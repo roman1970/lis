@@ -7,5 +7,1026 @@
     </database-info>
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <schema name="" catalog="plis"/>
+    <table name="AuthAssignment" schema="" catalog="plis" type="TABLE">
+      <column name="itemname" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="userid" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="bizrule" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="data" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="itemname,userid"/>
+      <foreign-key name="authassignment_ibfk_1" columns="itemname" ref-table="AuthItem" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="AuthItem" schema="" catalog="plis" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="bizrule" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="data" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="name"/>
+      <exported-key name="authassignment_ibfk_1" table="AuthAssignment" schema="" catalog="plis" columns="itemname"/>
+      <exported-key name="authitemchild_ibfk_1" table="AuthItemChild" schema="" catalog="plis" columns="parent"/>
+      <exported-key name="authitemchild_ibfk_2" table="AuthItemChild" schema="" catalog="plis" columns="child"/>
+    </table>
+    <table name="AuthItemChild" schema="" catalog="plis" type="TABLE">
+      <column name="parent" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="child" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="parent,child"/>
+      <foreign-key name="authitemchild_ibfk_1" columns="parent" ref-table="AuthItem" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="authitemchild_ibfk_2" columns="child" ref-table="AuthItem" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="accords" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="link" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="articles" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="alias" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="d_created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="d_updated" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="anons" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cat_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
+      <column name="anons_show" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rating" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tags" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="zatexta_task" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zatexta_exported" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="sort" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="status_quality" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="anons_img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="articles_ibfk_1" columns="cat_id" ref-table="category" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="articles_ibfk_2" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="articles_content_ibfk_1" table="articles_content" schema="" catalog="plis" columns="articles_id"/>
+      <exported-key name="articles_fields_content_ibfk_2" table="articles_fields_content" schema="" catalog="plis" columns="article_id"/>
+      <exported-key name="comments_ibfk_1" table="comments" schema="" catalog="plis" columns="article_id"/>
+      <index name="ux_articles_articles_cat_id" unique="false" columns="cat_id"/>
+      <index name="ux_articles_articles_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="articles_content" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articles_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="body" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="minititle" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="page" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fake_comm" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="text_under_photo" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="articles_content_ibfk_1" columns="articles_id" ref-table="articles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="articles_fields_content_ibfk_3" table="articles_fields_content" schema="" catalog="plis" columns="article_content_id"/>
+      <exported-key name="comments_ibfk_2" table="comments" schema="" catalog="plis" columns="article_content_id"/>
+      <index name="ux_articles_content_articles_content_articles_id" unique="false" columns="articles_id"/>
+    </table>
+    <table name="articles_fields" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sort" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="inner_field" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="alias" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="articles_fields_ibfk_1" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="articles_fields_content_ibfk_1" table="articles_fields_content" schema="" catalog="plis" columns="af_id"/>
+      <index name="ux_articles_fields_articles_fields_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="articles_fields_content" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="af_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="body" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="article_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="article_content_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="articles_fields_content_ibfk_1" columns="af_id" ref-table="articles_fields" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="articles_fields_content_ibfk_2" columns="article_id" ref-table="articles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="articles_fields_content_ibfk_3" columns="article_content_id" ref-table="articles_content" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_articles_fields_content_afc_article_content_id" unique="false" columns="article_content_id"/>
+      <index name="ux_articles_fields_content_articles_fields_content_af_id" unique="false" columns="af_id"/>
+      <index name="ux_articles_fields_content_articles_fields_content_article_id" unique="false" columns="article_id"/>
+    </table>
+    <table name="category" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="alias" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="category_ibfk_1" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="articles_ibfk_1" table="articles" schema="" catalog="plis" columns="cat_id"/>
+      <index name="ux_category_category_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="comments" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="body" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="d_created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="article_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="top" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
+      <column name="article_content_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fake_comm_type" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="comments_ibfk_1" columns="article_id" ref-table="articles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="comments_ibfk_2" columns="article_content_id" ref-table="articles_content" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_comments_article_content_id" unique="false" columns="article_content_id"/>
+      <index name="ux_comments_article_id" unique="false" columns="article_id"/>
+    </table>
+    <table name="dom_cult" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="telephone" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="e-mail" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="address" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="text" sqlType="MEDIUMTEXT" precision="16777215" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="fake_comm_types" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="foo_countries" schema="" catalog="plis" type="TABLE">
+      <column name="id_country" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="icon" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="ide_matches" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id_country"/>
+    </table>
+    <table name="foo_matches" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tournament" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gett" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lett" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="stay_h" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stay_g" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="yel_kart_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="red_kart_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="yel_kart_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="red_kart_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="substit_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="substit_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="goul_h" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="goul_g" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pen_miss_h" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pen_miss_g" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="onehalf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="onehalf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stra_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stra_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ud_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_mim_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_mim_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offside_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offside_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_v_stv_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_v_stv_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelkar_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelkar_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ballpos_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ballpos_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bet_h" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_n" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_g" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="foo_teams" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="team" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="town" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="plays" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="vic" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="nobody" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="def" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="zabito" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="prop" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="bal" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="vic_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nobody_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="def_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zabito_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prop_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bal_1h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vic_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nobody_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="def_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zabito_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prop_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bal_2h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vic_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nobody_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="def_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zabito_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prop_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bal_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vic_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nobody_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="def_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zabito_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prop_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bal_neit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vic_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nobody_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="def_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zabito_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prop_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bal_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="udary_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="udary_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="udary_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mimo_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mimo_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mimo_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offs_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offs_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offs_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vstvor_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vstvor_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vstvor_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelk_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelk_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelk_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="pos_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="pos_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="pos_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_n" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bet_h" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7" def="MC4wMA=="/>
+      <column name="bet_n" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7" def="MC4wMA=="/>
+      <column name="bet_g" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7" def="MC4wMA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="hoc" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tournir" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="get" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="get2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="god" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="hoc2" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tournir" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="get" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="get2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="maner" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="weigth" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="denzhisni" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sport" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dgp" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dgt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vd" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="poezdk" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mishvstal" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishkak" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishleg" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishout1" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishout2" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishdc1" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishdc2" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishoc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="seadm" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="progrm" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="job" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="readd" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="hdeal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="site" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guitar" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ele" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="eze" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="emo" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="kt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="s" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svskob" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn1" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn3" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn4" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn5" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="alkg" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gn" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nesport" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rab" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="ocenka" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="srskor" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="ds" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="maner_old" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="weigth" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="denzhisni" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sport" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dgp" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dgt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vd" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="poezdk" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mishvstal" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishkak" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishleg" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishout1" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishout2" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishdc1" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishdc2" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="mishoc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sum" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="seadm" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="progrm" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="job" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="readd" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="hdeal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="site" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guitar" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ele" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="eze" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="emo" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="kt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="s" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svo" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svskob" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn1" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn3" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn4" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="altn5" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="alkg" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gn" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nesport" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rab" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="ocenka" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="srskor" sqlType="DOUBLE" precision="22" scale="0" nullable="false" jdbcType="8"/>
+      <column name="ds" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="money" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="elcount" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hotwatcount" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="coldwatcount" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="mts_s" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="mts_r" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="eg" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="sv_kart" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="r_kart" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="dol" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="eur" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="brent" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="valrub" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="ostat" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="sber" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="mts" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="o_reper" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="cat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="play" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="f" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="author" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="group" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="minus" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gpro" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" remarks="0LrQu9GO0YfQtdCy0YvQtSDRgdC70L7QstCw"/>
+      <column name="accord" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="vyb" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="preamb" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="text" unique="false" columns="text"/>
+    </table>
+    <table name="o_reper_sv" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="cat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="play" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="f" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="author" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="group" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="minus" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gpro" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="accord" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="vyb" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="preamb" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="text" unique="false" columns="text"/>
+    </table>
+    <table name="ormon" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="totalstep" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerostep" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerowalktime" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="calories" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="distance" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="fatburned" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="steph1" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph3" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph4" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph5" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph6" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph7" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph8" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph9" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph10" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph11" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph12" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph13" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph14" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph15" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph16" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph17" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph18" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph19" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph20" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph21" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph22" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph23" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="steph24" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph1" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph3" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph4" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph5" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph6" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph7" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph8" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph9" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph10" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph11" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph12" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph13" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph14" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph15" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph16" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph17" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph18" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph19" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph20" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph21" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph22" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph23" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="aerosteph24" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="play" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tournir" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="get" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="get2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="god" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="play2" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tournir" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="get" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="get2" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="let2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="play2013" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tournir" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="get" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="let" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="get2" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="let2" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="pogoda" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="temmorn" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="hummorn" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pressmorn" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="temday" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="humday" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pressday" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="temev" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7"/>
+      <column name="humev" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pressev" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="temcommax" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="temcommin" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="humcommax" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="humcommin" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sunrise" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="sunset" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dday" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="moonvid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="moonold" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="moonrast" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="moonrise" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="moonset" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="date"/>
+      <index name="id_2" unique="true" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="prod" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="salatmastot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="banantot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bulkatot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="garkruptot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="karmastot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kashatot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="konftot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kurtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="makartot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="maslotot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ogurtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="peltot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pechtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pechenietot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pirogtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pybtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="salatovtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sahartot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sladtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="supzhirtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="suppostot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="syrkolbtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fruttot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hlebtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="morozhtot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="shoktot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="totkk" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="totgr" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tottot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="alk" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bil" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bol" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dor" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="doshirab" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="zhvach" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="internet" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="canc" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kvar" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kolbas" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="koncer" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kofe" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="krup" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="makar" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="maslorast" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mebel" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="meloch" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="misha" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="moloco" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mus" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mjas" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="obuv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ovos" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="odezhd" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="paric" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pelmen" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prih_r" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prih_s" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ptic" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="puresh" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rem" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ryb" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="slad" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sok" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sot_r" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sot_s" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="suhfr" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tech" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="uch" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="fruct" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hleb" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hoz" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="hosting" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="much" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="totminus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="totplus" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rybday" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ashan" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ikea" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="holiday" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gotti" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mariara" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="leroy" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ramos" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chistmir" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="miaso" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="family" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gloria_djins" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="det_mir" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sib_gig" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ostin" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="m_video" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="romika" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="avalone" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lumen" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mothercare" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="dochki_synochki" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bystronom" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="e96" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="dudnik" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="letual" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mus_ars" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="master_best" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="pris" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="music_land" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="mango" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="sinar" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="limpopo" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="sportmaster" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="salamander" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zolla" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="florange" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="marks_spenser" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="malonfashn" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="natti" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="dns" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="piaterochka" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="radiotehnika" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="ramler" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fromm" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="vessite" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="mainpage" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="timin" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="scheme" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="comment" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="scheme_site_id" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="site_settings_scheme" table="site_settings" schema="" catalog="plis" columns="scheme_id"/>
+      <index name="ux_scheme_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="sho_about" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="photo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="create_time" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
+      <column name="update_time" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="JzAwMDAtMDAtMDAgMDA6MDA6MDAn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="sho_cat" schema="" catalog="plis" type="TABLE">
+      <column name="idcat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="id_parent" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="idcat"/>
+      <exported-key name="FK_sho_prods_sho_cat" table="sho_prods" schema="" catalog="plis" columns="id_cat"/>
+    </table>
+    <table name="sho_items" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="sho_prods" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="id_cat" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="photo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="country_prud" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="articul" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="price" sqlType="FLOAT" precision="8" scale="2" nullable="true" jdbcType="7" def="MC4wMA=="/>
+      <column name="size" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="material" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="quont_min" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="choose_model" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" def="MA=="/>
+      <column name="create_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="update_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="author_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_sho_prods_sho_cat" columns="id_cat" ref-table="sho_cat" ref-schema="" ref-catalog="plis" ref-columns="idcat" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="FK_sho_prods_sho_cat" unique="false" columns="id_cat"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="site" schema="" catalog="plis" type="TABLE">
+      <column name="date" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="month" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="naglav" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="putesh" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chel" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="novos" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="elec" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="pros" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="balda" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="alco" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="kapit" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="krepche" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="samy" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="zavod" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="ebn" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="tal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="drgrave" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="teatrb" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="articles" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="stories" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="date"/>
+    </table>
+    <table name="site_settings" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="type" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="scheme_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="add_scheme" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="site_settings_ibfk_1" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="site_settings_scheme" columns="scheme_id" ref-table="scheme" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_site_settings_site_settings_scheme_id" unique="false" columns="scheme_id"/>
+      <index name="ux_site_settings_site_settings_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="sites" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="theme" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="theme_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="zatexta_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="akula_key" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="lang" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="sites_ibfk_1" columns="theme_id" ref-table="themes" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="articles_ibfk_2" table="articles" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="articles_fields_ibfk_1" table="articles_fields" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="category_ibfk_1" table="category" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="scheme_site_id" table="scheme" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="site_settings_ibfk_1" table="site_settings" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="subscribe_ibfk_1" table="subscribe" schema="" catalog="plis" columns="site_id"/>
+      <index name="ux_sites_sites_theme_id" unique="false" columns="theme_id"/>
+      <index name="ux_sites_sites_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="statistic_ctr_ad" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="param_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="param_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="param_alias" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="site_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="site_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="article_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="article_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="slide_id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="slide_name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="request_uri" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="count_view" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <column name="count_click" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="subscribe" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="d_created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J25ldyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="subscribe_ibfk_1" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_subscribe_subscribe_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="sum_tel" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="tel" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="abonent" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
+      <column name="spend" sqlType="FLOAT" precision="12" scale="0" nullable="true" jdbcType="7" def="MA=="/>
+      <column name="inx" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="outx" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="dlit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="tbl_migration" schema="" catalog="plis" type="TABLE">
+      <column name="version" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="apply_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="version"/>
+    </table>
+    <table name="teams" schema="" catalog="plis" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="town" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="play" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vic" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nobody" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="def" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="getgoal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="letgoal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="name"/>
+    </table>
+    <table name="teams13_14" schema="" catalog="plis" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="town" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="play" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="vic" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nobody" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="def" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="getgoal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="letgoal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="bal" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cat" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="name"/>
+    </table>
+    <table name="telbase" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date_nach" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="time_nach" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="nom_tel" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="zak_gr" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="zv" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="source" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="a" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="dlitelnost" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="c" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="dut" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="f" sqlType="FLOAT" precision="5" scale="5" nullable="false" jdbcType="7" def="MC4wMDAwMA=="/>
+      <column name="date_okon" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="time_okon" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="cur" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <column name="gmt" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12" def="Jyc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="telephone" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="day" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="month" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="dd" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="svi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="svt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="elei" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="elev" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="elet" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="rybi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rybv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rybt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chas9i" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chas9v" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="chas9t" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nfi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nfv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nft" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="onchi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="onchv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="oncht" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="conci" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="concv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="conct" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rabi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rabv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rabt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="itoi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="itov" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="itot" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="anti" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="antv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="antt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="soldi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="soldv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="soldt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="zni" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="znv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="znt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="usli" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="uslv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="uslt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="levi" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="levv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="levt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="yuli" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="yulv" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="yult" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="themes" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="sites_ibfk_1" table="sites" schema="" catalog="plis" columns="theme_id"/>
+    </table>
+    <table name="user" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="login" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="role" sqlType="ENUM" precision="17" scale="0" nullable="false" jdbcType="1" def="J21hbmFnZXIn"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="login" unique="true" columns="login"/>
+    </table>
   </data-source>
 </component>
