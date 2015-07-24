@@ -9,6 +9,10 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     public $password;
     public $authKey;
     public $accessToken;
+    
+    const ROLE_USER = 1;
+    const ROLE_MODER = 5;
+    const ROLE_ADMIN = 10;
 
     private static $users = [
         '100' => [
