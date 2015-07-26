@@ -23,17 +23,10 @@ class User extends BaseUser
         // do your magic
     }
 
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
 
     /**
      * @inheritdoc
-     */
+     *
     public static function findIdentityByAccessToken($token, $type = null)
     {
         foreach (self::$users as $user) {
@@ -44,7 +37,7 @@ class User extends BaseUser
 
         return null;
     }
-
+*/
     /**
      * Finds user by username
      *
@@ -64,28 +57,28 @@ class User extends BaseUser
 
     /**
      * @inheritdoc
-     */
+     *
     public function getId()
     {
         return $this->id;
     }
-
+    */
     /**
      * @inheritdoc
-     */
+     *
     public function getAuthKey()
     {
         return $this->authKey;
     }
-
+    */
     /**
      * @inheritdoc
-     */
+     *
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
     }
-
+    */
     /**
      * Validates password
      *

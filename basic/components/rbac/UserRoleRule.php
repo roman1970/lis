@@ -3,7 +3,7 @@ namespace app\components\rbac;
 use Yii;
 use yii\rbac\Rule;
 use yii\helpers\ArrayHelper;
-use common\models\User;
+use app\models\User;
 
 class UserRoleRule extends Rule
 {

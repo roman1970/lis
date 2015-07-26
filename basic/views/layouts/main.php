@@ -39,15 +39,16 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'User', 'url' => ['/user/admin/index']],
+            ['label' => 'User', 'url' => ['/user/profile/show']],
             Yii::$app->user->isGuest ?
-                ['label' => 'Login', 'url' => ['/user/security/login']] :
-                ['label' => 'Logout (' . 'k'. ')',
-                    'url' => ['/user/logout'],
+               ['label' => 'Login', 'url' => ['/user/security/login']] :
+                ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
+                    'url' => ['/user/security/logout'],
                     'linkOptions' => ['data-method' => 'post']],
         ],
     ]);
     NavBar::end();
+
     ?>
 
     <div class="container">
