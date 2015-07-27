@@ -16,28 +16,22 @@ class User extends BaseUser
     const ROLE_MODER = 5;
     const ROLE_ADMIN = 10;
 
-    private static $users;
-
+    //private static $users;
+   
     public function register()
     {
-        // do your magic
+       
     }
 
 
     /**
      * @inheritdoc
-     *
-    public static function findIdentityByAccessToken($token, $type = null)
+     */
+    public static function findIdentity($id)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
+      return new static(static::find()->where(['id' => $id])->asArray()->one());
     }
-*/
+     
     /**
      * Finds user by username
      *
@@ -46,23 +40,27 @@ class User extends BaseUser
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
+        /*foreach (self::$users as $user) {
             if (strcasecmp($user['username'], $username) === 0) {
                 return new static($user);
             }
         }
 
         return null;
+	 * */
+	 
     }
 
     /**
      * @inheritdoc
      *
+     */
+     
     public function getId()
     {
         return $this->id;
     }
-    */
+    
     /**
      * @inheritdoc
      *
