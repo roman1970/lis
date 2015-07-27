@@ -2,7 +2,9 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use dektrium\user\models\User as BaseUser;
+
+class User extends BaseUser
 {
     public $id;
     public $username;
@@ -14,34 +16,17 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
     const ROLE_MODER = 5;
     const ROLE_ADMIN = 10;
 
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
+    private static $users;
 
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
+    public function register()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        // do your magic
     }
 
+
     /**
      * @inheritdoc
-     */
+     *
     public static function findIdentityByAccessToken($token, $type = null)
     {
         foreach (self::$users as $user) {
@@ -52,7 +37,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
 
         return null;
     }
-
+*/
     /**
      * Finds user by username
      *
@@ -72,28 +57,28 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
 
     /**
      * @inheritdoc
-     */
+     *
     public function getId()
     {
         return $this->id;
     }
-
+    */
     /**
      * @inheritdoc
-     */
+     *
     public function getAuthKey()
     {
         return $this->authKey;
     }
-
+    */
     /**
      * @inheritdoc
-     */
+     *
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
     }
-
+    */
     /**
      * Validates password
      *
