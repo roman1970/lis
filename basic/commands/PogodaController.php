@@ -10,8 +10,8 @@ class PogodaController extends Controller
     private $cityUrls;
     
     
-    public function run()
-    {
+    public function actionInit()
+    {/*
 
 	$this->cityUrls = [
 	    "http://meteoinfo.ru/pogoda/russia/novosibirsk-area/novosibirsk", 
@@ -58,6 +58,8 @@ class PogodaController extends Controller
 	    if(putDatasInTable(clearDatas($content, 'Атмосферное давление', ' '),$city)) echo "For $city $date datas is in table";
 	    else "For $city $date datas falure";
 	}
+     * */
+     
     }
     
     /**
