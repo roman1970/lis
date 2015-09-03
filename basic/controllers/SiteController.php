@@ -12,7 +12,7 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
 
-    public $layout = 'landing';
+    //public $layout = 'landing';
 
     public function behaviors()
     {
