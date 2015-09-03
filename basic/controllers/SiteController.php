@@ -11,6 +11,9 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
+
+    public $layout = 'landing';
+
     public function behaviors()
     {
         return [
@@ -54,6 +57,11 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+
+        //\Yii::$app->view->theme->pathMap = ['app/views' => 'app/themes/landberry/views'];
+        //\Yii::$app->view->theme->baseUrl = '@app/themes/landberry';
+        \Yii::$app->view->theme->pathMap = ['@app/views' => '@app/themes/landberry/views'];
+        \Yii::$app->view->theme->baseUrl = '@app/themes/landberry';
         return $this->render('index');
     }
 

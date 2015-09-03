@@ -1,0 +1,615 @@
+@font-face {
+  font-family: 'MetaPro-Normal';
+  src: url('fonts/metapro-normal/MetaPro-Normal.eot-#iefix')/*tpa=http://wp-media.ru/css/fonts/metapro-normal/MetaPro-Normal.eot?#iefix*/ format('embedded-opentype'),
+       url('fonts/metapro-normal/MetaPro-Normal.otf')/*tpa=http://wp-media.ru/css/fonts/metapro-normal/MetaPro-Normal.otf*/  format('opentype'),
+	   url('fonts/metapro-normal/MetaPro-Normal.woff')/*tpa=http://wp-media.ru/css/fonts/metapro-normal/MetaPro-Normal.woff*/ format('woff'),
+	   url('fonts/metapro-normal/MetaPro-Normal.ttf')/*tpa=http://wp-media.ru/css/fonts/metapro-normal/MetaPro-Normal.ttf*/  format('truetype'),
+	   url('fonts/metapro-normal/MetaPro-Normal.svg#MetaPro-Normal')/*tpa=http://wp-media.ru/css/fonts/metapro-normal/MetaPro-Normal.svg#MetaPro-Normal*/ format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+    font-family: 'metnclfc';
+    src: url('fonts/metnclfc/metnclfc.eot')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.eot*/;
+    src: url('fonts/metnclfc/metnclfc.eot-#iefix')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.eot?#iefix*/ format('embedded-opentype'),
+         url('fonts/metnclfc/metnclfc.woff2')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.woff2*/ format('woff2'),
+         url('fonts/metnclfc/metnclfc.woff')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.woff*/ format('woff'),
+         url('fonts/metnclfc/metnclfc.ttf')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.ttf*/ format('truetype'),
+         url('fonts/metnclfc/metnclfc.svg#metnclfc')/*tpa=http://wp-media.ru/css/fonts/metnclfc/metnclfc.svg#metnclfc*/ format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'metmclfr';
+    src: url('fonts/metmclfr/metmclfr.eot')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.eot*/;
+    src: url('fonts/metmclfr/metmclfr.eot-#iefix')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.eot?#iefix*/ format('embedded-opentype'),
+         url('fonts/metmclfr/metmclfr.woff2')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.woff2*/ format('woff2'),
+         url('fonts/metmclfr/metmclfr.woff')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.woff*/ format('woff'),
+         url('fonts/metmclfr/metmclfr.ttf')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.ttf*/ format('truetype'),
+         url('fonts/metmclfr/metmclfr.svg#metmclfr')/*tpa=http://wp-media.ru/css/fonts/metmclfr/metmclfr.svg#metmclfr*/ format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*,html{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	font-family:  'MetaPro-Normal';
+}
+
+ul{
+	list-style: none;
+}
+
+.container{
+	position: relative;
+	margin: 0 auto;
+	width: 1000px;
+}
+
+#header{
+	height: 158px;
+	background: url(../images/sonnik/logo.png)/*tpa=http://wp-media.ru/images/sonnik/logo.png*/ center center no-repeat;
+}
+
+
+/*------------------Navigation-------------------------*/
+
+
+#nav{
+	background: url(../images/sonnik/nav-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/nav-bg.jpg*/;
+	z-index: 1000;
+}
+	#nav ul{
+		height: 53px;
+		font-size:0;
+	}
+
+	#nav ul li{
+		height: 53px;
+		float: left;
+	}
+		#nav ul li a{
+			margin: 5px 0;
+			text-decoration: none;
+			font-size: 18px;
+			color: #333;
+			display: block;
+			line-height: 43px;
+			border-left: 1px solid #bdbdbd;
+		}
+
+		#nav ul li a:hover span{
+			padding-bottom: 12px;
+			border-bottom: 4px solid #d89981;
+		}
+
+		#nav .main a{
+			padding: 0 16px 0 0;
+			border: none;
+		}
+
+        #nav .top a{
+            padding: 0 16px 0 0;
+            border-left: 1px solid #bdbdbd !important;
+        }
+
+		#nav .projects a{
+			padding: 0 16px 0 17px;
+		}
+
+		#nav .format a{
+			padding: 0 18px 0 16px;
+		}
+
+		#nav .cost a{
+			padding: 0 17px 0 15px;
+		}
+
+		#nav .contacts a{
+			padding: 0 19px 0 16px;
+		}
+
+		#nav .about a{
+			padding: 0 30px 0 18px;
+
+		}
+
+		#nav .book{
+			width: 202px;
+			background: url(../images/sonnik/book-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/book-bg.jpg*/;
+		}
+
+			#nav .book a{
+				padding-left: 35px;
+				border-left: none;
+				color:#fff;
+				text-transform: uppercase;
+				border-left: none;
+			}
+
+		#nav .book:hover{
+			opacity: 0.9;
+		}
+
+/*--------------------Main------------------------*/
+
+#main{
+	padding: 79px 0 66px 0;
+	background: url(../images/sonnik/main-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/main-bg.jpg*/ center center;
+	background-size: cover;
+}
+
+#main .content{
+	padding-left: 400px;
+	height: 315px;
+	background: url(../images/sonnik/main-mac.png)/*tpa=http://wp-media.ru/images/sonnik/main-mac.png*/ 1px top no-repeat;
+}
+
+#main .content .str1{
+	display: block;
+	font-size: 30px;
+	line-height: 15px;
+	font-style: italic;
+	color:#313131;
+}
+
+#main .content .str2{
+	display: block;
+	font-size: 36px;
+	font-family: 'metmclfr';
+	font-style: italic;
+	text-transform: uppercase;
+	color:#383838;
+	padding: 8px 0 31px 3px;
+}
+
+#main .content p{
+	padding: 0 0 24px 5px;
+	font-size: 24px;
+	font-style: italic;
+	color: #383838;
+}
+
+
+/*------------------Projects-----------------*/
+
+#projects{
+	min-height: 353px;
+	background: url(../images/sonnik/projects-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/projects-bg.jpg*/;
+	background-size: cover;
+}
+
+#projects .left-block{
+	padding: 87px 0 186px 141px;
+	float: left;
+	background: url(../images/sonnik/pr-icon.png)/*tpa=http://wp-media.ru/images/sonnik/pr-icon.png*/ -4px top no-repeat;
+}
+
+#projects .left-block .str1{
+	text-transform: uppercase;
+	display: block;
+	font-size: 24px;
+	line-height: 24px;
+	color:#fff;
+}
+
+#projects .left-block .str2{
+	text-transform: uppercase;
+	display: block;
+	font-size: 35px;
+	font-family: 'metmclfr';
+	line-height: 34px;
+	color:#fff;
+}
+
+#projects .left-block .line{
+	position: relative;
+	top: -3px;
+	margin: 0 0 0 1px;
+	display: inline-block;
+	width: 80px;
+	border-bottom: 7px solid #d89981;
+}
+
+#projects .right-block{
+	width: 507px;
+	position: relative;
+	margin: 45px 6px 0 0px;
+	float: right;
+}
+
+#projects .right-block p{
+	padding-top: 5px;
+	margin-top: 12px;
+	font-size: 18px;
+	color:#fff;
+	border-top: 1px solid rgba(255,255,255,.5);
+}
+
+#projects .right-block .link1{
+	text-align: center;
+	float: left;
+	width: 211px;
+}
+
+#projects .right-block .link1 a{
+	margin: 0 2px;
+	text-decoration: none;
+	font-size: 24px;
+	color: #fff;
+	display: block;
+	padding-top: 165px;
+	background: url(../images/sonnik/pr-mac1.png)/*tpa=http://wp-media.ru/images/sonnik/pr-mac1.png*/ center top no-repeat;
+}
+
+#projects .right-block .link2{
+	margin-left: 81px;
+	text-align: center;
+	float: right;
+	width: 211px;
+}
+
+#projects .right-block .link2 a{
+	margin: 0 2px;
+	text-decoration: none;
+	font-size: 24px;
+	color: #fff;
+	display: block;
+	padding-top: 165px;
+	background: url(../images/sonnik/pr-mac2.png)/*tpa=http://wp-media.ru/images/sonnik/pr-mac2.png*/ center top no-repeat;
+}
+
+#projects .right-block .line{
+	position: absolute;
+	top: 78px;
+	left: 213px;
+	width: 80px;
+	border-bottom: 2px dashed #fff;
+}
+
+/*-------------------------Formats--------------------------*/
+
+#format{
+	position: relative;
+	height: 687px;
+	background: url(../images/sonnik/format-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/format-bg.jpg*/;
+	background-size: cover;
+}
+
+#format .content{
+	padding-left: 64px;
+	position: absolute;
+	top: 73px;
+	left: -5px;
+	width: 960px;
+	height: 511px;
+	background: url(../images/sonnik/format-content-bg.png)/*tpa=http://wp-media.ru/images/sonnik/format-content-bg.png*/ left top no-repeat;
+}
+
+#format .content .str1{
+	padding: 10px 0 0 40px;
+	display: block;
+	font-size: 24px;
+	text-transform: uppercase;
+	line-height: 4px;
+	color:#383838;
+}
+
+#format .content .str2{
+	padding: 3px 0 48px 40px;
+	display: block;
+	font-size: 36px;
+	font-family: 'metmclfr';
+	line-height: 45px;
+	text-transform: uppercase;
+	color:#383838;
+}
+
+
+#format .content p{
+	padding-bottom: 32px;
+	font-size: 24px;
+	color: #383838;
+}
+
+
+/*---------------------Cost-------------------*/
+
+#cost{
+	position: relative;
+	height: 353px;
+	background: url(../images/sonnik/cost-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/cost-bg.jpg*/ center top;
+	background-size: cover;
+}
+
+#cost .left-block{
+	padding: 125px 0 122px 137px;
+	display: inline-block;
+	background: url(../images/sonnik/cost-icon.png)/*tpa=http://wp-media.ru/images/sonnik/cost-icon.png*/ left top no-repeat;
+}
+
+#cost .left-block .str1{
+	text-transform: uppercase;
+	display: block;
+	font-size: 24px;
+	line-height: 24px;
+	color:#fff;
+}
+
+#cost .left-block .str2{
+	padding: 5px 0 21px 0;
+	letter-spacing: 1px;
+	display: block;
+	font-size: 47px;
+	line-height: 34px;
+	color:#fff;
+}
+
+#cost .left-block .line{
+	position: relative;
+	top: -3px;
+	left: 4px;
+	margin: 0 0 0 1px;
+	display: inline-block;
+	width: 80px;
+	border-bottom: 7px solid #d89981;
+}
+
+#cost .right-block{
+	width:360px;
+	position: absolute;
+	top: 74px;
+	left: 580px;
+}
+
+#cost .right-block .str1{
+	display: block;
+	font-family: 'metmclfr';
+	font-size: 48px;
+	color:#fff;
+	text-align: center;
+}
+
+#cost .right-block .str2{
+	display: block;
+	line-height: 41px;
+	font-size: 35px;
+	color:#fff;
+	text-align: center;
+}
+
+#cost .right-block .date{
+	display: block;
+	line-height: 35px;
+	letter-spacing: 1px;
+	font-size: 46px;
+	color:#fff;
+	text-align: center;
+	font-weight: bold;
+}
+
+/*-------------------Book-----------------------*/
+
+#book{
+	height: 710px;
+	background: url(../images/sonnik/format-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/format-bg.jpg*/;
+	background-size: cover;
+}
+
+#book .h1{
+	padding: 66px 0 37px 128px;
+	letter-spacing: 0.008em;
+	font: 48px 'metmclfr';
+	color:#363636;
+	/* text-align: center; */
+	text-transform: uppercase;
+}
+
+#book .feedback{
+	padding: 160px 0 0 131px;
+	float: left;
+	width: 349px;
+	height: 295px;
+	border: 10px solid rgba(222,222,222,.5)
+}
+
+#book .feedback li{
+    margin-bottom: 14px;
+
+}
+
+#book .feedback li a{
+	padding-left: 47px;
+	text-decoration: none;
+	font-size: 24px;
+	color:#393939;
+}
+
+#book .feedback .skype{
+	background: url(../images/sonnik/skype-icon.png)/*tpa=http://wp-media.ru/images/sonnik/skype-icon.png*/ 0 0 no-repeat;
+}
+
+#book .feedback .phone{
+	background: url(../images/sonnik/phone-icon.png)/*tpa=http://wp-media.ru/images/sonnik/phone-icon.png*/ 3px 2px no-repeat;
+}
+
+#book .feedback .mail{
+	background: url(../images/sonnik/mail-icon.png)/*tpa=http://wp-media.ru/images/sonnik/mail-icon.png*/ 1px 4px no-repeat;
+}
+
+#book form{
+	float: right;
+	width: 444px;
+}
+
+#book form p{
+	padding: 16px 0 23px 34px;
+	font-size: 18px;
+	color:#393939;
+	text-align: center;
+}
+
+#book form .input-date-wrap{
+	height: 55px;
+	margin-bottom: 4px;
+	padding: 4px 0 4px 68px;
+	border:5px solid #dedede;
+	background: url(../images/sonnik/calendar-icon.png)/*tpa=http://wp-media.ru/images/sonnik/calendar-icon.png*/ 20px 19px no-repeat;
+}
+
+#book form .input-name-wrap{
+	position: relative;
+	height: 55px;
+	margin-bottom: 4px;
+	padding: 4px 0 4px 68px;
+	border:5px solid #dedede;
+	background: url(../images/sonnik/user-icon.png)/*tpa=http://wp-media.ru/images/sonnik/user-icon.png*/ 23px 19px no-repeat;
+}
+
+#book form .input-phone-wrap{
+	position: relative;
+	height: 55px;
+	margin-bottom: 4px;
+	padding: 4px 0 4px 68px;
+	border:5px solid #dedede;
+	background: url(../images/sonnik/phone2-icon.png)/*tpa=http://wp-media.ru/images/sonnik/phone2-icon.png*/ 22px 20px no-repeat;
+}
+
+#book input{
+	outline: none;
+	border: none;
+	background: none;
+}
+
+#book input[type="text"]{
+	display: block;
+	padding: 14px 0 13px 24px;
+	font-size: 24px;
+	letter-spacing: -0.05em;
+	color:#5b5b5b;
+	border-left: 2px solid #dedede;
+}
+
+#book input[type="submit"]{
+	margin-top: 15px;
+	display: block;
+	width: 100%;
+	height: 93px;
+	font: 36px 'metmclfr';
+	color: #fff;
+	text-indent: 10px;
+	letter-spacing: 0px;
+	text-transform: uppercase;
+	background: url(../images/sonnik/input-btn.jpg)/*tpa=http://wp-media.ru/images/sonnik/input-btn.jpg*/;
+	cursor: pointer;
+}	
+
+#book input[type="submit"]:hover{
+	opacity: 0.9;
+}
+
+#book form p{
+	display:none;
+}
+
+/*=============== Thanks Window ====================*/
+
+#thanks-wrap{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(../images/sonnik/thanks-bg.png)/*tpa=http://wp-media.ru/images/sonnik/thanks-bg.png*/;
+	z-index: 1100;
+	display: none;
+}
+
+.thanks{
+	margin: 100px auto;
+	width: 400px;
+	height: 300px;
+	background: #fff;
+}
+
+.thanks h1{
+	padding: 75px 15px 15px 15px;
+	font: 36px 'metmclfr';
+	color:#383838;
+	text-transform: uppercase;
+	font-weight: normal;
+	text-align: center;
+}
+
+.thanks p{
+    margin: 0 85px 0 90px;
+    padding: 10px 0px 0 0px;
+    font-size: 18px;
+    color: #383838;
+    text-align: center;
+    border-top: 1px solid #c3c3c3;
+}
+
+label.error{
+	padding: 10px 0;
+	position: absolute;
+	top:-5px;
+	left: -230px;
+	width: 200px;
+	height: 53px;
+	font-size: 18px;
+	color: #E70C0C;
+	text-align: center;
+	display: block;
+	background-color: #dedede;
+}
+
+label.error:after {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(222, 222, 222, 0);
+	border-left-color: #dedede;
+	border-width: 15px;
+	margin-top: -15px;
+}
+
+.dropdown {
+    background: #f9f9f9;
+    display: none;
+    height: auto !important;
+    padding: 10px;
+    position: absolute;
+    visibility: hidden;
+    width: 200px;
+    opacity: 0;
+}
+
+ul li ul li {
+    display: block;
+}
+
+.dropdown li {
+    width: 100%;
+}
+
+.dropdown li a:hover span {
+    border-bottom: 4px solid #d89981;
+    cursor: pointer;
+}
+
+ul li:hover ul {
+    display: block;
+    opacity: 1;
+    visibility: visible;}

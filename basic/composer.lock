@@ -238,7 +238,8 @@
             },
             "license": [
                 "MIT"
-            ]
+            ],
+            "time": "2015-03-08 21:03:11"
         },
         {
             "name": "cebe/markdown",
@@ -467,12 +468,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "be95de36bb802790a6a588451e620d27b7bdd231"
+                "reference": "f3a94f3ddd8c1649332fbe5221b3c16217129c51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/be95de36bb802790a6a588451e620d27b7bdd231",
-                "reference": "be95de36bb802790a6a588451e620d27b7bdd231",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f3a94f3ddd8c1649332fbe5221b3c16217129c51",
+                "reference": "f3a94f3ddd8c1649332fbe5221b3c16217129c51",
                 "shasum": ""
             },
             "require": {
@@ -547,7 +548,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2015-07-26 00:21:41"
+            "time": "2015-07-27 15:57:10"
         },
         {
             "name": "yiisoft/yii2-authclient",
@@ -1054,12 +1055,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-gii.git",
-                "reference": "db79e960620c515ed502a09c04f0c7b714944c92"
+                "reference": "cbf4248b9cfb7f31e966b88f4b4da89516757d57"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/db79e960620c515ed502a09c04f0c7b714944c92",
-                "reference": "db79e960620c515ed502a09c04f0c7b714944c92",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/cbf4248b9cfb7f31e966b88f4b4da89516757d57",
+                "reference": "cbf4248b9cfb7f31e966b88f4b4da89516757d57",
                 "shasum": ""
             },
             "require": {
@@ -1099,7 +1100,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2015-07-25 19:58:02"
+            "time": "2015-07-27 07:28:22"
         }
     ],
     "aliases": [],

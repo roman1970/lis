@@ -9,10 +9,21 @@ class m150810_033000_create_table_weather extends Migration
     {
 	$this->createTable(
             '{{weather}}', array(
-                'id' => 'pk',
-                'name' => 'varchar(255) NOT NULL',
-                'weather_link' => 'varchar(255) NOT NULL',
-                'country_id' => 'INT(11) NOT NULL',
+        'id' => 'pk',
+        'chas' => 'INT(4) NOT NULL',
+        'date' => 'DATETIME',
+        'atmdavlnaurst' => 'INT(8) NOT NULL',
+        'temp' => 'FLOAT(8) NOT NULL',
+        'otnvlaz' => 'INT(8) NOT NULL',
+        'naprvetra' => 'varchar(8) NOT NULL',
+        'scorvetra' => 'INT(8) NOT NULL',
+        'balobl' => 'INT(8) NOT NULL',
+        'gorvid' => 'INT(8) NOT NULL',
+        'osad24' => 'FLOAT(8) NOT NULL',
+        'osad12' => 'FLOAT(8) NOT NULL',
+        'vyspok' => 'INT(8) NOT NULL',
+        'dd' => 'INT(8) NOT NULL',
+        'country_id' => 'INT(2) NOT NULL'
             ), 'DEFAULT CHARSET=utf8 ENGINE = INNODB'
         );
 

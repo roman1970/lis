@@ -34,6 +34,24 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+
+        /*
+         * 'view' => [
+            'theme' => [
+                'basePath' => '@app/themes/landberry',
+                //'baseUrl' => '@web/themes/landberry',
+            ],
+        ],
+        */
+        'view' => [
+            'theme' => [
+                'basePath' => '@app/themes/landberry',
+                'baseUrl' => '@web/themes/landberry',
+                'pathMap' => [
+                    '@app/views' => '@app/themes/landberry',
+                ],
+            ],
+        ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
@@ -75,7 +93,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<controller:\w+>/<id:\d+>'   => '<controller>/view',
+                //'<controller:\w+>/<id:\d+>'   => '<controller>/view',
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',

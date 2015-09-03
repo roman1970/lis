@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="weather" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/basic/commands/WeatherController.php">
+    <CommandLine workingDirectory="$PROJECT_DIR$/basic" />
+    <RunnerSettings RunnerId="PhpScriptDebugRunner" />
+    <ConfigurationWrapper RunnerId="PhpScriptDebugRunner" />
+    <method />
+  </configuration>
+</component>
