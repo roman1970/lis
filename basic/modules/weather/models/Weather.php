@@ -1,26 +1,15 @@
 <?php
 
-namespace app\models;
+namespace app\modules\weather\models;
 
 use Yii;
 
 /**
- * This is the model class for table "weather".
+ * This is the model class for table "category".
  *
  * @property integer $id
- * @property datetime $date
- * @property integer $atmdavlnaurst
- * @property integer $temp
- * @property integer $otnvlaz
- * @property integer $scorvetra
- * @property integer $balobl
- * @property integer $gorvid
- * @property integer $osad24
- * @property integer $osad12
- * @property integer $vyspok
- * @property integer $dd
- * @property string $naprvetra
- * @property integer $city_id
+ * @property string $name
+ * @property integer $id_parent
  */
 class Weather extends \yii\db\ActiveRecord
 {

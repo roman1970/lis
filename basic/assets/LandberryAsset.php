@@ -18,12 +18,14 @@ class LandberryAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'css/animate.css',
         'css/bootstrap.min.css',
         'css/flexslider.css',
         'css/font-awesome.css',
         'css/index.css',
         'css/owl.carousel.css',
         'css/sonnik_style.css',
+        'css/style.css',
         'css/traffic-calc.css'
     ];
     public $js = [

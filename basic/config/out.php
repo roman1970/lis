@@ -1,12 +1,16 @@
 <?php
-
 $params = require(__DIR__ . '/params.php');
+
+if (isset($_GET['mode'])) {
+    $mode = $_GET['mode'];
+}
+else $mode = 'user';
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    //'defaultRoute' => '/weather/default/index',
+    'defaultRoute' => '/'.$mode.'/default/index',
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
@@ -19,7 +23,6 @@ $config = [
         ],
         'weather' => [
             'class' => 'app\modules\weather\Weather',
-
         ],
 
     ],
@@ -48,7 +51,7 @@ $config = [
                 //'baseUrl' => '@web/themes/landberry',
             ],
         ],
-
+        */
         'view' => [
             'theme' => [
                 'basePath' => '@app/themes/landberry',
@@ -58,7 +61,6 @@ $config = [
                 ],
             ],
         ],
-        */
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set
