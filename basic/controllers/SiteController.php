@@ -58,14 +58,7 @@ class SiteController extends BackEndController
     public function actionIndex()
     {
 
-        $modelWeather = new Weather();
-        $last = $modelWeather::find()
-            ->limit(10)
-            ->all();
-
-        return $this->render('index', [
-            'model' =>  $last,
-        ]);
+        return $this->render('index');
     }
 
     public function actionLogin()
