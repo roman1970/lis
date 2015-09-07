@@ -70,8 +70,8 @@ $config = [
                 'host' => 'smtp.gmail.com',
                 'username' => 'r0man4ernyshev@gmail.com',
                 'password' => 'vbif10cdtnf79',
-                'port' => '587',
-                'encryption' => 'tls',
+                //'port' => '587',
+                //'encryption' => 'tls',
             ],
         ],
         'log' => [
