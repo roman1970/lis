@@ -124,8 +124,8 @@ LandberryAsset::register($this);
                 </button>
 
                 <a class="navbar-brand" href="#home" id="logo">
-
-                    <img src="@app/themes/landberry/images/logo1.png" width="133" alt="WP Media"></a>
+                    <?= Helper::echoImg('@app/themes/landberry/images/logo1.png') ?>
+                   <?php // <img src="@app/themes/landberry/images/logo1.png" width="133" alt="WP Media"></a> ?>
 
             </div>
 
