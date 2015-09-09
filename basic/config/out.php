@@ -103,9 +103,9 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 //'<controller:\w+>/<id:\d+>'   => '<controller>/view',
-                '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
-                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
-                '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
+                //'<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
+                //'<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                //'<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
 
 
             ],
