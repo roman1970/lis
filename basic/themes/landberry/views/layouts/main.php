@@ -158,7 +158,7 @@ LandberryAsset::register($this);
 
             <div class="title col-md-8 col-sm-10 col-xs-12">
 
-                <h1><img src="../images/logo.png" alt="WP Media"></h1>
+                <h1><img src="/images/logo.png" alt="WP Media"></h1>
 
             </div>
 
