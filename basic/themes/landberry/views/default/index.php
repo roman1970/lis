@@ -5,7 +5,7 @@
 ?>
 <div class="site-index">
 
-
+    <?='<p>'.Yii::$app->view->theme->baseUrl.' </p> '?>
 
 
 </div>
