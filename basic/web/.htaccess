@@ -1,6 +1,26 @@
+AddDefaultCharset utf-8
+
+Options +FollowSymLinks
+#IndexIgnore */*
 RewriteEngine on
+#RewriteRule ^resize/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-.]+)$		resize.php?h=$1&w=$2&type=$3&folder=$4&subfolder=$5&file=$6	     [L]
+#RewriteRule ^resize/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/$		resize.php?h=$1&w=$2&type=$3&folder=$4&subfolder=$5	     [L]
+#RewriteRule ^resize/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/$		resize.php?h=$1&w=$2&type=$3&folder=$4     [L]
+#RewriteRule ^resize/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/([0-9a-zA-Z\_\-]+)/$		resize.php?h=$1&w=$2&type=$3    [L]
+RewriteRule ^resize\/([0-9]+)\/([0-9]+)\/(no|w|h|s|a)(\/.*|)$ resize.php?h=$1&w=$2&type=$3&file=$4 [L]
+
+# Make the backend accessible via url: http://site/backend.
+#RewriteRule ^cp admin.php
+
+# если директория или файл существуют, использовать их напрямую
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+# иначе отправлять запрос на файл index.php
 RewriteRule . index.php
 
-php_flag expose_php off
+
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule . index.php
+#RewriteRule ^resize\/([0-9]+)\/([0-9]+)\/(no|w|h|s|a)(\/.*|)$ resize.php?h=$1&w=$2&type=$3&file=$4 [L]

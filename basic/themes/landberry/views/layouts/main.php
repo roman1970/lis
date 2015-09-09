@@ -1,6 +1,7 @@
 <?php
 
 use app\assets\LandberryAsset;
+use app\components\Helper;
 use yii\helpers\Html;
 
 LandberryAsset::register($this);
@@ -123,8 +124,8 @@ LandberryAsset::register($this);
                 </button>
 
                 <a class="navbar-brand" href="#home" id="logo">
-                    <?= Html::img('/images/logo1.png') ?>
-                    <?php //  <img src="@app/themes/landberry/images/logo1.png" width="133" alt="WP Media"></a> ?>
+
+                    <img src="@app/themes/landberry/images/logo1.png" width="133" alt="WP Media"></a>
 
             </div>
 

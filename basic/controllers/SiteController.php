@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\components\BackEndController;
+//use app\components\Helper;
 
 class SiteController extends BackEndController
 {
@@ -24,7 +25,7 @@ class SiteController extends BackEndController
                     [
                         'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['?'],
                     ],
 		     [
                         'actions' => ['login'],
