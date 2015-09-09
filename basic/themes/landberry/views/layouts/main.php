@@ -157,9 +157,7 @@ LandberryAsset::register($this);
         <div class="container">
 
             <div class="title col-md-8 col-sm-10 col-xs-12">
-
-                <h1><img src="../themes/landberry/images/logo.png" alt="WP Media"></h1>
-
+                <img src="<?= Url::base()."/themes/landberry/images/logo.png"?>" />
             </div>
 
             <!-- About Text -->
