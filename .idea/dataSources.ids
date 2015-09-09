@@ -873,6 +873,15 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="user_id" unique="false" columns="user_id"/>
     </table>
+    <table name="qpsites" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="theme" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qpsites_ibfk_1" columns="user_id" ref-table="user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+    </table>
     <table name="ramler" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -1188,6 +1197,7 @@
       <column name="flags" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="fk_user_profile" table="profile" schema="" catalog="plis" columns="user_id"/>
+      <exported-key name="qpsites_ibfk_1" table="qpsites" schema="" catalog="plis" columns="user_id"/>
       <exported-key name="fk_user_account" table="social_account" schema="" catalog="plis" columns="user_id"/>
       <exported-key name="fk_user_token" table="token" schema="" catalog="plis" columns="user_id"/>
       <index name="user_unique_email" unique="true" columns="email"/>
@@ -1220,6 +1230,118 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="weather_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_weather_city_id" unique="false" columns="city_id"/>
+    </table>
+  </data-source>
+  <data-source name="MySQL - @localhost" uuid="cffa2510-1a04-45ec-8b81-3cbfc9f7ec96">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
+  <data-source name="MySQL - gb_x_qplis@mysql92.1gb.ru" uuid="673baab4-b1d2-4606-b59a-4d0168d77db3">
+    <database-info product="MySQL" version="5.5.35-rel33.0-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <schema name="" catalog="gb_x_qplis"/>
+    <table name="cities" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="weather_link" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="country_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="yhcode" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="part" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="region" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="yndid" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="weather_ibfk_1" table="weather" schema="" catalog="gb_x_qplis" columns="city_id"/>
+      <index name="ux_cities_country_id" unique="false" columns="country_id"/>
+    </table>
+    <table name="country" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="migration" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="version" sqlType="VARCHAR" precision="180" scale="0" nullable="false" jdbcType="12"/>
+      <column name="apply_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="version"/>
+    </table>
+    <table name="profile" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="public_email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="gravatar_email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="gravatar_id" sqlType="VARCHAR" precision="32" scale="0" nullable="true" jdbcType="12"/>
+      <column name="location" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="website" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="bio" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="user_id"/>
+      <foreign-key name="fk_user_profile" columns="user_id" ref-table="user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="qpsites" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="url" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="theme" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="social_account" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="provider" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="client_id" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="fk_user_account" columns="user_id" ref-table="user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="account_unique" unique="true" columns="provider,client_id"/>
+      <index name="fk_user_account" unique="false" columns="user_id"/>
+    </table>
+    <table name="token" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="code" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="type" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <foreign-key name="fk_user_token" columns="user_id" ref-table="user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="token_unique" unique="true" columns="user_id,code,type"/>
+    </table>
+    <table name="user" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="username" sqlType="VARCHAR" precision="25" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password_hash" sqlType="VARCHAR" precision="60" scale="0" nullable="false" jdbcType="12"/>
+      <column name="auth_key" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
+      <column name="confirmed_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="unconfirmed_email" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="blocked_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="registration_ip" sqlType="VARCHAR" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <column name="created_at" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="updated_at" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="flags" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="fk_user_profile" table="profile" schema="" catalog="gb_x_qplis" columns="user_id"/>
+      <exported-key name="fk_user_account" table="social_account" schema="" catalog="gb_x_qplis" columns="user_id"/>
+      <exported-key name="fk_user_token" table="token" schema="" catalog="gb_x_qplis" columns="user_id"/>
+      <index name="user_unique_email" unique="true" columns="email"/>
+      <index name="user_unique_username" unique="true" columns="username"/>
+    </table>
+    <table name="weather" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="chas" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="atmdavlnaurst" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="temp" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="otnvlaz" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="naprvetra" sqlType="VARCHAR" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <column name="scorvetra" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="balobl" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="gorvid" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="osad24" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="osad12" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="vyspok" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="dd" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="weather_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
     </table>
   </data-source>
 </component>
