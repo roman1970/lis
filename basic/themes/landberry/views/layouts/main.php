@@ -158,7 +158,7 @@ LandberryAsset::register($this);
         <div class="container">
 
             <div class="title col-md-8 col-sm-10 col-xs-12">
-                <img src="<?= Url::to('@app/themes/landberry/images/logo.png')?>" />
+                <img src="<?=$this->theme->getUrl('images/bg/1.jpg')?>" />
 
             </div>
 
@@ -238,7 +238,6 @@ LandberryAsset::register($this);
     <!-- End About Section -->
 
     <?= $content ?>
-
 
 
     <script>

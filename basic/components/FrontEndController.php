@@ -18,7 +18,7 @@ class FrontEndController extends BaseController
     {
         //if(isset($_GET['siteParamIdForTheme'])) {$this->theme = $_GET['siteParamIdForTheme'];}
         //if(isset($_GET['admin'])) {$this->theme = 'admin';}
-
+        //@TODO $_GET сделать через request
         if (isset($_GET['siteParamIdForTheme'])) {
             $this->theme = $_GET['siteParamIdForTheme'];
            // $site = new Qpsites;
@@ -27,7 +27,8 @@ class FrontEndController extends BaseController
             //\Yii::$app->view->theme->pathMap = ['app/views' => 'app/themes/landberry/views'];
             //\Yii::$app->view->theme->baseUrl = '@app/themes/landberry';
             \Yii::$app->view->theme->pathMap = ['@app/views' => '@app/themes/' . $this->theme . '/views'];
-            \Yii::$app->view->theme->baseUrl = '@app/themes/' . $this->theme;
+            \Yii::$app->view->theme->baseUrl = '@web/themes/' . $this->theme;
+
 
         }
 

@@ -11,7 +11,8 @@ class Weather extends \yii\base\Module
     {
         parent::init();
         \Yii::$app->view->theme->pathMap = ['@app/views' => '@app/themes/landberry/views'];
-        \Yii::$app->view->theme->baseUrl = '@app/themes/landberry' /*. $this->controllerMap->theme*/;
+        \Yii::$app->view->theme->baseUrl = '@web/themes/landberry' /*. $this->controllerMap->theme*/;
+
     }
 
 }

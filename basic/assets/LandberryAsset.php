@@ -16,7 +16,8 @@ use yii\web\AssetBundle;
 class LandberryAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@web/themes/landberry';
+    //public $sourcePath = '@a';
     public $css = [
         'css/animate.css',
         'css/bootstrap.min.css',
@@ -50,6 +51,10 @@ class LandberryAsset extends AssetBundle
         'js/traffic-calc.js',
         'js/traffic-calc-settings.js'
     ];
+    public $images = [
+        'images/bg/1.jpg'
+    ];
+
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
