@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\components\BackEndController;
 //use app\components\Helper;
+use dektrium\user\models\User as User;
 
 class SiteController extends BackEndController
 {
@@ -18,7 +19,7 @@ class SiteController extends BackEndController
     public function behaviors()
     {
         return [
-            'access' => [
+            /*'access' => [
                 'class' => AccessControl::className(),
                 'only' => ['logout', 'login'],
                 'rules' => [
@@ -34,6 +35,7 @@ class SiteController extends BackEndController
                     ],
                 ],
             ],
+            */
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -99,6 +101,7 @@ class SiteController extends BackEndController
 
     public function actionAbout()
     {
-        return $this->render('about');
+        $names = User::findByUsername('roman');
+        return $this->render('about', ['names' => $names]);
     }
 }

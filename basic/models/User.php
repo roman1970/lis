@@ -16,7 +16,7 @@ class User extends BaseUser
     const ROLE_MODER = 5;
     const ROLE_ADMIN = 10;
 
-    //private static $users;
+    private static $users;
    
     public function register()
     {
@@ -40,14 +40,14 @@ class User extends BaseUser
      */
     public static function findByUsername($username)
     {
-        /*foreach (self::$users as $user) {
+        foreach (self::$users as $user) {
             if (strcasecmp($user['username'], $username) === 0) {
                 return new static($user);
             }
         }
 
         return null;
-	 * */
+
 	 
     }
 

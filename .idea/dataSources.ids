@@ -524,6 +524,15 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="id" unique="false" columns="id"/>
     </table>
+    <table name="mes" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="tel" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cr_time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="migration" schema="" catalog="plis" type="TABLE">
       <column name="version" sqlType="VARCHAR" precision="180" scale="0" nullable="false" jdbcType="12"/>
       <column name="apply_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
@@ -873,6 +882,52 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="user_id" unique="false" columns="user_id"/>
     </table>
+    <table name="qparticles" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="alias" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="d_created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="anons" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="cat_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="plis" columns="articles_id"/>
+      <index name="ux_qparticles_qparticles_cat_id" unique="false" columns="cat_id"/>
+      <index name="ux_qparticles_qparticles_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="qparticles_content" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="articles_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="body" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="minititle" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="page" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_content_ibfk_1" columns="articles_id" ref-table="qparticles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_qparticles_content_articles_id" unique="false" columns="articles_id"/>
+    </table>
+    <table name="qpcategory" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="alias" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="lft" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rgt" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="level" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="name" sqlType="VARCHAR" precision="150" scale="0" nullable="false" jdbcType="12"/>
+      <column name="meta_k" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="meta_d" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="order" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="show" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <column name="txt" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="cssclass" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="htmlveiw" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="plis" columns="cat_id"/>
+    </table>
     <table name="qpsites" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="title" sqlType="VARCHAR" precision="225" scale="0" nullable="true" jdbcType="12"/>
@@ -881,6 +936,7 @@
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="qpsites_ibfk_1" columns="user_id" ref-table="user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="qparticles_ibfk_1" table="qparticles" schema="" catalog="plis" columns="site_id"/>
     </table>
     <table name="ramler" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -901,6 +957,25 @@
       <foreign-key name="scheme_site_id" columns="site_id" ref-table="sites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="site_settings_scheme" table="site_settings" schema="" catalog="plis" columns="scheme_id"/>
       <index name="ux_scheme_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="seg_temp" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="2013" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2000" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2001" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2002" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2003" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2004" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2005" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2006" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2007" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2008" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2009" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2010" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2011" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="2012" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="sho_about" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -946,6 +1021,13 @@
       <foreign-key name="FK_sho_prods_sho_cat" columns="id_cat" ref-table="sho_cat" ref-schema="" ref-catalog="plis" ref-columns="idcat" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="FK_sho_prods_sho_cat" unique="false" columns="id_cat"/>
       <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="shut" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="create_date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="head" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="site" schema="" catalog="plis" type="TABLE">
       <column name="date" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
@@ -1019,6 +1101,15 @@
       <foreign-key name="fk_user_account" columns="user_id" ref-table="user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="account_unique" unique="true" columns="provider,client_id"/>
       <index name="fk_user_account" unique="false" columns="user_id"/>
+    </table>
+    <table name="songs" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="autor" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="file" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="like" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="albom" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="statistic_ctr_ad" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1210,6 +1301,11 @@
       <column name="role" sqlType="ENUM" precision="17" scale="0" nullable="false" jdbcType="1" def="J21hbmFnZXIn"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="login" unique="true" columns="login"/>
+    </table>
+    <table name="users" schema="" catalog="plis" type="TABLE">
+      <column name="id_user" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name_user" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id_user"/>
     </table>
     <table name="weather" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

@@ -99,7 +99,6 @@ p {
     background-color: #fff;
     color: #333;
 }
-
 .parallax {
     background-attachment: fixed;
     background-repeat: no-repeat;
@@ -172,7 +171,7 @@ p {
 -------------------------------------------------------------- */
 
 #home {
-    height: 500px;
+    height: 150px;
     overflow: hidden;
     position: relative;
     background-color: rgba(0, 0, 0, 0.2);
@@ -184,7 +183,7 @@ p {
 }
 
 .hero {
-    padding: 186px 0;
+    padding: 16px 0;
     text-align: center;
     color: #fff;
 }
@@ -207,7 +206,7 @@ p {
     font-size: 45%;
     position: relative;
     top: -0.3em;
-    border: 2px dotted #fff;
+    border: 2px #fff;
     padding: 10px;
 }
 

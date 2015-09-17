@@ -52,7 +52,7 @@ if (!preg_match('/\/.*\.(jpg|jpeg|png|gif|bmp)/i', $file))
     $file = '';
 
 if (empty($file) || !file_exists($root.$file))
-    $file = '/noimage.jpg';
+    $file = '/noimage.jpg'; echo $file; exit;
 
 $fileRes = '/resize/'.$height.'/'.$width.'/'.$type.$file;
 

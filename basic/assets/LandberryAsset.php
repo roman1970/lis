@@ -51,9 +51,9 @@ class LandberryAsset extends AssetBundle
         'js/traffic-calc.js',
         'js/traffic-calc-settings.js'
     ];
-    public $images = [
-        'images/bg/1.jpg'
-    ];
+   // public $images = [
+   //     'images/bg/1.jpg'
+   // ];
 
     public $depends = [
         'yii\web\YiiAsset',

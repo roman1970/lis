@@ -24,6 +24,9 @@ $config = [
         'weather' => [
             'class' => 'app\modules\weather\Weather',
         ],
+        'bardzilla' => [
+            'class' => 'app\modules\bardzilla\Bardzilla',
+        ],
 
     ],
     'components' => [
@@ -54,10 +57,11 @@ $config = [
         */
         'view' => [
             'theme' => [
-                'basePath' => '@app/themes/landberry',
-                'baseUrl' => '@web/themes/landberry',
+                'basePath' => '@app/themes/'.$mode,
+                'baseUrl' => '@web/themes/'.$mode,
                 'pathMap' => [
-                    '@app/views' => '@app/themes/landberry',
+                    '@app/views' => '@app/themes/'.$mode
+
                 ],
             ],
         ],
@@ -105,6 +109,7 @@ $config = [
                 '<controller:\w+>/<id:\d+>'   => '<controller>/view',
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>/',
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
 
 

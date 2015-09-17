@@ -13,9 +13,14 @@ $config = [
             'controllerMap' => [
                 'admin' => [
                     'class'  => 'app\controllers\user\AdminController',
-                    'layout' => 'path-to-your-admin-layout',
+                    'layout' => 'app\views',
                 ],
+                'security' => 'app\controllers\user\SecurityController'
             ],
+            'enableUnconfirmedLogin' => true,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['roman']
         ],
         'weather' => [
             'class' => 'app\modules\weather\Weather',
@@ -31,11 +36,13 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        /*
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['/user/security/login'],
         ],
+        */
 
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -48,17 +55,16 @@ $config = [
                 //'baseUrl' => '@web/themes/landberry',
             ],
         ],
-
+        */
         'view' => [
             'theme' => [
-                'basePath' => '@app/themes/landberry',
-                'baseUrl' => '@web/themes/landberry',
+
                 'pathMap' => [
-                    '@app/views' => '@app/themes/landberry',
+                    '@dektrium/user/views' => '@app/views/user'
                 ],
             ],
         ],
-        */
+
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             // send all mails to a file by default. You have to set

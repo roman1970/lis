@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1479fa315d0f03879536c1e4cd4339cd",
+    "hash": "87cc7a30b9cb6b55ee70cff7d033f71e",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -302,6 +302,50 @@
             "time": "2015-03-20 11:07:08"
         },
         {
+            "name": "creocoder/yii2-nested-sets",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/creocoder/yii2-nested-sets.git",
+                "reference": "ac447e98b644eed56bbbbcb695d7ecddc23af90e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/creocoder/yii2-nested-sets/zipball/ac447e98b644eed56bbbbcb695d7ecddc23af90e",
+                "reference": "ac447e98b644eed56bbbbcb695d7ecddc23af90e",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.0"
+            },
+            "require-dev": {
+                "phpunit/dbunit": "~1.0",
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "creocoder\\nestedsets\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kochetov",
+                    "email": "creocoder@gmail.com"
+                }
+            ],
+            "description": "The nested sets behavior for the Yii framework",
+            "keywords": [
+                "nested sets",
+                "yii2"
+            ],
+            "time": "2015-02-25 21:37:22"
+        },
+        {
             "name": "dektrium/yii2-user",
             "version": "v0.9.4",
             "source": {
@@ -419,7 +463,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/caf94ee2473ba6503e411ce3bcbd33b080f1d903",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/6522539daf0a7bdada1cc2dccb7ec37dc0712136",
                 "reference": "caf94ee2473ba6503e411ce3bcbd33b080f1d903",
                 "shasum": ""
             },
@@ -472,7 +516,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/f3a94f3ddd8c1649332fbe5221b3c16217129c51",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/42749cbc9e36cbdd4b7659a0055f15598619decb",
                 "reference": "f3a94f3ddd8c1649332fbe5221b3c16217129c51",
                 "shasum": ""
             },
@@ -560,7 +604,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/9c56e2a7bcc00b0eafe336904156f4882266186e",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/e8c639af26be6ce38b0bbf5113882345fe25de3d",
                 "reference": "9c56e2a7bcc00b0eafe336904156f4882266186e",
                 "shasum": ""
             },
@@ -608,7 +652,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/6787348a3622720ed4b6a61998ff71988454fc53",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/5ae12770c69b1b42f1be742ca16d97dc63371eb8",
                 "reference": "6787348a3622720ed4b6a61998ff71988454fc53",
                 "shasum": ""
             },
@@ -705,7 +749,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/3d4f3d7d0e86af0e0b051a3660517f3041623ffa",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/7b71a0389e5aa2bfa8a3ac605705a286908b14e8",
                 "reference": "3d4f3d7d0e86af0e0b051a3660517f3041623ffa",
                 "shasum": ""
             },
@@ -834,7 +878,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/55e5560de3e669ff9f3b8bfd3c3d456796fc2e8d",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/46a25cb87fe630550e99b2a26d6fa7cce3b4143d",
                 "reference": "55e5560de3e669ff9f3b8bfd3c3d456796fc2e8d",
                 "shasum": ""
             },
@@ -920,7 +964,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/b3407b0c8614c1d614c5c58287816027ba98418b",
+                "url": "https://api.github.com/repos/yiisoft/yii2-codeception/zipball/4428504253562c3de6643776d1bda273088bdeb4",
                 "reference": "b3407b0c8614c1d614c5c58287816027ba98418b",
                 "shasum": ""
             },
@@ -965,7 +1009,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/69ab71b950f05c89ab347e9aeeb2726fb4fd4bad",
+                "url": "https://api.github.com/repos/yiisoft/yii2-debug/zipball/daf79cf6f6e32c474c9a476293d199cae64254fb",
                 "reference": "69ab71b950f05c89ab347e9aeeb2726fb4fd4bad",
                 "shasum": ""
             },
@@ -1012,7 +1056,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/66432de272e5795435dc7da49381ea7bea2a2a67",
+                "url": "https://api.github.com/repos/yiisoft/yii2-faker/zipball/091bc3c5db9e53031817c6e155c0bd518f3606de",
                 "reference": "66432de272e5795435dc7da49381ea7bea2a2a67",
                 "shasum": ""
             },
@@ -1059,7 +1103,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/cbf4248b9cfb7f31e966b88f4b4da89516757d57",
+                "url": "https://api.github.com/repos/yiisoft/yii2-gii/zipball/6519954dc8dd16050d886d1266d6248cbae2d14f",
                 "reference": "cbf4248b9cfb7f31e966b88f4b4da89516757d57",
                 "shasum": ""
             },
@@ -1106,7 +1150,8 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "dektrium/yii2-user": 20
+        "dektrium/yii2-user": 20,
+        "creocoder/yii2-nested-sets": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

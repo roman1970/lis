@@ -11,6 +11,7 @@ use app\components\BaseController;
 
 class BackEndController extends BaseController
 {
+    public $layout = 'admin';
 
 
 }

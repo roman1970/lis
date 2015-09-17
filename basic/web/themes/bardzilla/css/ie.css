@@ -1,0 +1,34 @@
+
+/* ie.css */
+
+
+body {
+ background: black;
+    border-radius: 10px;
+    border: 0;
+
+}
+
+img{
+    
+    
+    
+     border: none; 
+    
+    
+}
+
+p{
+    text-align: left;
+}
+#phrase{
+        position: absolute;
+        left: 110px;
+        top: 95px;
+        
+        
+        font-weight: bold;
+        padding-left: 70px;
+        color: #e4a001;
+        font-size: 18px;
+    }

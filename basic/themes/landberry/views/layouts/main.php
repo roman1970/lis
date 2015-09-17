@@ -13,7 +13,7 @@ LandberryAsset::register($this);
 
     <head>
         <meta charset="utf-8">
-        <title>Наши проекты</title>
+        <title>Прогноз погоды</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="keywords" content="">
@@ -25,7 +25,6 @@ LandberryAsset::register($this);
         <!-- Fonts -->
         <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,100italic,100,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-
 
         <?php $this->head() ?>
 
@@ -66,21 +65,13 @@ LandberryAsset::register($this);
                         <ul class="slides">
 
                             <li>
-
-                                <h1><span>ОЧЕНЬ ИНТЕРЕСНО</span></h1>
-
+                                <h1><span>СРАВНИТЕ ПОГОДУ</span></h1>
                             </li>
-
                             <li>
-
                                 <h1><span>ИНФОРМ-АГЕНСТВО</span></h1>
-
                             </li>
-
                             <li>
-
                                 <h1><span>"ДРУГАЯ СТОРОНА ЗЕМЛИ"</span></h1>
-
                             </li>
 
                         </ul>
@@ -101,7 +92,6 @@ LandberryAsset::register($this);
     </section>
 
     <!-- End Home Section -->
-
 
 
     <!-- Header -->
@@ -125,7 +115,7 @@ LandberryAsset::register($this);
                 </button>
 
                 <a class="navbar-brand" href="#home" id="logo">
-                    <?= Helper::echoImg('@app/themes/landberry/images/logo1.png') ?>
+                    <?= Helper::echoImg($this->theme->getUrl('images/logo1.png')) ?>
                    <?php // <img src="@app/themes/landberry/images/logo1.png" width="133" alt="WP Media"></a> ?>
 
             </div>
@@ -152,7 +142,7 @@ LandberryAsset::register($this);
 
 
     <!-- About Section -->
-
+    <?php /*
     <section id="about" class="section">
 
         <div class="container">
@@ -236,9 +226,11 @@ LandberryAsset::register($this);
     </section>
 
     <!-- End About Section -->
+    */ ?>
 
     <?= $content ?>
 
+     <?php /*
 
     <script>
         (function (window) {
@@ -263,6 +255,8 @@ LandberryAsset::register($this);
 
         });
     </script>
+    */
+    ?>
     <?php $this->endBody() ?>
     </body>
     </html>
