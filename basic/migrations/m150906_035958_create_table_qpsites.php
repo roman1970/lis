@@ -7,7 +7,7 @@ class m150906_035958_create_table_qpsites extends Migration
 {
     public function up()
     {
-        $this->createTable(
+       /* $this->createTable(
             '{{qpsites}}', array(
             'id' => 'pk',
             'title' => 'VARCHAR(225)',
@@ -18,7 +18,7 @@ class m150906_035958_create_table_qpsites extends Migration
         );
 
         $this->db->createCommand('ALTER TABLE {{qpsites}} ADD FOREIGN KEY (`user_id`) REFERENCES  {{user}} (`id`) ON DELETE CASCADE ON UPDATE NO ACTION ;')->execute();
-
+    */
     }
 
     public function down()
