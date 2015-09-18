@@ -5,6 +5,8 @@ use app\components\BackEndController;
 
 class AdminController extends BackEndController
 {
+    public $layout = 'admin';
+
 
     public function actionIndex()
     {

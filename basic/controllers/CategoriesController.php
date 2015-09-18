@@ -6,6 +6,8 @@ use app\models\Categories;
 
 class CategoriesController extends BackEndController
 {
+    public $layout = 'admin';
+
 
     public function actionIndex()
     {
