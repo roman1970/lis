@@ -28,8 +28,8 @@ class Categories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['city_id'], 'integer'],
-            // [['name'], 'string', 'max' => 50]
+
+            [['title'], 'string', 'max' => 50]
         ];
     }
 
@@ -40,7 +40,7 @@ class Categories extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            //'name' => 'Name',
+            'name' => 'Название',
             // 'id_parent' => 'Id Parent',
         ];
     }
@@ -49,10 +49,10 @@ class Categories extends \yii\db\ActiveRecord
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
-                // 'treeAttribute' => 'tree',
-                // 'leftAttribute' => 'lft',
-                // 'rightAttribute' => 'rgt',
-                // 'depthAttribute' => 'level',
+                //'treeAttribute' => 'tree',
+                'leftAttribute' => 'lft',
+                'rightAttribute' => 'rgt',
+                'depthAttribute' => 'level',
             ],
         ];
     }

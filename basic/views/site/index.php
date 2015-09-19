@@ -9,8 +9,6 @@ $this->title = 'My Yii Application';
     <div class="jumbotron">
         <h1>Добро пожаловать в административную часть!</h1>
 
-
-        <p><a class="btn btn-lg btn-success" href="<?=  Yii::$app->user->isGuest ? '/user/security/login' : '/user/security/logout' ?>">Войти</a></p>
     </div>
 
 

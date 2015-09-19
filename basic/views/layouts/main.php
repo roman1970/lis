@@ -37,13 +37,13 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+
+
             ['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'User', 'url' => ['/user/profile/show']],
             Yii::$app->user->isGuest ?
-               ['label' => 'Login', 'url' => ['/user/security/login']] :
-                ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
+               ['label' => 'Войти', 'url' => ['/user/security/login']] :
+                ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/user/security/logout'],
                     'linkOptions' => ['data-method' => 'post']],
         ],
