@@ -12,30 +12,84 @@ class CategoriesController extends BackEndController
     public function actionIndex()
     {
         $cats = Categories::find()->all();
+       // $cats = Categories::find()->all();
         return $this->render('index', ['cats' => $cats]);
     }
 
+    /**
+     * Создание корневой категории
+     * @return string
+     */
     public function actionCreate()
     {
 
         $model = new Categories();
-        if ($model->load(Yii::$app->request->post())) {
-           // var_dump($model); exit;
-            $countries = new Categories(['name' => 'Countries']);
-            $countries->load(Yii::$app->request->post());
-            $countries->makeRoot();
-            $russia = new Categories(['name' => 'Russia']);
-            $russia->prependTo($countries);
+        //var_dump(Yii::$app->request->post('Categories')['rootCat']); exit;
+        if($model->load(Yii::$app->request->post())){
+            if (Yii::$app->request->post('Categories')['rootCat'] === '') {
+                $model = new Categories(['name' => Yii::$app->request->post('Categories')['name']]);
+                $model->makeRoot();
+                $cats = Categories::find()->roots()->all();
+                // $cats = Categories::find()->all();
+                return $this->render('index', ['cats' => $cats]);
 
-            return $this->goBack();
-        } else {
+            }
+
+            else {
+                $model = new Categories(['name' => Yii::$app->request->post('Categories')['name']]);
+                $rootCategory = Categories::find()
+                    ->where(['id' => Yii::$app->request->post('Categories')['rootCat']])
+                    ->one();
+
+                $model->prependTo($rootCategory);
+
+                $cats = Categories::find()->roots()->all();
+                // $cats = Categories::find()->all();
+                return $this->render('index', ['cats' => $cats]);
+            }
+        }
+        else {
             return $this->render('_form', [
                 'model' => $model,
             ]);
         }
 
+    }
+
+    /**
+     * Удаляет категорию
+     * @param $id
+     * @return \yii\web\Response
+     * @throws \yii\web\HttpException
+     */
+    public function actionDelete($id)
+    {
+
+        if($model=$this->loadModel($id)->delete()){
+            $cats = Categories::find()->all();
+
+            return $this->render(['index', ['cats' => $cats]]);
+        } else {
+            throw new \yii\web\HttpException(404,'Cant delete record.');
+        };
 
 
+    }
+
+    /**
+     * Загружает запись модели текущего контроллера по айдишнику
+     * @param $id
+     * @return null|static
+     * @throws \yii\web\HttpException
+     */
+    public function loadModel($id)
+    {
+
+        $model=Categories::findOne($id);
+
+        if($model===null)
+            throw new \yii\web\HttpException(404,'The requested page does not exist.');
+        return $model;
     }
 
 }

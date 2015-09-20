@@ -14,7 +14,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'nav nav-sidebar'],
         'items' => [
-            ['label' => 'Создать', 'url' => ['/categories/create']],
+            ['label' => 'Создать главную категорию', 'url' => ['/categories/create']],
             ['label' => 'Редактировать', 'url' => ['/categories/update']],
 
         ],
@@ -47,7 +47,8 @@ AppAsset::register($this);
                         <td><?=$cat->alias?></td>
                         <td><?=$cat->name?></td>
                         <td><?=$cat->lft?></td>
-                        <td><?=$cat->rgt?></td>
+                        <td>  <a class="edit" href="update?id=<?=$cat->id?>&type=1" title="редактировать"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a class="del" href="delete?id=<?=$cat->id?>&type=1" title="удалить"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>
 
                     <?php endforeach; ?>

@@ -14,6 +14,7 @@ use app\components\CategoriesQuery;
  */
 class Categories extends \yii\db\ActiveRecord
 {
+    public $rootCat;
     /**
      * @inheritdoc
      */
@@ -29,6 +30,7 @@ class Categories extends \yii\db\ActiveRecord
     {
         return [
 
+            [['name'], 'required'],
             [['title'], 'string', 'max' => 50]
         ];
     }
@@ -41,6 +43,7 @@ class Categories extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Название',
+            'rootCat' => 'Корневая категория'
             // 'id_parent' => 'Id Parent',
         ];
     }
@@ -49,7 +52,7 @@ class Categories extends \yii\db\ActiveRecord
         return [
             'tree' => [
                 'class' => NestedSetsBehavior::className(),
-                //'treeAttribute' => 'tree',
+                'treeAttribute' => 'tree',
                 'leftAttribute' => 'lft',
                 'rightAttribute' => 'rgt',
                 'depthAttribute' => 'level',
