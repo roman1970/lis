@@ -35,6 +35,10 @@ img {
     text-transform: uppercase;
 }
 
+a.del{
+    color: red;
+}
+
 p {
     margin-bottom: 20px;
     font-size: 15px;

@@ -891,6 +891,11 @@
       <column name="anons" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
       <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="cat_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="audio" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="video" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="qparticles_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
@@ -925,6 +930,8 @@
       <column name="txt" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
       <column name="cssclass" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="htmlveiw" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tree" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="action" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="plis" columns="cat_id"/>
     </table>
@@ -1416,6 +1423,7 @@
       <column name="txt" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
       <column name="cssclass" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="htmlveiw" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tree" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="gb_x_qplis" columns="cat_id"/>
     </table>

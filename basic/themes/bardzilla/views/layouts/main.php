@@ -15,7 +15,7 @@ BardzillaAsset::register($this);
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,700&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css' />
-
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <?php $this->head() ?>
 </head>
@@ -37,28 +37,7 @@ BardzillaAsset::register($this);
 
     </div>
 
-    <div id="nav" class="row">
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="atho"><a href="#"><b>Стихи</b></a> </p>
-        </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="au"><a href="#"><b>Аудио</b></a></p>
-        </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="con2"><a href="#"><b>Видео</b></a></p>
-        </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="pho"><a href="#"><b>Проза</b></a></p>
-        </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="atho"><a href="#"><b>Шутки</b></a> </p>
-        </div>
-        <div class="col-md-2 col-sm-6 col-xs-12">
-            <p id="au"><a href="#"><b>Цитаты</b></a></p>
-        </div>
-
-
-    </div>
+    <?= $content ?>
 
     <div class="cont row">
         <div class="col-md-4 col-sm-6 col-xs-12">
@@ -116,7 +95,7 @@ BardzillaAsset::register($this);
 
     </div>
 </div>
-    <?= $content ?>
+
     <?php $this->endBody() ?>
     </body>
 </html>

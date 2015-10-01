@@ -4,6 +4,17 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
+/**
+ * This is the model class for table "qparticles".
+ *
+ * @property integer $id
+ * @property string $title
+ * @property integer $d_created
+ * @property string $img
+ * @property integer $site_id
+ * @property integer $cat_id
+ */
+
 class Articles extends \yii\db\ActiveRecord
 {
     public $count_contents;
@@ -17,8 +28,8 @@ class Articles extends \yii\db\ActiveRecord
 	const STATUS_PUBLISHED = 'published';
 	const STATUS_DELETED = 'deleted';
 	
-	const IS_TESTING_NO = 0;
-	const IS_TESTING_YES = 1;
+	//const IS_TESTING_NO = 0;
+	//const IS_TESTING_YES = 1;
 
 	/**
 	 * @return string the associated database table name
@@ -35,17 +46,13 @@ class Articles extends \yii\db\ActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return [
-			['title, site_id', 'required'],
-			['site_id, cat_id', 'numerical', 'integerOnly'=>true],
-			['title, alias, img, tags', 'length', 'max'=>255],
-			['alias', 'match', 'pattern'=>'/^[A-Za-z0-9\-.]+$/'],
-			['img, anons, anons_img, status, anons_show, rating', 'safe'],
-			['image, image2', 'file', 'types'=>['jpg', 'jpeg', 'png', 'gif'], 'allowEmpty'=>true],
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			['id, title, alias, d_created, img, anons, anons_img, site_id, cat_id, status_quality, scheme_id, add_scheme', 'safe', 'on'=>'search'],
-		];
+        return [
+
+            [['title','site_id','cat_id'], 'required'],
+
+        ];
+
+
 	}
 
 
@@ -57,22 +64,9 @@ class Articles extends \yii\db\ActiveRecord
 		return [
 			'id' => 'ID',
 			'title' => 'Заголовок',
-			'alias' => 'Алиас',
-			'd_created' => 'Дата создания',
-			'img' => 'Фотография',
-			'anons' => 'Анонс',
-			'site_id' => 'Сайт',
-			'cat_id' => 'Категория',
-			'image' => 'Превью',
-			'anons_img' => 'Картинка анонса',
-			'image2' => 'Картинка анонса',
-			'status' => 'Статус',
-			'anons_show' => 'Показывать анонс',
-			'tags' => 'Теги',
-            'status_quality' => 'status_quality',
-            'scheme_id' => 'Схема',
-            'add_scheme' => 'Использовать в схеме',
-			'count_rotator' => 'Кол-во переходов по ротатору',
+            'site_id' => 'Сайт',
+            'cat_id' => 'Категория'
+
 		];
 	}
 
@@ -113,6 +107,21 @@ class Articles extends \yii\db\ActiveRecord
     public function getCategory()
     {
         return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
+    }
+
+    public  function beforeSave()
+    {
+
+        if (parent::beforeSave(1)) {
+            if ($this->isNewRecord) {
+                $this->d_created = date('Y-m-d H:i:s');
+
+                return true;
+            } else
+
+                return true;
+        } else
+            return false;
     }
 
 	/**

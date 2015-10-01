@@ -14,7 +14,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'nav nav-sidebar'],
         'items' => [
-            ['label' => 'Создать главную категорию', 'url' => ['/categories/create']],
+            ['label' => 'Создать', 'url' => ['/categories/create']],
             ['label' => 'Редактировать', 'url' => ['/categories/update']],
 
         ],
@@ -23,7 +23,15 @@ AppAsset::register($this);
     ?>
 
     </div>
+<?php /*GridView::widget([
+    'dataProvider' => $articles,
+    //'filterModel' => $searchModel,
+    'columns' => [
+        'id',
+        'title',
 
+    ],
+]); */ ?>
     <div class="col-sm-9 col-md-10 main">
             <h1 class="page-header">Категории</h1>
 
@@ -47,8 +55,8 @@ AppAsset::register($this);
                         <td><?=$cat->alias?></td>
                         <td><?=$cat->name?></td>
                         <td><?=$cat->lft?></td>
-                        <td>  <a class="edit" href="update?id=<?=$cat->id?>&type=1" title="редактировать"><span class="glyphicon glyphicon-pencil"></span></a>
-                            <a class="del" href="delete?id=<?=$cat->id?>&type=1" title="удалить"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        <td>  <a class="edit" href="update?id=<?=$cat->id?>" title="редактировать"><span class="glyphicon glyphicon-pencil"></span></a>
+                            <a class="del" href="delete?id=<?=$cat->id?>" title="удалить"><span class="glyphicon glyphicon-remove"></span></a></td>
                     </tr>
 
                     <?php endforeach; ?>

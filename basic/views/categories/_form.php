@@ -22,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php $form = ActiveForm::begin(['id' => 'category-form']); ?>
 
             <?= $form->field($model, 'name')->textInput()  ?>
+            <?= $form->field($model, 'title')->textInput()  ?>
+            <?= $form->field($model, 'cssclass')->textInput()  ?>
             <?= $form->field($model, 'rootCat')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
                 ['prompt' => 'Это корневая категория'])  ?>
             <div class="form-group">

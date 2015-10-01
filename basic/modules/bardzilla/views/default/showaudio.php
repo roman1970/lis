@@ -45,14 +45,16 @@
 
 </script>
 
+<?php foreach ($content as $cnt) : ?>
+
     <div class='content'>
-        <img src="<?=$this->theme->getUrl('Img/DoctorGraveZatoOchen_big.jpg')?>" width="250" height="200" alt="Доктор Грэйв - зато очень не дорого"/>
+        <img src="<?=$this->theme->getUrl($cnt->img)?>" width="250" height="200" alt="Доктор Грэйв - зато очень не дорого"/>
         <br />
 
-        <div id="text_main">"...зато очень недорого!" - альбом, записанный Б,КПЗ в 2011 году с ансамблем, все участники которого - инопланетяне. Это они дали этому эклектичному проекту такое
-            глубокое, но мало кому доступное для анализа его сути название - Доктор Грэйв.<hr />
+        <div id="text_main"><?=$cnt->text?><hr />
             <a onclick="nextSong()" style="cursor: pointer;">Ткни на цифру и послушай</a><hr />
             <?php $i = 0;
+
             foreach ($articles as $article) :
                 $i++; ?>
                 <a onclick="nextSong(<?= $article->id ?>)" style="cursor: pointer;"><?= $i ?></a>|
@@ -66,3 +68,4 @@
     <div class="content" id="song" style="display: none;">
 
     </div><br>
+<?php endforeach; ?>

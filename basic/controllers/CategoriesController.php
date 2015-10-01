@@ -24,7 +24,7 @@ class CategoriesController extends BackEndController
     {
 
         $model = new Categories();
-        //var_dump(Yii::$app->request->post('Categories')['rootCat']); exit;
+
         if($model->load(Yii::$app->request->post())){
             if (Yii::$app->request->post('Categories')['rootCat'] === '') {
                 $model = new Categories(['name' => Yii::$app->request->post('Categories')['name']]);

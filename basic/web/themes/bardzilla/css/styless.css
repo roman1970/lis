@@ -110,7 +110,6 @@ p a:hover {
     font-size: 20px;
 }
 
-
 #logo p.sl {
     
     font-family: Georgia;
@@ -118,15 +117,16 @@ p a:hover {
     color: #985f0d;
     padding-top: 0px;
     padding-bottom: 0px;
-
 }
 
 #nav {
     width: 1280px;
     color: #bd2c2c;
+    height: 80px;
+    position: relative;
 }
 
-#nav p {
+#nav div.root {
 
     background-color: gray;
 	//float: left;
@@ -136,23 +136,60 @@ p a:hover {
 	font-family: Arial, "Lucida Console";
 	//width: 233px;
 	text-align: center;
+}
 
+div.inside{
+    background-color: gray;
+}
 
+#nav div.root a b{
+    color: #000;
+}
 
-}  
-
-#nav p:hover {
+#nav div.root:hover {
 
 	background-color: #bd2c2c;
     color: #ffffff;
-	
+
 }
 
-#nav p a:hover {
+#nav div.root a:hover {
 
 color: #e4a001;
+text-decoration: none;
 
-} 
+}
+
+
+/*--- ВЫПАДАЮЩИЕ ПУНКТЫ ---*/
+#nav .inside{
+    list-style:none;
+    position:absolute;
+    left:-9999px; /* Скрываем за экраном, когда не нужно (данный метод лучше, чем display:none;) */
+    opacity:0; /* Устанавливаем начальное состояние прозрачности */
+    -webkit-transition:1s linear opacity; /* В Webkit выпадающие пункты будут проявляться */
+}
+#nav div.inside p.drop{
+    padding-top:1px; /* Вводим отступ между li чтобы создать иллюзию разделенных пунктов меню */
+    float:none;
+    border-top: groove;
+
+
+}
+#nav div.inside p.drop a{
+    white-space:nowrap; /* Останавливаем перенос текста и создаем многострочный выпадающий пункт */
+    display:block;
+}
+#nav div.root:hover div{ /* Выводим выпадающий пункт при наведении курсора */
+    left:0; /* Приносим его обратно на экран, когда нужно */
+    opacity:1; /* Делаем непрозрачным */
+    position: inherit;
+}
+
+#nav div.root div p:hover{
+    background-color: #bd2c2c;
+}
+
 
 h3 {
     color:#e4a001;

@@ -1,11 +1,10 @@
-$(document).ready(function() { 
-    
+/*$(document).ready(function() {
 
-    /*Подгружаем скрипт работы с авторами*/
+
     $('#atho').click(function() {
     $("#play").load("bardzilla/default/showrymes");
         if (!last) {
-        y = document.getElementById("main"); /*Освобождаем #main*/
+        y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last);
 }
@@ -14,7 +13,7 @@ $(document).ready(function() {
 
         $('#au').click(function() {
         $("#play").load("bardzilla/default/showaudio");
-        if (!last) {y = document.getElementById("main"); /*Освобождаем #main*/
+        if (!last) {y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last);
 }
@@ -23,7 +22,7 @@ $(document).ready(function() {
 
         $('#site').click(function() {
         $("#play").load("conn3.html");
-        if (!last) {y = document.getElementById("main"); /*Освобождаем #main*/
+        if (!last) {y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last);
 }
@@ -32,7 +31,7 @@ $(document).ready(function() {
         $('#con').click(function() {
         $("#play").load("conn.html");
         if (!last) {
-        y = document.getElementById("main"); /*Освобождаем #main*/
+        y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last); }
 
@@ -42,7 +41,7 @@ $(document).ready(function() {
         $('#con2').click(function() {
             $("#play").load("audio_tb.php");
         if (!last) {
-        y = document.getElementById("main"); /*Освобождаем #main*/
+        y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last); }
 
@@ -52,7 +51,7 @@ $(document).ready(function() {
         $('#pho').click(function() {
         $("#play").load("bez_pokup.html");
         if (!last) {
-        y = document.getElementById("main"); /*Освобождаем #main*/
+        y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last); }
 
@@ -63,7 +62,7 @@ $(document).ready(function() {
         num = $(this).data('num');    
         $("#play").load("stihi/authors_"+ num +".php");
         if (!last) {
-        y = document.getElementById("main"); /*Освобождаем #main*/
+        y = document.getElementById("main");
         var last = y.lastChild;
         last.parentNode.removeChild(last); }
 
@@ -71,13 +70,14 @@ $(document).ready(function() {
 });
 
 });
+*/
         var index = 0;
         var el;
         var txt;
         i = 0;
         var year = 2000;
         var im = 0;
-        
+
         dt = new Array("#000", "#fff", "#000", "#e4a001");
         function next_cl()
                 {
@@ -306,6 +306,16 @@ function getTemp(){
                 getTemp();
                 };
 
+
+        function getContent(block,cat) {
+            jQuery(document).ready(function() {
+                $('#' + block).click(function () {
+                    $("#play").load("bardzilla/default/show/"+cat);
+                    y = document.getElementById("main");
+
+                });
+            });
+        }
 
 
 

@@ -43,8 +43,10 @@ class Categories extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Название',
-            'rootCat' => 'Корневая категория'
-            // 'id_parent' => 'Id Parent',
+            'title' => 'Титул',
+            'rootCat' => 'Корневая категория',
+            'cssclass' => 'Класс css',
+
         ];
     }
 
