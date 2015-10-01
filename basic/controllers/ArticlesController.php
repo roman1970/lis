@@ -15,7 +15,6 @@ class ArticlesController extends BackEndController
     {
         $articles = Articles::find();
 
-
         $dataProvider = new ActiveDataProvider([
             'query' => $articles,
         ]);

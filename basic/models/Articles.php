@@ -109,7 +109,7 @@ class Articles extends \yii\db\ActiveRecord
         return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
     }
 
-    public  function beforeSave()
+    public  function beforeSave($options = [])
     {
 
         if (parent::beforeSave(1)) {

@@ -19,6 +19,7 @@ class CategoriesController extends BackEndController
     /**
      * Создание корневой категории
      * @return string
+     * @TODO добавление title
      */
     public function actionCreate()
     {

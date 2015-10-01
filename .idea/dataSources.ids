@@ -1389,9 +1389,14 @@
       <column name="anons" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
       <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="cat_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="audio" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="video" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="articles_id"/>
       <index name="ux_qparticles_qparticles_cat_id" unique="false" columns="cat_id"/>
       <index name="ux_qparticles_qparticles_site_id" unique="false" columns="site_id"/>
