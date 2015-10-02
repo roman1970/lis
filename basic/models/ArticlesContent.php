@@ -41,14 +41,9 @@ class ArticlesContent extends \yii\db\ActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return [
-            ['articles_id', 'required'],
-            ['articles_id, page', 'numerical', 'integerOnly' => true],
-            ['minititle, img', 'length', 'max' => 255],
-            ['image', 'file', 'types' => ['jpg', 'jpeg', 'png', 'gif'], 'allowEmpty' => true],
-            ['minititle, img, page, body, fake_comm, text_under_photo', 'safe'],
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            ['id, articles_id, body, minititle, img, page, fake_comm, text_under_photo', 'safe', 'on' => 'search'],
+
+            [['articles_id','minititle','body'], 'required'],
+
         ];
     }
     /*
@@ -92,8 +87,7 @@ class ArticlesContent extends \yii\db\ActiveRecord
             'img' => 'фото',
             'image' => 'фотография',
             'page' => 'Номер страницы',
-            'fake_comm' => 'Группа коммерческих комментариев',
-            'text_under_photo' => 'Текст2'
+
         ];
     }
 

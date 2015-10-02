@@ -57,7 +57,7 @@
 
             foreach ($articles as $article) :
                 $i++; ?>
-                <a onclick="nextSong(<?= $article->id ?>)" style="cursor: pointer;"><?= $i ?></a>|
+                <a onclick="nextSong(<?= $article->id ?>)" style="cursor: pointer;"><?= $i.'-'.$article->minititle ?></a><br>
 
             <?php endforeach; ?>
         </div>

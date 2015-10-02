@@ -1,0 +1,69 @@
+<?php
+
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use app\assets\AppAsset;
+use yii\grid\GridView;
+use yii\helpers\Url;
+
+AppAsset::register($this);
+?>
+    <div class="col-sm-3 col-md-2 sidebar">
+        <?php
+
+        echo Nav::widget([
+            'options' => ['class' => 'nav nav-sidebar'],
+            'items' => [
+                ['label' => 'Создать новый контент', 'url' => ['/articles/create']],
+                ['label' => 'Показать контент', 'url' => ['/articles/index']],
+
+            ],
+        ]);
+
+        ?>
+
+    </div>
+
+    <div class="col-sm-9 col-md-10 main">
+    <h1 class="page-header">Контент</h1>
+<?php  //var_dump($articles); exit; ?>
+<?php if(isset($content)) : ?>
+
+    <?= GridView::widget([
+        'dataProvider' => $content,
+        //'filterModel' => $searchModel,
+        'columns' => [
+            'id',
+            'minititle',
+            'body',
+            'audio',
+
+
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{delete} {update}',
+                'buttons' =>
+                    [
+                        'delete' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['deletepage','id' => $model->id]), [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                            ]);
+                        },
+                        'update' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['updatepage','id' => $model->id]), [
+                                'title' => Yii::t('yii', 'Update'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                            ]);
+                        }
+
+                    ]
+            ]
+        ],
+    ]); ?>
+
+<?php endif; ?>

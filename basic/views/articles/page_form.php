@@ -8,7 +8,7 @@ use yii\bootstrap\Nav;
 /* @var $form yii\bootstrap\ActiveForm */
 
 
-$this->title = $model->isNewRecord ? 'Добавить контент' : 'Редактировать контент';
+$this->title = $model->isNewRecord ? 'Добавить страницу' : 'Редактировать страницу';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -22,7 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
             echo Nav::widget([
                 'options' => ['class' => 'nav nav-sidebar'],
                 'items' => [
-
                     ['label' => 'Добавить страницу', 'url' => ['/articles/addpage/'.$model->id]],
 
                 ],
@@ -34,12 +33,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-10">
             <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-            <?= $form->field($model, 'title')->textInput()  ?>
-            <?= $form->field($model, 'site_id')->dropDownList(ArrayHelper::map(\app\models\Qpsites::find()->all(),'id','title'),
-                ['prompt' => 'Выбрать сайт']) ?>
-             <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
-                ['prompt' => 'Выбрать категорию'])  ?>
-            <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5])  ?>
+            <?= $form->field($model, 'minititle')->textInput()  ?>
+            <?= $form->field($model, 'body')->textarea(['rows' => 5, 'cols' => 5])  ?>
             <?= $form->field($upload, 'file')->fileInput() ?>
 
 
@@ -51,4 +46,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </div>
-

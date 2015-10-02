@@ -36,6 +36,9 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'translater' => [
+            'class' => 'app\components\TranslateHelper'
+        ],
         /*
         'user' => [
             'identityClass' => 'app\models\User',
@@ -107,9 +110,10 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 //'<controller:\w+>/<id:\d+>'   => '<controller>/view',
-                '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
+                '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
+                //'<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
 
 
             ],
