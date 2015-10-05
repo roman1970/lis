@@ -43,6 +43,10 @@
        // });
     }
 
+    function showSongs(){
+        $("#songs").show();
+    }
+
 </script>
 
 <?php foreach ($content as $cnt) : ?>
@@ -52,20 +56,24 @@
         <br />
 
         <div id="text_main"><?=$cnt->text?><hr />
-            <a onclick="nextSong()" style="cursor: pointer;">Ткни на цифру и послушай</a><hr />
-            <?php $i = 0;
+            <a onclick="showSongs()" style="cursor: pointer;">Послушай альбом</a><hr />
 
-            foreach ($articles as $article) :
-                $i++; ?>
-                <a onclick="nextSong(<?= $article->id ?>)" style="cursor: pointer;"><?= $i.'-'.$article->minititle ?></a><br>
-
-            <?php endforeach; ?>
         </div>
 
     </div>
+    <div class="content" id="songs" style="display: none;">
+        <div id="songs_name">
+        <?php $i = 0;
 
+        foreach ($articles as $article) :
+            $i++; ?>
+            <a onclick="nextSong(<?= $article->id ?>)" style="cursor: pointer;"><?= $i.'-'.$article->minititle ?></a> ///
 
-    <div class="content" id="song" style="display: none;">
+        <?php endforeach; ?>
+            </div>
+    </div><br>
+
+    <div id="song" style="display: none;">
 
     </div><br>
 <?php endforeach; ?>

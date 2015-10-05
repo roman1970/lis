@@ -1,4 +1,4 @@
-<table align='center' class='lesson' >
+
 
     <div id="player">
         <p>
@@ -6,13 +6,14 @@
         <div id="nr_<?= $article->id ?>)" title="Щёлкни, если Нравится" style="cursor: pointer;">
             <img src="<?=$this->theme->getUrl('Img/nrav.ico')?>" width="90" height="15" /> </a></div>
         </p>
-        <a href="<?= $article->audio ?>" target="_blank"><?php echo $id = $article->id . " - " . $article->minititle ?> </a>
 
-        <audio controls="controls" style="padding-top: 7px;">
+        <a href="<?= $article->audio ?>" target="_blank"><?php echo " --- " . $article->minititle ?> </a>
+
+        <audio controls="controls" ">
 
             <source src='<?=$article->audio?>' type='audio/mpeg'>
         </audio>
+
     </div>
 
 
-</table>

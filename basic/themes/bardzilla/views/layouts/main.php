@@ -14,6 +14,7 @@ BardzillaAsset::register($this);
     <title>Бард, который перевернул ЗИЛ</title>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,700&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -22,9 +23,9 @@ BardzillaAsset::register($this);
 
 <body>
 <?php $this->beginBody() ?>
-<div id="wrapper">
+<div id="wrapper" >
     <div id="logo" class="row">
-        <div class="col-md-12 col-sm-6 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
 
             <div id="phot_h">
                 Бард, который перевернул ЗИЛ и его друзья
@@ -36,20 +37,20 @@ BardzillaAsset::register($this);
 
 
     </div>
-
+</div>
     <?= $content ?>
-
+<div id="wrapper" >
     <div class="cont row">
-        <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="col-md-3 ">
                 <div id="rom"> </div>
                 <div id="footer">
-                    <p>    Copyright &copy;2014 романБеляшов <br/>
+                    <p>    Copyright &copy;2014 Б'КПЗ <br/>
 
                     </p>
                 </div>
         </div>
 
-        <div class="col-md-4 col-sm-6 col-xs-12 main">
+        <div class="col-md-6 col-sm-12 col-xs-12">
 
 
             <p id='play'>О! Здравствуй, Мой Дорогой Гость! Ты забрёл ко мне случайно?<br />
@@ -79,7 +80,7 @@ BardzillaAsset::register($this);
         </div>
 
 
-        <div class="col-md-4 col-sm-6 col-xs-12" >
+        <div class="col-md-3 " >
             <div id="mish" >
             </div>
 
