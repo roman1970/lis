@@ -292,7 +292,6 @@ function getTemp(){
 
             $.getJSON( "bardzilla/default/getphrases/", function( data ) {
               phr = data;
-                alert(phr);
                 var phrase = document.getElementById("phrase");
                         var p = document.createElement("P");
                         var str = phr[index];

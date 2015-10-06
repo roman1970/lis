@@ -87,13 +87,23 @@ class DefaultController extends FrontEndController
      */
     public function actionGetphrases(){
         $arr = [];
+        if(__DIR__ == '/home/romanych/public_html/plis/basic/modules/bardzilla/controllers') {
 
-      $allPhrases = ArticlesContent::find()
-            ->joinWith(['articles' => function ($query) {
-                $query->andWhere('cat_id = 35');
-            },])
-            ->all();
-       // var_dump($allPhrases); exit;
+            $allPhrases = ArticlesContent::find()
+                ->joinWith(['articles' => function ($query) {
+                    $query->andWhere('cat_id = 35');
+                },])
+                ->all();
+            // var_dump($allPhrases); exit;
+        }
+        else {
+            $allPhrases = ArticlesContent::find()
+                ->joinWith(['articles' => function ($query) {
+                    $query->andWhere('cat_id = 5');
+                },])
+                ->all();
+            // var_dump($allPhrases); exit;
+        }
 
         foreach($allPhrases as $phrase){
             $arr[] = $phrase->body;
