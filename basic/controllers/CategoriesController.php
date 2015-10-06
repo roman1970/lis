@@ -28,7 +28,11 @@ class CategoriesController extends BackEndController
 
         if($model->load(Yii::$app->request->post())){
             if (Yii::$app->request->post('Categories')['rootCat'] === '') {
-                $model = new Categories(['name' => Yii::$app->request->post('Categories')['name']]);
+                $model = new Categories(['name' => Yii::$app->request->post('Categories')['name']],
+                    ['title' => Yii::$app->request->post('Categories')['title']],
+                    ['cssclass' => Yii::$app->request->post('Categories')['cssclass']],
+                    ['action' => Yii::$app->request->post('Categories')['action']]
+                );
                 $model->makeRoot();
                 $cats = Categories::find()->roots()->all();
                 // $cats = Categories::find()->all();

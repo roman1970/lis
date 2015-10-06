@@ -311,8 +311,6 @@ function getTemp(){
             jQuery(document).ready(function() {
                 $('#' + block).click(function () {
                     $("#play").load("bardzilla/default/show/"+cat);
-                    y = document.getElementById("main");
-
                 });
             });
         }

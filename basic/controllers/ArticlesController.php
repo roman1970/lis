@@ -35,16 +35,20 @@ class ArticlesController extends BackEndController
 
         $model = new Articles();
 
-        $upload = new UploadForm();
+        $uploadFile = new UploadForm();
+        $uploadImg = new UploadForm();
+
 
         if (Yii::$app->request->isPost) {
-            $upload->file = UploadedFile::getInstance($upload, 'file');
+            $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
+            $uploadImg->img = UploadedFile::getInstance($uploadImg, 'img');
 
-            if ($upload->file && $upload->validate()) {
-                $upload->file->saveAs('uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension);
+            if ($uploadFile->file && $uploadFile->validate()) {
+                $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
+                $uploadImg->img->saveAs('uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
 
             }
-            else { print_r($upload->getErrors()); }
+            else { print_r($uploadFile->getErrors()); }
         }
 
         if ($model->load(Yii::$app->request->post())) {
@@ -53,10 +57,11 @@ class ArticlesController extends BackEndController
             $model->alias = TranslateHelper::translit(Yii::$app->request->post('Articles')['title']);
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
-            $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
+            $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
+            $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
 
 
-            $model->save();
+            $model->save(false);
 
             $articles = Articles::find();
             $dataProvider = new ActiveDataProvider([
@@ -69,7 +74,9 @@ class ArticlesController extends BackEndController
 
             return $this->render('_form', [
                 'model' => $model,
-                'upload' => $upload,
+                'uploadFile' => $uploadFile,
+                'uploadImg' => $uploadImg,
+
             ]);
         }
 
@@ -78,23 +85,27 @@ class ArticlesController extends BackEndController
     public function actionUpdate($id){
 
         $model = $this->loadModel($id);
-        $upload = new UploadForm();
+        $uploadFile = new UploadForm();
+        $uploadImg = new UploadForm();
          //var_dump($upload); exit;
         if (Yii::$app->request->isPost) {
-            $upload->file = UploadedFile::getInstance($upload, 'file');
+            $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
+            $uploadImg->img = UploadedFile::getInstance($uploadImg, 'img');
 
-            if ($upload->file && $upload->validate()) {
-                $upload->file->saveAs('uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension);
+            if ($uploadFile->file && $uploadFile->validate()) {
+                $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
+                $uploadImg->img->saveAs('uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
 
             }
-            else { print_r($upload->getErrors()); }
+            else { print_r($uploadFile->getErrors()); }
         }
 
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
+            $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
+            $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
 
-            //var_dump($model); exit;
+            //var_dump($uploadImg->img); exit;
             $model->save();
 
             $articles = Articles::find();
@@ -107,7 +118,8 @@ class ArticlesController extends BackEndController
 
             return $this->render('_form', [
                 'model' => $model,
-                'upload' => $upload
+                'uploadFile' => $uploadFile,
+                'uploadImg' => $uploadImg,
             ]);
         }
 

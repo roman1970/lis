@@ -52,7 +52,7 @@
 <?php foreach ($content as $cnt) : ?>
 
     <div class='content'>
-        <img src="<?=$this->theme->getUrl($cnt->img)?>" width="250" height="200" alt="Доктор Грэйв - зато очень не дорого"/>
+        <img src="<?=$cnt->img?>" width="250" height="200" alt="<?=$cnt->title?>"/>
         <br />
 
         <div id="text_main"><?=$cnt->text?><hr />

@@ -18,6 +18,7 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Создать новый контент', 'url' => ['/articles/create']],
                 ['label' => 'Показать контент', 'url' => ['/articles/index']],
+                //['label' => 'Добавить страницу', 'url' => ['/articles/addpage/'.$model->id]],
 
             ],
         ]);
@@ -48,7 +49,7 @@ AppAsset::register($this);
                         'delete' => function ($url, $model) {
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['deletepage','id' => $model->id]), [
                                 'title' => Yii::t('yii', 'Delete'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                'data-confirm' => Yii::t('yii', 'Уверены, что хотите удалить страницу?'),
                                 'data-method' => 'post',
                                 'data-pjax' => '0',
                             ]);

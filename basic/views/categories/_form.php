@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'name')->textInput()  ?>
             <?= $form->field($model, 'title')->textInput()  ?>
             <?= $form->field($model, 'cssclass')->textInput()  ?>
+            <?= $form->field($model, 'action')->textInput()  ?>
             <?= $form->field($model, 'rootCat')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
                 ['prompt' => 'Это корневая категория'])  ?>
             <div class="form-group">

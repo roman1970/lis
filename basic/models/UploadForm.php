@@ -7,6 +7,8 @@ use yii\web\UploadedFile;
 
 /**
  * UploadForm is the model behind the upload form.
+ * @TODO Не грузятся wav-файлы
+ * @TODO Дать возможность загружать не загружать файлы
  */
 class UploadForm extends Model
 {
@@ -14,8 +16,9 @@ class UploadForm extends Model
      * @var UploadedFile file attribute
      */
     public $file;
+    public $img;
 
-    const MAX_SIZE_FILE = 204800000;
+    const MAX_SIZE_FILE = 2048000000;
 
     /**
      * @return array the validation rules.
@@ -23,7 +26,8 @@ class UploadForm extends Model
     public function rules()
     {
         return [
-         [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => ['mp3'], 'maxSize' => self::MAX_SIZE_FILE],
+         [['file'], 'file', 'skipOnEmpty' => true, 'extensions' => ['mp3', 'wav'], 'maxSize' => self::MAX_SIZE_FILE],
+            [['img'], 'file', 'skipOnEmpty' => true, 'extensions' => ['jpg', 'png'], 'maxSize' => self::MAX_SIZE_FILE],
         ];
     }
 

@@ -40,7 +40,8 @@ $this->params['breadcrumbs'][] = $this->title;
              <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
                 ['prompt' => 'Выбрать категорию'])  ?>
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5])  ?>
-            <?= $form->field($upload, 'file')->fileInput() ?>
+            <?= $form->field($uploadFile, 'file')->fileInput() ?>
+            <?= $form->field($uploadImg, 'img')->fileInput() ?>
 
 
             <div class="form-group">
