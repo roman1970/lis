@@ -135,16 +135,16 @@
                 var last = phrase.lastChild;
                 last.parentNode.removeChild(last);
                 var p = document.createElement("P");
-                if (phrases.length > index)
+                if (phr.length > index)
                 index++;
                 else {
                 index = 0;
                 }
 
 
-        var str = phrases[index];
+        var str = phr[index];
                 if (!str)
-                str = phrases[0];
+                str = phr[0];
                 var text = document.createTextNode(str);
                 el = phrase.appendChild(p);
                 el.className = "sl";
@@ -290,30 +290,33 @@ function getTemp(){
 
         window.onload = function() {
 
+            $.getJSON( "bardzilla/default/getphrases/", function( data ) {
+              phr = data;
+                alert(phr);
+                var phrase = document.getElementById("phrase");
+                        var p = document.createElement("P");
+                        var str = phr[index];
+                        var text = document.createTextNode(str);
+                        el = phrase.appendChild(p);
+                        el.className = "sl";
+                        txt = el.appendChild(text);
+                        setTimeout("getNextPhrase()", 10000);
 
-
-        var phrase = document.getElementById("phrase");
-                var p = document.createElement("P");
-                var str = phrases[index];
-                var text = document.createTextNode(str);
-                el = phrase.appendChild(p);
-                el.className = "sl";
-                txt = el.appendChild(text);
-                setTimeout("getNextPhrase()", 10000);
-               
-                getNextPhotoLeft();
-                getNextPhotoRight();
-                getTemp();
-                };
+                        getNextPhotoLeft();
+                        getNextPhotoRight();
+                        getTemp();
+                }, "json" );
+        };
 
 
         function getContent(block,cat) {
-            jQuery(document).ready(function() {
+
                 $('#' + block).click(function () {
                     $("#play").load("bardzilla/default/show/"+cat);
                 });
-            });
+
         }
+
 
 
 

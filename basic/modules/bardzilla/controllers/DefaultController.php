@@ -80,6 +80,29 @@ class DefaultController extends FrontEndController
         return $this->renderPartial('children', ['cats' => $children]);
     }
 
+    /**
+     * Получает массив умных фраз
+     *
+     * @return array
+     */
+    public function actionGetphrases(){
+        $arr = [];
+
+      $allPhrases = ArticlesContent::find()
+            ->joinWith(['articles' => function ($query) {
+                $query->andWhere('cat_id = 35');
+            },])
+            ->all();
+       // var_dump($allPhrases); exit;
+
+        foreach($allPhrases as $phrase){
+            $arr[] = $phrase->body;
+        }
+
+        return  json_encode($arr);
+
+    }
+
 
 
 

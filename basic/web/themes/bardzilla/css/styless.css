@@ -479,6 +479,11 @@ hr {
    
           
     }
+
+.accord{
+    width: 600px;
+    margin-left: 80px;
+}
     
 #footer p{
            margin-top: 30px;
@@ -634,5 +639,15 @@ hr {
     #songs_name{
         padding-left: 15px;
 
+    }
+
+
+    .accord{
+        width: 600px;
+        margin-left: 0px;
+    }
+
+    h3{
+        font-size: 20px;
     }
 }

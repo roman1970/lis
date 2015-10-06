@@ -45,6 +45,9 @@ class ArticlesController extends BackEndController
 
             if ($uploadFile->file && $uploadFile->validate()) {
                 $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
+
+            }
+            elseif($uploadImg->file && $uploadImg->validate()) {
                 $uploadImg->img->saveAs('uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
 
             }
@@ -57,7 +60,9 @@ class ArticlesController extends BackEndController
             $model->alias = TranslateHelper::translit(Yii::$app->request->post('Articles')['title']);
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
+            if(isset($uploadFile->file))
             $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
+            if(isset($uploadImg->file))
             $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
 
 
@@ -145,7 +150,6 @@ class ArticlesController extends BackEndController
             throw new \yii\web\HttpException(404, 'Cant delete record.');
         };
 
-
     }
 
 
@@ -153,6 +157,8 @@ class ArticlesController extends BackEndController
      * Добавляем страницу контента
      *
      */
+    //@TODO добавление страницы из списка страниц контента
+    //@TODO при добавлении страницы выводить название контента
     public function actionAddpage($id){
 
         $artContent = new ArticlesContent;
@@ -173,8 +179,8 @@ class ArticlesController extends BackEndController
             $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
             $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
             $artContent->articles_id = $id;
-            $artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
-
+            if(isset($upload->file))$artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
+            else $artContent->audio = '';
 
             $artContent->save();
 
