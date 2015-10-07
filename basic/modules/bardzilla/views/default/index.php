@@ -15,13 +15,13 @@
 
                     <div class="inside">
                     <?php foreach ($leaves as $leave) : ?>
-                        <p id="<?=$leave->cssclass?>" class="drop" onclick="getContent('<?=$leave->cssclass?>',  <?=$leave->id?>)"><a href="#"><b><?=$leave->title?></b></a> </p>
+                        <p id="<?=$leave->cssclass?>" class="drop" onmouseup="getContent('<?=$leave->cssclass?>',  <?=$leave->id?>)"><a><b><?=$leave->title?></b></a> </p>
 
                     <?php endforeach; ?>
                     </div>
             <?php else : ?>
 
-                <div id="<?=$cat->cssclass?>" class="root" onclick="getContent('<?=$cat->cssclass?>', <?=$cat->id?>)" ><a href="#"><b><?=$cat->title?></b></a>
+                <div id="<?=$cat->cssclass?>" class="root" onmouseup="getContent('<?=$cat->cssclass?>', <?=$cat->id?>)" ><a><b><?=$cat->title?></b></a>
 
             <?php endif; ?>
                 </div>

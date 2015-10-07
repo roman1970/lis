@@ -308,10 +308,11 @@ function getTemp(){
         };
 
 
-        function getContent(block,cat) {
+        function getContent(block,cat,page) {
+                if(page === undefined) page = '';
 
                 $('#' + block).click(function () {
-                    $("#play").load("bardzilla/default/show/"+cat);
+                    $("#play").load("bardzilla/default/show/"+cat+page);
                 });
 
         }

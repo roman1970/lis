@@ -6,6 +6,7 @@ use app\components\FrontEndController;
 use app\models\ArticlesContent;
 use Yii;
 use app\models\Categories;
+use yii\data\Pagination;
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
 use app\models\Articles;
@@ -28,6 +29,12 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Показывает контент
+     * @return string
+     * @TODO В таблицу контента добавить поле, в котором будет храниться количество показываемых страниц контента
+     *
+     */
     public function actionShow() {
 
 
@@ -44,11 +51,24 @@ class DefaultController extends FrontEndController
         $allArticles = ArticlesContent::find()
             ->joinWith(['articles' => function ($query) {
                 $query->andWhere('cat_id = '. $this->cat_id);
-            },])
+            },]);
+       // var_dump($allArticles); exit;
+
+        $countQuery = clone $allArticles;
+        $pages = new Pagination(['totalCount' => $countQuery->count(),
+                                'pageSize'=>5,   //@TODO Сюда его подставляем
+                                'forcePageParam' => false,
+                                'pageSizeParam' => false,
+                                ]);
+        $models = $allArticles->offset($pages->offset)
+            ->limit($pages->limit)
             ->all();
 
         return $this->renderPartial($cat_obg->action,
-            ['articles' => $allArticles, 'content' => $allContent]);
+            [//'articles' => $allArticles,
+                'content' => $allContent,
+                'articles' => $models,
+                'pages' => $pages,]);
 
     }
 

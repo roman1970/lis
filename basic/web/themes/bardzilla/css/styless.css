@@ -68,6 +68,7 @@ p {
 
 h3 {
     text-decoration: none;
+    cursor: POINTER;
     color: #e4a001;
     transition: 0s 9999999s;
 }
@@ -467,7 +468,7 @@ hr {
         color: white;
         width: 1280px;
        top: 350px;
-       left: 150px;
+       left: 90px;
          text-align: center;
          font-family: Arial;
          font-size: 12px;
@@ -535,7 +536,7 @@ hr {
     position: absolute;
     text-align: right;
     padding-top: 15px;
-    left: 3px;
+    left: -40px;
 }
     
 #liv{
@@ -549,6 +550,31 @@ hr {
         top: 710px;
        right: 150px;
     }
+
+.pagination{
+    padding-left: 100px;
+    margin: 0;
+}
+
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 0.8;
+    color: #b79824;
+    text-decoration: none;
+    background-color: #000;
+    border: 1px solid #ddd;
+}
+
+.pagination > .active > a{
+    z-index: 2;
+    //color: #fff;
+    cursor: default;
+    background-color: #bd2c2c;
+    border-color: #bd2c2c;
+}
 
 @media screen and (max-width: 1100px) {
     #mish,
@@ -649,5 +675,14 @@ hr {
 
     h3{
         font-size: 20px;
+    }
+
+    iframe{
+        width: 100%;
+    }
+
+    .pagination {
+        padding-left: 0px;
+        margin: 0;
     }
 }
