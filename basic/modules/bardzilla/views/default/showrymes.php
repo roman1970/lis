@@ -22,6 +22,7 @@ $(this).siblings("h3").removeClass("active");
 
 <?php echo app\components\CustomPagination::widget([
     'pagination' => $pages,
+    'cat' => $cat
 ]);
 ?>
 <div class="accord">

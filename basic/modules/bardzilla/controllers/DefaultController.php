@@ -68,7 +68,9 @@ class DefaultController extends FrontEndController
             [//'articles' => $allArticles,
                 'content' => $allContent,
                 'articles' => $models,
-                'pages' => $pages,]);
+                'pages' => $pages,
+                'cat' => $this->cat_id
+            ]);
 
     }
 

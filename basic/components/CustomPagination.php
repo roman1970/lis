@@ -9,6 +9,8 @@ use yii\data\Pagination;
 
 class CustomPagination  extends \yii\widgets\LinkPager
 {
+    public $cat;
+
     public function init()
     {
         parent::init();
@@ -34,7 +36,7 @@ class CustomPagination  extends \yii\widgets\LinkPager
         $linkOptions = $this->linkOptions;
         $linkOptions['id'] = $page;
         $linkOptions['data-page'] = $page;
-        $linkOptions['onmouseup']="getContent('$page','32','?page=".$page."')";
+        $linkOptions['onmouseup']="getContent('$page','$this->cat','?page=".$page."')";
 
         return Html::tag('li', Html::a($label, '#', $linkOptions), $options);
     }
