@@ -151,6 +151,7 @@ div.inside{
 
 	background-color: #bd2c2c;
     color: #ffffff;
+    cursor: pointer;
 
 }
 
@@ -174,6 +175,7 @@ text-decoration: none;
     padding-top:1px; /* Вводим отступ между li чтобы создать иллюзию разделенных пунктов меню */
     float:none;
     border-top: groove;
+    cursor: pointer;
 
 
 }
@@ -341,6 +343,7 @@ h3 {
         
         transition: 10s;
 }
+/*
 #play a:hover{
     color: #fff;
         transition: 3s;
@@ -349,7 +352,7 @@ h3 {
     -o-transition: 3s;
 
 }
-    
+    */
 #phrase{
 
     text-align: center;
@@ -483,7 +486,8 @@ hr {
 
 .accord{
     width: 600px;
-    margin-left: 80px;
+   /* margin-left: 80px;*/
+    text-align: center;
 }
     
 #footer p{
@@ -552,8 +556,9 @@ hr {
     }
 
 .pagination{
-    padding-left: 100px;
+    /*padding-left: 100px;*/
     margin: 0;
+    text-align: center;
 }
 
 .pagination > li > a, .pagination > li > span {
@@ -561,20 +566,39 @@ hr {
     float: left;
     padding: 6px 12px;
     margin-left: -1px;
-    line-height: 0.8;
+    line-height: 0.3;
     color: #b79824;
     text-decoration: none;
     background-color: #000;
-    border: 1px solid #ddd;
+    border: none;
 }
 
 .pagination > .active > a{
     z-index: 2;
-    //color: #fff;
+    /*color: #fff;*/
     cursor: default;
     background-color: #bd2c2c;
-    border-color: #bd2c2c;
+    border:none 15px #000000;
+    -moz-border-radius-topleft: 75px;
+    -moz-border-radius-topright:75px;
+    -moz-border-radius-bottomleft:75px;
+    -moz-border-radius-bottomright:75px;
+    -webkit-border-top-left-radius:75px;
+    -webkit-border-top-right-radius:75px;
+    -webkit-border-bottom-left-radius:75px;
+    -webkit-border-bottom-right-radius:75px;
+    border-top-left-radius:75px;
+    border-top-right-radius:75px;
+    border-bottom-left-radius:75px;
+    border-bottom-right-radius:75px;
 }
+
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+
+    background-color: #000000;
+
+}
+
 
 @media screen and (max-width: 1100px) {
     #mish,
@@ -593,7 +617,7 @@ hr {
     }
     #play {
         width: 100%;
-        font-size: 14px;
+        font-size: 15px;
         padding-left: 0px;
     }
     #text_main {
@@ -651,6 +675,7 @@ hr {
     #nav div.root {
 
         border-bottom: 1px solid #e4a001; /* Параметры рамки */
+        cursor: pointer;
     }
 
     .row {
@@ -669,7 +694,7 @@ hr {
 
 
     .accord{
-        width: 600px;
+        width: 90%;
         margin-left: 0px;
     }
 

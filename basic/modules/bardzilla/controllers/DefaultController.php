@@ -32,7 +32,7 @@ class DefaultController extends FrontEndController
     /**
      * Показывает контент
      * @return string
-     * @TODO В таблицу контента добавить поле, в котором будет храниться количество показываемых страниц контента
+     * @TODO Нужно предусмотреть возможность вывода разного контента, привязаного к одной категории
      *
      */
     public function actionShow() {
@@ -56,7 +56,7 @@ class DefaultController extends FrontEndController
 
         $countQuery = clone $allArticles;
         $pages = new Pagination(['totalCount' => $countQuery->count(),
-                                'pageSize'=>5,   //@TODO Сюда его подставляем
+                                'pageSize'=>$allContent[0]->onepages,
                                 'forcePageParam' => false,
                                 'pageSizeParam' => false,
                                 ]);

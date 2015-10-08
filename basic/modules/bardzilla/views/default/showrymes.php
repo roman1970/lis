@@ -29,7 +29,7 @@ $(this).siblings("h3").removeClass("active");
 
     <?php
 
-    array_shift($articles);
+    shuffle($articles);
     foreach ($articles as $article) :  ?>
 
     <h3> <?= $article->minititle ?></h3>
