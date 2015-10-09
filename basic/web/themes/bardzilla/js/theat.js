@@ -318,5 +318,11 @@ function getTemp(){
         }
 
 
+        function setCount(id) {
+            alert(id);
+            $('#uu').load("bardzilla/default/counter/"+id);
+        }
+
+
 
 

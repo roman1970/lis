@@ -15,6 +15,7 @@ use app\models\Articles;
 class DefaultController extends FrontEndController
 {
     public $cat_id;
+    public $article_id;
 
     /**
      * @return string
@@ -75,9 +76,23 @@ class DefaultController extends FrontEndController
     }
 
 
+    public function actionCounter(){
+
+        $this->article_id = Yii::$app->getRequest()->getQueryParam('id') ? Yii::$app->getRequest()->getQueryParam('id') : null;
+        $article = ArticlesContent::find()
+            ->where('id = '. $this->article_id)
+            ->one();
+        $article->count++;
+        if($article->update()) return true;
+        else return false;
+    }
+
+
     public function actionShowlikes($id) {
 
         $article = ArticlesContent::findOne($id);
+        $article->count++;
+        $article->update();
 
         return $this->renderPartial('showlikes', ['article' => $article]);
 

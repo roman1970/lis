@@ -81,7 +81,7 @@ h3:hover{
 a {
 
     text-decoration: none;
-    color: #e4a001;
+    color: #985f0d;
 }
 
 p a {
@@ -91,13 +91,13 @@ p a {
 
 p a:hover {
 
-    color: #e4a001;
+    color: #985f0d;
 
 } 
 
 #main a{
     text-decoration: none;
-    color: #e4a001;
+    color: #985f0d;
     transition: 0s 9999999s;
 }
 
@@ -157,7 +157,7 @@ div.inside{
 
 #nav div.root a:hover {
 
-color: #e4a001;
+color: #985f0d;
 text-decoration: none;
 
 }
@@ -195,7 +195,7 @@ text-decoration: none;
 
 
 h3 {
-    color:#e4a001;
+    color:#985f0d;
 }
 
 .mus {
@@ -327,7 +327,7 @@ h3 {
     
 #play  a{
     text-decoration: none;
-	color: #e4a001;
+	color: #985f0d;
     transition: 0s 9999999s;
     -webkit-transition: 0s 9999999s;
     -moz-transition: 0s 9999999s;
@@ -392,7 +392,7 @@ h3 {
         font-family: Georgia;
       padding-right: 10px;
       padding-bottom: 0px;
-      color: #FFCC00;
+      color: #985f0d;
      
     }
     
@@ -454,8 +454,14 @@ hr {
     color: #fff;
     font-size: 14px;
 }
+
 #text_main a{
     cursor: pointer;
+    color:#e4a001;
+}
+
+#songs_name a{
+    color:#e4a001;
 }
     
 #nr_{
@@ -493,7 +499,7 @@ hr {
 #footer p{
            margin-top: 30px;
            margin-bottom: 10px;
-            color: #e4a001;
+            color: #985f0d;
     }
     
 #footerr{
@@ -510,14 +516,13 @@ hr {
         height: 100px;
         background-color: gray;
         box-shadow: 0 0 10px 4px #fff; 
-   
-          
+
     }
     
 #footerr p{
            margin-top: 20px;
            margin-bottom: 10px;
-           color: #e4a001;
+           color: #985f0d;
     }
     
 #pla{
@@ -577,6 +582,7 @@ hr {
     z-index: 2;
     /*color: #fff;*/
     cursor: default;
+    color: black;
     background-color: #bd2c2c;
     border:none 15px #000000;
     -moz-border-radius-topleft: 75px;
@@ -599,6 +605,11 @@ hr {
 
 }
 
+.smallest{
+    font-size: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #897845;
+}
 
 @media screen and (max-width: 1100px) {
     #mish,
@@ -629,6 +640,7 @@ hr {
         font-size: 14px;
         width: 400px;
     }
+
 
     #phot_h {
 
