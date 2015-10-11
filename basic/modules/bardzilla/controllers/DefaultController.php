@@ -75,7 +75,11 @@ class DefaultController extends FrontEndController
 
     }
 
-
+    /**
+     * Счётчик посещения страниц
+     * @return bool
+     * @throws \Exception
+     */
     public function actionCounter(){
 
         $this->article_id = Yii::$app->getRequest()->getQueryParam('id') ? Yii::$app->getRequest()->getQueryParam('id') : null;
@@ -87,7 +91,11 @@ class DefaultController extends FrontEndController
         else return false;
     }
 
-
+    /**
+     * Показывает и считает аудио-страницы
+     * @param $id
+     * @return string
+     */
     public function actionShowlikes($id) {
 
         $article = ArticlesContent::findOne($id);
@@ -98,16 +106,18 @@ class DefaultController extends FrontEndController
 
     }
 
-    public function actionSetlikes() {
+    /**
+     * Устанавливает и показывает лайки
+     * @param $id
+     * @return mixed
+     */
+    public function actionSetlikes($id) {
 
-        /*  $articles = new ArticlesContent();
-          $allArticles = $articles::find()
-              ->with(['articles' => function ($query) {
-                  $query->andWhere('cat_id = 2');
-              },])
-              ->all();
-         */
+        $article = ArticlesContent::findOne($id);
+        $article->likes++;
+        $article->update();
 
+        return 'лайков '.$article->likes.' - прослушиваний '.$article->count;
 
     }
 

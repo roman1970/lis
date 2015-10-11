@@ -361,7 +361,9 @@ h3 {
     }
 
 #player {
+    width: 600px;
     text-align: center;
+
 }
 
 #player a {
@@ -433,6 +435,10 @@ hr {
        padding-left: 15px;
        padding-top: 5px;
    }
+
+#count_ {
+    font-size: 12px;
+}
   
    
 #text_main{

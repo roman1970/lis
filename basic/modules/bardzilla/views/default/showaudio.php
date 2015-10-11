@@ -1,23 +1,10 @@
 <script>
 
     function setLike(idLike) {
-        count = 0;
-        $.post("bardzilla/default/setLike", {id: idLike}, function(data) {
-            count = data;
 
-        });
+        $("#count_").load("bardzilla/default/setlikes/"+idLike);
+        $("#nr_"+idLike).hide();
 
-        $("#count_" + idLike).ajaxSuccess(function() { //убираем количество после голосования
-            $(this).text(count);
-            $(this).hide();
-
-        });
-
-        $("#nr_" + idLike).ajaxSuccess(function() {   //убираем "Нравится" после голосования
-
-            $(this).hide();
-
-        });
     }
     function nextSong(id){
         $("#song").show();
@@ -28,19 +15,12 @@
             last.parentNode.removeChild(last);
         }
 
-
-
         $("#count_").ajaxSuccess(function() { //убираем количество после голосования
             $(this).text(name);
             $(this).hide();
 
         });
 
-       // $("#nr_" + idLike).ajaxSuccess(function() {   //убираем "Нравится" после голосования
-
-       //     $(this).hide();
-
-       // });
     }
 
     function showSongs(){
