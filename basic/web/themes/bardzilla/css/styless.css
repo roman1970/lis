@@ -62,7 +62,7 @@ p {
 	margin: 0;
 	font-family: Arial, serif, Georgia, Times New Roman, Times;
 	color: gray;
-	
+
 	
 }
 
@@ -649,6 +649,11 @@ hr {
 
 input {
     color: black;
+}
+
+.phrasa p{
+    text-align: center;
+
 }
 
 @media screen and (max-width: 1100px) {

@@ -18,7 +18,7 @@ BardzillaAsset::register($this);
     <link rel="shortcut icon" href="<?=$this->theme->getUrl('Img/favicon.ico')?>" tvpe="imaqe/x-icon" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,400italic,700&subset=cyrillic-ext,latin' rel='stylesheet' type='text/css' />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
+    <script type="text/javascript" src="js/bounce.js-0.8.2/bounce.min.js"></script>
     <?php $this->head() ?>
 </head>
 
