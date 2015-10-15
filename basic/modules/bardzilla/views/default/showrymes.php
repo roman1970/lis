@@ -24,35 +24,36 @@ $(".accord p:not(:first)").hide();
 });
 </script>
 
-<?php //@TODO сохранение в базе количества кликов ?>
+<?php if(isset($articles)): ?>
+    <?php foreach($articles as $article): ?>
+    <?php echo app\components\CustomPagination::widget([
+        'pagination' => $article['pages'],
+        'cat' => $cat
+    ]);
+    ?>
+    <div class="accord">
 
-<?php echo app\components\CustomPagination::widget([
-    'pagination' => $pages,
-    'cat' => $cat
-]);
-?>
-<div class="accord">
+        <?php
 
-    <?php
+        shuffle($article['contents']);
+        foreach ($article['contents'] as $conts) : ?>
 
-    shuffle($articles);
-    foreach ($articles as $article) : ?>
-
-    <h3 id="<?= $article->id ?>"> <?= $article->minititle ?></h3>
-    <p><?= nl2br($article->body) ?><br>
-        <span class="smallest">просмотров: <?= $article->count ?></span>
-    </p>
-    <span id="count"  style="display: none"><?= $article->id ?></span>
+            <h3 id="<?= $conts->id ?>"> <?= $conts->minititle ?></h3>
+            <p><?= nl2br($conts->body) ?><br>
+                <span class="smallest">просмотров: <?= $conts->count ?></span>
+            </p>
+            <span id="count"  style="display: none"><?= $conts->id ?></span>
 
 
+
+        <?php endforeach; ?>
+
+
+    </div>
 
     <?php endforeach; ?>
 
-
-
-
-</div>
-
+<?php endif; ?>
 
 <?php /*
 <p id="more" data-num="1" >Ещё</p>

@@ -411,6 +411,7 @@ h3 {
     
    
 .content {
+    position: relative;
     padding: 3px; /* Поля вокруг текста */
     //min-height: 1px; /* Минимальная высота */
 	background: gray; /* Цвет фона */
@@ -434,6 +435,7 @@ hr {
        font-weight: bold;
        padding-left: 15px;
        padding-top: 5px;
+        color: #fff;
    }
 
 #count_ {
@@ -443,8 +445,8 @@ hr {
    
 #text_main{
         position: absolute;
-        left: 310px;
-        top: 40px;
+        left: 190px;
+        top: 10px;
         font-weight: bold;
         font-family: sans-serif;
         padding-left: 75px;
@@ -617,6 +619,38 @@ hr {
     color: #897845;
 }
 
+.hd{
+    text-align: center;
+}
+
+.hd span{
+    font-size: 14px;
+    color: #b79824;
+
+}
+
+.hd span:hover{
+    color:brown;
+    transition: 3s;
+    cursor: pointer;
+}
+
+#text_contakt {
+    position: absolute;
+    left: 350px;
+    top: 40px;
+    font-weight: bold;
+    font-family: sans-serif;
+    padding-left: 75px;
+    color: #000;
+    font-size: 14px;
+    width: 400px;
+}
+
+input {
+    color: black;
+}
+
 @media screen and (max-width: 1100px) {
     #mish,
     #rom,
@@ -658,6 +692,7 @@ hr {
 
     .content{
         width: 100%;
+        position: inherit;
     }
 
     .content img{
@@ -667,7 +702,7 @@ hr {
 
 
     #text_main{
-       position: absolute;
+        position: inherit;
        top: 97%;
        left: 0;
         padding: 3px; /* Поля вокруг текста */
@@ -676,7 +711,7 @@ hr {
         border: 1px solid #fff; /* Параметры рамки */
         border-radius:10px;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
         font-weight: bold;
         font-family: sans-serif;
         padding-left: 15px;
@@ -727,5 +762,9 @@ hr {
     .pagination {
         padding-left: 0px;
         margin: 0;
+    }
+
+    #player {
+        width: 90%;
     }
 }

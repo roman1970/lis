@@ -4,6 +4,7 @@ namespace app\modules\bardzilla\controllers;
 
 use app\components\FrontEndController;
 use app\models\ArticlesContent;
+use app\models\ContactForm;
 use Yii;
 use app\models\Categories;
 use yii\data\Pagination;
@@ -16,6 +17,7 @@ class DefaultController extends FrontEndController
 {
     public $cat_id;
     public $article_id;
+    public $articles = [];
 
     /**
      * @return string
@@ -36,42 +38,69 @@ class DefaultController extends FrontEndController
      * @TODO Нужно предусмотреть возможность вывода разного контента, привязаного к одной категории
      *
      */
-    public function actionShow() {
-
+    public function actionShow()
+    {
 
         $this->cat_id = Yii::$app->getRequest()->getQueryParam('id') ? Yii::$app->getRequest()->getQueryParam('id') : null;
         $cat_obg = Categories::find()
-            ->where('id = '. $this->cat_id)
+            ->where('id = ' . $this->cat_id)
             ->one();
 
         $allContent = Articles::find()
-            ->where('cat_id = '. $this->cat_id)
+            ->where('cat_id = ' . $this->cat_id)
+            ->all();
+        $allArticlesForPager = Articles::find()
+            ->where(['cat_id' => $this->cat_id]);
+
+        $countQueryCont = clone $allArticlesForPager;
+        $pagesGlobal = new Pagination(['totalCount' => $countQueryCont->count(),
+            'pageSize' => 1,
+            'forcePageParam' => false,
+            'pageSizeParam' => false,
+        ]);
+        $artPages = $allArticlesForPager->offset($pagesGlobal->offset)
+            ->limit($pagesGlobal->limit)
             ->all();
 
 
-        $allArticles = ArticlesContent::find()
-            ->joinWith(['articles' => function ($query) {
-                $query->andWhere('cat_id = '. $this->cat_id);
-            },]);
-       // var_dump($allArticles); exit;
+           foreach ($allContent as $article) {
+            //var_dump($this->cat_id);
+           $this->article_id = $article->id;
 
-        $countQuery = clone $allArticles;
-        $pages = new Pagination(['totalCount' => $countQuery->count(),
-                                'pageSize'=>$allContent[0]->onepages,
-                                'forcePageParam' => false,
-                                'pageSizeParam' => false,
-                                ]);
-        $models = $allArticles->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+            $article = Articles::findOne($this->article_id);
 
-        return $this->renderPartial($cat_obg->action,
-            [//'articles' => $allArticles,
-                'content' => $allContent,
-                'articles' => $models,
-                'pages' => $pages,
-                'cat' => $this->cat_id
+
+            $allArticles = ArticlesContent::find()
+                ->where(['articles_id' => $this->article_id]);
+
+            //var_dump($allArticles); exit;
+
+            $countQuery = clone $allArticles;
+            $pages = new Pagination(['totalCount' => $countQuery->count(),
+                'pageSize' => isset($article->onepages) ? $article->onepages : 0,
+                'forcePageParam' => false,
+                'pageSizeParam' => false,
             ]);
+            $models = $allArticles->offset($pages->offset)
+                ->limit($pages->limit)
+                ->all();
+
+            $this->articles[]  = ['article' => $article,'contents' => $models, 'pages' => $pages];
+
+
+        }
+
+        //var_dump($this->articles); exit;
+        return $this->renderPartial($cat_obg->action,
+            [
+                'articles' => $this->articles,
+                'cat' => $this->cat_id,
+                'pagesGlobal' =>  $pagesGlobal,
+                'artPages' => $artPages,
+                'cat_obg' => $cat_obg
+            ]);
+
+
 
     }
 
@@ -157,6 +186,35 @@ class DefaultController extends FrontEndController
         }
 
         return  json_encode($arr);
+
+    }
+
+
+    /**
+     * Обрабатываем контактную форму
+     * @return string|\yii\web\Response
+     */
+    public function actionContacts()
+    {
+
+        /* Создаем экземпляр класса */
+        $model = new ContactForm();
+
+        if(Yii::$app->request->get()){
+            $model->name = Yii::$app->getRequest()->getQueryParam('name');
+            $model->email = Yii::$app->getRequest()->getQueryParam('email');
+            $model->body = Yii::$app->getRequest()->getQueryParam('text');
+            $model->subject = 'subj';
+            if($model->contact(Yii::$app->params['adminEmail']))
+            return true;
+            else return Yii::$app->params['adminEmail'];
+        }
+
+        else {
+            return false;
+        }
+
+
 
     }
 
