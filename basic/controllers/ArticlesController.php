@@ -317,6 +317,9 @@ class ArticlesController extends BackEndController
 
         $dataCont = new ActiveDataProvider([
             'query' => $content,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
 
         ]);
 

@@ -41,7 +41,12 @@
             foreach ($article['contents'] as $conts) : ?>
 
                     <p><?= nl2br($conts->body) ?><br>
-
+                        <?php if($conts->audio !== '') : ?>
+                          <audio controls="controls" ">
+                                <source src='<?=$conts->audio?>' type='audio/mpeg'>
+                            </audio>
+                         <?php endif; ?>
+                    </p>
 
             <?php endforeach; ?>
 
