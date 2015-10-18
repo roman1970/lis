@@ -61,7 +61,7 @@ p {
 
 	margin: 0;
 	font-family: Arial, serif, Georgia, Times New Roman, Times;
-	color: gray;
+	color: #b1b1b1;
 
 	
 }
@@ -732,6 +732,11 @@ input {
         font-size: 20px;
     }
 
+    .phrasa p {
+
+        padding-right: 0px;
+    }
+
     #nav div.root {
 
         border-bottom: 1px solid #e4a001; /* Параметры рамки */
@@ -754,7 +759,7 @@ input {
 
 
     .accord{
-        width: 90%;
+        width: 100%;
         margin-left: 0px;
     }
 
@@ -774,4 +779,6 @@ input {
     #player {
         width: 90%;
     }
+
+
 }

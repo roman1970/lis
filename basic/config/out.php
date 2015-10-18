@@ -27,6 +27,9 @@ $config = [
         'bardzilla' => [
             'class' => 'app\modules\bardzilla\Bardzilla',
         ],
+        'russia2018' => [
+            'class' => 'app\modules\russia2018\Russia2018',
+        ],
 
     ],
     'components' => [

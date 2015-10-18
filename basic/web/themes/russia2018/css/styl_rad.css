@@ -1,0 +1,524 @@
+* {margin: 0; padding: 0;} /* обнуляем отступы - делаем контент по центру страницы */
+body{
+
+    background: #002211;
+
+}
+
+#wrapper{
+    background: #002211;
+    margin: 0 auto;
+    width: 1499px;
+    height: 1700px;
+}
+
+#head {
+    position: relative;
+    background: #009966;
+    height: 128px;
+    width: 1499px;
+}
+
+#top{
+    height: 30px;
+    /*background:url(img/images/top_01.jpg) no-repeat;*/
+}
+
+
+#logo {
+    position: absolute;
+    font-family: Times New Roman;
+    font-size: 30px;
+    text-shadow: black 0px 2px 0px;
+    color: white; 
+    left: 320px;
+    top: 0px;
+    letter-spacing: 2px;
+}
+
+#logo span {
+    color: #e0bd69;
+}
+
+#fam {
+    position: absolute;
+    font-family: Arial;
+    font-size: 18px;
+
+    text-shadow: black 0px 1px 0px;
+    color: #e0bd69;
+    left: 276px;
+    top: 62px;
+    letter-spacing: 5px;
+}
+
+#tel{
+    position: relative;
+    font-family: Arial;
+    font-size: 18px;
+
+
+    left: 970px;
+    top:18px;
+}
+
+#online {
+    background: #07b6ef;
+    position: absolute;
+    font-family: Arial;
+    font-size: 10px;
+    height: 19px;
+    width: 114px;
+    left: 1042px;
+    top: 6px;
+    border-radius:10px;
+    color: white;
+    text-shadow: #048bcb 2px 2px 1px;  
+    /*vertical-align: bottom; вертикальное выравнивание не понадобилось - центр задали paddingом в #online p*/
+
+
+
+}
+
+#online p{
+    padding-top: 2px;
+    text-align: center;
+
+}
+
+#ptic{
+    position: absolute;
+    left: 1035px;
+    top: 4px;
+}
+
+#flag{
+    position: absolute;
+    left: 1187px;
+    top: 8px;
+    color: white;
+    font-size: 8px;
+    font-family: Arial;
+
+}
+
+#stick{
+    position: absolute;
+    left: 1170px;
+    top: 4px;
+    color: #07b6ef;
+}
+
+
+#strel {
+    position: absolute;
+    left: 1258px;
+    top: 10px;
+}
+
+#lang p{
+    position: absolute;
+    left: 1210px;
+    color: white;
+    font-size: 12px;
+    font-family: Arial;
+    top: 7px;
+}
+
+#cont {
+
+    position: relative;
+
+    height: 1128px;
+    width: 1499px;
+}
+
+#menu {
+    /*background:url(img/images/menu.jpg) no-repeat;*/
+    height: 50px;
+    width: 1027px;
+    position: absolute;
+    left: 240px;
+    top: 0px;
+
+}
+
+#menu ul{
+    position: absolute;
+    left: 80px;
+    top: 12px;
+
+}
+
+#menu ul li {
+    display: inline;
+    font-size: 18px;
+  
+    padding-left: 28px;
+
+    margin:0px;
+    color: white;
+    font-family:  Impact;
+
+
+}
+
+#menu ul li a{
+     text-decoration: none;
+      color: white;
+}
+
+#practice{
+    position: absolute;
+   /* background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #002500;
+    height: 460px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 40px;
+    font-size: 15px;
+    color: white;
+
+}
+
+#practice p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#practice ul{
+    padding-left: 28px;
+    padding-top: 36px;
+
+}
+
+
+#practice ul li{
+    font-size: 13px;
+    font-family: Arial;
+    color: #a7ecfc;
+    list-style-type: none;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    width: 230px;
+    margin:0px;
+    text-shadow: #4c7a89 0px 0px 1px;
+
+    border-bottom: 1px dotted #009900;
+
+}
+#practice ul li span{
+    position: absolute;
+    left: 16px;
+}
+
+#ques{
+    position: absolute;
+   /* background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 224px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 270px;
+    font-size: 13px;
+    color: white;
+}
+
+#ques p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#ques form{
+
+    padding-left: 28px;
+    padding-top: 60px;
+    font-family: Arial;
+
+}
+
+#ques form a{
+    color: #aaeaff;
+}
+
+#ques .aer{
+
+    height: 20px;
+    width: 245px;
+    margin-bottom:  2px;
+    padding-left: 4px;
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 1px;
+
+}
+
+#ques .mes{
+
+    height: 60px;
+    width: 249px;
+    margin-bottom:  4px;
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: grey 0px 0px 1px;
+
+}
+
+#ques textarea{
+    font-family: Arial;
+    font-size: 13px;
+
+
+    width: 250px;
+}
+
+.button{
+    background: #45626a;
+    border: 2px solid #006600;
+    height: 20px;
+    width: 75px;
+    color: #8fc4d6;
+    border-radius: 0px 0 5px 0;
+    cursor: pointer;
+    margin-left: 6px;
+    vertical-align: baseline;
+    padding-bottom: 2px;
+    font-size: 10px;
+}
+
+
+#tele{
+    position: absolute;
+   /* background:url(img/images/sh_03_mir.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 189px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 515px;
+    font-size: 13px;
+    color: white;
+}
+
+#tele p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#tele form{
+
+    padding-left: 20px;
+    padding-top: 60px;
+    font-family: Arial;
+
+}
+
+#tele form a{
+    color: #aaeaff;
+    background-color:  #45616c;
+}
+
+#tele .aer{
+
+  
+
+    height: 20px;
+    width: 200px;
+    margin-bottom:  2px;
+
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 2px;
+
+}
+
+#tele span{
+
+    color: #a7ecfc;
+
+}
+
+#tele .button{
+    margin-left: 200px;
+}
+
+select {
+    background-color:  #45616c;
+
+}
+
+
+#tele table .left {
+    text-align: right;
+    color: #a7ecfc;
+    text-shadow: gray 0px 0px 2px;
+    padding-right: 3px;
+}
+
+#testimon{
+      position: absolute;
+   /* background:url(img/images/sh_03_mir.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 224px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 728px;
+    font-size: 13px;
+    color: white;
+}
+
+#testimon p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#testimon #con {
+    left: 15px;
+  position: absolute;
+   top: 50px;
+    height: 125px;
+    width: 250px;
+    margin-bottom:  2px;
+    font-family: Arial;
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 2px;
+    padding: 5px;
+}
+
+#testimon .button{
+    margin-left: 200px;
+    margin-top: 195px;
+}
+
+#proud{
+      position: absolute;
+  /*  background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 225px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 974px;
+    font-size: 13px;
+    color: white;
+}
+
+#proud p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#proud table{
+     left: 15px;
+  position: absolute;
+   top: 50px;
+    height: 125px;
+     font-family: Arial;
+     vertical-align: text-top;
+}
+
+
+#proud table tr td .left{
+    height: 20px;
+    text-align: left;
+   
+}
+
+#footer{
+     position: absolute;
+  /*   background:url(img/images/sh_03.jpg) no-repeat, url(img/images/sh_03_pic.jpg) repeat-x ;*/
+   
+    background-color: #031d2a;
+     height: 225px;
+    width: 1025px;
+    top: 1230px;
+     left: 240px;
+       border: 1px #164b59 solid;
+    border-radius: 10px 0 10px 0;
+}
+
+
+#stat{
+    position: absolute;
+   
+    background-color: black;
+    height: 210px;
+    width: 720px;
+
+    left: 540px;
+    border: 1px #006600 solid;
+   
+    top: 40px;
+}
+
+#base{
+     position: absolute;
+   top: 40px;
+   /* background: url(img/images/pole.jpg) no-repeat;*/
+    height: 1161px;
+    width: 730px;
+    left: 530px;
+    border-radius: 10px;
+    border: 1px #006600 solid;
+    color: #a7ecfc;
+    font-size: 30px;
+    
+}
+
+.gr_tur  {
+    float: left;
+    padding-left: 5px;
+}
+
+.gr_tur td{
+    width: 20px;
+    height: 15px;
+    font-size: 10px;
+    font-family: Arial;
+    border: 1px #009900 solid;
+}
+
+
+
+#emb img{
+    padding-top: 10px;
+    margin: 6px;
+}
