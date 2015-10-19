@@ -65,10 +65,6 @@ BardzillaAsset::register($this);
                     ответит Король Анормального - Бард, который перевернул ЗИЛ! <br />
                     <br />
 
-            <?php /*
-
-                    <iframe  width="560" height="315" src="//www.youtube.com/embed/Li_Odfte4nY"  allowfullscreen></iframe>
-            */ ?>
 
             </p>
 
@@ -98,7 +94,34 @@ BardzillaAsset::register($this);
 
     </div>
 </div>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter33103768 = new Ya.Metrika({
+                    id:33103768,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
 
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/33103768" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
     <?php $this->endBody() ?>
     </body>
 </html>
