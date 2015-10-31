@@ -7,7 +7,7 @@ class m151027_062610_add_field_siteid_to_cat_table extends Migration
 {
     public function up()
     {
-        $this->addColumn('{{qpcategory}}', 'site_id', 'INT(11) DEFAULT 4');
+        $this->addColumn('{{qpcategory}}', 'site_id', 'INT(11) DEFAULT 1');
 
         $this->createIndex("ux_qpcategory_qpcategory_site_id", 'qpcategory', "site_id", false);
         $this->db->createCommand('ALTER TABLE {{qpcategory}} ADD FOREIGN KEY (`site_id`) REFERENCES {{qpsites}}(`id`) ON DELETE CASCADE ON UPDATE NO ACTION;')->execute();
