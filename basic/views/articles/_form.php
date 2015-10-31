@@ -39,10 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt' => 'Выбрать сайт']) ?>
              <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
                 ['prompt' => 'Выбрать категорию'])  ?>
-            <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5])  ?>
+            <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
+                ['prompt' => 'Выбрать источник'])  ?>
+            <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
+            <?= $form->field($model, 'tags')->textInput()  ?>
             <?= $form->field($uploadFile, 'file')->fileInput() ?>
             <?= $form->field($uploadImg, 'img')->fileInput() ?>
-
 
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => 'btn btn-primary', 'name' => 'create-button']) ?>

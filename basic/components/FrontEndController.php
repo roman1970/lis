@@ -6,13 +6,14 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 //use yii\filters\VerbFilter;
 //use app\models\LoginForm;
-//use app\models\ContactForm;
+use app\models\Qpsites;
 use app\components\BaseController;
-use app\modules\weather\models\Weather;
+
 
 class FrontEndController extends BaseController
 {
     public $theme;
+    public $site;
 
     public function init()
     {
@@ -20,6 +21,8 @@ class FrontEndController extends BaseController
         //if(isset($_GET['admin'])) {$this->theme = 'admin';}
         //@TODO $_GET сделать через request
         if (isset($_GET['siteParamIdForTheme'])) {
+           $this->site = Qpsites::find()->where(['theme' => $_GET['siteParamIdForTheme']])->one();
+
             $this->theme = $_GET['siteParamIdForTheme'];
            // $site = new Qpsites;
             //var_dump($site); exit;

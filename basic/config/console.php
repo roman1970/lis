@@ -26,15 +26,32 @@ return [
                 ],
             ],
         ],
-	'authManager' => [
-	    'class' => 'yii\rbac\PhpManager',
-	    'defaultRoles' => ['user','moder','admin'], //здесь прописываем роли
-	    //зададим куда будут сохраняться наши файлы конфигураций RBAC
-	    'itemFile' => 'components/rbac/items.php',
-	    'assignmentFile' => 'components/rbac/assignments.php',
-	    'ruleFile' => 'components/rbac/rules.php'
-	],
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+            'defaultRoles' => ['user','moder','admin'], //здесь прописываем роли
+            //зададим куда будут сохраняться наши файлы конфигураций RBAC
+            'itemFile' => 'components/rbac/items.php',
+            'assignmentFile' => 'components/rbac/assignments.php',
+            'ruleFile' => 'components/rbac/rules.php'
+        ],
         'db' => $db,
+        'urlManager' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => dirname(__DIR__),
+            'hostInfo' => '',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                '<controller:\w+>/<id:\d+>'   => '<controller>/view',
+                '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
+                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>/',
+                '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
+
+
+            ],
+
+        ],
     ],
     'params' => $params,
 ];

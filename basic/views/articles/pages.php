@@ -36,11 +36,7 @@ AppAsset::register($this);
         'dataProvider' => $content,
         //'filterModel' => $searchModel,
         'columns' => [
-            'id',
             'minititle',
-            'body',
-            'audio',
-
 
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{delete} {update}',

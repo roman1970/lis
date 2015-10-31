@@ -41,8 +41,10 @@ AppAsset::register($this);
             ['label' => 'Категории', 'url' => ['/categories/index']],
             ['label' => 'Контент', 'url' => ['/articles/index']],
             ['label' => 'Пользователи', 'url' => ['/user/index']],
-           /* ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'User', 'url' => ['/user/profile/show']],
+           ['label' => 'Страны', 'url' => ['/countries/index']],
+            ['label' => 'Источники', 'url' => ['/source/index']],
+            ['label' => 'Авторы', 'url' => ['/author/index']],
+            /*['label' => 'User', 'url' => ['/user/profile/show']],
            */
 
         ],

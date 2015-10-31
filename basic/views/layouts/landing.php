@@ -3,10 +3,13 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-
+use yii\helpers\Html;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use app\assets\LandberryAsset;
 use app\assets\AppAsset;
 
-AppAsset::register($this);
+LandberryAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -14,7 +17,7 @@ AppAsset::register($this);
 
 <head>
     <meta charset="utf-8">
-    <title>Интернет-издательство «Акула Пера»</title>
+    <title>ООП «Очкарики»</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -67,13 +70,18 @@ AppAsset::register($this);
 
                         <li>
 
-                            <h1><span>АКУЛА ПЕРА</span></h1>
+                            <h1><span>ООП «Очкарики»</span></h1>
 
                         </li>
 
                         <li>
 
-                            <h1><span>ИНТЕРНЕТ-ИЗДАТЕЛЬСТВО</span></h1>
+                            <h1><span>ОБЪЕДКИ ОБРАЗОВАННЫХ ПРОГРАММИСТОВ</span></h1>
+
+                        </li>
+                        <li>
+
+                            <h1><span>КЛАДБИЩЕ НЕДОДЕЛАННЫХ ПРОЕКТОВ</span></h1>
 
                         </li>
 
@@ -125,6 +133,19 @@ AppAsset::register($this);
         <div class="collapse navbar-collapse" id="navigation">
 
             <ul id="nav" class="nav navbar-nav navbar-right">
+                <?php echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => [
+
+                Yii::$app->user->isGuest ?
+                ['label' => 'Войти', 'url' => ['/user/security/login']] :
+                ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
+                'url' => ['/user/security/logout'],
+                'linkOptions' => ['data-method' => 'post']],
+                ],
+                ]);
+
+                ?>
 
                 <li class=""><a href="#about">О НАС</a></li>
                 <li><a href="#works">ПРОЕКТЫ</a></li>

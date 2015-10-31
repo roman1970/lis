@@ -15,6 +15,37 @@ class ArticlesController extends BackEndController
 {
     public $layout = 'admin';
 
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'image-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => '/uploads/imperaviim/',// Directory URL address, where files are stored.
+                'path' => '@webroot/uploads/imperaviim/' // Or absolute path to directory where files are stored.
+            ],
+            'images-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+                'url' => '/images/blog/', // Directory URL address, where files are stored.
+                'path' => '@webroot/images/blog/', // Or absolute path to directory where files are stored.
+                'type' => '0',
+            ],
+            'files-get' => [
+                'class' => 'vova07\imperavi\actions\GetAction',
+                'url' => '/files/blog/', // Directory URL address, where files are stored.
+                'path' => '@webroot/files/blog/', // Or absolute path to directory where files are stored.
+                'type' => '1',//GetAction::TYPE_FILES,
+            ],
+            'file-upload' => [
+                'class' => 'vova07\imperavi\actions\UploadAction',
+                'url' => '/files/blog/', // Directory URL address, where files are stored.
+                'path' => '@webroot/files/blog/' // Or absolute path to directory where files are stored.
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         $articles = Articles::find();
@@ -60,6 +91,9 @@ class ArticlesController extends BackEndController
             $model->alias = TranslateHelper::translit(Yii::$app->request->post('Articles')['title']);
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
+            $model->tags = Yii::$app->request->post('Articles')['tags'];
+            if(isset(Yii::$app->request->post('Articles')['source_id']))$model->source_id = Yii::$app->request->post('Articles')['source_id'];
+             else $model->source_id = 2;
             if(isset($uploadFile->file))
                 $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
 
@@ -67,12 +101,8 @@ class ArticlesController extends BackEndController
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
             $model->save(false);
 
-            $articles = Articles::find();
-            $dataProvider = new ActiveDataProvider([
-                'query' => $articles,
-            ]);
 
-            return $this->render('index', ['articles' => $dataProvider]);
+            return $this->redirect(Url::toRoute('articles/index'));
 
         } else {
 
@@ -114,6 +144,8 @@ class ArticlesController extends BackEndController
             $model->alias = TranslateHelper::translit(Yii::$app->request->post('Articles')['title']);
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
+            if(isset(Yii::$app->request->post('Articles')['source_id']))$model->source_id = Yii::$app->request->post('Articles')['source_id'];
+                else $model->source_id = 2;
             if(isset($uploadFile->file))
                 $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
 
@@ -121,12 +153,7 @@ class ArticlesController extends BackEndController
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
             $model->save(false);
 
-            $articles = Articles::find();
-            $dataProvider = new ActiveDataProvider([
-                'query' => $articles,
-            ]);
-
-            return $this->render('index', ['articles' => $dataProvider]);
+            return $this->redirect(Url::toRoute('articles/index'));
         } else {
 
             return $this->render('_form', [
@@ -186,6 +213,7 @@ class ArticlesController extends BackEndController
         if ($artContent->load(Yii::$app->request->post())) {
             $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
             $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
+            $artContent->source_id = Yii::$app->request->post('ArticlesContent')['source_id'];
             $artContent->articles_id = $id;
             if(isset($upload->file))$artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
             else $artContent->audio = '';
@@ -244,7 +272,9 @@ class ArticlesController extends BackEndController
         if ($artContent->load(Yii::$app->request->post())) {
             $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
             $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
+            $artContent->source_id = Yii::$app->request->post('ArticlesContent')['source_id'];
             $artContent->articles_id = $artId;
+            if(isset($upload->file))
             $artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
 
             $artContent->save();

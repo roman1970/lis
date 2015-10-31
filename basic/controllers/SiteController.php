@@ -15,6 +15,7 @@ use dektrium\user\models\User as User;
 
 class SiteController extends BackEndController
 {
+   // public $layout = 'landing';
 
     public function behaviors()
     {

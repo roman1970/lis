@@ -1,295 +1,346 @@
+<?php
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Nav;
+?>
+<script>
+
+
+    $(document).ready(function() {
+        var host = $("#host");
+        var guest = $("#guest");
+        var limit = $("#limit");
+        var bet = $("#bet");
+        var country = $("#country");
+        var country_limit = $("#country_limit");
+        var country_bet = $("#country_bet");
+
+
+        var k = false;
+        $("#statusMess").ajaxSuccess(
+            function() {
+                if (k == true) {
+                    $("#send").hide();
+                    $(this).text("Сообщение удачно отправлено!");
+                }
+            }
+        );
+        $("#send").click(
+            function() {
+
+                sendMess(limit.val(), host.val(), bet.val());
+            });
+
+        $("#choose_country").click(
+            function() {
+                getCont(country.val(),country_limit.val(),country_bet.val());
+            }
+        );
+
+
+        $("#statusMess").ajaxError(
+            function() {
+
+                $(this).text("Сообщение не отправлено!");
+                $("#send").show();
+            }
+        );
+        $("#send").ajaxStart(
+            function() {
+                if (k === true) {
+                    $(this).hide();
+                    k = false;
+                }
+            });
+
+
+
+        function sendMess(limit, host,  bet) {
+
+
+            //Валидация
+            if (host === "" && guest === "") {
+                alert("Введите хотя бы одну команду");
+                return false;
+            }
+
+            if (host === "") {
+                host = "UIU";
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: "russia2018/default/strateg/",
+                data: "host="+host+"&limit="+limit+"&bet="+bet,
+                success: function(html){
+                    $("#base").html(html);
+                }
+
+            });
+
+        }
+
+        function getCont(country,country_limit,country_bet){
+            if (country === "") {
+                alert("Введите страну");
+                return false;
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: "russia2018/default/country/",
+                data: "country="+country+"&country_limit="+country_limit+"&country_bet="+country_bet,
+                success: function(html){
+                    $("#base").html(html);
+                }
+
+            });
+
+        }
+
+
+    });
+
+    function getTour(i) {
+        var tournament = $(".tour"+i).html();
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/tournament/",
+            data: "tournament="+tournament,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+    }
+
+
+</script>
+
+
 <div id="wrapper">
 
-    <div id="head">
 
-        <div id="logo"><span style="font-size:40px; color:white;">М</span>ИРОВОЙ<span style=" position: relative; top:22px; left: 5px; padding: 0;"></span> ФУТБОЛ ПЕРЕД ЧЕМПИОНАТОМ МИРА -2018</div>
+    <div id="head" class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div id="logo"><span style="font-size:40px; color:white;">М</span>ИРОВОЙ<span style=" position: relative; top:22px; left: 5px; padding: 0;"></span> ФУТБОЛ ПЕРЕД ЧЕМПИОНАТОМ МИРА -2018</div>
 
-        <div id="fam">В цифрах</div>
+            <div id="fam">В цифрах</div>
+        </div>
 
     </div>
 
-    <div id="cont">
-        <div id="menu">
-            <ul>
-                <li id="chemps"><a href="#" >Чемпионаты</a> </li>
-                <li>&diams;</li>
-                <li id="commands"><a href="#" >Команды </a> </li>
-                <li> &diams;</li>
-                <li id="match"><a href="#" >Матчи </a></li>
-                <li> &diams;</li>
-                <li id="player"><a href="#" >Игроки</a> </li>
-                <li>&diams;</li>
-                <li id="nakaz"><a href="#">Наказания</a></li>
-                <li>&diams;</li>
-                <li id="gols"><a href="#" >Голы</a></li>
-            </ul>
-        </div>
+    <div id="cont" class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-xs-3">
 
-        <div id="practice">
-            <p><span style="font-size:22px; color:white;">Ч</span>ЕМПИОНАТЫ МИРА</p>
-            <ul>
-                <li><span> &rsaquo; </span><a onclick="Chempionat(1)" style="cursor: pointer;">I Уругвай - 1930</a></li>
-                <li><span> &rsaquo; </span>II Италия - 1934</li>
-                <li><span> &rsaquo; </span>III Франция - 1938</li>
-                <li><span> &rsaquo; </span>IV Бразилия - 1950</li>
-                <li><span> &rsaquo; </span>V Швейцария - 1954</li>
-                <li><span> &rsaquo; </span>VI Швеция - 1958</li>
-                <li><span> &rsaquo; </span>VII Чили - 1962</li>
-                <li><span> &rsaquo; </span>VIII Англия - 1966</li>
-                <li><span> &rsaquo; </span>IX Мексика - 1970</li>
-                <li><span> &rsaquo; </span>X ФРГ - 1974</li>
-                <li><span> &rsaquo; </span>XI Аргентина - 1978</li>
-                <li><span> &rsaquo; </span>XII Испания - 1982</li>
-                <li><span> &rsaquo; </span>XIII Мексика - 1986</li>
-                <li><span> &rsaquo; </span>XIV Италия - 1990</li>
-                <li><span> &rsaquo; </span>XV США - 1994</li>
-                <li><span> &rsaquo; </span>XVI Франция - 1998</li>
-                <li><span> &rsaquo; </span>XVII Япония-Корея - 2002</li>
-                <li><span> &rsaquo; </span>XVIII Германия - 2006</li>
-                <li><span> &rsaquo; </span>XIX ЮАР - 2010</li>
-                <li style="border-bottom: none;"><span> &rsaquo; </span><a onclick="Chempionat(20)" style="cursor: pointer;">XX Бразилия - 2014</a></li>
-            </ul>
-        </div>
-
-        <!--       <div id="ques">
-                   <p><span style="font-size:22px; color:white;">H</span>AVE A<span style="font-size: 22px; color:white;"> Q</span>UESTION</p>
+                <div id="practice" class="tele">
+                    <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">С</span>ТРАНА</p>
 
 
-                   <form action="#" method="post">
+                    <form action="#" method="post">
 
-                       <input class="aer" name="name" type="text" value="name"/><br />
-                       <input class="aer" name="email" type="text" value="E-mail"/><br />
-                       <input class="aer"  name="phone" type="text"  value="phone"/><br />
-                       <textarea class="mes"  name="massage" rows="3" cols="7" > Message</textarea><br />
-                       <input class="rad" name="disclaim" type="radio" /> I have read the <a href="#"> disclaimer</a>
+                            <span>Страна:</span><br /> <input type='text' class="aer" id="country" size="30"/><br />
+                            <span>Количество последних матчей:</span> <br /><input type='text' class="aer" id="country_limit" size="30"/></p><br />
+                            <span>Ставка:</span><br /> <input type='text' class="aer" id="country_bet" size="30"/><br />
+                        <span style="font-size: 10px;">руб</span><br />
 
-                       <button class="button" type="submit" >Submit &rarr;</button>
+                    </form>
 
-
-
-                   </form>
-               </div>
--->
-        <div id="tele">
-            <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">R</span>EQUEST A<span style="font-size: 22px; color:white;"> C</span>ALL
-            </p>
-
-            <form action="#" method="post">
-                <table>
-
-                    <tr>
-                        <td class="left">
-                            <span > Name:  </span>
-                        </td>
-                        <td class="right"  >
-                            <input class="aer" name="nam" type="text" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="left">
-                            <span >Phone: </span>
-                        </td>
-                        <td class="right"  >
-                            <input class="aer" name="mail" type="text" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="left">
-                            <span >Matter: </span>
-                        </td>
-                        <td class="right"  >
-                            <select class="aer" name='matter'>
-                                <option selected="selected">Family Low</option>
-                                <option value='Дзержинский'>Дзержинский</option>
-                                <option value='Железнодорожный'>Железнодорожный</option>
+                    <button class="button" id="choose_country" type="submit" >Применить</button>
 
 
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="left">
-                            <span >Call me: </span>
-                        </td>
-                        <td class="right"  >
-                            <select class="aer" name='matter'>
-                                <option selected="selected">Now/ASAP</option>
-                                <option value='Дзержинский'>Дзержинский</option>
-                                <option value='Железнодорожный'>Железнодорожный</option>
+                   <br />
 
 
-                            </select>
-                        </td>
+                </div>
+
+                <div class="tele">
+                    <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">К</span>ОМАНДА</p>
+
+                    <form action="#" method="post">
+
+                        <span>Команда:</span><br /><input type='text' class="aer" id="host"  size="30"/><br />
+
+                        <span>Количество последних матчей</span>: <br /><input type='text' class="aer" id="limit" size="30"/></p><br />
+                        <span>Ставка:</span><br /> <input type='text' class="aer" id="bet" size="30"/><br>
+                        <span style="font-size: 10px;">руб</span><br />
 
 
-                    </tr>
+                    </form>
 
-
-                </table>
-            </form>
-
-            <button class="button" type="submit" >Call me</button>
-        </div>
-
-
-        <div id="testimon">
-            <p><span style="font-size:22px; color:white;">T</span>ESTIMONIALS</p>
+                    <button class="button" id="send" type="submit" >Применить</button>
+                </div>
 
 
 
 
+                <div id="proud">
 
-            <div id="con"><MARQUEE behavior=scroll direction=up height=120
-                                   loop=-1 scrollamount=1 scrolldelay=100 >
-                    Хотя назначение этого алгоритма — поиск, его
-                    можно применять и для сортировки. Фактически он
-                    очень напоминает метод сортировки простым включе-
-                    нием, но поскольку вместо массива используется де-
-                    рево, то пропадает необходимость передвигать ком-
-                    поненты, находящиеся выше места включения. Сор-
-                    тировку с помощью дерева можно запрограммировать
-                    почти столь же эффективно, как и наилучшие из из-
-                    вестных методов сортировки массивов
+                    <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">P</span>ROUDLY<span style="font-size: 22px; color:white;"> S</span>ERVING
+                    </p>
 
-                </MARQUEE>
+                    <table width="250">
 
+
+                    </table>
+
+                </div>
+
+                <div id="footer">
+                    <table width="1025">
+
+                        <tr>
+                            <td class="left">
+                                Россия
+                            </td>
+                            <td class="cen">
+                                Россия
+                            </td>
+                            <td class="right">
+                                Россия
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
 
             </div>
-
-
-            <button class="button" type="submit" >Veiw all</button>
         </div>
+        <div id="base" class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
 
-        <div id="proud">
+                <table id="mems_match" cellpadding="0" >
+                    <tr>
+                        <td class="left">Если бы поставил на победу, выигрыш </td>
+                        <td class="center">Если бы поставил на ничью, выигрыш  </td>
+                        <td class="right">Если бы поставил на поражение, выигрыш  </td>
 
-            <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">P</span>ROUDLY<span style="font-size: 22px; color:white;"> S</span>ERVING
-            </p>
+                    </tr>
+                </table>
+                <table id="mems_match" cellpadding="0" >
+                    <tr>
+                        <td class="left"><?=$bet_h ?></td>
+                        <td class="center"><?=$bet_n ?></td>
+                        <td class="right"><?=$bet_g ?></td>
+                    </tr>
+                </table>
 
-            <table width="250">
-
-                <tr>
-                    <td class="left">
-                        Россия
-                    </td>
-                    <td class="right">
-                        Россия
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Корея
-                    </td>
-                    <td class="right"  >
-                        Корея
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Япония
-                    </td>
-                    <td class="right"  >
-                        Япония
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Северная Ирландия
-                    </td>
-                    <td class="right"  >
-                        Северная Ирландия
-                    </td>
+                <?php $r=0; foreach ($matchs as $match) : ?>
+                    <div class="view">
 
 
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Англия
-                    </td>
-                    <td class="right"  >
-                        Англия
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Косово
-                    </td>
-                    <td class="right"  >
-                        Косово
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Ирландия
-                    </td>
-                    <td class="right"  >
-                        Ирландия
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="left">
-                        Германия
-                    </td>
-                    <td class="right"  >
-                        Германия
-                    </td>
+                        <p id="match_date">
+                            <?php echo $match->date; ?>
+                        </p>
 
 
-                </tr>
+                        <p id="match_tour" onclick="getTour(<?=$r?>)" class="tour<?=$r?>">
+                            <?php echo $match->tournament; ?>
+                        </p>
 
 
-                <tr>
-                    <td class="left">
-                        Франция
-                    </td>
-                    <td class="right"  >
-                        Франция
-                    </td>
+                        <table id="mems_match" cellpadding="0" >
+                            <tr>
+                                <td class="left"><?php echo $match->host; ?></td>
+                                <td class="center"><?php echo $match->gett; ?>:<?php echo $match->lett; ?> </td>
+                                <td class="right"><?php echo $match->guest; ?></td>
+
+                            </tr>
+                        </table>
+                        <table id="mems_goal" cellpadding="0" >
+                            <tr>
+                                <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?></td>
+                                <td class="center"></td>
+                                <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?></td>
+
+                            </tr>
+                        </table>
+
+                        <?php if($match->ud_h != 0 && $match->ud_g != 0) : ?>
+
+                        <table id="ud" cellpadding="0" >
+                            <tr>
+                                <td class="left"><?php echo $match->ud_h; ?></td>
+                                <td class="center">удары</td>
+                                <td class="right"><?php echo $match->ud_g; ?></td>
+
+                            </tr>
+                        </table>
+
+                        <?php endif; ?>
+
+                        <?php if($match->falls_h != 0 && $match->falls_g != 0) : ?>
+
+                            <table id="falls" cellpadding="0" >
+                                <tr>
+                                    <td class="left"><?php echo $match->yellCardCount_h(); ?><?php echo $match->falls_h; ?></td>
+                                    <td class="center">фолы</td>
+                                    <td class="right"><?php echo $match->falls_g; ?><?php echo $match->yellCardCount_g(); ?></td>
+
+                                </tr>
+                            </table>
+
+                        <?php endif; ?>
 
 
-                </tr>
+                        <table id="stavki" cellpadding="0" >
+                            <tr>
+                                <td class="left"></td>
+                                <td class="center"> ставки </td>
+                                <td class="right"></td>
 
-            </table>
+                            </tr>
+                        </table>
+                        <table id="stavki" cellpadding="0" >
+                            <tr>
+                                <td class="left"><?php echo $match->bet_h; ?></td>
+                                <td class="center"><?php echo $match->bet_n; ?> </td>
+                                <td class="right"><?php echo $match->bet_g; ?></td>
 
+                            </tr>
+                        </table>
+
+
+                    </div>
+
+                <?php $r++; endforeach; ?>
+
+                </div>
         </div>
-
-        <div id="footer">
-            <table width="1025">
-
-                <tr>
-                    <td class="left">
-                        Россия
-                    </td>
-                    <td class="cen">
-                        Россия
-                    </td>
-                    <td class="right">
-                        Россия
-                    </td>
-                </tr>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 col-xs-3">
+                <div id="testimon">
+                    <p><span style="font-size:22px; color:white;">T</span>ESTIMONIALS</p>
 
 
-            </table>
-        </div>
+                        <div id="con"><MARQUEE behavior=scroll direction=up height=120
+                                               loop=-1 scrollamount=1 scrolldelay=100 >
+                                Хотя назначение этого алгоритма — поиск, его
+                                можно применять и для сортировки. Фактически он
+                                очень напоминает метод сортировки простым включе-
+                                нием, но поскольку вместо массива используется де-
+                                рево, то пропадает необходимость передвигать ком-
+                                поненты, находящиеся выше места включения. Сор-
+                                тировку с помощью дерева можно запрограммировать
+                                почти столь же эффективно, как и наилучшие из из-
+                                вестных методов сортировки массивов
 
-        <!--   <div id="stat">
-               <img src="img/images/statuia.jpg" />
+                            </MARQUEE>
 
-           </div>
-        -->
 
-        <div id="base">
-            Текст, кототототото
+                        </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
+</div>
+
 

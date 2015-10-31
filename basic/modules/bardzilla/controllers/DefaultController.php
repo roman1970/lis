@@ -25,8 +25,7 @@ class DefaultController extends FrontEndController
     public function actionIndex()
     {
 
-        $cats = Categories::find()->roots()->all();
-        //$cats = Categories::find()->leaves()->all();
+        $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
 
         return $this->render('index', ['cats' => $cats]);
 

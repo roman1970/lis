@@ -19,8 +19,13 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'css/flags.css',
+        'js/syntaxhighlighter/styles/shCore.css',
+        'js/syntaxhighlighter/styles/shThemeDefault.css'
     ];
     public $js = [
+        'js/syntaxhighlighter_3.0.83/scripts/shCore.js',
+        'js/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

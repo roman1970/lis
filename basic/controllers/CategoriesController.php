@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\components\BackEndController;
 use app\models\Categories;
 use Yii;
+use yii\helpers\Url;
 
 class CategoriesController extends BackEndController
 {
@@ -36,9 +37,6 @@ class CategoriesController extends BackEndController
                 );
 
                 $model->makeRoot();
-                $cats = Categories::find()->roots()->all();
-                // $cats = Categories::find()->all();
-                return $this->render('index', ['cats' => $cats]);
 
             }
 
@@ -55,10 +53,37 @@ class CategoriesController extends BackEndController
                 //var_dump(Yii::$app->request->post('Categories')); exit;
                 $model->prependTo($rootCategory);
 
-                $cats = Categories::find()->roots()->all();
-                // $cats = Categories::find()->all();
-                return $this->render('index', ['cats' => $cats]);
+
             }
+            return $this->redirect(Url::toRoute('categories/index'));
+        }
+        else {
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        }
+
+    }
+
+    /**
+     * Редактирование категории
+     * @param $id
+     * @return string
+     * @throws \yii\web\HttpException
+     */
+    public function  actionUpdate($id){
+
+        $model = $this->loadModel($id);
+
+        if($model->load(Yii::$app->request->post())){
+
+                $model->name = Yii::$app->request->post('Categories')['name'];
+                $model->title = Yii::$app->request->post('Categories')['title'];
+                $model->site_id = Yii::$app->request->post('Categories')['site_id'];
+                $model->update();
+
+
+            return $this->redirect(Url::toRoute('categories/index'));
         }
         else {
             return $this->render('_form', [

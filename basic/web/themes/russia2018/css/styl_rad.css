@@ -5,6 +5,11 @@ body{
 
 }
 
+::-webkit-scrollbar{
+    width:3px;
+}
+
+
 #wrapper{
     background: #002211;
     margin: 0 auto;
@@ -50,6 +55,12 @@ body{
     left: 276px;
     top: 62px;
     letter-spacing: 5px;
+}
+
+.view {
+
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.50); /* Параметры тени */
+    padding: 10px;
 }
 
 #tel{
@@ -171,15 +182,15 @@ body{
 #practice{
     position: absolute;
    /* background:url(img/images/sh_03.jpg) no-repeat;*/
-    background-color: #002500;
-    height: 460px;
+    background-color: #031d2a;
+    height: 250px;
     width: 269px;
 
     left: 240px;
     border: 1px #006600 solid;
     border-radius: 10px 0 10px 0;
     top: 40px;
-    font-size: 15px;
+    font-size: 13px;
     color: white;
 
 }
@@ -255,7 +266,7 @@ body{
     color: #aaeaff;
 }
 
-#ques .aer{
+.aer{
 
     height: 20px;
     width: 245px;
@@ -292,33 +303,34 @@ body{
     background: #45626a;
     border: 2px solid #006600;
     height: 20px;
-    width: 75px;
+    width: 200px;
+    margin-top: 15px;
     color: #8fc4d6;
     border-radius: 0px 0 5px 0;
     cursor: pointer;
-    margin-left: 6px;
+    margin-left: 20px;
     vertical-align: baseline;
     padding-bottom: 2px;
     font-size: 10px;
 }
 
 
-#tele{
+.tele{
     position: absolute;
    /* background:url(img/images/sh_03_mir.jpg) no-repeat;*/
     background-color: #031d2a;
-    height: 189px;
+    height: 300px;
     width: 269px;
 
     left: 240px;
     border: 1px #006600 solid;
     border-radius: 10px 0 10px 0;
-    top: 515px;
+    top: 310px;
     font-size: 13px;
     color: white;
 }
 
-#tele p{
+.tele p{
     position: absolute;
     font-size: 18px;
     color: white;
@@ -327,7 +339,7 @@ body{
     letter-spacing: 2px;
 }
 
-#tele form{
+.tele form{
 
     padding-left: 20px;
     padding-top: 60px;
@@ -335,12 +347,12 @@ body{
 
 }
 
-#tele form a{
+.tele form a{
     color: #aaeaff;
     background-color:  #45616c;
 }
 
-#tele .aer{
+.tele .aer{
 
   
 
@@ -355,15 +367,12 @@ body{
 
 }
 
-#tele span{
+.tele span{
 
     color: #a7ecfc;
 
 }
 
-#tele .button{
-    margin-left: 200px;
-}
 
 select {
     background-color:  #45616c;
@@ -371,7 +380,7 @@ select {
 }
 
 
-#tele table .left {
+.tele table .left {
     text-align: right;
     color: #a7ecfc;
     text-shadow: gray 0px 0px 2px;
@@ -500,7 +509,11 @@ select {
     border: 1px #006600 solid;
     color: #a7ecfc;
     font-size: 30px;
+    overflow: auto;
     
+}
+#base input{
+    width: 50%;
 }
 
 .gr_tur  {
@@ -521,4 +534,139 @@ select {
 #emb img{
     padding-top: 10px;
     margin: 6px;
+}
+
+
+#match_date {
+    color:#009900;
+    font-size: 15px;
+    float: right;
+    padding-top: 3px;
+    margin: 0;
+    padding-right: 10px;
+}
+
+#match_tour{
+    color:#009900;
+    font-size: 18px;
+    margin: 0;
+    padding-left: 10px;
+
+}
+
+#match_tour:hover{
+    cursor: pointer;
+    color: #879971;
+}
+
+#mems_match {
+    color:#e0bd69;
+    font-size: 18px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+#ud{
+    color: #7db0e0;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+#falls{
+    color: #e05d1d;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+
+#stavki{
+    color: #e0c400;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+.left{
+
+    text-align: right;
+    width: 300px;
+    padding-left: 20px;
+}
+
+.center{
+    text-align: center;
+    width: 100px;
+
+
+}
+
+.right{
+    text-align: left;
+    width: 300px;
+    padding-right: 20px;
+
+
+}
+
+#mems_goal {
+    color:#BCE774;
+    font-size: 14px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+#mems_goal p{
+    text-align: center;
+}
+
+
+
+#strtabl{
+    color:#e0bd69;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+.mes{
+    text-align: right;
+    width: 10px;
+}
+
+.team{
+    text-align: left;
+    width: 200px;
+}
+
+.country{
+    text-align: left;
+    width: 200px;
+}
+
+.plays{
+
+}
+
+.zab{
+    text-align: right;
+    width: 20px;
+}
+
+.prop{
+    text-align: left;
+    width: 20px;
 }

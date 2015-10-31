@@ -6,6 +6,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 
 BardzillaAsset::register($this);
+//@TODO Предусмотреть переход по клику на меню на блок с контентом для мобильной версии
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

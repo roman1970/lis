@@ -66,6 +66,11 @@ class ArticlesContent extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Articles::className(), ['id' => 'articles_id']);
     }
+
+    public function getSource()
+    {
+        return $this->hasOne(Source::className(), ['id' => 'source_id']);
+    }
     /*
     public function getCategory()
     {
@@ -82,7 +87,7 @@ class ArticlesContent extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'articles_id' => 'Articles',
-            'body' => 'Текст1',
+            'body' => 'Текст',
             'minititle' => 'короткий заголовок',
             'img' => 'фото',
             'image' => 'фотография',

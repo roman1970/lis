@@ -30,6 +30,9 @@ $config = [
         'russia2018' => [
             'class' => 'app\modules\russia2018\Russia2018',
         ],
+        'knoledges' => [
+            'class' => 'app\modules\knoledges\Knoledges',
+        ],
 
     ],
     'components' => [

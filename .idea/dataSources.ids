@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="MySQL - plis@localhost" uuid="4d6ed56c-e134-4b1b-8376-01b0a74f0d7e">
-    <database-info product="MySQL" version="5.5.44-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+    <database-info product="MySQL" version="5.5.46-0ubuntu0.14.04.2" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
@@ -109,6 +109,12 @@
       <index name="ux_articles_fields_content_articles_fields_content_af_id" unique="false" columns="af_id"/>
       <index name="ux_articles_fields_content_articles_fields_content_article_id" unique="false" columns="article_id"/>
     </table>
+    <table name="authors" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="sources_ibfk_1" table="sources" schema="" catalog="plis" columns="author_id"/>
+    </table>
     <table name="block" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -170,6 +176,10 @@
     <table name="country" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="icon" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="iso_code" sqlType="VARCHAR" precision="24" scale="0" nullable="false" jdbcType="12"/>
+      <column name="soc_abrev" sqlType="VARCHAR" precision="24" scale="0" nullable="false" jdbcType="12"/>
+      <column name="soccer_code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="cities_ibfk_1" table="cities" schema="" catalog="plis" columns="country_id"/>
     </table>
@@ -218,6 +228,7 @@
       <column name="onehalf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="onehalf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="prim" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="info" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
       <column name="stra_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
       <column name="stra_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
       <column name="ud_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
@@ -897,12 +908,16 @@
       <column name="video" sqlType="VARCHAR" precision="225" scale="0" nullable="false" jdbcType="12"/>
       <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
       <column name="onepages" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
+      <column name="tags" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_ibfk_3" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="plis" columns="articles_id"/>
       <index name="ux_qparticles_qparticles_cat_id" unique="false" columns="cat_id"/>
       <index name="ux_qparticles_qparticles_site_id" unique="false" columns="site_id"/>
+      <index name="ux_qparticles_qparticles_source_id" unique="false" columns="source_id"/>
     </table>
     <table name="qparticles_content" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -914,9 +929,12 @@
       <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="likes" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_content_ibfk_2" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_content_ibfk_1" columns="articles_id" ref-table="qparticles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_qparticles_content_articles_id" unique="false" columns="articles_id"/>
+      <index name="ux_qparticles_content_qparticles_content_source_id" unique="false" columns="source_id"/>
     </table>
     <table name="qpcategory" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -936,8 +954,11 @@
       <column name="htmlveiw" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="tree" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="NA=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qpcategory_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="plis" columns="cat_id"/>
+      <index name="ux_qpcategory_qpcategory_site_id" unique="false" columns="site_id"/>
     </table>
     <table name="qpsites" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -948,6 +969,7 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="qpsites_ibfk_1" columns="user_id" ref-table="user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_ibfk_1" table="qparticles" schema="" catalog="plis" columns="site_id"/>
+      <exported-key name="qpcategory_ibfk_1" table="qpcategory" schema="" catalog="plis" columns="site_id"/>
     </table>
     <table name="ramler" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1121,6 +1143,16 @@
       <column name="like" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="albom" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="sources" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="author_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="sources_ibfk_1" columns="author_id" ref-table="authors" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="qparticles_ibfk_3" table="qparticles" schema="" catalog="plis" columns="source_id"/>
+      <exported-key name="qparticles_content_ibfk_2" table="qparticles_content" schema="" catalog="plis" columns="source_id"/>
+      <index name="ux_sources_sources_author_id" unique="false" columns="author_id"/>
     </table>
     <table name="statistic_ctr_ad" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT UNSIGNED" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
