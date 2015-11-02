@@ -50,9 +50,19 @@ class CountryController extends Controller
     }
 
     public function actionAddNewMatches(){
+       // Yii::$app->db->createCommand("SET NAMES 'utf8';");
+       //Yii::$app->db->createCommand("SET CHARACTER SET 'utf8';");
+       // Yii::$app->db->createCommand("SET SESSION collation_connection = 'utf8_general_ci';");
+
+
+
         $url = Url::to("@app/commands/tmpl.html");
 
         $content = file_get_contents($url);
+        //var_dump(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true)); exit;
+
+        //$content = iconv(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true), 'Windows-1251', $content);
+
         $content = str_replace(chr(9), '', $content);
         $content = str_replace(chr(11), '', $content);  // заменяем табуляцию на пробел
         $content = str_replace(chr(13), '', $content);
@@ -121,9 +131,8 @@ class CountryController extends Controller
 
 
             $dom = new \DomDocument();
-
-            $head = "";
-            $match = $head . $chars[$m]; //добавляем хэдер
+            libxml_use_internal_errors(true);
+            $match = $chars[$m]; //добавляем хэдер
             $dom->loadHTML($match);
 
 
@@ -141,10 +150,10 @@ class CountryController extends Controller
                 if ($node->getAttribute('id') === 'tab-statistics-0-statistic')
                 {
                     $dt = $node->nodeValue;
-                    $dom_in = new DomDocument();
+                    $dom_in = new \DomDocument();
                     $html = $node->ownerDocument->saveHTML($node);
-                    $newhtml = $head . $html;
-                    $dom_in->loadHTML($newhtml);
+                    libxml_use_internal_errors(true);
+                    $dom_in->loadHTML($html);
 
 
                     $tr = $dom_in->getElementsByTagName("tr");
@@ -418,9 +427,10 @@ class CountryController extends Controller
 
                         $stay = $node->nodeValue;
                         $sty = explode("Расстановка", $stay);
-
-                        $stay_h = $sty[0];
-                        $stay_g = $sty[1];
+                        if(is_array($stay)) {
+                            $stay_h = $sty[0];
+                            $stay_g = $sty[1];
+                        }
 
 
                     }
@@ -434,7 +444,7 @@ class CountryController extends Controller
                 if ($node->getAttribute('class') === 'summary-vertical fl')
                 {
                     $dt = $node->nodeValue;
-                    $dom_in = new DomDocument();
+                    $dom_in = new \DomDocument();
                     $html = $node->ownerDocument->saveHTML($node);
                     $dom_in->loadHTML($html);
 
@@ -484,7 +494,7 @@ class CountryController extends Controller
 
                 if ($node->getAttribute('class') === 'summary-vertical fr') {
                     $dt = $node->nodeValue;
-                    $dom_in = new DomDocument();
+                    $dom_in = new \DomDocument();
                     $html = $node->ownerDocument->saveHTML($node);
                     $dom_in->loadHTML($html);
                     $dv = $dom_in->getElementsByTagName("div");
@@ -591,10 +601,73 @@ class CountryController extends Controller
             if($pen_miss_g) $pen_miss_g = addslashes($pen_miss_g);
             if($stra_g) $stra_g = addslashes($stra_g);
 
-            if (isset($date) && ($tournament != '') && isset($host) && ($host != ''))
-                $result = mysql_query("INSERT INTO `foo_matches` (date, time, tournament, host, guest, gett, lett, stay_h, stay_g, yel_kart_h, red_kart_h, yel_kart_g, red_kart_g, substit_h, substit_g, goul_h, goul_g, pen_miss_h, pen_miss_g, onehalf_h, onehalf_g, prim, stra_h, stra_g, ud_h, ud_g, ud_mim_h, ud_mim_g, offside_h, offside_g, falls_h, falls_g, ud_v_stv_h, ud_v_stv_g, corner_h, corner_g, saves_h, saves_g, yelkar_h, yelkar_g, ballpos_h, ballpos_g, shtraf_h, shtraf_g, outs_h, outs_g, bet_h, bet_n, bet_g) VALUES ('$date', '$time','$tournament', '$host', '$guest', '$gett', '$lett', '$stay_h', '$stay_g', '$yel_kart_h', '$red_kart_h', '$yel_kart_g', '$red_kart_g', '$substit_h', '$substit_g', '$goul_h',  '$goul_g', '$pen_miss_h', '$pen_miss_g', '$onehalf_h', '$onehalf_g', '$prim', '$stra_h', '$stra_g', '$ud_h', '$ud_g', '$ud_mim_h', '$ud_mim_g', '$offside_h', '$offside_g', '$falls_h', '$falls_g', '$ud_v_stv_h', '$ud_v_stv_g', '$corner_h', '$corner_g', '$saves_h', '$saves_g', '$yelkar_h', '$yelkar_g', '$ballpos_h', '$ballpos_g', '$shtraf_h', '$shtraf_g', '$outs_h', '$outs_g', '$bet_h', '$bet_n', '$bet_g')") or die("Error in sql: <br>$sql<br>" . mysql_error());
+            if (isset($date) && ($tournament != '') && isset($host) && ($host != '')) {
+                $match = new Matches();
+                $match->date = $date;
+                $match->time = $time;
+                $match->tournament = $tournament;
+                $match->host = $host;
+                $match->guest = $guest;
+                $match->gett = $gett;
+                $match->lett = $lett;
+                $match->stay_h = $stay_h;
+                $match->stay_g = $stay_g;
+                $match->yel_kart_h = $yel_kart_h;
+                $match->yel_kart_g = $yel_kart_g;
+                $match->red_kart_h = $red_kart_h;
+                $match->red_kart_g = $red_kart_g;
+                $match->substit_h = $substit_h;
+                $match->substit_g = $substit_g;
+                $match->goul_h = $goul_h;
+                $match->goul_g = $goul_g;
+                $match->pen_miss_h = $pen_miss_h;
+                $match->pen_miss_g = $pen_miss_g;
+                $match->onehalf_h = $onehalf_h;
+                $match->onehalf_g = $onehalf_g;
+                $match->prim = $prim;
+                $match->stra_h = $stra_h;
+                $match->stra_g = $stra_g;
+                $match->ud_h = $ud_h;
+                $match->ud_g = $ud_g;
+                $match->ud_mim_h = $ud_mim_h;
+                $match->ud_mim_g = $ud_mim_g;
+                $match->offside_h = $offside_h;
+                $match->offside_g = $offside_g;
+                $match->falls_h = $falls_h;
+                $match->falls_g = $falls_g;
+                $match->ud_v_stv_h = $ud_v_stv_h;
+                $match->ud_v_stv_g = $ud_v_stv_g;
+                $match->corner_h = $corner_h;
+                $match->corner_g = $corner_g;
+                $match->saves_h = $saves_h;
+                $match->saves_g = $saves_g;
+                $match->yelkar_h = $yelkar_h;
+                $match->yelkar_g = $yelkar_g;
+                $match->ballpos_h = $ballpos_h;
+                $match->ballpos_g = $ballpos_g;
+                $match->shtraf_h = $shtraf_h;
+                $match->shtraf_g = $shtraf_g;
+                $match->outs_h = $outs_h;
+                $match->outs_g = $outs_g;
+                $match->bet_h = $bet_h;
+                $match->bet_n = $bet_n;
+                $match->bet_g = $bet_g;
+
+                $match->save(false);
+
+            }
 
 
+           /*
+
+                $result = Yii::app()->db->createCommand("INSERT INTO 'foo_matches'
+(date, time, tournament, host, guest, gett, lett, stay_h, stay_g, yel_kart_h, red_kart_h, yel_kart_g,
+           red_kart_g, substit_h, substit_g, goul_h, goul_g, pen_miss_h, pen_miss_g, onehalf_h, onehalf_g,
+           prim, stra_h, stra_g, ud_h, ud_g, ud_mim_h, ud_mim_g, offside_h, offside_g,
+           falls_h, falls_g, ud_v_stv_h, ud_v_stv_g, corner_h, corner_g, saves_h, saves_g,
+           yelkar_h, yelkar_g, ballpos_h, ballpos_g, shtraf_h, shtraf_g, outs_h, outs_g, bet_h, bet_n, bet_g) VALUES ('$date', '$time','$tournament', '$host', '$guest', '$gett', '$lett', '$stay_h', '$stay_g', '$yel_kart_h', '$red_kart_h', '$yel_kart_g', '$red_kart_g', '$substit_h', '$substit_g', '$goul_h',  '$goul_g', '$pen_miss_h', '$pen_miss_g', '$onehalf_h', '$onehalf_g', '$prim', '$stra_h', '$stra_g', '$ud_h', '$ud_g', '$ud_mim_h', '$ud_mim_g', '$offside_h', '$offside_g', '$falls_h', '$falls_g', '$ud_v_stv_h', '$ud_v_stv_g', '$corner_h', '$corner_g', '$saves_h', '$saves_g', '$yelkar_h', '$yelkar_g', '$ballpos_h', '$ballpos_g', '$shtraf_h', '$shtraf_g', '$outs_h', '$outs_g', '$bet_h', '$bet_n', '$bet_g')");
+
+*/
         }
     }
 }

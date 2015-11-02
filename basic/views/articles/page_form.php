@@ -40,11 +40,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($upload, 'file')->fileInput() ?>
             <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
                 ['prompt' => 'Выбрать источник'])  ?>
+            <?php if(!$redactor) :   ?>
+                <?= $form->field($model, 'body')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
+            <?php else : ?>
+
             <?= $form->field($model, 'body')->widget(Widget::classname(), [
                 'settings' => [
                     'lang' => 'ru',
                     'minHeight' => 300,
                     'pastePlainText' => true,
+                    //'buttons' => ['html', 'formatting', 'bold', 'italic'],
                     'buttonSource' => true,
                     'plugins' => [
                         'clips',
@@ -59,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ]);?>
 
-
+            <?php endif; ?>
 
 
             <div class="form-group">

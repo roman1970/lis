@@ -92,6 +92,8 @@ class ArticlesController extends BackEndController
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
             $model->tags = Yii::$app->request->post('Articles')['tags'];
+            if(Yii::$app->request->post('Articles')['redactor']) $model->redactor = 1;
+            else $model->redactor = 0;
             if(isset(Yii::$app->request->post('Articles')['source_id']))$model->source_id = Yii::$app->request->post('Articles')['source_id'];
              else $model->source_id = 2;
             if(isset($uploadFile->file))
@@ -144,6 +146,8 @@ class ArticlesController extends BackEndController
             $model->alias = TranslateHelper::translit(Yii::$app->request->post('Articles')['title']);
             $model->site_id = Yii::$app->request->post('Articles')['site_id'];
             $model->cat_id = Yii::$app->request->post('Articles')['cat_id'];
+            if(Yii::$app->request->post('Articles')['redactor']) $model->redactor = 1;
+            else $model->redactor = 0;
             if(isset(Yii::$app->request->post('Articles')['source_id']))$model->source_id = Yii::$app->request->post('Articles')['source_id'];
                 else $model->source_id = 2;
             if(isset($uploadFile->file))
@@ -198,6 +202,8 @@ class ArticlesController extends BackEndController
 
         $artContent = new ArticlesContent;
 
+        $redactor = $this->loadModel($id)->redactor;
+
         $upload = new UploadForm();
 
         if (Yii::$app->request->isPost) {
@@ -233,7 +239,6 @@ class ArticlesController extends BackEndController
                 'content' => $dataCont,
                 'model' => $artContent,
 
-
             ]);
 
         } else {
@@ -241,6 +246,8 @@ class ArticlesController extends BackEndController
             return $this->render('page_form', [
                 'model' => $artContent,
                 'upload' => $upload,
+                'redactor' => $redactor
+
             ]);
         }
 

@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt' => 'Выбрать категорию'])  ?>
             <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
                 ['prompt' => 'Выбрать источник'])  ?>
+            <?= $form->field($model, 'redactor')->checkbox() ?>
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?= $form->field($model, 'tags')->textInput()  ?>
             <?= $form->field($uploadFile, 'file')->fileInput() ?>

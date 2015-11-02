@@ -1409,6 +1409,61 @@
       <column name="soccer_code" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="foo_matches" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="time" sqlType="VARCHAR" precision="25" scale="0" nullable="true" jdbcType="12"/>
+      <column name="tournament" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gett" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lett" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="stay_h" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stay_g" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
+      <column name="yel_kart_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="red_kart_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="yel_kart_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="red_kart_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="substit_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="substit_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="goul_h" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="goul_g" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pen_miss_h" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pen_miss_g" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="onehalf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="onehalf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="info" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stra_h" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="stra_g" sqlType="VARCHAR" precision="1000" scale="0" nullable="false" jdbcType="12"/>
+      <column name="ud_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_mim_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_mim_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offside_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="offside_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="falls_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_v_stv_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ud_v_stv_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="corner_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="saves_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelkar_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="yelkar_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ballpos_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ballpos_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="shtraf_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_h" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="outs_g" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="bet_h" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_n" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_g" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="id" unique="false" columns="id"/>
+    </table>
     <table name="migration" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="version" sqlType="VARCHAR" precision="180" scale="0" nullable="false" jdbcType="12"/>
       <column name="apply_time" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
@@ -1444,6 +1499,7 @@
       <column name="tags" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_ibfk_3" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="articles_id"/>
@@ -1461,9 +1517,12 @@
       <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="count" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="likes" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qparticles_content_ibfk_2" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_content_ibfk_1" columns="articles_id" ref-table="qparticles" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_qparticles_content_articles_id" unique="false" columns="articles_id"/>
+      <index name="ux_qparticles_content_qparticles_content_source_id" unique="false" columns="source_id"/>
     </table>
     <table name="qpcategory" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1483,8 +1542,11 @@
       <column name="htmlveiw" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="tree" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qpcategory_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="gb_x_qplis" columns="cat_id"/>
+      <index name="ux_qpcategory_qpcategory_site_id" unique="false" columns="site_id"/>
     </table>
     <table name="qpsites" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1494,6 +1556,7 @@
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="qparticles_ibfk_1" table="qparticles" schema="" catalog="gb_x_qplis" columns="site_id"/>
+      <exported-key name="qpcategory_ibfk_1" table="qpcategory" schema="" catalog="gb_x_qplis" columns="site_id"/>
     </table>
     <table name="social_account" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1512,6 +1575,8 @@
       <column name="author_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="sources_ibfk_1" columns="author_id" ref-table="authors" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="qparticles_ibfk_3" table="qparticles" schema="" catalog="gb_x_qplis" columns="source_id"/>
+      <exported-key name="qparticles_content_ibfk_2" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="source_id"/>
       <index name="ux_sources_sources_author_id" unique="false" columns="author_id"/>
     </table>
     <table name="token" schema="" catalog="gb_x_qplis" type="TABLE">
