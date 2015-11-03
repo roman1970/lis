@@ -132,7 +132,9 @@ class CountryController extends Controller
 
             $dom = new \DomDocument();
             libxml_use_internal_errors(true);
-            $match = $chars[$m]; //добавляем хэдер
+            $head = file_get_contents(Url::to("@app/commands/header.html"));
+            $match = $head . $chars[$m]; //добавляем хэдер
+
             $dom->loadHTML($match);
 
 
@@ -584,7 +586,7 @@ class CountryController extends Controller
                     $onehalf_g = (int) $node->nodeValue;
             }
 
-
+        /*
             if($host) $host = addslashes($host);
             if($yel_kart_h) $yel_kart_h = addslashes($yel_kart_h);
             if($red_kart_h) $red_kart_h = addslashes($red_kart_h);
@@ -600,9 +602,11 @@ class CountryController extends Controller
             if($goul_g) $goul_g = addslashes($goul_g);
             if($pen_miss_g) $pen_miss_g = addslashes($pen_miss_g);
             if($stra_g) $stra_g = addslashes($stra_g);
+        */
 
             if (isset($date) && ($tournament != '') && isset($host) && ($host != '')) {
                 $match = new Matches();
+
                 $match->date = $date;
                 $match->time = $time;
                 $match->tournament = $tournament;
