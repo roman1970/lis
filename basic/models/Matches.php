@@ -12,6 +12,8 @@ use yii\base\Model;
 
 class Matches extends \yii\db\ActiveRecord
 {
+    public $events_h;
+    public $events_g;
 
     /**
      * @inheritdoc
@@ -132,4 +134,150 @@ class Matches extends \yii\db\ActiveRecord
         else return false;
 
     }
+
+    public function substitH_str()
+    {
+        if ($this->substit_h != '') {
+
+
+            $exp_substit = explode(",", $this->substit_h, -1);
+
+            foreach ( $exp_substit as $value) {
+                echo  $value . "(замена)<br />";
+            }
+        }
+
+        else return false;
+
+
+    }
+
+    public function substitG_str()
+    {
+        if ($this->substit_g != '') {
+
+            $exp_substit = explode(",", $this->substit_g, -1);
+
+            foreach ($exp_substit as $value) {
+                echo  $value . "(замена)<br />";
+            }
+        }
+
+        else return false;
+
+
+    }
+
+    public function penMissH_str()
+    {
+        if ($this->pen_miss_h != '') {
+
+
+            $exp_penmiss = explode(",", $this->pen_miss_h, -1);
+
+            foreach ( $exp_penmiss as $value) {
+                echo $value . "<br />";
+            }
+        }
+
+        else return false;
+
+
+    }
+
+    public function penMissG_str()
+    {
+        if ($this->pen_miss_g != '') {
+
+            $exp_penmiss = explode(",", $this->pen_miss_g, -1);
+
+            foreach ($exp_penmiss as $value) {
+                echo $value . "<br />";
+            }
+        }
+
+        else return false;
+
+
+    }
+
+    /**
+     * Все события матча у хоэяев
+     */
+    public function allMatchEventsH(){
+        $this->events_h = explode(',',$this->goalH_str().$this->penMissH_str().$this->redCardH_str().$this->substitH_str());
+        $this->events_h = sort($this->events_h);
+        var_dump($this->events_h);
+        /*foreach ($this->events_h as $value) {
+            echo $value . "<br />";
+        }
+        */
+
+    }
+
+    /**
+     * Все события матча у гостей
+     */
+    public function allMatchEventsG(){
+
+        $this->events_g = explode(',',$this->goalG_str().$this->penMissG_str().$this->redCardG_str().$this->substitG_str());
+        $this->events_g = sort($this->events_g, SORT_REGULAR);
+        echo $this->events_g;
+        /*
+        foreach ($this->events_g as $value) {
+            echo $value . "<br />";
+        }
+        */
+
+    }
+
+    /**
+     * Тренер хозяев
+     * "TODO +couch[2]
+     */
+    public function getCoachH(){
+
+        if ($this->stra_h != '') {
+
+            $players = explode(',', $this->stra_h);
+
+            $couch = explode('-', $players[count($players) - 2]);
+
+            if (preg_match('/\d/', $couch[1])) {
+                    return false;
+
+            }
+            else  return trim($couch[1]);
+        }
+
+        else return false;
+
+    }
+
+    /**
+     * Тренер гостей
+     */
+    public function getCoachG(){
+
+        if ($this->stra_h != '') {
+
+            $players = explode(',', $this->stra_g);
+
+            $couch = explode('-', $players[count($players) - 2]);
+
+            if (preg_match('/\d/', $couch[1])) {
+                return false;
+
+            }
+            else  return trim($couch[1]);
+
+        }
+        else return false;
+
+    }
+
+
+
+
+
 }

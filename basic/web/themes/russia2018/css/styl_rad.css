@@ -279,6 +279,12 @@ body{
 
 }
 
+.prim{
+    text-align: center;
+    font-size: 12px;
+    color: #00c077;
+}
+
 #ques .mes{
 
     height: 60px;
@@ -570,6 +576,15 @@ select {
 
 #ud{
     color: #7db0e0;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+#coach{
+    color: #24e08d;
     font-size: 15px;
 
     margin: 0;

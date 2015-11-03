@@ -253,14 +253,31 @@ use yii\bootstrap\Nav;
 
                             </tr>
                         </table>
+
+                        <?php if($match->prim) : ?>
+                            <p class="prim"><?=$match->prim ?></p>
+                        <?php endif; ?>
                         <table id="mems_goal" cellpadding="0" >
                             <tr>
-                                <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?></td>
+                                <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?><?php echo $match->penMissH_str(); ?></td>
                                 <td class="center"></td>
-                                <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?></td>
+                                <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?><?php echo $match->penMissG_str(); ?></td>
 
                             </tr>
                         </table>
+
+                        <?php if($match->getCoachH() != '' || $match->getCoachG() != '') : ?>
+
+                            <table id="coach" cellpadding="0" >
+                                <tr>
+                                    <td class="left"><?php echo $match->getCoachH(); ?></td>
+                                    <td class="center">тренер</td>
+                                    <td class="right"><?php echo $match->getCoachG(); ?></td>
+
+                                </tr>
+                            </table>
+
+                        <?php endif; ?>
 
                         <?php if($match->ud_h != 0 && $match->ud_g != 0) : ?>
 
