@@ -9,8 +9,9 @@ namespace app\commands;
 
 use app\models\Matches;
 use yii\console\Controller;
-
+use app\components\DocxConverter;
 use app\models\Country;
+use app\models\Articles;
 use Yii;
 use yii\helpers\Url;
 
@@ -49,12 +50,30 @@ class CountryController extends Controller
         print_r(array_unique($arr));
     }
 
+    public function actionTransformFile(){
+        $docObj = new DocxConverter(Url::to("web/uploads/file.docx"));
+
+        $docText = $docObj->convertToText();
+
+        $result = preg_split("/(\.poe\s|\.his\s|\.che\s|\.pc\s|\.pc-his\s|\.foo\s|\.pic\s|\.se\s|\.enc\s|\.mat\s|\.myt-gb\s|\.myt-gb\s)/",$docText, -1, PREG_SPLIT_DELIM_CAPTURE);
+        $model = new Articles();
+        $model->text = $result[0];
+        $model->title = '';
+        $model->alias = '';
+        $model->site_id = 7;
+        $model->cat_id = 57;
+        $model->tags = '';
+        $model->source_id = 2;
+
+        if($model->save(false)) echo "Head copied";
+
+
+    }
+
+    /**
+     * Добавление новых матчей в foo_matches
+     */
     public function actionAddNewMatches(){
-       // Yii::$app->db->createCommand("SET NAMES 'utf8';");
-       //Yii::$app->db->createCommand("SET CHARACTER SET 'utf8';");
-       // Yii::$app->db->createCommand("SET SESSION collation_connection = 'utf8_general_ci';");
-
-
 
         $url = Url::to("@app/commands/tmpl.html");
 
