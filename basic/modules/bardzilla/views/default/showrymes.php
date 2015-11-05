@@ -39,7 +39,9 @@ $(".accord p:not(:first)").hide();
         foreach ($article['contents'] as $conts) : ?>
 
             <h3 id="<?= $conts->id ?>"> <?= $conts->minititle ?></h3>
+            <?php if($article['source'] !== 'default') : ?>
             <span class="smallest"><?= $article['author'] ?> - <?= $article['source'] ?></span><br>
+            <?php endif; ?>
             <?php if($conts->audio) : ?>
             <audio controls="controls" >
                 <source src='<?=$conts->audio?>' type='audio/mpeg'>
