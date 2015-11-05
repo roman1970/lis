@@ -8,11 +8,16 @@
                 <div class="row">
 
                     <?php foreach ($articles as $article): ?>
-                        <a href="<?=Url::to('knoledges/default/show/'.$article->id);?>">
+                        <div class="article col-md-3 col-sm-3 col-xs-3">
+                            <a href="<?=Url::to('knoledges/default/show/'.$article->id);?>">
 
-                                <?=$article->title;?>
+                                <?=$article->title;?> </br>
+                                <?php if($article->img) : ?>
+                                    <img src="<?=Url::to($article->img)?>" />
+                                <?php endif; ?>
 
-                        </a>
+                            </a>
+                        </div>
                     <?php endforeach; ?>
 
                 </div>

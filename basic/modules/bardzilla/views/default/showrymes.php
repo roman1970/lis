@@ -39,7 +39,14 @@ $(".accord p:not(:first)").hide();
         foreach ($article['contents'] as $conts) : ?>
 
             <h3 id="<?= $conts->id ?>"> <?= $conts->minititle ?></h3>
+            <span class="smallest"><?= $article['author'] ?> - <?= $article['source'] ?></span><br>
+            <?php if($conts->audio) : ?>
+            <audio controls="controls" >
+                <source src='<?=$conts->audio?>' type='audio/mpeg'>
+            </audio>
+            <?php endif; ?>
             <p><?= nl2br($conts->body) ?><br>
+
                 <span class="smallest">просмотров: <?= $conts->count ?></span>
             </p>
             <span id="count"  style="display: none"><?= $conts->id ?></span>

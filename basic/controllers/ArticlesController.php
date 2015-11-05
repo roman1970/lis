@@ -263,6 +263,7 @@ class ArticlesController extends BackEndController
 
         $artContent = $this->loadModelcontent($id);
         $artId = $artContent->articles_id;
+        $redactor = $this->loadModel($artId)->redactor;
         $upload = new UploadForm();
         //var_dump($upload); exit;
         if (Yii::$app->request->isPost) {
@@ -305,6 +306,7 @@ class ArticlesController extends BackEndController
             return $this->render('page_form', [
                 'model' => $artContent,
                 'upload' => $upload,
+                'redactor' => $redactor
             ]);
         }
     }

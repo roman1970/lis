@@ -7,6 +7,8 @@ use app\models\ArticlesContent;
 use app\models\ContactForm;
 use Yii;
 use app\models\Categories;
+use app\models\Author;
+use app\models\Source;
 use yii\data\Pagination;
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
@@ -18,6 +20,8 @@ class DefaultController extends FrontEndController
     public $cat_id;
     public $article_id;
     public $articles = [];
+    public $source;
+    public $author;
 
     /**
      * @return string
@@ -83,8 +87,13 @@ class DefaultController extends FrontEndController
             $models = $allArticles->offset($pages->offset)
                 ->limit($pages->limit)
                 ->all();
+            $this->source = Source::find()->where(['id' => $models[0]->source_id])->one()->title;
+            $this->author = Author::find()->where(['id' => Source::find()->where(['id' => $models[0]->source_id])->one()->author_id])->one()->name;
 
-            $this->articles[]  = ['article' => $article,'contents' => $models, 'pages' => $pages];
+            $this->articles[]  = ['article' => $article,'contents' => $models, 'pages' => $pages,
+                'source' => $this->source,
+                'author' => $this->author
+               ];
 
 
         }
@@ -96,7 +105,8 @@ class DefaultController extends FrontEndController
                 'cat' => $this->cat_id,
                 'pagesGlobal' =>  $pagesGlobal,
                 'artPages' => $artPages,
-                'cat_obg' => $cat_obg
+                'cat_obg' => $cat_obg,
+
             ]);
 
 
