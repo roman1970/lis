@@ -174,7 +174,9 @@ class CountryController extends Controller
                     $dom_in = new \DomDocument();
                     $html = $node->ownerDocument->saveHTML($node);
                     libxml_use_internal_errors(true);
-                    $dom_in->loadHTML($html);
+                    $newhtml = $head . $html;
+                    $dom_in->loadHTML($newhtml);
+
 
 
                     $tr = $dom_in->getElementsByTagName("tr");
@@ -467,7 +469,9 @@ class CountryController extends Controller
                     $dt = $node->nodeValue;
                     $dom_in = new \DomDocument();
                     $html = $node->ownerDocument->saveHTML($node);
-                    $dom_in->loadHTML($html);
+                    $newhtml = $head . $html;
+                    $dom_in->loadHTML($newhtml);
+
 
 
                     $dv = $dom_in->getElementsByTagName("div");
