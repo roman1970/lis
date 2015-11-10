@@ -147,6 +147,7 @@ class CountryController extends Controller
             $prim = ''; //примечание
             $onehalf_h = 0; // голы хозяев в первой половине матча
             $onehalf_g = 0; // голы гостей в первой половине матча
+            $info = '';
 
 
             $dom = new \DomDocument();
@@ -458,7 +459,13 @@ class CountryController extends Controller
 
                     }
                 }
+
+                if ($node->getAttribute('class') === 'parts match-information') {
+                    $info = substr($node->nodeValue, 34);
+
             }
+
+        }
 
             $td = $dom->getElementsByTagName("td");
 
@@ -652,6 +659,7 @@ class CountryController extends Controller
                 $match->onehalf_h = $onehalf_h;
                 $match->onehalf_g = $onehalf_g;
                 $match->prim = $prim;
+                $match->info = $info;
                 $match->stra_h = $stra_h;
                 $match->stra_g = $stra_g;
                 $match->ud_h = $ud_h;
