@@ -259,7 +259,7 @@ class Matches extends \yii\db\ActiveRecord
      */
     public function getCoachG(){
 
-        if ($this->stra_h != '') {
+        if ($this->stra_g != '') {
 
             $players = explode(',', $this->stra_g);
 
@@ -273,6 +273,44 @@ class Matches extends \yii\db\ActiveRecord
 
         }
         else return false;
+
+    }
+
+    /**
+     * Вратарь хозяев
+     */
+    public function getKeeperH(){
+        if ($this->stra_h != '') {
+
+            $players = explode(',', $this->stra_h);
+            foreach ($players as $player) {
+                if(preg_match('/\(В\)/',$player)) {
+                    $keeper = preg_replace ("/[0-9\-]/","",$player);
+                    $keeper = preg_replace ("/\(В\)/","", $keeper);
+                    return $keeper;
+                }
+
+            }
+        }
+
+    }
+
+    /**
+     * Вратарь гостей
+     */
+    public function getKeeperG(){
+        if ($this->stra_g != '') {
+
+            $players = explode(',', $this->stra_g);
+            foreach ($players as $player) {
+                if(preg_match('/\(В\)/',$player)) {
+                    $keeper = preg_replace ("/[0-9\-]/","",$player);
+                    $keeper = preg_replace ("/\(В\)/","", $keeper);
+                    return $keeper;
+                }
+
+            }
+        }
 
     }
 

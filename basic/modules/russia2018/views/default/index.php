@@ -15,6 +15,8 @@ use yii\bootstrap\Nav;
         var country = $("#country");
         var country_limit = $("#country_limit");
         var country_bet = $("#country_bet");
+        var hoster = $("#hoster");
+        var guester = $("#guester");
 
 
         var k = false;
@@ -35,6 +37,12 @@ use yii\bootstrap\Nav;
         $("#choose_country").click(
             function() {
                 getCont(country.val(),country_limit.val(),country_bet.val());
+            }
+        );
+
+        $("#two_teams").click(
+            function() {
+                getMatches(hoster.val(),guester.val());
             }
         );
 
@@ -101,6 +109,26 @@ use yii\bootstrap\Nav;
 
         }
 
+        function getMatches(hoster, guester){
+            if(hoster === "") {
+                alert("Введите хозяина");
+                return false;
+            }
+            if(guester === "") {
+                alert("Введите гостя");
+                return false;
+            }
+            $.ajax({
+                type: "GET",
+                url: "russia2018/default/match/",
+                data: "hoster="+hoster+"&guester="+guester,
+                success: function(html){
+                    $("#base").html(html);
+                }
+
+            });
+
+        }
 
     });
 
@@ -124,14 +152,28 @@ use yii\bootstrap\Nav;
 <div id="wrapper">
 
 
-    <div id="head" class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div id="logo"><span style="font-size:40px; color:white;">М</span>ИРОВОЙ<span style=" position: relative; top:22px; left: 5px; padding: 0;"></span> ФУТБОЛ ПЕРЕД ЧЕМПИОНАТОМ МИРА -2018</div>
+    <div id="head" >
 
-            <div id="fam">В цифрах</div>
-        </div>
+
+
+            <div id="fam">Футбол 2014-2018
+                <form action="#" method="post">
+
+                    <span>Страна</span><input type='text' class="aer" id="country" size="30"/>
+                    <input type='hidden' class="aer" id="country_limit" size="30"/>
+                    <input type='hidden' class="aer" id="country_bet" size="30"/>
+
+
+                    <button class="button glyphicon glyphicon-search" id="choose_country" type="submit" ></button>
+                </form>
+
+
+            </div>
+
 
     </div>
+
+    <?php /*
 
     <div id="cont" class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -176,18 +218,38 @@ use yii\bootstrap\Nav;
                     <button class="button" id="send" type="submit" >Применить</button>
                 </div>
 
+                    <div class="tele">
+                        <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">К</span>ОМАНДА</p>
+
+                        <form action="#" method="post">
+
+                            <span>Команда:</span><br /><input type='text' class="aer" id="host"  size="30"/><br />
+
+                            <span>Количество последних матчей</span>: <br /><input type='text' class="aer" id="limit" size="30"/></p><br />
+                            <span>Ставка:</span><br /> <input type='text' class="aer" id="bet" size="30"/><br>
+                            <span style="font-size: 10px;">руб</span><br />
+
+
+                        </form>
+
+                        <button class="button" id="send" type="submit" >Применить</button>
+                    </div>
+
 
 
 
                 <div id="proud">
 
-                    <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">P</span>ROUDLY<span style="font-size: 22px; color:white;"> S</span>ERVING
-                    </p>
+                        <p style="vertical-align: baseline; "><span style="font-size:22px; color:white;">М</span>АТЧ</p>
 
-                    <table width="250">
+                        <form action="#" method="post">
 
+                            <span>Команда хозяин:</span><br /><input type='text' class="aer" id="hoster"  size="30"/><br />
+                            <span>Команда гость:</span><br /><input type='text' class="aer" id="guester"  size="30"/><br />
 
-                    </table>
+                        </form>
+
+                        <button class="button" id="two_teams" type="submit" >Найти</button>
 
                 </div>
 
@@ -212,8 +274,10 @@ use yii\bootstrap\Nav;
 
             </div>
         </div>
-        <div id="base" class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+
+ */ ?>
+        <div id="base">
+
 
                 <table id="mems_match" cellpadding="0" >
                     <tr>
@@ -279,6 +343,19 @@ use yii\bootstrap\Nav;
 
                         <?php endif; ?>
 
+                        <?php if($match->getKeeperH() != '' || $match->getKeeperG() != '') : ?>
+
+                            <table id="coach" cellpadding="0" >
+                                <tr>
+                                    <td class="left"><?php echo $match->getKeeperH(); ?></td>
+                                    <td class="center">вратарь</td>
+                                    <td class="right"><?php echo $match->getKeeperG(); ?></td>
+
+                                </tr>
+                            </table>
+
+                        <?php endif; ?>
+
                         <?php if($match->ud_h != 0 && $match->ud_g != 0) : ?>
 
                         <table id="ud" cellpadding="0" >
@@ -328,8 +405,9 @@ use yii\bootstrap\Nav;
 
                 <?php $r++; endforeach; ?>
 
-                </div>
+
         </div>
+        <?php /*
         <div class="row">
             <div class="col-md-3 col-sm-3 col-xs-3">
                 <div id="testimon">
@@ -356,6 +434,7 @@ use yii\bootstrap\Nav;
                 </div>
             </div>
         </div>
+        */ ?>
     </div>
 </div>
 </div>

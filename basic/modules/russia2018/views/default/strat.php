@@ -59,6 +59,18 @@
             </table>
 
         <?php endif; ?>
+        <?php if($match->getKeeperH() != '' || $match->getKeeperG() != '') : ?>
+
+            <table id="coach" cellpadding="0" >
+                <tr>
+                    <td class="left"><?php echo $match->getKeeperH(); ?></td>
+                    <td class="center">вратарь</td>
+                    <td class="right"><?php echo $match->getKeeperG(); ?></td>
+
+                </tr>
+            </table>
+
+        <?php endif; ?>
 
     <?php if($match->ud_h != 0 && $match->ud_g != 0) : ?>
 

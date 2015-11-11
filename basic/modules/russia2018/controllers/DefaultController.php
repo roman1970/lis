@@ -204,6 +204,57 @@ class DefaultController extends FrontEndController
 
     }
 
+    public function actionMatch() {
+        $model = new Strategy();
+        if(Yii::$app->getRequest()->getQueryParam('hoster')) {
+            $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
+            $hoster = trim($hoster);
+        }
+        else $hoster = 'ЦСКА';
+        if(Yii::$app->getRequest()->getQueryParam('guester')) {
+
+            $guester = Yii::$app->getRequest()->getQueryParam('guester');
+            $guester = trim($guester);
+        }
+        else $guester = 'Манчестер Юнайтед';
+
+        $matchs = Matches::find()
+            ->orderBy('id DESC')
+            // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+            ->where("host like('%".$hoster."%') and guest like('%".$guester."%')")
+            ->all();
+
+        foreach ($matchs as $match) {
+            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
+                if ($match->gett > $match->lett) {
+                    $this->bet_h += ($match->bet_h - 1);
+                    $this->bet_n--;
+                    $this->bet_g--;
+                }
+                if ($match->gett == $match->lett) {
+                    $this->bet_n += ($match->bet_n - 1);
+                    $this->bet_h--;
+                    $this->bet_g--;
+                }
+                if ($match->gett < $match->lett) {
+                    $this->bet_g += ($match->bet_g - 1);
+                    $this->bet_n--;
+                    $this->bet_h--;
+                }
+            }
+        }
+
+        return $this->renderPartial('strat', ['matchs' => $matchs,
+            'model' => $model,
+            'bet_h' => $this->bet_h,
+            'bet_n' => $this->bet_n,
+            'bet_g' => $this->bet_g,
+        ]);
+
+
+
+    }
+
 
 
 }
