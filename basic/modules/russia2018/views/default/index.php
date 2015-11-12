@@ -64,36 +64,49 @@ use yii\bootstrap\Nav;
 
 
 
-        function sendMess(limit, host,  bet) {
+
+    });
+
+    function sendMess(limit, host,  bet) {
 
 
-            //Валидация
-            if (host === "" && guest === "") {
-                alert("Введите хотя бы одну команду");
-                return false;
-            }
+        //Валидация
+        if (host === "" && guest === "") {
+            alert("Введите хотя бы одну команду");
+            return false;
+        }
 
-            if (host === "") {
-                host = "UIU";
-            }
-
-
-            $.ajax({
-                type: "GET",
-                url: "russia2018/default/strateg/",
-                data: "host="+host+"&limit="+limit+"&bet="+bet,
-                success: function(html){
-                    $("#base").html(html);
-                }
-
-            });
-
+        if (host === "") {
+            host = "UIU";
         }
 
 
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/strateg/",
+            data: "host="+host+"&limit="+limit+"&bet="+bet,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/strategu/",
+            data: "host="+host+"&limit="+limit+"&bet="+bet,
+            success: function(html){
+                $("#bets").html(html);
+            }
+
+        });
 
 
-    });
+    }
+
+
+
+
 
     function getMatches(hoster, guester){
         if(hoster === "") {

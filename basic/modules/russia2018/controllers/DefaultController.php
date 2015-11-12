@@ -60,7 +60,10 @@ class DefaultController extends FrontEndController
                 'bet_g' => $this->bet_g]);
         }
 
-
+    /**
+     * Команда
+     * @return string
+     */
     public function actionStrateg() {
 
         if(Yii::$app->getRequest()->getQueryParam('host')) $team = Yii::$app->getRequest()->getQueryParam('host');
@@ -110,6 +113,60 @@ class DefaultController extends FrontEndController
             'bet' => $bet
         ]);
     }
+
+    /**
+     * Команда - данные
+     * @return string
+     */
+    public function actionStrategu() {
+
+        if(Yii::$app->getRequest()->getQueryParam('host')) $team = Yii::$app->getRequest()->getQueryParam('host');
+        else $team = '';
+
+        if(Yii::$app->getRequest()->getQueryParam('limit')) $limit = Yii::$app->getRequest()->getQueryParam('limit');
+        else $limit = 10;
+
+        if(Yii::$app->getRequest()->getQueryParam('bet')) $bet = (int)Yii::$app->getRequest()->getQueryParam('bet');
+        else $bet = 1;
+
+        $model = new Strategy();
+
+        $matchs = Matches::find()
+            ->orderBy('id DESC')
+            // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+            ->where("host like('%".$team."%') or guest like('%".$team."%')")
+            ->limit($limit)
+            ->all();
+        //$cats = Categories::find()->leaves()->all();
+        foreach ($matchs as $match) {
+            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
+                if ($match->gett > $match->lett) {
+                    $this->bet_h += ($match->bet_h - 1);
+                    $this->bet_n--;
+                    $this->bet_g--;
+                }
+                if ($match->gett == $match->lett) {
+                    $this->bet_n += ($match->bet_n - 1);
+                    $this->bet_h--;
+                    $this->bet_g--;
+                }
+                if ($match->gett < $match->lett) {
+                    $this->bet_g += ($match->bet_g - 1);
+                    $this->bet_n--;
+                    $this->bet_h--;
+                }
+            }
+        }
+
+
+        return $this->renderPartial('bets', [
+            'bet_h' => $this->bet_h*$bet,
+            'bet_n' => $this->bet_n*$bet,
+            'bet_g' => $this->bet_g*$bet,
+
+        ]);
+    }
+
 
     /**
      * Запрос по стране
