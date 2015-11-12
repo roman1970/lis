@@ -1,19 +1,3 @@
-<table id="mems_match" cellpadding="0" >
-    <tr>
-        <td class="left">Если бы поставил на победу, выигрыш </td>
-        <td class="center">Если бы поставил на ничью, выигрыш  </td>
-        <td class="right">Если бы поставил на поражение, выигрыш  </td>
-
-    </tr>
-</table>
-<table id="mems_match" cellpadding="0" >
-    <tr>
-        <td class="left"><?=$bet_h ?></td>
-        <td class="center"><?=$bet_n ?></td>
-        <td class="right"><?=$bet_g ?></td>
-    </tr>
-</table>
-
 <?php $r=0; foreach ($matchs as $match) : ?>
     <div class="view">
 

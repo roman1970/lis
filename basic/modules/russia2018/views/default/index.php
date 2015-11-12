@@ -90,47 +90,72 @@ use yii\bootstrap\Nav;
 
         }
 
-        function getCont(country,country_limit,country_bet){
-            if (country === "") {
-                alert("Введите страну");
-                return false;
-            }
 
 
-            $.ajax({
-                type: "GET",
-                url: "russia2018/default/country/",
-                data: "country="+country+"&country_limit="+country_limit+"&country_bet="+country_bet,
-                success: function(html){
-                    $("#base").html(html);
-                }
-
-            });
-
-        }
-
-        function getMatches(hoster, guester){
-            if(hoster === "") {
-                alert("Введите хозяина");
-                return false;
-            }
-            if(guester === "") {
-                alert("Введите гостя");
-                return false;
-            }
-            $.ajax({
-                type: "GET",
-                url: "russia2018/default/match/",
-                data: "hoster="+hoster+"&guester="+guester,
-                success: function(html){
-                    $("#base").html(html);
-                }
-
-            });
-
-        }
 
     });
+
+    function getMatches(hoster, guester){
+        if(hoster === "") {
+            alert("Введите хозяина");
+            return false;
+        }
+        if(guester === "") {
+            alert("Введите гостя");
+            return false;
+        }
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/match/",
+            data: "hoster="+hoster+"&guester="+guester,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/matchu/",
+            data: "hoster="+hoster+"&guester="+guester,
+            success: function(html){
+                $("#bets").html(html);
+            }
+
+        });
+
+    }
+
+
+
+    function getCont(country,country_limit,country_bet){
+        if (country === "") {
+            alert("Введите страну");
+            return false;
+        }
+
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/country/",
+            data: "country="+country+"&country_limit="+country_limit+"&country_bet="+country_bet,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/countryu/",
+            data: "country="+country+"&country_limit="+country_limit+"&country_bet="+country_bet,
+            success: function(html){
+                $("#bets").html(html);
+            }
+
+        });
+
+    }
 
     function getTour(i) {
         var tournament = $(".tour"+i).html();
@@ -140,6 +165,15 @@ use yii\bootstrap\Nav;
             data: "tournament="+tournament,
             success: function(html){
                 $("#base").html(html);
+            }
+
+        });
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/tournamentu/",
+            data: "tournament="+tournament,
+            success: function(html){
+                $("#bets").html(html);
             }
 
         });
@@ -155,18 +189,42 @@ use yii\bootstrap\Nav;
     <div id="head" >
 
 
+            <div id="fam"><h3>Футбольные матчи мира 2014-2018</h3>
 
-            <div id="fam">Футбол 2014-2018
-                <form action="#" method="post">
-
-                    <span>Страна</span><input type='text' class="aer" id="country" size="30"/>
-                    <input type='hidden' class="aer" id="country_limit" size="30"/>
+                    <span>Страна</span><input type='text' class="aer" id="country" size="35" placeholder="Первые буквы страны и кол-во последних матчей>"/>
+                    <input type='text' class="aer" id="country_limit" size="1" placeholder="10"/>
                     <input type='hidden' class="aer" id="country_bet" size="30"/>
+                    <button class="button glyphicon glyphicon-search" id="choose_country" ></button><br>
 
 
-                    <button class="button glyphicon glyphicon-search" id="choose_country" type="submit" ></button>
-                </form>
+                    <span>Команда</span><input type='text' class="aer" id="host" size="35" placeholder="Команда и кол-во последних матчей>"/>
+                    <input type='text' class="aer" id="limit" size="1" placeholder="10"/>
+                    <input type='hidden' class="aer" id="bet" size="30"/>
+                    <button class="button glyphicon glyphicon-search" id="send" ></button>
 
+                    <p>Матч</p>
+
+                    <input type='text' class="aer" id="hoster"  size="20"/> - <input type='text' class="aer" id="guester"  size="20"/>
+                    <button class="button glyphicon glyphicon-search" id="two_teams"  ></button>
+                <div id="bets">
+                    <p>Если поставить на один исход во всех этих матчах</p>
+                    <table id="bet" cellpadding="0" >
+                        <tr>
+                            <td class="left_bet">На хозяев</td>
+                            <td class="center_bet">На ничью</td>
+                            <td class="right_bet">На гостей</td>
+
+                        </tr>
+                    </table>
+                    <p>Можно было бы выиграть (- проиграть) *ставка</p>
+                    <table id="bet" cellpadding="0" >
+                        <tr>
+                            <td class="left_bet_cyph"><?=$bet_h ?></td>
+                            <td class="center_bet_cyph"><?=$bet_n ?></td>
+                            <td class="right_bet_cyph"><?=$bet_g ?></td>
+                        </tr>
+                    </table>
+                </div>
 
             </div>
 
@@ -277,23 +335,6 @@ use yii\bootstrap\Nav;
 
  */ ?>
         <div id="base">
-
-
-                <table id="mems_match" cellpadding="0" >
-                    <tr>
-                        <td class="left">Если бы поставил на победу, выигрыш </td>
-                        <td class="center">Если бы поставил на ничью, выигрыш  </td>
-                        <td class="right">Если бы поставил на поражение, выигрыш  </td>
-
-                    </tr>
-                </table>
-                <table id="mems_match" cellpadding="0" >
-                    <tr>
-                        <td class="left"><?=$bet_h ?></td>
-                        <td class="center"><?=$bet_n ?></td>
-                        <td class="right"><?=$bet_g ?></td>
-                    </tr>
-                </table>
 
                 <?php $r=0; foreach ($matchs as $match) : ?>
                     <div class="view">
@@ -435,8 +476,8 @@ use yii\bootstrap\Nav;
             </div>
         </div>
         */ ?>
-    </div>
+
 </div>
-</div>
+
 
 

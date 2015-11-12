@@ -18,10 +18,10 @@ body{
 }
 
 #head {
-    background-image: url(../images/tablo.png);
-    background-repeat: no-repeat;
+    background: url(../images/tablo.png) 0 0 no-repeat;
+   /* background-repeat: no-repeat;*/
    /* position: relative;*/
-    height: 425px;
+    height: 600px;
     width: 900px;
 }
 
@@ -59,6 +59,11 @@ body{
     padding-top: 80px;
 }
 
+#fam p {
+    padding-top: 15px;
+    margin: 0;
+}
+
 #fam span{
     font-size: 10px;
 }
@@ -68,7 +73,7 @@ body{
 }
 
 .view {
-    width: 100%;
+    width: 97%;
     max-width:900px;
     margin: 1em auto;
     padding: 1em;
@@ -294,7 +299,7 @@ body{
 .aer{
 
     height: 20px;
-    width: 245px;
+    /*width: 245px;*/
     margin-bottom:  2px;
     padding-left: 4px;
     background-color: rgba(131, 131, 131, 0.85);
@@ -385,7 +390,6 @@ body{
 
 .tele .aer{
 
-  
 
     height: 20px;
     width: 200px;
@@ -395,6 +399,7 @@ body{
     border: none;
     color: white;
     text-shadow: gray 0px 0px 2px;
+    border-radius: 5px 5px 5px 5px;
 
 }
 
@@ -601,6 +606,59 @@ select {
     width: 700px;
     table-layout: fixed;
 }
+
+#bet {
+    width: 750px;
+    margin-left: 70px;
+}
+
+.left_bet_cyph{
+
+    text-align: right;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+}
+
+.center_bet_cyph{
+    text-align: center;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+
+}
+
+.right_bet_cyph{
+    text-align: left;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+
+}
+
+.left_bet{
+
+    text-align: right;
+    width: 250px;
+    color: #0088e4;
+
+}
+
+.center_bet{
+    text-align: center;
+    width: 250px;
+    color: #0088e4;
+
+
+}
+
+.right_bet{
+    text-align: left;
+    width: 250px;
+    color: #0088e4;
+
+}
+
 
 #ud{
     color: #7db0e0;
