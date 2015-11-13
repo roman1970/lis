@@ -31,26 +31,7 @@ class DefaultController extends FrontEndController
                 //->offset(30)
                 ->all();
             //$cats = Categories::find()->leaves()->all();
-            foreach ($matchs as $match) {
-                if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                    if ($match->gett > $match->lett) {
-                        $this->bet_h += ($match->bet_h - 1);
-                        $this->bet_n--;
-                        $this->bet_g--;
-                    }
-                    if ($match->gett == $match->lett) {
-                        $this->bet_n += ($match->bet_n - 1);
-                        $this->bet_h--;
-                        $this->bet_g--;
-                    }
-                    if ($match->gett < $match->lett) {
-                        $this->bet_g += ($match->bet_g - 1);
-                        $this->bet_n--;
-                        $this->bet_h--;
-                    }
-                }
-
-            }
+            $this->betsGenerate($matchs);
 
             shuffle($matchs);
             return $this->render('index', ['matchs' => $matchs,
@@ -84,26 +65,7 @@ class DefaultController extends FrontEndController
             ->limit($limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
-
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
@@ -138,26 +100,7 @@ class DefaultController extends FrontEndController
             ->limit($limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
-
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h*$bet,
@@ -193,25 +136,7 @@ class DefaultController extends FrontEndController
             ->limit($country_limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
@@ -247,25 +172,7 @@ class DefaultController extends FrontEndController
             ->limit($country_limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h*$country_bet,
@@ -294,25 +201,7 @@ class DefaultController extends FrontEndController
             ->where("tournament like('".$tournament."') and date like('%".$year."%')")
             ->all();
 
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
@@ -341,25 +230,7 @@ class DefaultController extends FrontEndController
             ->where("tournament like('".$tournament."') and date like('%".$year."%')")
             ->all();
 
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
-        }
+        $this->betsGenerate($matchs);
 
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h,
@@ -380,39 +251,39 @@ class DefaultController extends FrontEndController
             $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
             $hoster = trim($hoster);
         }
-        else $hoster = 'ЦСКА';
+        else $hoster = '---';
         if(Yii::$app->getRequest()->getQueryParam('guester')) {
 
             $guester = Yii::$app->getRequest()->getQueryParam('guester');
             $guester = trim($guester);
         }
-        else $guester = 'Манчестер Юнайтед';
+        else $guester = '---';
 
-        $matchs = Matches::find()
-            ->orderBy('id DESC')
-            // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('%".$hoster."%') and guest like('%".$guester."%')")
-            ->all();
-
-        foreach ($matchs as $match) {
-            if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
-                if ($match->gett > $match->lett) {
-                    $this->bet_h += ($match->bet_h - 1);
-                    $this->bet_n--;
-                    $this->bet_g--;
-                }
-                if ($match->gett == $match->lett) {
-                    $this->bet_n += ($match->bet_n - 1);
-                    $this->bet_h--;
-                    $this->bet_g--;
-                }
-                if ($match->gett < $match->lett) {
-                    $this->bet_g += ($match->bet_g - 1);
-                    $this->bet_n--;
-                    $this->bet_h--;
-                }
-            }
+        if($hoster === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("guest like('%".$guester."%')")
+                ->all();
         }
+        elseif($guester === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%".$hoster."%')")
+                ->all();
+        }
+        else {
+
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%" . $hoster . "%') and guest like('%" . $guester . "%')")
+                ->all();
+        }
+
+        $this->betsGenerate($matchs);
+
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
@@ -443,13 +314,151 @@ class DefaultController extends FrontEndController
         }
         else $guester = 'Манчестер Юнайтед';
 
-        $matchs = Matches::find()
-            ->orderBy('id DESC')
-            // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('%".$hoster."%') and guest like('%".$guester."%')")
-            ->all();
+        if($hoster === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("guest like('%".$guester."%')")
+                ->all();
+        }
+        elseif($guester === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%".$hoster."%')")
+                ->all();
+        }
+        else {
 
-        foreach ($matchs as $match) {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%" . $hoster . "%') and guest like('%" . $guester . "%')")
+                ->all();
+        }
+
+        $this->betsGenerate($matchs);
+
+        return $this->renderPartial('bets', [
+            'bet_h' => $this->bet_h,
+            'bet_n' => $this->bet_n,
+            'bet_g' => $this->bet_g,
+        ]);
+
+
+
+    }
+
+    /**
+     * Запрос на матч (точный)
+     * @return string
+     */
+    public function actionMatchstrict() {
+        $model = new Strategy();
+        if(Yii::$app->getRequest()->getQueryParam('hoster')) {
+            $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
+            $hoster = trim($hoster);
+        }
+        else $hoster = '---';
+        if(Yii::$app->getRequest()->getQueryParam('guester')) {
+
+            $guester = Yii::$app->getRequest()->getQueryParam('guester');
+            $guester = trim($guester);
+        }
+        else $guester = '---';
+
+        if($hoster === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("guest =('"  .$guester. "')")
+                ->all();
+        }
+        elseif($guester === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%".$hoster."')")
+                ->all();
+        }
+        else {
+
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%" . $hoster . "') and guest like('" . $guester . "')")
+                ->all();
+        }
+
+        $this->betsGenerate($matchs);
+
+
+        return $this->renderPartial('strat', ['matchs' => $matchs,
+            'model' => $model,
+            'bet_h' => $this->bet_h,
+            'bet_n' => $this->bet_n,
+            'bet_g' => $this->bet_g,
+        ]);
+
+
+
+    }
+
+    /**
+     * Запрос на матч - данные (точный)
+     * @return string
+     */
+    public function actionMatchstrictu() {
+        $model = new Strategy();
+        if(Yii::$app->getRequest()->getQueryParam('hoster')) {
+            $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
+            $hoster = trim($hoster);
+        }
+        else $hoster = 'ЦСКА';
+        if(Yii::$app->getRequest()->getQueryParam('guester')) {
+
+            $guester = Yii::$app->getRequest()->getQueryParam('guester');
+            $guester = trim($guester);
+        }
+        else $guester = 'Манчестер Юнайтед';
+
+        if($hoster === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("guest =('" .$guester. "')")
+                ->all();
+        }
+        elseif($guester === 'null') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('%".$hoster."')")
+                ->all();
+        }
+        else {
+
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('" . $hoster . "') and guest like('" . $guester . "')")
+                ->all();
+        }
+
+        $this->betsGenerate($matchs);
+
+        return $this->renderPartial('bets', [
+            'bet_h' => $this->bet_h,
+            'bet_n' => $this->bet_n,
+            'bet_g' => $this->bet_g,
+        ]);
+
+
+
+    }
+
+    public function betsGenerate($matches) {
+        foreach ($matches as $match) {
             if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) {
                 if ($match->gett > $match->lett) {
                     $this->bet_h += ($match->bet_h - 1);
@@ -468,15 +477,6 @@ class DefaultController extends FrontEndController
                 }
             }
         }
-
-        return $this->renderPartial('bets', [
-            'bet_h' => $this->bet_h,
-            'bet_n' => $this->bet_n,
-            'bet_g' => $this->bet_g,
-        ]);
-
-
-
     }
 
 

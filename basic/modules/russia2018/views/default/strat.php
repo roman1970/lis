@@ -7,7 +7,7 @@
         </p>
 
 
-        <p id="match_tour" onclick="getTour(<?=$r?>)" class="tour<?=$r?>">
+        <p id="match_tour" onclick="getTour(<?=$r?>)" class="tour<?=$r?>" title="Все матчи <?=$match->tournament?>">
             <?php echo $match->tournament; ?>
         </p>
 
@@ -102,4 +102,4 @@
 
     </div>
 
-<?php endforeach; ?>
+<?php $r++; endforeach; ?>

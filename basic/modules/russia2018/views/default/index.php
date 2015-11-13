@@ -46,6 +46,12 @@ use yii\bootstrap\Nav;
             }
         );
 
+        $("#two_teams_strict").click(
+            function() {
+                getMatchesStrict(hoster.val(),guester.val());
+            }
+        )
+
 
         $("#statusMess").ajaxError(
             function() {
@@ -105,17 +111,16 @@ use yii\bootstrap\Nav;
     }
 
 
-
-
-
     function getMatches(hoster, guester){
-        if(hoster === "") {
-            alert("Введите хозяина");
+        if(hoster === "" && guester === "") {
+            alert("Введите хотя бы одну команду");
             return false;
         }
         if(guester === "") {
-            alert("Введите гостя");
-            return false;
+           guester = "null"
+        }
+        if(hoster === ""){
+            hoster = "null"
         }
         $.ajax({
             type: "GET",
@@ -130,6 +135,39 @@ use yii\bootstrap\Nav;
         $.ajax({
             type: "GET",
             url: "russia2018/default/matchu/",
+            data: "hoster="+hoster+"&guester="+guester,
+            success: function(html){
+                $("#bets").html(html);
+            }
+
+        });
+
+    }
+
+    function getMatchesStrict(hoster, guester){
+        if(hoster === "" && guester === "") {
+            alert("Введите хотя бы одну команду");
+            return false;
+        }
+        if(guester === "") {
+            guester = "null"
+        }
+        if(hoster === ""){
+            hoster = "null"
+        }
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/matchstrict/",
+            data: "hoster="+hoster+"&guester="+guester,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/matchstrictu/",
             data: "hoster="+hoster+"&guester="+guester,
             success: function(html){
                 $("#bets").html(html);
@@ -219,6 +257,7 @@ use yii\bootstrap\Nav;
 
                     <input type='text' class="aer" id="hoster"  size="20"/> - <input type='text' class="aer" id="guester"  size="20"/>
                     <button class="button glyphicon glyphicon-search" id="two_teams"  ></button>
+                    <button class="button glyphicon glyphicon-search" id="two_teams_strict"  ></button>
                 <div id="bets">
                     <p>Если поставить на один исход во всех этих матчах</p>
                     <table id="bet" cellpadding="0" >
@@ -358,7 +397,7 @@ use yii\bootstrap\Nav;
                         </p>
 
 
-                        <p id="match_tour" onclick="getTour(<?=$r?>)" class="tour<?=$r?>">
+                        <p id="match_tour" onclick="getTour(<?=$r?>)" class="tour<?=$r?>" title="Все матчи <?=$match->tournament?>">
                             <?php echo $match->tournament; ?>
                         </p>
 
