@@ -31,7 +31,20 @@ class DefaultController extends FrontEndController
 
         $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
 
-        return $this->render('index', ['cats' => $cats]);
+
+        if(__DIR__ == '/home/romanych/public_html/plis/basic/modules/bardzilla/controllers') {
+
+            $songs = ArticlesContent::find()
+                ->where(['articles_id' => 22])->all(); $rand_song = $songs[rand(0,count($songs))];
+
+        }
+        else {
+            $songs = ArticlesContent::find()
+                ->where(['articles_id' => 3])->all(); $rand_song = $songs[rand(0,count($songs))];
+
+        }
+
+        return $this->render('index', ['cats' => $cats, 'article' => $rand_song]);
 
     }
 

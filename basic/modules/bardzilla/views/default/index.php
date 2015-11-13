@@ -35,3 +35,17 @@
         </div>
     </div>
 </div>
+
+<div id="player_first" class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12" >
+        <p>
+
+        <a href="<?= $article->audio ?>" target="_blank"><?php echo " --- " . $article->minititle ?> </a>
+
+        <audio controls="controls" autoplay="autoplay">
+
+        <source src='<?=$article->audio?>' type='audio/mpeg'>
+        </audio>
+        </p>
+    </div>
+</div>
