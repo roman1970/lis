@@ -705,4 +705,21 @@ class CountryController extends Controller
 */
         }
     }
+
+    public function actionFillCountruWithSocCode() {
+
+        $models = Country::find()->all();
+
+        foreach($models as $model) {
+
+            if($model->id == 2) {$model->iso_code = 'au'; $model->soc_abrev = '(Авс)'; $model->soccer_code = 24; $model->update();}
+            if($model->id == 3) {$model->iso_code = 'at'; $model->soc_abrev = '(Авт)'; $model->soccer_code = 25; $model->update();}
+            if($model->id == 4) {$model->iso_code = 'az'; $model->soc_abrev = '(Азе)'; $model->soccer_code = 26; $model->update();}
+            if($model->id == 6) {$model->iso_code = 'al'; $model->soc_abrev = '(Алб)'; $model->soccer_code = 17; $model->update();}
+            if($model->id == 7) {$model->iso_code = 'dz';  $model->soccer_code = 18; $model->update();}
+            if($model->id == 10) {$model->iso_code = 'ao';  $model->soccer_code = 20; $model->update();}
+            if($model->id == 11) {$model->iso_code = 'ad'; $model->soc_abrev = '(Анд)'; $model->soccer_code = 19; $model->update();}
+
+        }
+    }
 }
