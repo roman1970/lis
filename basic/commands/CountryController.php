@@ -716,9 +716,40 @@ class CountryController extends Controller
             if($model->id == 3) {$model->iso_code = 'at'; $model->soc_abrev = '(Авт)'; $model->soccer_code = 25; $model->update();}
             if($model->id == 4) {$model->iso_code = 'az'; $model->soc_abrev = '(Азе)'; $model->soccer_code = 26; $model->update();}
             if($model->id == 6) {$model->iso_code = 'al'; $model->soc_abrev = '(Алб)'; $model->soccer_code = 17; $model->update();}
-            if($model->id == 7) {$model->iso_code = 'dz';  $model->soccer_code = 18; $model->update();}
+            if($model->id == 7) {$model->iso_code = 'dz'; $model->soc_abrev = '(Алж)'; $model->soccer_code = 18; $model->update();}
             if($model->id == 10) {$model->iso_code = 'ao';  $model->soccer_code = 20; $model->update();}
             if($model->id == 11) {$model->iso_code = 'ad'; $model->soc_abrev = '(Анд)'; $model->soccer_code = 19; $model->update();}
+            if($model->id == 12) {$model->iso_code = 'aq'; $model->soccer_code = 10; $model->update();}
+            if($model->id == 13) {$model->iso_code = 'ag'; $model->soccer_code = 28; $model->update();}
+            if($model->id == 14) {$model->iso_code = 'ar'; $model->soc_abrev = '(Арг)'; $model->soccer_code = 22; $model->update();}
+            if($model->id == 15) {$model->iso_code = 'am'; $model->soc_abrev = '(Арм)'; $model->soccer_code = 19; $model->update();}
+            if($model->id == 16) {$model->iso_code = 'aw';  $model->update();}
+            if($model->id == 17) {$model->iso_code = 'af';  $model->update();}
+            if($model->id == 18) {$model->iso_code = 'bs';  $model->update();}
+            if($model->id == 20) {$model->iso_code = 'bd';  $model->update();}
+            if($model->id == 21) {$model->iso_code = 'bb';  $model->update();}
+            if($model->id == 22) {$model->iso_code = 'bh';  $model->update();}
+            if($model->id == 23) {$model->iso_code = 'by';  $model->soc_abrev = '(Беи)'; $model->soccer_code = 31; $model->update();}
+            if($model->id == 24) {$model->iso_code = 'bz';  $model->update();}
+            if($model->id == 25) {$model->iso_code = 'be';  $model->soc_abrev = '(Бел)'; $model->soccer_code = 32; $model->update();}
+            if($model->id == 26) {$model->iso_code = 'bj';  $model->update();}
+            if($model->id == 27) {$model->iso_code = 'bm';  $model->update();}
+            if($model->id == 28) {$model->iso_code = 'bg';  $model->soc_abrev = '(Бог)'; $model->soccer_code = 41; $model->update();}
+            if($model->id == 29) {$model->iso_code = 'bo';  $model->soc_abrev = '(Бол)'; $model->soccer_code = 36; $model->update();}
+            if($model->id == 30) {$model->iso_code = 'ba';  $model->soc_abrev = '(Бос)'; $model->soccer_code = 37; $model->update();}
+            if($model->id == 31) {$model->iso_code = 'bw'; $model->update();}
+            if($model->id == 32) {$model->iso_code = 'br';  $model->soc_abrev = '(Бра)'; $model->soccer_code = 39; $model->update();}
+            if($model->id == 33) {$model->iso_code = 'io';  $model->update();}
+            if($model->id == 34) {$model->iso_code = 'bn';  $model->update();}
+            if($model->id == 35) {$model->iso_code = 'bf';  $model->update();}
+            if($model->id == 36) {$model->iso_code = 'bi';  $model->update();}
+            if($model->id == 37) {$model->iso_code = 'bt';  $model->update();}
+
+
+
+            if($model->id == 232) {$model->iso_code = 'gb'; $model->soc_abrev = '(Уэл)'; $model->soccer_code = 198; $model->update();}
+            if($model->id == 233) {$model->iso_code = 'gb'; $model->soc_abrev = '(Анг)'; $model->soccer_code = 198; $model->update();}
+
 
         }
     }
