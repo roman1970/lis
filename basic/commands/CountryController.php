@@ -744,10 +744,120 @@ class CountryController extends Controller
             if($model->id == 35) {$model->iso_code = 'bf';  $model->update();}
             if($model->id == 36) {$model->iso_code = 'bi';  $model->update();}
             if($model->id == 37) {$model->iso_code = 'bt';  $model->update();}
+            if($model->id == 38) {$model->iso_code = 'va';  $model->update();}
+            if($model->id == 39) {$model->iso_code = 'gb';  $model->update();}
+            if($model->id == 40) {$model->iso_code = 'hu';  $model->soc_abrev = '(Вен)'; $model->soccer_code = 91; $model->update();}
+            if($model->id == 41) {$model->iso_code = 've';  $model->soccer_code = 205; $model->update();}
+            if($model->id == 44) {$model->iso_code = 'vn';  $model->soc_abrev = '(Вье)';$model->soccer_code = 206; $model->update();}
+            if($model->id == 45) {$model->iso_code = 'ga';  $model->soccer_code = 78; $model->update();}
+            if($model->id == 46) {$model->iso_code = 'ht';  $model->update();}
+            if($model->id == 47) {$model->iso_code = 'gy';  $model->update();}
+            if($model->id == 48) {$model->iso_code = 'gm';  $model->soccer_code = 79; $model->update();}
+            if($model->id == 49) {$model->iso_code = 'gh';  $model->soccer_code = 82; $model->update();}
+            if($model->id == 50) {$model->iso_code = 'gp';  $model->update();}
+            if($model->id == 51) {$model->iso_code = 'gt';  $model->soccer_code = 85; $model->update();}
+            if($model->id == 52) {$model->iso_code = 'gn';  $model->soccer_code = 86; $model->update();}
+            if($model->id == 53) {$model->iso_code = 'gw';  $model->update();}
+            if($model->id == 54) {$model->iso_code = 'de';  $model->soc_abrev = '(Гер)';$model->soccer_code = 81; $model->update();}
+            if($model->id == 55) {$model->iso_code = 'gi';  $model->soc_abrev = '(Гиб)';$model->soccer_code = 304; $model->update();}
+            if($model->id == 56) {$model->iso_code = 'hn';  $model->soccer_code = 90; $model->update();}
+            if($model->id == 57) {$model->iso_code = 'gd';  $model->update();}
+            if($model->id == 58) {$model->iso_code = 'gl';  $model->update();}
+            if($model->id == 59) {$model->iso_code = 'gr';  $model->soc_abrev = '(Гри)';$model->soccer_code = 83; $model->update();}
+            if($model->id == 60) {$model->iso_code = 'ge';  $model->soc_abrev = '(Гру)';$model->soccer_code = 80; $model->update();}
+            if($model->id == 61) {$model->iso_code = 'dk';  $model->soc_abrev = '(Дан)';$model->soccer_code = 63; $model->update();}
+            if($model->id == 62) {$model->iso_code = 'cd';  $model->soccer_code = 56; $model->update();}
+            if($model->id == 63) {$model->iso_code = 'dj';  $model->soccer_code = 64; $model->update();}
+            if($model->id == 64) {$model->iso_code = 'dm';  $model->update();}
+            if($model->id == 65) {$model->iso_code = 'co';  $model->update();}
+            if($model->id == 66) {$model->iso_code = 'eg';  $model->soccer_code = 69; $model->update();}
+            if($model->id == 67) {$model->iso_code = 'zm';  $model->soccer_code = 209; $model->update();}
+            if($model->id == 68) {$model->iso_code = 'eh';  $model->update();}
+            if($model->id == 69) {$model->iso_code = 'zw';  $model->soccer_code = 210; $model->update();}
+            if($model->id == 70) {$model->iso_code = 'il';  $model->soc_abrev = '(Изр)';$model->soccer_code = 97; $model->update();}
+            if($model->id == 71) {$model->iso_code = 'in';  $model->soccer_code = 93; $model->update();}
+            if($model->id == 72) {$model->iso_code = 'id';  $model->soc_abrev = '(Ина)';$model->soccer_code = 228; $model->update();}
+            if($model->id == 73) {$model->iso_code = 'jo';  $model->soccer_code = 101; $model->update();}
+            if($model->id == 74) {$model->iso_code = 'iq';  $model->soccer_code = 95; $model->update();}
+            if($model->id == 75) {$model->iso_code = 'ir';  $model->soc_abrev = '(Ирн)';$model->soccer_code = 94; $model->update();}
+            if($model->id == 76) {$model->iso_code = 'ie';  $model->soc_abrev = '(Иря)';$model->soccer_code = 96; $model->update();}
+            if($model->id == 77) {$model->iso_code = 'is';  $model->soc_abrev = '(Исл)';$model->soccer_code = 92; $model->update();}
+            if($model->id == 78) {$model->iso_code = 'es';  $model->soc_abrev = '(Исп)';$model->soccer_code = 176; $model->update();}
+            if($model->id == 79) {$model->iso_code = 'it';  $model->soc_abrev = '(Ита)';$model->soccer_code = 98; $model->update();}
+            if($model->id == 80) {$model->iso_code = 'ye';  $model->soccer_code = 208; $model->update();}
+            if($model->id == 81) {$model->iso_code = 'cv';  $model->soccer_code = 48; $model->update();}
+            if($model->id == 82) {$model->iso_code = 'kz';  $model->soc_abrev = '(Каз)';$model->soccer_code = 102; $model->update();}
+            if($model->id == 83) {$model->iso_code = 'ky';  $model->update();}
+            if($model->id == 84) {$model->iso_code = 'kh';  $model->update();}
+            if($model->id == 85) {$model->iso_code = 'cm';  $model->soc_abrev = '(Кам)';$model->soccer_code = 46; $model->update();}
+            if($model->id == 86) {$model->iso_code = 'ca';  $model->soc_abrev = '(Кан)';$model->soccer_code = 47; $model->update();}
+            if($model->id == 88) {$model->iso_code = 'qa';  $model->soc_abrev = '(Кат)';$model->soccer_code = 156; $model->update();}
+            if($model->id == 89) {$model->iso_code = 'ke';  $model->soccer_code = 103; $model->update();}
+            if($model->id == 90) {$model->iso_code = 'cy';  $model->soc_abrev = '(Кип)';$model->soccer_code = 61; $model->update();}
+            if($model->id == 91) {$model->iso_code = 'kg';  $model->update();}
+            if($model->id == 92) {$model->iso_code = 'ki';  $model->update();}
+            if($model->id == 93) {$model->iso_code = 'cn';  $model->soc_abrev = '(Кит)';$model->soccer_code = 52; $model->update();}
+            if($model->id == 94) {$model->iso_code = 'cc';  $model->update();}
+            if($model->id == 95) {$model->iso_code = 'co';  $model->soc_abrev = '(Кол)';$model->soccer_code = 53; $model->update();}
+            if($model->id == 96) {$model->iso_code = 'km';  $model->update();}
+            if($model->id == 97) {$model->iso_code = 'cr';  $model->soccer_code = 57; $model->update();}
+            if($model->id == 98) {$model->iso_code = 'ci';  $model->soc_abrev = '(Кот)';$model->soccer_code = 58; $model->update();}
+            if($model->id == 99) {$model->iso_code = 'cu';  $model->update();}
+            if($model->id == 100) {$model->iso_code = 'kw';  $model->soccer_code = 107; $model->update();}
+            if($model->id == 101) {$model->iso_code = 'kw';  $model->update();}
+            if($model->id == 102) {$model->iso_code = 'lv';  $model->soccer_code = 110; $model->update();}
+            if($model->id == 103) {$model->iso_code = 'ls';  $model->soccer_code = 112; $model->update();}
+            if($model->id == 104) {$model->iso_code = 'lr';  $model->soccer_code = 113; $model->update();}
+            if($model->id == 105) {$model->iso_code = 'ly';  $model->update();}
+            if($model->id == 106) {$model->soccer_code = 114; $model->update();}
+            if($model->id == 107) {$model->iso_code = 'lt'; $model->soc_abrev = '(Лит)'; $model->soccer_code = 116; $model->update();}
+            if($model->id == 108) {$model->iso_code = 'li'; $model->soc_abrev = '(Лих)'; $model->soccer_code = 115; $model->update();}
+            if($model->id == 109) {$model->iso_code = 'lu'; $model->soc_abrev = '(Люк)'; $model->soccer_code = 117; $model->update();}
+            if($model->id == 110) {$model->iso_code = 'mu'; $model->soccer_code = 127; $model->update();}
+            if($model->id == 111) {$model->iso_code = 'mr'; $model->soccer_code = 126; $model->update();}
+            if($model->id == 112) {$model->iso_code = 'mg'; $model->update();}
+            if($model->id == 113) {$model->iso_code = 'yt'; $model->update();}
+            if($model->id == 114) {$model->iso_code = 'lt'; $model->soc_abrev = '(Мад)'; $model->soccer_code = 118; $model->update();}
+            if($model->id == 115) {$model->iso_code = 'mw'; $model->soccer_code = 120; $model->update();}
+            if($model->id == 116) {$model->iso_code = 'my'; $model->soc_abrev = '(Маз)'; $model->soccer_code = 121; $model->update();}
+            if($model->id == 117) {$model->iso_code = 'ml'; $model->soccer_code = 123; $model->update();}
+            if($model->id == 118) {$model->iso_code = 'mv'; $model->update();}
+            if($model->id == 119) {$model->iso_code = 'mt'; $model->soc_abrev = '(Млт)'; $model->soccer_code = 124; $model->update();}
+            if($model->id == 120) {$model->iso_code = 'ma'; $model->soc_abrev = '(Мар)'; $model->soccer_code = 134; $model->update();}
+            if($model->id == 121) {$model->iso_code = 'mh'; $model->update();}
+            if($model->id == 122) {$model->iso_code = 'mx'; $model->soc_abrev = '(Мек)'; $model->soccer_code = 128; $model->update();}
+            if($model->id == 124) {$model->iso_code = 'fm'; $model->update();}
+            if($model->id == 125) {$model->iso_code = 'mz'; $model->soccer_code = 135; $model->update();}
+            if($model->id == 126) {$model->iso_code = 'md'; $model->soc_abrev = '(Мол)'; $model->soccer_code = 130; $model->update();}
+            if($model->id == 127) {$model->iso_code = 'mc'; $model->update();}
+            if($model->id == 128) {$model->iso_code = 'mn'; $model->update();}
+            if($model->id == 129) {$model->iso_code = 'ms'; $model->update();}
+            if($model->id == 130) {$model->iso_code = 'mm'; $model->update();}
+            if($model->id == 131) {$model->iso_code = 'na'; $model->soccer_code = 136; $model->update();}
+            if($model->id == 132) {$model->iso_code = 'nr'; $model->update();}
+            if($model->id == 133) {$model->iso_code = 'np'; $model->update();}
+            if($model->id == 134) {$model->iso_code = 'ne'; $model->soccer_code = 142; $model->update();}
+            if($model->id == 135) {$model->iso_code = 'ng'; $model->soccer_code = 143; $model->update();}
+            if($model->id == 136) {$model->iso_code = 'an'; $model->update();}
+            if($model->id == 137) {$model->iso_code = 'nl'; $model->soc_abrev = '(Нид)'; $model->soccer_code = 139; $model->update();}
+            if($model->id == 138) {$model->iso_code = 'ni'; $model->update();}
+            if($model->id == 139) {$model->iso_code = 'nz'; $model->soc_abrev = '(Нзл)'; $model->soccer_code = 140; $model->update();}
+            if($model->id == 140) {$model->iso_code = 'nc'; $model->update();}
+            if($model->id == 141) {$model->iso_code = 'no'; $model->soc_abrev = '(Нор)'; $model->soccer_code = 145; $model->update();}
+            if($model->id == 142) {$model->iso_code = 'nf'; $model->update();}
+            if($model->id == 143) {$model->iso_code = 'ae'; $model->soc_abrev = '(ОАЭ)'; $model->soccer_code = 196; $model->update();}
+            if($model->id == 144) {$model->iso_code = 'om'; $model->update();}
+            if($model->id == 145) {$model->iso_code = 'gu'; $model->update();}
+            if($model->id == 150) {$model->iso_code = 'pk'; $model->soccer_code = 147; $model->update();}
 
 
 
-            if($model->id == 232) {$model->iso_code = 'gb'; $model->soc_abrev = '(Уэл)'; $model->soccer_code = 198; $model->update();}
+
+
+
+
+
+            if($model->id == 232) {$model->iso_code = 'gb'; $model->soc_abrev = '(Уэл)'; $model->soccer_code = 207; $model->update();}
             if($model->id == 233) {$model->iso_code = 'gb'; $model->soc_abrev = '(Анг)'; $model->soccer_code = 198; $model->update();}
 
 
