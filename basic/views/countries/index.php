@@ -40,7 +40,7 @@ AppAsset::register($this);
                     'label' => 'ico',
                     'format' => 'raw',
                     'value' => function($countries){
-                        return '<img src="'.Url::toRoute('css/blank.gif').'" class="flag flag-'.$countries->iso_code.'" alt="Czech Republic" />';
+                        return '<img src="'.Url::toRoute('css/blank.gif').'" class="flag flag-'.$countries->iso_code.'" alt="" />';
                     },
                 ],
 

@@ -706,6 +706,10 @@ class CountryController extends Controller
         }
     }
 
+    /**
+     * Заполнение таблицы country данными
+     * @throws \Exception
+     */
     public function actionFillCountruWithSocCode() {
 
         $models = Country::find()->all();
@@ -849,16 +853,88 @@ class CountryController extends Controller
             if($model->id == 144) {$model->iso_code = 'om'; $model->update();}
             if($model->id == 145) {$model->iso_code = 'gu'; $model->update();}
             if($model->id == 150) {$model->iso_code = 'pk'; $model->soccer_code = 147; $model->update();}
-
-
-
-
-
-
-
-
+            if($model->id == 151) {$model->iso_code = 'pw'; $model->update();}
+            if($model->id == 153) {$model->iso_code = 'pa'; $model->soc_abrev = '(Пан)';$model->soccer_code = 149; $model->update();}
+            if($model->id == 154) {$model->iso_code = 'pg'; $model->update();}
+            if($model->id == 155) {$model->iso_code = 'py'; $model->soc_abrev = '(Пар)';$model->soccer_code = 151; $model->update();}
+            if($model->id == 156) {$model->iso_code = 'pe'; $model->soc_abrev = '(Пер)';$model->soccer_code = 152; $model->update();}
+            if($model->id == 157) {$model->iso_code = 'pl'; $model->soc_abrev = '(Пол)';$model->soccer_code = 154; $model->update();}
+            if($model->id == 158) {$model->iso_code = 'pt'; $model->soc_abrev = '(Пор)';$model->soccer_code = 155; $model->update();}
+            if($model->id == 159) {$model->iso_code = 'vu'; $model->update();}
+            if($model->id == 160) {$model->iso_code = 'cd'; $model->update();}
+            if($model->id == 161) {$model->iso_code = 're'; $model->update();}
+            if($model->id == 162) {$model->iso_code = 'ru'; $model->soc_abrev = '(Рос)';$model->soccer_code = 158; $model->update();}
+            if($model->id == 163) {$model->iso_code = 'rw'; $model->soccer_code = 159; $model->update();}
+            if($model->id == 164) {$model->iso_code = 'ro'; $model->soc_abrev = '(Рум)';$model->soccer_code = 157; $model->update();}
+            if($model->id == 165) {$model->iso_code = 'us'; $model->soc_abrev = '(США)';$model->soccer_code = 200; $model->update();}
+            if($model->id == 166) {$model->iso_code = 'sv'; $model->soccer_code = 70; $model->update();}
+            if($model->id == 167) {$model->iso_code = 'ws'; $model->update();}
+            if($model->id == 168) {$model->iso_code = 'sm'; $model->soc_abrev = '(Сан)';$model->soccer_code = 163; $model->update();}
+            if($model->id == 169) {$model->iso_code = 'st'; $model->update();}
+            if($model->id == 170) {$model->iso_code = 'sa'; $model->soc_abrev = '(Сау)';$model->soccer_code = 165; $model->update();}
+            if($model->id == 171) {$model->soccer_code = 180; $model->update();}
+            if($model->id == 172) {$model->iso_code = 'kp';  $model->update();}
+            if($model->id == 173) {$model->iso_code = 'mp'; $model->update();}
+            if($model->id == 174) {$model->iso_code = 'sc'; $model->update();}
+            if($model->id == 175) {$model->iso_code = 'sn'; $model->soccer_code = 166; $model->update();}
+            if($model->id == 176) {$model->iso_code = 'vc'; $model->update();}
+            if($model->id == 177) {$model->iso_code = 'kn'; $model->update();}
+            if($model->id == 178) {$model->iso_code = 'lc'; $model->update();}
+            if($model->id == 179) {$model->iso_code = 'rs'; $model->soc_abrev = '(Сер)';$model->soccer_code = 167; $model->update();}
+            if($model->id == 181) {$model->iso_code = 'sg'; $model->soc_abrev = '(Син)';$model->soccer_code = 170; $model->update();}
+            if($model->id == 182) {$model->iso_code = 'sy'; $model->soccer_code = 183; $model->update();}
+            if($model->id == 183) {$model->iso_code = 'sk'; $model->soc_abrev = '(Сла)'; $model->soccer_code = 171; $model->update();}
+            if($model->id == 184) {$model->iso_code = 'si'; $model->soc_abrev = '(Сло)'; $model->soccer_code = 172; $model->update();}
+            if($model->id == 185) {$model->iso_code = 'sb'; $model->update();}
+            if($model->id == 186) {$model->iso_code = 'so'; $model->update();}
+            if($model->id == 187) {$model->iso_code = 'sd'; $model->soccer_code = 178; $model->update();}
+            if($model->id == 188) {$model->iso_code = 'sr'; $model->update();}
+            if($model->id == 189) {$model->iso_code = 'sl'; $model->soccer_code = 169; $model->update();}
+            if($model->id == 190) {$model->iso_code = 'tj'; $model->soccer_code = 184; $model->update();}
+            if($model->id == 191) {$model->iso_code = 'th'; $model->soc_abrev = '(Таи)'; $model->soccer_code = 186; $model->update();}
+            if($model->id == 192) {$model->iso_code = 'tw'; $model->update();}
+            if($model->id == 193) {$model->iso_code = 'tz'; $model->soccer_code = 185; $model->update();}
+            if($model->id == 194) {$model->iso_code = 'tg'; $model->soccer_code = 187; $model->update();}
+            if($model->id == 195) {$model->iso_code = 'to'; $model->update();}
+            if($model->id == 196) {$model->iso_code = 'tt'; $model->update();}
+            if($model->id == 197) {$model->iso_code = 'tv'; $model->update();}
+            if($model->id == 198) {$model->iso_code = 'tn'; $model->soc_abrev = '(Тун)'; $model->soccer_code = 190; $model->update();}
+            if($model->id == 199) {$model->iso_code = 'tm'; $model->update();}
+            if($model->id == 200) {$model->iso_code = 'tr'; $model->soc_abrev = '(Туц)'; $model->soccer_code = 191; $model->update();}
+            if($model->id == 201) {$model->iso_code = 'tc'; $model->update();}
+            if($model->id == 202) {$model->iso_code = 'ug'; $model->soccer_code = 194; $model->update();}
+            if($model->id == 203) {$model->iso_code = 'uz'; $model->soc_abrev = '(Узб)'; $model->soccer_code = 202; $model->update();}
+            if($model->id == 204) {$model->iso_code = 'ua'; $model->soc_abrev = '(Укр)'; $model->soccer_code = 195; $model->update();}
+            if($model->id == 205) {$model->iso_code = 'uy'; $model->soc_abrev = '(Уру)'; $model->soccer_code = 201; $model->update();}
+            if($model->id == 206) {$model->iso_code = 'fo'; $model->soc_abrev = '(Фар)'; $model->soccer_code = 231; $model->update();}
+            if($model->id == 207) {$model->iso_code = 'fj'; $model->update();}
+            if($model->id == 208) {$model->iso_code = 'ph'; $model->soccer_code = 153; $model->update();}
+            if($model->id == 209) {$model->iso_code = 'fi'; $model->soc_abrev = '(Фин)'; $model->soccer_code = 76; $model->update();}
+            if($model->id == 210) {$model->iso_code = 'fr'; $model->soc_abrev = '(Фра)'; $model->soccer_code = 77; $model->update();}
+            if($model->id == 211) {$model->iso_code = 'gf'; $model->update();}
+            if($model->id == 212) {$model->iso_code = 'pf'; $model->update();}
+            if($model->id == 213) {$model->iso_code = 'hr'; $model->soc_abrev = '(Хор)'; $model->soccer_code = 59; $model->update();}
+            if($model->id == 214) {$model->iso_code = 'cf'; $model->update();}
+            if($model->id == 215) {$model->iso_code = 'td'; $model->update();}
+            if($model->id == 216) {$model->iso_code = 'me'; $model->soc_abrev = '(Чрн)'; $model->soccer_code = 133; $model->update();}
+            if($model->id == 217) {$model->iso_code = 'cz'; $model->soc_abrev = '(Чех)'; $model->soccer_code = 62; $model->update();}
+            if($model->id == 218) {$model->iso_code = 'cl'; $model->soc_abrev = '(Чил)'; $model->soccer_code = 51; $model->update();}
+            if($model->id == 219) {$model->iso_code = 'ch'; $model->soc_abrev = '(Шва)'; $model->soccer_code = 182; $model->update();}
+            if($model->id == 220) {$model->iso_code = 'se'; $model->soc_abrev = '(Шве)'; $model->soccer_code = 181; $model->update();}
+            if($model->id == 221) {$model->iso_code = 'lk'; $model->update();}
+            if($model->id == 222) {$model->iso_code = 'ec'; $model->soc_abrev = '(Эка)'; $model->soccer_code = 68; $model->update();}
+            if($model->id == 223) {$model->iso_code = 'gq'; $model->update();}
+            if($model->id == 224) {$model->iso_code = 'er'; $model->update();}
+            if($model->id == 225) {$model->iso_code = 'ee'; $model->soc_abrev = '(Эст)'; $model->soccer_code = 73; $model->update();}
+            if($model->id == 226) {$model->iso_code = 'et'; $model->soccer_code = 74; $model->update();}
+            if($model->id == 227) {$model->iso_code = 'za'; $model->soc_abrev = '(Южн)'; $model->soccer_code = 175; $model->update();}
+            if($model->id == 228) {$model->iso_code = 'kr'; $model->soc_abrev = '(Кор)'; $model->soccer_code = 106; $model->update();}
+            if($model->id == 230) {$model->iso_code = 'jm'; $model->soc_abrev = '(Ямк)'; $model->update();}
+            if($model->id == 231) {$model->iso_code = 'jp'; $model->soc_abrev = '(Япо)'; $model->soccer_code = 100; $model->update();}
             if($model->id == 232) {$model->iso_code = 'gb'; $model->soc_abrev = '(Уэл)'; $model->soccer_code = 207; $model->update();}
             if($model->id == 233) {$model->iso_code = 'gb'; $model->soc_abrev = '(Анг)'; $model->soccer_code = 198; $model->update();}
+            if($model->id == 234) {$model->iso_code = 'gb'; $model->soc_abrev = '(СИр)'; $model->soccer_code = 144; $model->update();}
+            if($model->id == 235) {$model->iso_code = 'gb'; $model->soc_abrev = '(Шот)'; $model->soccer_code = 199; $model->update();}
 
 
         }

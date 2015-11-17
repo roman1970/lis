@@ -4,6 +4,8 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use app\models\Country;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "foo_matches".
@@ -50,7 +52,12 @@ class Matches extends \yii\db\ActiveRecord
             $exp_goalh = explode(",", $this->goul_h, -1);
 
             foreach ($exp_goalh as $value) {
-                echo $value . "<br />";
+                if($this->stra_h) {
+                    $country = $this->getCountryCode($this->stra_h, $value);
+                  //  var_dump($country);
+                }
+                else $country = "";
+                echo  $value . '<img src="css/blank.gif" class="flag flag-'.$country.'" alt="" /><br />';
             }
         }
         else return false;
@@ -65,7 +72,12 @@ class Matches extends \yii\db\ActiveRecord
             $exp_goalh = explode(",", $this->goul_g, -1);
 
             foreach ($exp_goalh as $value) {
-                echo $value . "<br />";
+                if($this->stra_g) {
+                    $country = $this->getCountryCode($this->stra_g, $value);
+                    //  var_dump($country);
+                }
+                else $country = "";
+                echo '<img src="css/blank.gif" class="flag flag-'.$country.'" alt="" />'. $value . "<br />";
             }
         }
         else return false;
@@ -314,7 +326,32 @@ class Matches extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Возвращает iso код страны игрока
+     * @param string $players
+     * @return mixed
+     */
+    public function getCountryCode($players, $player){
+        $players = explode(',', $players);
+        //$player = preg_replace ("/[0-9\']/","",$player);
+        trim($player);
+        foreach($players as $one) {
 
+            //var_dump($player);
+            if (strstr($one,substr($player,3)) || strstr($one,substr($player,4))) {
+                $country_code = explode('-', $one);
+
+                $country = Country::find()
+                   ->where(['soccer_code' => (int)$country_code[0]])
+                   ->one();
+
+
+                return $country->iso_code;
+            }
+
+        }
+        return null;
+    }
 
 
 
