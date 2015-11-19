@@ -475,6 +475,8 @@ use yii\bootstrap\Nav;
 
                         <?php endif; ?>
 
+                        <?php if($match->bet_h != 0 && $match->bet_n != 0 && $match->bet_g != 0) : ?>
+
 
                         <table id="stavki" cellpadding="0" >
                             <tr>
@@ -492,6 +494,8 @@ use yii\bootstrap\Nav;
 
                             </tr>
                         </table>
+
+                        <?php endif; ?>
 
 
                     </div>

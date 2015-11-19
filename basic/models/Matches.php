@@ -334,17 +334,22 @@ class Matches extends \yii\db\ActiveRecord
     public function getCountryCode($players, $player){
         $players = explode(',', $players);
         //$player = preg_replace ("/[0-9\']/","",$player);
-        trim($player);
+        /*$player = explode(" ", $player);
+        //trim($player);
+        $new_player = "";
+        foreach($player as $part) {
+            if(!preg_match("/[\(\)]/",$part)) $new_player .= $part;
+        }
+        //trim($new_player);
+        var_dump($new_player);*/
         foreach($players as $one) {
 
-            //var_dump($player);
             if (strstr($one,substr($player,3)) || strstr($one,substr($player,4))) {
                 $country_code = explode('-', $one);
 
                 $country = Country::find()
                    ->where(['soccer_code' => (int)$country_code[0]])
                    ->one();
-
 
                 return $country->iso_code;
             }
