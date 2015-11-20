@@ -20,6 +20,8 @@ Russia2018Asset::register($this);
     </head>
 
     <body>
+    <canvas id="planet" width="300" height="300" style="position: absolute; left:200px; top: 200px; border-radius:50%">
+    </canvas>
     <?php $this->beginBody() ?>
     <?= $content ?>
 
