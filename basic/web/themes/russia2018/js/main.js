@@ -46,7 +46,7 @@ $(function(){
         //добавляем тень и блики
         id.drawImage(fxShadow, 0, 0, width, height);
         // если смещение достигло предела, начинаем сначала
-        if (newMoveWidth >= 899.5) newMoveWidth = 0;
+        if (newMoveWidth >= 300.5) newMoveWidth = 0;
         else newMoveWidth = newMoveWidth+0.5; // иначе двигаем карту дальше
 
     }
