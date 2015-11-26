@@ -52,12 +52,13 @@ class Matches extends \yii\db\ActiveRecord
             $exp_goalh = explode(",", $this->goul_h, -1);
 
             foreach ($exp_goalh as $value) {
-                if($this->stra_h) {
+               /* if($this->stra_h) {
                     $country = $this->getCountryCode($this->stra_h, $value);
                   //  var_dump($country);
                 }
                 else $country = "";
-                echo  $value . '<img src="css/blank.gif" class="flag flag-'.$country.'" alt="" /><br />';
+               */
+                echo  $value . "<br />";
             }
         }
         else return false;
@@ -72,12 +73,14 @@ class Matches extends \yii\db\ActiveRecord
             $exp_goalh = explode(",", $this->goul_g, -1);
 
             foreach ($exp_goalh as $value) {
+                /*
                 if($this->stra_g) {
                     $country = $this->getCountryCode($this->stra_g, $value);
                     //  var_dump($country);
                 }
                 else $country = "";
-                echo '<img src="css/blank.gif" class="flag flag-'.$country.'" alt="" />'. $value . "<br />";
+                */
+                echo $value . "<br />";
             }
         }
         else return false;

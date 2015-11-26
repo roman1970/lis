@@ -1,12 +1,9 @@
 <?php
-/**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
- * @license http://www.yiiframework.com/license/
- */
 
 namespace app\commands;
 
+use app\models\City;
+use app\models\Khlteams;
 use app\models\Matches;
 use yii\console\Controller;
 use app\components\DocxConverter;
@@ -19,6 +16,7 @@ use yii\helpers\Url;
 class KhlController extends Controller
 {
 
+    public $arrOfTeams = ['Салават Юлаев' => 'Уфа', 'Сибирь' => 'Новосибирск'];
 
     public function actionIndex()
     {
@@ -31,7 +29,20 @@ class KhlController extends Controller
 
     public function actionFillTeams()
     {
+        foreach ($this->arrOfTeams as $team => $city) {
 
+            $model = new Khlteams();
+            $model->name = $team;
+
+            $city_id = City::find()
+                ->where("name like('" . $city . "')")
+                ->one()->id;
+
+
+            $model->city_id = $city_id;
+            $model->save(false);
+        }
     }
+
 
 }

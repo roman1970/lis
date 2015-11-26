@@ -27,11 +27,12 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->limit(30)
+                ->limit(10)
                 //->offset(30)
                 ->all();
             //$cats = Categories::find()->leaves()->all();
             $this->betsGenerate($matchs);
+           // var_dump($matchs);
 
             shuffle($matchs);
             return $this->render('index', ['matchs' => $matchs,
