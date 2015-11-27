@@ -193,6 +193,11 @@ text-decoration: none;
     background-color: #bd2c2c;
 }
 
+.google_play{
+    text-align: center;
+    padding-bottom: 30px;
+}
+
 
 h3 {
     color:#985f0d;
@@ -494,7 +499,7 @@ hr {
          font-family: Arial;
          font-size: 12px;
         border-radius: 50px;
-        width: 100px;
+        width: 130px;
         height: 100px;
         background-color: gray;
         box-shadow: 0 0 10px 4px #fff; 
@@ -509,7 +514,7 @@ hr {
 }
     
 #footer p{
-           margin-top: 30px;
+           margin-top: 40px;
            margin-bottom: 10px;
             color: #985f0d;
     }
@@ -524,7 +529,7 @@ hr {
          font-family: Arial;
          font-size: 12px;
         border-radius: 50px;
-        width: 100px;
+        width: 130px;
         height: 100px;
         background-color: gray;
         box-shadow: 0 0 10px 4px #fff; 
@@ -532,7 +537,7 @@ hr {
     }
     
 #footerr p{
-           margin-top: 20px;
+           margin-top: 10px;
            margin-bottom: 10px;
            color: #985f0d;
     }

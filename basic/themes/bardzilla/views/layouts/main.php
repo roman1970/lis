@@ -71,6 +71,7 @@ BardzillaAsset::register($this);
             </p>
 
 
+
             <p id="main">
 
             </p>
@@ -85,8 +86,9 @@ BardzillaAsset::register($this);
             </div>
 
             <div id="footerr">
-                <p  id="site">  <a href="#">  Закажи оригинальный <br/>
-                            сайт </a>
+                <p  id="site">
+                    <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
+               </a>
                     <br/>
                 </p>
             </div>
