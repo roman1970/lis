@@ -1397,6 +1397,14 @@
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="sources_ibfk_1" table="sources" schema="" catalog="gb_x_qplis" columns="author_id"/>
     </table>
+    <table name="chl_teams" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_teams_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_chl_teams_city_id" unique="false" columns="city_id"/>
+    </table>
     <table name="cities" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -1407,6 +1415,7 @@
       <column name="region" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="yndid" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="chl_teams_ibfk_1" table="chl_teams" schema="" catalog="gb_x_qplis" columns="city_id"/>
       <exported-key name="weather_ibfk_1" table="weather" schema="" catalog="gb_x_qplis" columns="city_id"/>
       <index name="ux_cities_country_id" unique="false" columns="country_id"/>
     </table>
@@ -1530,8 +1539,8 @@
       <column name="likes" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MQ=="/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="qparticles_content_ibfk_2" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_content_ibfk_1" columns="articles_id" ref-table="qparticles" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="qparticles_content_ibfk_2" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_qparticles_content_articles_id" unique="false" columns="articles_id"/>
       <index name="ux_qparticles_content_qparticles_content_source_id" unique="false" columns="source_id"/>
     </table>
