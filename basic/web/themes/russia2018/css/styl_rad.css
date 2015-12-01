@@ -315,6 +315,15 @@ body{
     color: #00c077;
 }
 
+#planet{
+    filter: alpha(Opacity=25);
+    opacity: 0.25;
+    position: absolute;
+    left:42%;
+    top: 100px;
+    border-radius:50%
+}
+
 #ques .mes{
 
     height: 60px;

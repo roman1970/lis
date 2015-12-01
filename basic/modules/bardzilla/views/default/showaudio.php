@@ -42,7 +42,22 @@
         return r++;
     }
 
+    $(document).ready(function() {
+        $(".accord h3:first").addClass("active");
 
+        $(".accord span:not(:first)").hide();
+
+        $(".accord h3").click(function() {
+
+            $(this).next("span").slideToggle("slow")
+                .siblings("span:visible").slideUp("slow");
+
+
+            $(this).toggleClass("active");
+
+            $(this).siblings("h3").removeClass("active");
+        });
+    });
 </script>
 <?php /*
 <p class="hd">
@@ -51,8 +66,10 @@
 
 </p>
  */ ?>
-<?php if(isset($articles)): $count = count($articles);
-    $r = rand(0,$count-1); ?>
+<?php if(isset($articles)):
+    /*$count = count($articles);
+    $r = rand(0,$count-1);*/
+    foreach($articles as $article) : ?>
 
     <?php $u =0;/*echo app\components\CustomPagination::widget([
         'pagination' => $artPages,
@@ -61,26 +78,26 @@
      ?>
     <div class="accord" style="text-align: left">
 
-        <h3 style="text-align: center"><?=$articles[$r]['article']->title?></h3>
+        <h3 style="text-align: center"><?=$article['article']->title?></h3>
             <span>
 
                 <div class='content'>
 
-                    <img src="<?=$articles[$r]['article']->img?>" width="250" height="200" alt="<?=$articles[$r]['article']->title?>"/>
+                    <img src="<?=$article['article']->img?>" width="250" height="200" alt="<?=$article['article']->title?>"/>
                     <br />
 
-                    <div id="text_main"><?=$articles[$r]['article']->text?><hr />
-                        <a onclick="showSongs(<?= $articles[$r]['article']->id ?>)" style="cursor: pointer;">Послушай альбом</a><hr />
+                    <div id="text_main"><?=$article['article']->text?><hr />
+                        <a onclick="showSongs(<?= $article['article']->id ?>)" style="cursor: pointer;">Послушай альбом</a><hr />
 
                     </div>
 
                 </div>
-                <div class="content" id="songs<?= $articles[$r]['article']->id ?>" style="display: none;">
+                <div class="content" id="songs<?= $article['article']->id ?>" style="display: none;">
                     <div id="songs_name">
-                    <?php if (isset($articles[$r]['contents']))  : ?>
+                    <?php if (isset($article['contents']))  : ?>
                         <?php $i = 0; ?>
 
-                        <?php foreach ($articles[$r]['contents'] as $cont) :
+                        <?php foreach ($article['contents'] as $cont) :
                             $i++;  ?>
                             <a onclick="nextSong(<?= $cont->id ?>)" style="cursor: pointer;"><?= $i.'-'.$cont->minititle ?></a> ///
 
@@ -97,7 +114,7 @@
 
 
 
-    <?php // endforeach; ?>
+    <?php endforeach; ?>
     </div>
 
 <?php endif; ?>
