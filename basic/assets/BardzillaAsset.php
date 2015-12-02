@@ -26,7 +26,7 @@ class BardzillaAsset extends AssetBundle
     ];
     public $js = [
         'js/photos.js',
-        'js/jquery.min.js',
+        //'js/jquery.min.js',
         'js/phrase.js',
         'js/phot_left.js',
         'js/theat.js',

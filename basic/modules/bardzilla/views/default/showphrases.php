@@ -27,12 +27,13 @@
 </script>
 <?php if(isset($articles)): ?>
     <?php foreach($articles as $article): ?>
-        <?php echo app\components\CustomPagination::widget([
-            'pagination' => $article['pages'],
-            'cat' => $cat
-        ]);
-        ?>
+
         <div class="phrasa">
+            <?php echo app\components\BardNextPagination::widget([
+                'pagination' => $article['pages'],
+                'cat' => $cat
+            ]);
+            ?>
 
             <?php
 

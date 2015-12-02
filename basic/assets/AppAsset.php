@@ -24,8 +24,8 @@ class AppAsset extends AssetBundle
         'js/syntaxhighlighter/styles/shThemeDefault.css'
     ];
     public $js = [
-        'js/syntaxhighlighter_3.0.83/scripts/shCore.js',
-        'js/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js'
+        'js/syntaxhighlighter/scripts/shCore.js',
+        'js/syntaxhighlighter/scripts/shBrushPhp.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

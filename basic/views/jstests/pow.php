@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 ?>
+<script src="https://js.cx/test/libs.js"></script>
 <script src="<?= Url::toRoute('js/tests.js')?>"></script>
 <div id="mocha"></div>
 <script>

@@ -578,9 +578,11 @@ hr {
     }
 
 .pagination{
-    /*padding-left: 100px;*/
     margin: 0;
     text-align: center;
+    padding-left: 213px;
+    padding-bottom: 20px;
+    width: 1000px;
 }
 
 .pagination > li > a, .pagination > li > span {

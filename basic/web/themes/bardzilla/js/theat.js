@@ -239,20 +239,20 @@ function getNextPhotoRight() {
 function getTemp(){
         
                 if (year < 2014) {
-        $("#temp").load("temp.php", { y: year}, function(data){
-        var sent= data;
-                var tem = document.getElementById("temp");
-                var last = tem.lastChild;
-                last.parentNode.removeChild(last);
-                var p = document.createElement("P");
-                var str = sent;
-                var text = document.createTextNode(str);
-                el = tem.appendChild(p);
-                el.className = "sl";
-                el.style.fontSize = "18px";
-                el.appendChild(text);
-                year++;
-                setTimeout("getTemp()", 5000);
+                    $("#temp").load("temp.php", { y: year}, function(data){
+                    var sent= data;
+                    var tem = document.getElementById("temp");
+                    var last = tem.lastChild;
+                    last.parentNode.removeChild(last);
+                    var p = document.createElement("P");
+                    var str = sent;
+                    var text = document.createTextNode(str);
+                    el = tem.appendChild(p);
+                    el.className = "sl";
+                    el.style.fontSize = "18px";
+                    el.appendChild(text);
+                    year++;
+                    setTimeout("getTemp()", 5000);
                 
                 
                  });

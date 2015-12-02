@@ -4,6 +4,7 @@
 
 $this->title = 'Тесты';
 ?>
+<script src="https://js.cx/test/libs.js"></script>
 <div class="site-index">
 
     <div class="jumbotron">

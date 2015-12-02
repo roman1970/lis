@@ -26,7 +26,7 @@ $(".accord p:not(:first)").hide();
 
 <?php if(isset($articles)): ?>
     <?php foreach($articles as $article): ?>
-    <?php echo app\components\CustomPagination::widget([
+    <?php echo app\components\BardNextPagination::widget([
         'pagination' => $article['pages'],
         'cat' => $cat
     ]);

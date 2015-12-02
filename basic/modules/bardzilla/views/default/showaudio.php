@@ -49,8 +49,7 @@
 
         $(".accord h3").click(function() {
 
-            $(this).next("span").slideToggle("slow")
-                .siblings("span:visible").slideUp("slow");
+            $(this).next("span").slideToggle("slow").siblings("span:visible").slideUp("slow");
 
 
             $(this).toggleClass("active");
@@ -59,6 +58,10 @@
         });
     });
 </script>
+<div id="song" style="display: none;">
+
+</div><br>
+<div class="accord" style="text-align: left">
 <?php /*
 <p class="hd">
 
@@ -76,7 +79,7 @@
         'cat' => $cat
     ]);*/
      ?>
-    <div class="accord" style="text-align: left">
+
 
         <h3 style="text-align: center"><?=$article['article']->title?></h3>
             <span>
@@ -107,9 +110,7 @@
                     </div>
                 </div><br>
 
-                <div id="song" style="display: none;">
 
-                </div><br>
             </span>
 
 
