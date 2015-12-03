@@ -3,12 +3,13 @@
 * {margin: 0; padding: 0;} /* обнуляем отступы - делаем контент по центру страницы */
 body{
     background: black;
-
+    position: relative;
 }
 
 
 #wrapper{
-    //position: relative;
+    position: absolute;
+    left: 20%;
     //height: 1500px;
     
     background: black;
@@ -19,6 +20,38 @@ body{
     //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
 
     //border-bottom: none;
+}
+
+#wrapper_cont{
+    position: absolute;
+    left: 20%;
+    top: 210px;
+//height: 1500px;
+
+    background: black;
+//border-radius:0px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 1280px;
+//box-shadow: 0 0 10px 4px #fff; /*тень блока*/
+
+//border-bottom: none;
+}
+
+#wrapper_menu{
+   position: absolute;
+    top: 130px;
+    left: 20%;
+//height: 1500px;
+    z-index: 1;
+    background: black;
+//border-radius:0px;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 1280px;
+//box-shadow: 0 0 10px 4px #fff; /*тень блока*/
+
+//border-bottom: none;
 }
 
 /*
@@ -676,9 +709,19 @@ input {
     #footer{
         left: -10000px;
     }
-    #wrapper{
+    #wrapper,#wrapper_cont,#wrapper_menu{
         //text-align: center;
         width: 90%;
+        left: 0;
+    }
+    #wrapper_menu{
+        top: 230px;
+    }
+    #wrapper{
+       // height: auto;
+    }
+    #wrapper_cont{
+        top: 400px;
     }
     #nav{
         width: 100%;

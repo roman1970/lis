@@ -1,4 +1,4 @@
-<div id="wrapper" >
+<div id="wrapper_menu" >
     <div id="nav" class="row">
 
         <?php foreach($cats as $cat) : ?>

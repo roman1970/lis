@@ -42,12 +42,12 @@ BardzillaAsset::register($this);
     </div>
 </div>
     <?= $content ?>
-<div id="wrapper" >
+<div id="wrapper_cont" >
     <div class="cont row">
         <div class="col-md-3 ">
                 <div id="rom"> </div>
                 <div id="footer">
-                    <p>    Copyright &copy;2014 Б'КПЗ <br/>
+                    <p>    Copyright &copy;<?=date('Y')?> Б'КПЗ <br/>
 
                     </p>
                 </div>
