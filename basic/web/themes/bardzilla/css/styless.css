@@ -9,7 +9,7 @@ body{
 
 #wrapper{
     position: absolute;
-    left: 20%;
+    left: 17%;
     //height: 1500px;
     
     background: black;
@@ -24,7 +24,7 @@ body{
 
 #wrapper_cont{
     position: absolute;
-    left: 20%;
+    left: 17%;
     top: 210px;
 //height: 1500px;
 
@@ -41,7 +41,7 @@ body{
 #wrapper_menu{
    position: absolute;
     top: 130px;
-    left: 20%;
+    left: 17%;
 //height: 1500px;
     z-index: 1;
     background: black;
@@ -712,7 +712,7 @@ input {
     #wrapper,#wrapper_cont,#wrapper_menu{
         //text-align: center;
         width: 90%;
-        left: 0;
+        left: 10px;
     }
     #wrapper_menu{
         top: 230px;
@@ -826,8 +826,7 @@ input {
     }
 
     .pagination {
-        padding-left: 0px;
-        margin: 0;
+        padding-left: 30%;
     }
 
     #player {
