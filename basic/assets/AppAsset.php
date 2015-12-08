@@ -20,6 +20,8 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/flags.css',
+        'js/syntaxhighlighter/styles/shCore.css',
+        'js/syntaxhighlighter/styles/shThemeDefault.css'
 
     ];
     public $js = [

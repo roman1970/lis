@@ -16,12 +16,15 @@ $this->title = 'Тесты';
             <a href="/jstests/functions?n=pow">Функция возведения в степень pow</a>
         <h1>Примеры</h1>
             <a onclick="addingTwoNumbers()" class="testLink">Сложить два числа</a>
-            <pre style="display: none" id="code">function addingTwoNumbers(){
-                var a = +prompt("Введите первое число", "");
-                var b = +prompt("Введите второе число", "");
 
-                alert( a + b );
-                }</pre>
+                <pre  class="brush: js;">
+                    function addingTwoNumbers(){
+                        var a = +prompt("Введите первое число", "");
+                        var b = +prompt("Введите второе число", "");
+
+                    alert( a + b );
+                    }
+                </pre>
 
     </div>
 
