@@ -70,9 +70,15 @@ $this->title = 'Тесты';
                 </pre>
 
         <a onclick="rand(10)" class="testLink">Случайное в диапазоне от 0 до 10</a>
-          <pre class="brush: js;">
+                <pre class="brush: js;">
                    function rand(max){
                         alert( Math.random() * max );
+                    }
+                </pre>
+        <a onclick="randInterval(5,10)" class="testLink">Случайное в диапазоне от 5 до 10</a>
+                <pre class="brush: js;">
+                 function randInterval(min,max){
+                    alert( min + Math.random() * (max - min) );
                     }
                 </pre>
 

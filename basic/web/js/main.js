@@ -46,4 +46,9 @@ function rand(max){
     alert( Math.random() * max );
 }
 
+//случайного значения в диапазоне от min до max
+function randInterval(min,max){
+    alert( min + Math.random() * (max - min) );
+}
+
 
