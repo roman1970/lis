@@ -17,9 +17,9 @@ $this->title = 'Тесты';
         <h1>Тесты</h1>
             <a href="/jstests/functions?n=pow">Функция возведения в степень pow</a>
         <h1>Примеры</h1>
-            <a onclick="addingTwoNumbers(this)" class="testLink">Сложить два числа</a>
+            <a onclick="addingTwoNumbers(this)" class="testLink">1 Сложить два числа</a><br>
 
-                    <pre class="brush: js;">
+                    <pre class="brush: js;" id="code_1">
                         function addingTwoNumbers(){
                             var a = +prompt("Введите первое число", "");
                             var b = +prompt("Введите второе число", "");
@@ -28,9 +28,9 @@ $this->title = 'Тесты';
                         }
                     </pre>
 
-        <a onclick="alert(getDecimal(2.3334))" class="testLink">Получить дробную часть числа</a>
+        <a onclick="alert(getDecimal(2.3334))" class="testLink">2 Получить дробную часть числа</a><br>
 
-                <pre class="brush: js;">
+                <pre class="brush: js;" id="code_2">
                     function getDecimal(num) {
                         var str = "" + num;
                         var zeroPos = str.indexOf(".");
@@ -41,10 +41,10 @@ $this->title = 'Тесты';
                     alert( getDecimal(2.3334) );
                 </pre>
 
-        <a onclick="alert(fibBinet(77))" class="testLink">Формула Бине для нахождения числа Фибонначи (для числа с номером 77)</a><br>
-        <a onclick="alert(fib(77))" class="testLink">более тривиальный подход для нахождения числа Фибонначи (для числа с номером 77)</a>
+        <a onclick="alert(fibBinet(77))" class="testLink">3 Формула Бине для нахождения числа Фибонначи (для числа с номером 77)</a><br>
+        <a onclick="alert(fib(77))" class="testLink">более тривиальный подход для нахождения числа Фибонначи (для числа с номером 77)</a><br>
 
-                <pre class="brush: js;">
+                <pre class="brush: js;" id="code_3">
                     function fibBinet(n) {
                         var phi = (1 + Math.sqrt(5)) / 2;
                         // используем Math.round для округления до ближайшего целого
@@ -69,19 +69,24 @@ $this->title = 'Тесты';
                     }
                 </pre>
 
-        <a onclick="rand(10)" class="testLink">Случайное в диапазоне от 0 до 10</a>
-                <pre class="brush: js;">
+        <a onclick="rand(10)" class="testLink">4 Случайное в диапазоне от 0 до 10</a><br>
+                <pre class="brush: js;" id="code_4">
                    function rand(max){
                         alert( Math.random() * max );
                     }
                 </pre>
-        <a onclick="randInterval(5,10)" class="testLink">Случайное в диапазоне от 5 до 10</a>
-                <pre class="brush: js;">
+        <a onclick="randInterval(5,10)" class="testLink">5 Случайное в диапазоне от 5 до 10</a><br>
+                <pre class="brush: js;" id="code_5">
                  function randInterval(min,max){
                     alert( min + Math.random() * (max - min) );
                     }
                 </pre>
-
+        <a onclick="randomInteger(5,10)" class="testLink">6 Случайное целое в диапазоне от 5 до 10</a><br>
+                <pre class="brush: js;" id="code_6">
+                 function randomInteger(min, max){
+                    alert (Math.floor( min + Math.random() * (max - min) ));
+                 }
+                </pre>
     </div>
 
 

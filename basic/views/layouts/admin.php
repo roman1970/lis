@@ -49,7 +49,7 @@ AppAsset::register($this);
            ['label' => 'Страны', 'url' => ['/countries/index']],
             ['label' => 'Источники', 'url' => ['/source/index']],
             ['label' => 'Авторы', 'url' => ['/author/index']],
-            ['label' => 'jsTests', 'url' => ['/jstests/index']],
+            ['label' => 'CodeHelp', 'url' => ['/jstests/index']],
             /*['label' => 'User', 'url' => ['/user/profile/show']],
            */
 
