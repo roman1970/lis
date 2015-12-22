@@ -87,7 +87,8 @@ class DefaultController extends FrontEndController
 
 
             $allArticles = ArticlesContent::find()
-                ->where(['articles_id' => $this->article_id]);
+                ->where(['articles_id' => $this->article_id])
+                ->orderBy(['id' => SORT_DESC]);
 
             //var_dump($allArticles); exit;
 
