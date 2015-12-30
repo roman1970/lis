@@ -87,6 +87,36 @@ $this->title = 'Тесты';
                     alert (Math.floor( min + Math.random() * (max - min) ));
                  }
                 </pre>
+        <a onclick="ucFirst()" class="testLink">Делаем первую букву заглавной</a><br>
+                <pre class="brush: js;" id="code_7">
+                function ucFirst(){
+                    var str = prompt('Наберите слово, которое нужно написать с большой буквы', '');
+                    if (!str) return str;
+                    alert(str[0].toUpperCase() + str.slice(1));
+                    return str[0].toUpperCase() + str.slice(1);
+                }
+                </pre>
+        <a onclick="checkSpam()" class="testLink">Проверяем строку на наличе viagra, xxx</a><br>
+                <pre class="brush: js;" id="code_8">
+                function checkSpam(){
+                   $("#code_8").show();
+                        var str = prompt('Наберите слово', '');
+                        var viagra = "viagra";
+
+                        alert(str.length);
+                        for(var n = 0; n < str.length; n++) {
+                            if( str[n].toLowerCase().indexOf(viagra[n]) == -1 ) {
+                                alert("spam!");
+                                return false;
+                            }
+                            //другое решение
+                            //var lowerStr = str.toLowerCase();
+                            //return !!(~lowerStr.indexOf('viagra') || ~lowerStr.indexOf('xxx'));
+                        }
+
+                        return true;
+                }
+                </pre>
     </div>
 
 

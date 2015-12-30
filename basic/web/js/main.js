@@ -62,4 +62,33 @@ function randomInteger(min, max){
     alert (Math.floor( min + Math.random() * (max - min) ));
 }
 
+//делаем первую букву заглавной
+function ucFirst(){
+    $("#code_7").show();
+    var str = prompt('Наберите слово, которое нужно написать с большой буквы', '');
+    if (!str) return str;
+    alert(str[0].toUpperCase() + str.slice(1));
+    return str[0].toUpperCase() + str.slice(1);
+}
+
+//проверка на спам
+function checkSpam(){
+    $("#code_8").show();
+    var str = prompt('Наберите слово', '');
+    var viagra = "viagra";
+
+    alert(str.length);
+    for(var n = 0; n < str.length; n++) {
+        if( str[n].toLowerCase().indexOf(viagra[n]) == -1 ) {
+            alert("spam!");
+            return false;
+        }
+        //другое решение
+        //var lowerStr = str.toLowerCase();
+        //return !!(~lowerStr.indexOf('viagra') || ~lowerStr.indexOf('xxx'));
+    }
+
+    return true;
+}
+
 
