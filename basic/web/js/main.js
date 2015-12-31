@@ -75,20 +75,21 @@ function ucFirst(){
 function checkSpam(){
     $("#code_8").show();
     var str = prompt('Наберите слово', '');
-    var viagra = "viagra";
+    var lowerStr = str.toLowerCase();
+    alert(!!(~lowerStr.indexOf('viagra')));
+    alert(~lowerStr.indexOf('xxx'));
+    return !!(~lowerStr.indexOf('viagra') || ~lowerStr.indexOf('xxx'));
+}
 
-    alert(str.length);
-    for(var n = 0; n < str.length; n++) {
-        if( str[n].toLowerCase().indexOf(viagra[n]) == -1 ) {
-            alert("spam!");
-            return false;
-        }
-        //другое решение
-        //var lowerStr = str.toLowerCase();
-        //return !!(~lowerStr.indexOf('viagra') || ~lowerStr.indexOf('xxx'));
-    }
+//укорачиваем строку
+function truncate(){
+    $("#code_9").show();
+    var sent = prompt('Предложение', '');
+    var limit = +prompt('Количество символов', '');
 
-    return true;
+    if(sent.length < limit) { alert(sent); return sent; }
+    else { alert(sent.slice(0,limit-3)+"..."); return sent.slice(0,limit-3)+"...";}
+
 }
 
 
