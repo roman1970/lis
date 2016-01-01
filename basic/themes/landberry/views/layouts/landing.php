@@ -15,7 +15,7 @@ LandberryAsset::register($this);
 
 <head>
     <meta charset="utf-8">
-    <title>Интернет-издательство «Акула Пераhfhf»</title>
+    <title>RomanJu WEB-разработчик</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -69,13 +69,19 @@ LandberryAsset::register($this);
 
                         <li>
 
-                            <h1><span>АКУЛА ПЕРА</span></h1>
+                            <h1><span>RomanJu WEB-разработчик</span></h1>
 
                         </li>
 
                         <li>
 
-                            <h1><span>ИНТЕРНЕТ-ИЗДАТЕЛЬСТВО</span></h1>
+                            <h1><span>Опыт разработки 2 года</span></h1>
+
+                        </li>
+
+                        <li>
+
+                            <h1><span>Сайты с нуля </span></h1>
 
                         </li>
 
