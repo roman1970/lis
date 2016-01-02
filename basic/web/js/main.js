@@ -92,4 +92,17 @@ function truncate(){
 
 }
 
+//выделяем цифры из смешанной строки
+function extractCurrencyValue(){
+    $("#code_10").show();
+    var str = prompt('Введите $920', '');
+    var newStr = '';
+
+    for(var i = 0; i < str.length; i++) {
+        if(str.charCodeAt(i) > 40) newStr += str[i];
+    }
+    alert( newStr );
+    return newStr;
+}
+
 

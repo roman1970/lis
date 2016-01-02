@@ -120,6 +120,15 @@ $this->title = 'Тесты';
                     }
 
                 </pre>
+        <a onclick="extractCurrencyValue()" class="testLink">10 Выделяем цифры из строки</a><br>
+                <pre class="brush: js;" id="code_10">
+               function extractCurrencyValue(){
+                    $("#code_10").show();
+                    var str = prompt('Введите $120', '');
+                    alert( str.charCodeAt(0) );
+                }
+
+                </pre>
     </div>
 
 
