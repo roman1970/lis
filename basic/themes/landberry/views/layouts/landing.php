@@ -1,8 +1,6 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 
 use app\assets\LandberryAsset;
 use yii\helpers\Html;
@@ -69,7 +67,13 @@ LandberryAsset::register($this);
 
                         <li>
 
-                            <h1><span>RomanJu WEB-разработчик</span></h1>
+                            <h1><span>RomanJu</span></h1>
+
+                        </li>
+
+                        <li>
+
+                            <h1><span>WEB-разработчик</span></h1>
 
                         </li>
 
