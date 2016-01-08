@@ -105,4 +105,23 @@ function extractCurrencyValue(){
     return newStr;
 }
 
+//есть ли свойства у объекта
+function showPropertiesIsEmptyObj() {
+    $("#code_11").show();
+    var schedule = {};
+
+    alert( isEmpty(schedule) ); // true
+    schedule["8:30"] = "подъём";
+    alert( isEmpty(schedule) ); // false
+}
+
+function isEmpty(obj){
+    var counter = 0;
+    for (var key in obj) {
+        counter++;
+    }
+    return counter ? true : false;
+}
+
+
 

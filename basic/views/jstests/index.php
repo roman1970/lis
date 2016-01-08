@@ -129,6 +129,22 @@ $this->title = 'Тесты';
                 }
 
                 </pre>
+
+        <a onclick="showPropertiesIsEmptyObj()" class="testLink">11 Проверить, есть ли свойства у объекта</a><br>
+                <pre class="brush: js;" id="code_11">
+                 function showPropertiesIsEmptyObj() {
+                    var schedule = {};
+
+                    alert( isEmpty(schedule) ); // true
+                    schedule["8:30"] = "подъём";
+                    alert( isEmpty(schedule) ); // false
+                }
+
+                function isEmpty(obj){
+                    return obj.keys(obj).length ? true : false;
+                }
+
+                </pre>
     </div>
 
 
