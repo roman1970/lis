@@ -123,5 +123,33 @@ function isEmpty(obj){
     return counter ? true : false;
 }
 
+//пример анимации
 
+function simpleAnimate() {
+    var canvas = document.getElementById("canvas");
+    var context = canvas.getContext("2d");
+    var squarePosition_y = 0;
+    var squarePosition_x = 10;
+   // var c=document.getElementById("myCanvas");
+   // var ctx=c.getContext("2d");
+    //ctx.fillStyle="red";
+    context.fillRect(0,0,300,150);
+  //  ctx.clearRect(20,20,100,50);
+
+    // Очищаем холст.
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    // Вызываем метод beginPath(), чтобы убедиться,
+    // что мы не рисуем часть уже нарисованного содержимого холста.
+    context.beginPath();
+    // Рисуем квадрат размером 10х10 пикселов в текущей позиции.
+    context.rect(squarePosition_x, squarePosition_y, 100, 100);
+    context.lineStyle = "black";
+    context.lineWidth = 1;
+    context.stroke();
+    // Перемещаем квадрат вниз на 1 пиксел (где он будет
+    // прорисован в следующем кадре).
+    squarePosition_y += 1;
+    // Рисуем следующий кадр через 20 миллисекунд.
+    setTimeout("simpleAnimate()", 20);
+}
 

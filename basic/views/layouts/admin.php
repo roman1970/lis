@@ -50,8 +50,8 @@ AppAsset::register($this);
             ['label' => 'Источники', 'url' => ['/source/index']],
             ['label' => 'Авторы', 'url' => ['/author/index']],
             ['label' => 'CodeHelp', 'url' => ['/jstests/index']],
-            /*['label' => 'User', 'url' => ['/user/profile/show']],
-           */
+            ['label' => 'Тесты', 'url' => ['/testing/index']],
+
 
         ],
     ]);

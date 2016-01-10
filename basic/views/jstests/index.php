@@ -145,6 +145,46 @@ $this->title = 'Тесты';
                 }
 
                 </pre>
+        <a onclick="simpleAnimate()" class="testLink">12 Пример анимации</a><br>
+                <pre class="brush: js;" id="code_12">
+                function simpleAnimate() {
+                    var canvas;
+                    var context;
+
+                    window.onload = function() {
+
+                        canvas = document.getElementById("canvas");
+                        context = canvas.getContext("2d");
+                    // Обновляем холст через 0,02 секунды.
+                        setTimeout("drawFrame()", 20);
+                    };
+                }
+
+                function drawFrame() {
+                    var squarePosition_y = 0;
+                    var squarePosition_x = 10;
+                    // Очищаем холст.
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    // Вызываем метод beginPath(), чтобы убедиться,
+                    // что мы не рисуем часть уже нарисованного содержимого холста.
+                    context.beginPath();
+                    // Рисуем квадрат размером 10х10 пикселов в текущей позиции.
+                    context.rect(squarePosition_x, squarePosition_y, 10, 10);
+                    context.lineStyle = "black";
+                    context.lineWidth = 1;
+                    context.stroke();
+                    // Перемещаем квадрат вниз на 1 пиксел (где он будет
+                    // прорисован в следующем кадре).
+                    squarePosition_y += 1;
+                    // Рисуем следующий кадр через 20 миллисекунд.
+                    setTimeout ("drawFrame()", 20);
+                }
+                    </pre>
+        <canvas id="canvas">
+
+        </canvas>
+
+
     </div>
 
 

@@ -875,6 +875,7 @@
       <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_3" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="plis" columns="articles_id"/>
+      <exported-key name="testing_ibfk_1" table="testing" schema="" catalog="plis" columns="article_id"/>
       <index name="ux_qparticles_qparticles_cat_id" unique="false" columns="cat_id"/>
       <index name="ux_qparticles_qparticles_site_id" unique="false" columns="site_id"/>
       <index name="ux_qparticles_qparticles_source_id" unique="false" columns="source_id"/>
@@ -1257,6 +1258,17 @@
       <column name="yult" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <index name="id" unique="true" columns="id"/>
+    </table>
+    <table name="testing" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="question" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="answer" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="right" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="article_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="testing_ibfk_1" columns="article_id" ref-table="qparticles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_testing_testing_article_id" unique="false" columns="article_id"/>
     </table>
     <table name="themes" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
