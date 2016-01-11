@@ -153,3 +153,20 @@ function simpleAnimate() {
     setTimeout("simpleAnimate()", 20);
 }
 
+
+function sumOfFieldsObjValues(){
+    var salarySum = 0;
+    var salaries = {
+        "Вася": 100,
+        "Петя": 300,
+        "Даша": 250
+    };
+
+    for (var key in salaries){
+        salarySum += salaries[key];
+    }
+    alert(salarySum);
+    return salarySum;
+
+}
+

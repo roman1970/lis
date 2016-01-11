@@ -183,7 +183,24 @@ $this->title = 'Тесты';
         <canvas id="canvas">
 
         </canvas>
+        <a onclick="sumOfFieldsObjValues()" class="testLink">13 Сумма значений свойств объекта</a><br>
+                <pre class="brush: js;" id="code_1">
+                 function sumOfFieldsObjValues(){
+                        var salarySum;
+                        var salaries = {
+                            "Вася": 100,
+                            "Петя": 300,
+                            "Даша": 250
+                        };
 
+                        for (var key in salaries){
+                            salarySum += salaries[key];
+                        }
+
+                        return salarySum;
+
+                    }
+                </pre>
 
     </div>
 

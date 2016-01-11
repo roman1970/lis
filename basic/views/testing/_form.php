@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'question')->textInput()  ?>
             <?= $form->field($model, 'article_id')->dropDownList(ArrayHelper::map(\app\models\Articles::find()->all(),'id','title'),
                 ['prompt' => 'Выбрать статью']) ?>
-            <?= $form->field($model, 'answer')->textInput()  ?>
             <?= $form->field($uploadImg, 'img')->fileInput() ?>
+            <?= $form->field($model, 'answer')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
 
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
