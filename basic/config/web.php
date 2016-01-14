@@ -26,6 +26,9 @@ $config = [
             'class' => 'app\modules\weather\Weather',
 
         ],
+        'diary' => [
+            'class' => 'app\modules\diary\Diary',
+        ],
 
     ],
     'components' => [

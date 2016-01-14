@@ -180,11 +180,12 @@ $this->title = 'Тесты';
                     setTimeout ("drawFrame()", 20);
                 }
                     </pre>
-        <canvas id="canvas">
+        <?php /*<canvas id="canvas">
 
         </canvas>
+        */ ?>
         <a onclick="sumOfFieldsObjValues()" class="testLink">13 Сумма значений свойств объекта</a><br>
-                <pre class="brush: js;" id="code_1">
+                <pre class="brush: js;" id="code_13">
                  function sumOfFieldsObjValues(){
                         var salarySum;
                         var salaries = {
@@ -201,7 +202,26 @@ $this->title = 'Тесты';
 
                     }
                 </pre>
+        <a onclick="maxSalary()" class="testLink">14 Максимальная зарплата</a><br>
+                <pre class="brush: js;" id="code_14">
+                function maxSalary(){
+                    var salaries = {
+                        "Вася": 100,
+                        "Петя": 300,
+                        "Даша": 250
+                    };
+                    var max = 0;
+                    var maxName = "";
+                    for (var name in salaries) {
+                        if (max < salaries[name]) {
+                            max = salaries[name];
+                            maxName = name;
+                        }
+                    }
 
+                    alert( maxName || "нет сотрудников" );
+                }
+                </pre>
     </div>
 
 

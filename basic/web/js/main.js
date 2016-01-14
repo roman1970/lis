@@ -155,6 +155,7 @@ function simpleAnimate() {
 
 
 function sumOfFieldsObjValues(){
+    $("#code_13").show();
     var salarySum = 0;
     var salaries = {
         "Вася": 100,
@@ -168,5 +169,24 @@ function sumOfFieldsObjValues(){
     alert(salarySum);
     return salarySum;
 
+}
+
+function maxSalary(){
+    $("#code_14").show();
+    var salaries = {
+        "Вася": 100,
+        "Петя": 300,
+        "Даша": 250
+    };
+    var max = 0;
+    var maxName = "";
+    for (var name in salaries) {
+        if (max < salaries[name]) {
+            max = salaries[name];
+            maxName = name;
+        }
+    }
+
+    alert( maxName || "нет сотрудников" );
 }
 
