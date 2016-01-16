@@ -153,7 +153,7 @@ function simpleAnimate() {
     setTimeout("simpleAnimate()", 20);
 }
 
-
+//сумма полей объекта
 function sumOfFieldsObjValues(){
     $("#code_13").show();
     var salarySum = 0;
@@ -171,6 +171,7 @@ function sumOfFieldsObjValues(){
 
 }
 
+//максимальное  значение поля
 function maxSalary(){
     $("#code_14").show();
     var salaries = {
@@ -190,3 +191,33 @@ function maxSalary(){
     alert( maxName || "нет сотрудников" );
 }
 
+//удвоение численных полей
+function putInMultipleNumeric(){
+    $("#code_15").show();
+    var menu = {
+        width: 200,
+        height: 300,
+        title: "My menu"
+    };
+
+    multiplyNumeric(menu);
+    alert( "menu width=" + menu.width + " height=" + menu.height + " title=" + menu.title );
+}
+
+//удваиваем числовые свойства
+function multiplyNumeric(obj){
+
+    for (var name in obj) {
+        if (isNumeric(obj[name])) {
+            obj[name] *= 2;
+        }
+    }
+
+    console.log(obj);
+
+}
+
+//проверка на число
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n)
+}
