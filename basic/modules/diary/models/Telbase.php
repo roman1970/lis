@@ -1,15 +1,11 @@
 <?php
-namespace frontend\modules\diary\models;
+namespace app\modules\diary\models;
 
 use Yii;
 
 
 class Telbase extends \yii\db\ActiveRecord
 {
-    
-    public static function getDb() {
-         return Yii::$app->db_diary;
-    }
     /**
      * @inheritdoc
      */

@@ -1,47 +1,37 @@
 <?php
 
-namespace frontend\modules\diary\controllers;
+namespace app\modules\diary\controllers;
 
-use yii\web\Controller;
+use app\components\BackEndController;
+use Yii;
+use app\models\Categories;
+use yii\data\Pagination;
 use yii\helpers\Url;
 
+use app\modules\diary\models\Prod;
+use app\modules\diary\models\Maner;
+use app\modules\diary\models\Money;
+use app\modules\diary\models\Ormon;
+use app\modules\diary\models\Pogoda;
+use app\modules\diary\models\Sumtel;
+use app\modules\diary\models\Telbase;
+use app\modules\diary\models\Telephone;
 
-class DefaultController extends Controller
+class DefaultController extends BackEndController
 {
-    
-    
-    public function actionIndex()
+
+    public function actionIndex2()
     {  
         
-        $mod_teams_bet_vic = new \frontend\modules\football\models\Teams();
-        $best_teams_bet_vic = $mod_teams_bet_vic::find()
-            ->orderBy(['bet_h' => SORT_DESC])
-            ->andWhere('bet_h > 15')
+        $prod = new Prod();
+        $prods = $prod::find()
             ->limit(10)
             ->all();
-        
-        
-        $mod_teams_bet_nbd = new \frontend\modules\football\models\Teams();
-        $best_teams_bet_nbd = $mod_teams_bet_nbd::find()
-            ->orderBy(['bet_n' => SORT_DESC])
-            ->andWhere('bet_n > 15')
-            ->limit(10)
-            ->all();
-        
-        $mod_teams_bet_def = new \frontend\modules\football\models\Teams();
-        $best_teams_bet_def = $mod_teams_bet_def::find()
-            ->orderBy(['bet_g' => SORT_DESC])
-            ->andWhere('bet_g > 15')
-            ->limit(10)
-            ->all();
-        
+
         return $this->render('index',[
                 
-                'best_teams_bet_vic' => $best_teams_bet_vic,
-                'best_teams_bet_nbd' => $best_teams_bet_nbd,
-                'best_teams_bet_def' => $best_teams_bet_def,
-            
-                
+                'prods' => $prods,
+
             ]);
     }
     
@@ -53,12 +43,12 @@ class DefaultController extends Controller
             ]);
     }
     
-    public function actionFourteen()
+    public function actionIndex()
     {  
         
         
         //Человек
-        $mod_maner = new \frontend\modules\diary\models\Maner();
+        $mod_maner = new Maner();
         
         $year = \Yii::$app->request->get('year', 2015);
         $max_id_maner = $mod_maner::find()
@@ -69,8 +59,8 @@ class DefaultController extends Controller
         $last_maner = $mod_maner::find()
             ->where(['id' => $max_id_maner])
             ->one();
-        
-        
+
+        echo Url::home();  exit;
         $this->pChart($mod_maner, $max_id_maner, 'day', 'weigth');
 		
         $this->pChart($mod_maner, $max_id_maner, 'day', 'ocenka');
@@ -121,7 +111,7 @@ class DefaultController extends Controller
         $this->pChartBarGrafWeek($this->avgWeekDays($mod_maner, "ocenka", 2014 ),$this->avgWeekDays($mod_maner, "ocenka", $year ));
         
         //Погода
-        $mod_pogoda = new \frontend\modules\diary\models\Pogoda();
+        $mod_pogoda = new Pogoda();
         
         $max_id_pogoda = $mod_pogoda::find()
             ->select('MAX(id)')
@@ -133,7 +123,7 @@ class DefaultController extends Controller
         
         
         //Деньги
-        $mod_money = new \frontend\modules\diary\models\Money();
+        $mod_money = new Money();
         
         $max_id_money = $mod_money::find()
             ->select('MAX(id)')
@@ -154,7 +144,7 @@ class DefaultController extends Controller
         $this->pChart($mod_money, $max_id_money, 'day', 'sber', 'brent');
         
         //Продукты
-        $mod_prod = new \frontend\modules\diary\models\Prod(); 
+        $mod_prod = new Prod();
         
         $max_id_prod = $mod_prod::find()
             ->select('MAX(id)')
@@ -197,7 +187,7 @@ class DefaultController extends Controller
         //$non_analis = $totplus - $totminus_sum;
         
         //Шагомер
-        $mod_ormon = new \frontend\modules\diary\models\Ormon();
+        $mod_ormon = new Ormon();
         
         $max_id_ormon = $mod_maner::find()
             ->select('MAX(id)')
@@ -283,7 +273,7 @@ class DefaultController extends Controller
      */
     public function pChart($model, $max_id, $x, $y, $y2=NULL){
         /* Include the pData class */ 
-        require_once '/../pChart/pChart/pData.class'; 
+        require_once '/../../pChart/pChart/pData.class';
         require_once '/../pChart/pChart/pCache.class'; 
         require_once '/../pChart/pChart/pChart.class'; 
         

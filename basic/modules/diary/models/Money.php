@@ -1,5 +1,5 @@
 <?php
-namespace frontend\modules\diary\models;
+namespace app\modules\diary\models;
 
 use Yii;
 
@@ -10,10 +10,7 @@ class Money extends \yii\db\ActiveRecord
     const STOIMOST_KUBA_GOR_VODY = 92.39;
     const STOIMOST_KUBA_HOL_VODY = 23.78;
     
-    
-    public static function getDb() {
-         return Yii::$app->db_diary;
-    }
+
     /**
      * @inheritdoc
      */
