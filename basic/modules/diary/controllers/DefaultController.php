@@ -60,7 +60,7 @@ class DefaultController extends BackEndController
             ->where(['id' => $max_id_maner])
             ->one();
 
-       echo Url::base();  exit;
+       //echo Url::base();  exit;
         $this->pChart($mod_maner, $max_id_maner, 'day', 'weigth');
 		
         $this->pChart($mod_maner, $max_id_maner, 'day', 'ocenka');
@@ -274,7 +274,7 @@ class DefaultController extends BackEndController
      */
     public function pChart($model, $max_id, $x, $y, $y2=NULL){
         /* Include the pData class */ 
-        require_once 'pChart/pChart/pData.class';
+        require_once '/../pChart/pChart/pData.class';
         require_once '/../pChart/pChart/pCache.class'; 
         require_once '/../pChart/pChart/pChart.class';
 
