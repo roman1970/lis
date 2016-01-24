@@ -258,6 +258,15 @@ $this->title = 'Тесты';
 
 
                 </pre>
+
+        <a onclick="lastElOfArray()" class="testLink">16 Последний элемент массива</a><br>
+                <pre class="brush: js;" id="code_16">
+              function lastElOfArray(){
+                   var goods = ['first', 'second', 'third', 'fourth', 'fifth'];
+                    alert(goods[goods.length-1]);
+                    return goods[goods.length-1];
+                }
+                </pre>
     </div>
 
 

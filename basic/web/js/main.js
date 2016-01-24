@@ -221,3 +221,11 @@ function multiplyNumeric(obj){
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
 }
+
+//последний элемент массива
+function lastElOfArray(){
+    $("#code_16").show();
+   var goods = ['first', 'second', 'third', 'fourth', 'fifth'];
+    alert(goods[goods.length-1]);
+    return goods[goods.length-1];
+}
