@@ -267,6 +267,22 @@ $this->title = 'Тесты';
                     return goods[goods.length-1];
                 }
                 </pre>
+
+        <a onclick="randArrayEl()" class="testLink">17 Случайный элемент массива</a><br>
+                <pre class="brush: js;" id="code_17">
+             function randArrayEl(){
+                    $("#code_17").show();
+                    var arr = ["Яблоко", "Апельсин", "Груша", "Лимон"];
+                    alert(arr[rand(0, arr.length-1)]);
+                    return arr[rand(0, arr.length-1)];
+
+                }
+
+                //случайное от min до max
+                function rand(min, max){
+                    return min + Math.floor(Math.random() * (max + 1 - min));
+                }
+                </pre>
     </div>
 
 

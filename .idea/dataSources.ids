@@ -135,12 +135,51 @@
       <exported-key name="articles_ibfk_1" table="articles" schema="" catalog="plis" columns="cat_id"/>
       <index name="ux_category_category_site_id" unique="false" columns="site_id"/>
     </table>
+    <table name="chl_events" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="minute" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_events_ibfk_1" columns="player_id" ref-table="chl_players" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_chl_events_match_id" unique="false" columns="match_id"/>
+      <index name="ux_chl_events_player_id" unique="false" columns="player_id"/>
+    </table>
+    <table name="chl_matches" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="host_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guest_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="host_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guest_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_matches_ibfk_2" columns="guest_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_1" columns="host_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_events_ibfk_2" table="chl_events" schema="" catalog="plis" columns="match_id"/>
+      <index name="ux_chl_matches_guest_id" unique="false" columns="guest_id"/>
+      <index name="ux_chl_matches_host_id" unique="false" columns="host_id"/>
+    </table>
+    <table name="chl_players" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="team_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_players_ibfk_1" columns="team_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_events_ibfk_1" table="chl_events" schema="" catalog="plis" columns="player_id"/>
+      <index name="ux_chl_players_team_id" unique="false" columns="team_id"/>
+    </table>
     <table name="chl_teams" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="chl_teams_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_matches_ibfk_2" table="chl_matches" schema="" catalog="plis" columns="guest_id"/>
+      <exported-key name="chl_matches_ibfk_1" table="chl_matches" schema="" catalog="plis" columns="host_id"/>
+      <exported-key name="chl_players_ibfk_1" table="chl_players" schema="" catalog="plis" columns="team_id"/>
       <index name="ux_chl_teams_city_id" unique="false" columns="city_id"/>
     </table>
     <table name="cities" schema="" catalog="plis" type="TABLE">

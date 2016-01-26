@@ -75,5 +75,30 @@ class KhlController extends Controller
         }
     }
 
+    /**
+     * Добавление новых матчей в foo_matches
+     */
+    public function actionAddNewMatches()
+    {
+        $arr_datas_classes = [
+            'tname-home', //хозяин
+            'tname-away', //гость
+        ];
+
+        $url = Url::to("@app/commands/khl.html");
+
+        $content = file_get_contents($url);
+        //var_dump(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true)); exit;
+
+        //$content = iconv(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true), 'Windows-1251', $content);
+
+        $content = str_replace(chr(9), '', $content);
+        $content = str_replace(chr(11), '', $content);  // заменяем табуляцию на пробел
+        $content = str_replace(chr(13), '', $content);
+        $content = str_replace(chr(10), '', $content);
+
+        $chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
+        $j = count($chars);
+    }
 
 }

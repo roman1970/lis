@@ -229,3 +229,17 @@ function lastElOfArray(){
     alert(goods[goods.length-1]);
     return goods[goods.length-1];
 }
+
+//случайный элемент массива
+function randArrayEl(){
+    $("#code_17").show();
+    var arr = ["Яблоко", "Апельсин", "Груша", "Лимон"];
+    alert(arr[rand(0, arr.length-1)]);
+    return arr[rand(0, arr.length-1)];
+
+}
+
+//случайное от min до max
+function rand(min, max){
+    return min + Math.floor(Math.random() * (max + 1 - min));
+}

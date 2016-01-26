@@ -61,9 +61,9 @@ class DefaultController extends BackEndController
             ->one();
 
        //echo Url::base();  exit;
-        $this->pChart($mod_maner, $max_id_maner, 'day', 'weigth');
+        @$this->pChart($mod_maner, $max_id_maner, 'day', 'weigth');
 		
-        $this->pChart($mod_maner, $max_id_maner, 'day', 'ocenka');
+        @$this->pChart($mod_maner, $max_id_maner, 'day', 'ocenka');
         
         $this->pChartBarGrafMonthes($this->avgMonthes($mod_maner, "weigth", 2014 ),$this->avgMonthes($mod_maner, "weigth", $year ));
         
@@ -104,11 +104,11 @@ class DefaultController extends BackEndController
             ->scalar();
         
         //гистограмма средней скорости транспорта по дням недели и месяцам
-        $this->pChartBarGrafWeek($this->avgWeekDays($mod_maner, "srskor", 2014 ),$this->avgWeekDays($mod_maner, "srskor", $year ));
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_maner, "srskor", 2014 ),$this->avgMonthes($mod_maner, "srskor", $year ));
+        @$this->pChartBarGrafWeek($this->avgWeekDays($mod_maner, "srskor", 2014 ),$this->avgWeekDays($mod_maner, "srskor", $year ));
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_maner, "srskor", 2014 ),$this->avgMonthes($mod_maner, "srskor", $year ));
         
         //гистограмма оценок по дням недели
-        $this->pChartBarGrafWeek($this->avgWeekDays($mod_maner, "ocenka", 2014 ),$this->avgWeekDays($mod_maner, "ocenka", $year ));
+        @$this->pChartBarGrafWeek($this->avgWeekDays($mod_maner, "ocenka", 2014 ),$this->avgWeekDays($mod_maner, "ocenka", $year ));
         
         //Погода
         $mod_pogoda = new Pogoda();
@@ -140,8 +140,8 @@ class DefaultController extends BackEndController
             ->one();
         $on_cards = $today_money->sv_kart + $today_money->r_kart;
         
-        $this->pChart($mod_money, $max_id_money, 'day', 'dol', 'eur');
-        $this->pChart($mod_money, $max_id_money, 'day', 'sber', 'brent');
+        @$this->pChart($mod_money, $max_id_money, 'day', 'dol', 'eur');
+        @$this->pChart($mod_money, $max_id_money, 'day', 'sber', 'brent');
         
         //Продукты
         $mod_prod = new Prod();
@@ -178,11 +178,11 @@ class DefaultController extends BackEndController
 			
         
         //гистограммы  калорий по дням недели и месяцам
-        $this->pChartBarGrafWeek($this->avgWeekDays($mod_prod, "tottot", 2014 ),$this->avgWeekDays($mod_prod, "tottot", $year ));
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "tottot", 2014 ),$this->avgMonthes($mod_prod, "tottot", $year ));
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "totminus", 2014 ),$this->avgMonthes($mod_prod, "totminus", $year ));
-		 $this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "totplus", 2014 ),$this->avgMonthes($mod_prod, "totplus", $year ));
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "fruct", 2014 ),$this->avgMonthes($mod_prod, "fruct", $year ));
+        @$this->pChartBarGrafWeek($this->avgWeekDays($mod_prod, "tottot", 2014 ),$this->avgWeekDays($mod_prod, "tottot", $year ));
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "tottot", 2014 ),$this->avgMonthes($mod_prod, "tottot", $year ));
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "totminus", 2014 ),$this->avgMonthes($mod_prod, "totminus", $year ));
+		@$this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "totplus", 2014 ),$this->avgMonthes($mod_prod, "totplus", $year ));
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_prod, "fruct", 2014 ),$this->avgMonthes($mod_prod, "fruct", $year ));
         
         //$non_analis = $totplus - $totminus_sum;
         
@@ -193,8 +193,8 @@ class DefaultController extends BackEndController
             ->select('MAX(id)')
             ->scalar();
         
-        $this->ormonGraf($mod_ormon, $max_id_ormon);
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_ormon, "totalstep", 2014 ),$this->avgMonthes($mod_ormon, "totalstep", $year ));
+        @$this->ormonGraf($mod_ormon, $max_id_ormon);
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_ormon, "totalstep", 2014 ),$this->avgMonthes($mod_ormon, "totalstep", $year ));
         
         $datas = $mod_prod::find()
             ->where(['year' => $year])
@@ -274,9 +274,9 @@ class DefaultController extends BackEndController
      */
     public function pChart($model, $max_id, $x, $y, $y2=NULL){
         /* Include the pData class */ 
-        require_once '/../pChart/pChart/pData.class';
-        require_once '/../pChart/pChart/pCache.class'; 
-        require_once '/../pChart/pChart/pChart.class';
+        require_once Yii::getAlias('@app').'/pChart/pChart/pData.class';
+        require_once Yii::getAlias('@app').'/pChart/pChart/pCache.class';
+        require_once Yii::getAlias('@app').'/pChart/pChart/pChart.class';
 
 
         //создаем объект данных 
@@ -318,7 +318,7 @@ class DefaultController extends BackEndController
         //создаем график шириной  и высотой  px 
         $graph = new \pChart(340,130); 
         //устанавливаем шрифт и размер шрифта 
-        $graph->setFontProperties(Url::to('@app/pChart/Fonts/tahoma.ttf', true),8); 
+        $graph->setFontProperties(Yii::getAlias('@app').'/pChart/Fonts/tahoma.ttf', true, 8);
         //координаты левой верхней вершины и правой нижней 
         //вершины графика 
         $graph->setGraphArea(35,20,330,110); 
@@ -545,8 +545,8 @@ class DefaultController extends BackEndController
             $y47 = (100 - $parArr[23] / 100);
             $x48 = 270;
             $y48 = 100;
-            
-            $im = imagecreatefrompng(Url::to('@app/web/uploads/setka_ormon.png')) or die("Cannot Initialize new GD image stream");
+            //echo Yii::getAlias('@app').'/web/uploads/setka_ormon.png'; exit;
+            $im = imagecreatefrompng(Yii::getAlias('@app').'/web/uploads/setka_ormon.png') or die("Cannot Initialize new GD image stream");
             $background_color = imagecolorallocate($im, 255, 255, 255);
 
             $text_color = imagecolorallocate($im, 0, 0, 0);
@@ -618,8 +618,8 @@ class DefaultController extends BackEndController
      */
     public function pChartBarGrafWeek($par1, $par2=NULL, $par3=NULL){
 
-        require_once '/../pChart/pChart/pData.class'; 
-        require_once '/../pChart/pChart/pChart.class'; 
+        require_once Yii::getAlias('@app').'/pChart/pChart/pData.class';
+        require_once Yii::getAlias('@app').'/pChart/pChart/pChart.class';
         
         $DataSet = new \pData;
        
@@ -668,8 +668,8 @@ class DefaultController extends BackEndController
      */
     public function pChartBarGrafMonthes($par1, $par2=NULL, $par3=NULL){
 
-        require_once '/../pChart/pChart/pData.class'; 
-        require_once '/../pChart/pChart/pChart.class'; 
+        require_once Yii::getAlias('@app').'/pChart/pChart/pData.class';
+        require_once Yii::getAlias('@app').'/pChart/pChart/pChart.class';
         
         $DataSet = new \pData;
        
@@ -716,6 +716,47 @@ class DefaultController extends BackEndController
 
     
     public function bestShops($datas){
+        $rybdaySum = 0;
+        $marSum = 0;
+        $ashanSum = 0;
+        $ikeaSum = 0;
+        $holSum = 0;
+        $gottiSum = 0;
+        $leroySum = 0;
+        $chistmirSum = 0;
+        $miasoSum = 0;
+        $familySum = 0;
+        $gloriadjinsSum = 0;
+        $detmirSum = 0;
+        $sibgigSum = 0;
+        $ostinSum = 0;
+        $m_videoSum = 0;
+        $romikaSum = 0;
+        $avaloneSum = 0;
+        $lumenSum = 0;
+        $mothercareSum = 0;
+        $dochki_synochkiSum = 0;
+        $bystronomSum = 0;
+        $e96Sum = 0;
+        $dudnikSum = 0;
+        $letualSum = 0;
+        $mus_arsSum = 0;
+        $master_bestSum = 0;
+        $music_landSum = 0;
+        $mangoSum = 0;
+        $sinarSum = 0;
+        $limpopoSum = 0;
+        $sportmasterSum = 0;
+        $salamanderSum = 0;
+        $zollaSum = 0;
+        $florangeSum = 0;
+        $marks_spenserSum = 0;
+        $malonfashnSum = 0;
+        $nattiSum = 0;
+        $dnsSum = 0;
+        $piaterochkaSum = 0;
+        $radiotehnikaSum = 0;
+        $ramSum = 0;
        
         
         foreach ($datas as $key => $data) {
@@ -819,7 +860,53 @@ class DefaultController extends BackEndController
      * @return array
      */
     public function spends($datas){
-         
+        $alkSum = 0;
+        $batSum = 0;
+        $bilSum = 0;
+        $bolSum = 0;
+        $dorSum = 0;
+        $doshirabSum = 0;
+        $zhvachSum = 0;
+
+        $cancSum = 0;
+        $kvarSum = 0;
+        $kolbasSum = 0;
+        $koncerSum = 0;
+        $kofeSum = 0;
+        $krupSum = 0;
+
+        $makarSum = 0;
+        $maslorastSum = 0;
+        $mebelSum = 0;
+        $melochSum = 0;
+        $mishaSum = 0;
+        $molocoSum = 0;
+        $musSum = 0;
+        $mjasSum = 0;
+        $obuvSum = 0;
+        $ovosSum = 0;
+        $odezhdSum = 0;
+        $paricSum = 0;
+        $pelmenSum = 0;
+        $pticSum = 0;
+
+        $pureshSum = 0;
+        $remSum = 0;
+        $rybSum = 0;
+        $sladSum = 0;
+        $sokSum = 0;
+        $sotSum = 0;
+        $sotSum = 0;
+        $suhfrSum = 0;
+        $techSum = 0;
+        $uchSum = 0;
+        $fructSum = 0;
+        $hlebSum = 0;
+        $hozSum = 0;
+        $hostingSum = 0;
+        $muchSum = 0;
+
+
         foreach ($datas as $key => $data) {
             $alkSum += $data->alk;
             $batSum += $data->bat;
