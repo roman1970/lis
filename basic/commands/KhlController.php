@@ -164,25 +164,26 @@ class KhlController extends Controller
             foreach ($td as $node) {
 
                 if ($node->getAttribute('class') === 'summary-vertical fr') {
-                    $dt = $node->nodeValue;
-                    $dom_in = new \DomDocument();
-                    $html = $node->ownerDocument->saveHTML($node);
-                    $newhtml = $head . $html;
-                    $dom_in->loadHTML($newhtml);
+                        $dt = $node->nodeValue;
+                        $dom_in = new \DomDocument();
+                        $html = $node->ownerDocument->saveHTML($node);
+                        $newhtml = $head . $html;
+                        $dom_in->loadHTML($newhtml);
 
 
-                    $dv = $dom_in->getElementsByTagName("div");
+                        $dv = $dom_in->getElementsByTagName("div");
 
 
-                    foreach ($dv as $node) {
+                        foreach ($dv as $node) {
 
-                        if ($node->getAttribute('class') === 'time-box-wide') {
+                            if ($node->getAttribute('class') === 'wrapper') {
+                                var_dump($node);
 
-                            $ud = $node->textContent. ", ";
-                            var_dump($ud);
+                                $ud .= $node->textContent. ", ";
+
+                            }
+
                         }
-
-                    }
 
                     }
                 }
