@@ -177,9 +177,10 @@ class KhlController extends Controller
                         foreach ($dv as $node) {
 
                             if ($node->getAttribute('class') === 'wrapper') {
-                                var_dump($node);
+                               // var_dump($node);
 
-                                $ud .= $node->textContent. ", ";
+                                $ud .= $node->nodeValue. ", ";
+                                var_dump($this->myTextNode($node, $a));
 
                             }
 
@@ -192,7 +193,7 @@ class KhlController extends Controller
             if($tnameguest) echo "гость - ".$tnameguest. "\n\r";
             if($date) echo "дата-время - ".$date. "\n\r";
             if($stat) echo "статус - ".$stat. "\n\r";
-            if($ud) echo "уд - ". $ud. "\n\r";
+            //if($ud) echo "уд - ". $ud. "\n\r";
             //var_dump($wrapper);
         }
     }
@@ -225,6 +226,40 @@ class KhlController extends Controller
         return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s]+/", "", $string);
     }
 
+    function myTextNode($n, &$a)
+    {
+        static $depth = 0;
+        static $sz = '';
+
+        if ($cn = $n->firstChild)
+        {
+            while ($cn)
+            {
+                if ($cn->nodeType == XML_TEXT_NODE)
+                {
+                    $sz .= $cn->nodeValue;
+                }
+                elseif ($cn->nodeType == XML_ELEMENT_NODE)
+                {
+                    $b = 1;
+                    if ($cn->hasChildNodes())
+                    {
+                        $depth++;
+                        if ($this->myHeadings($cn, $a))
+                        {
+                            if ($sz){
+                                array_push($a, $sz);
+                                $sz = '';
+                            }
+                        }
+                        $depth--;
+                    }
+                }
+                $cn = $cn->nextSibling;
+            }
+            return $b;
+        }
+    }
 
 
 }
