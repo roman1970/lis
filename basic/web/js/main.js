@@ -243,3 +243,25 @@ function randArrayEl(){
 function rand(min, max){
     return min + Math.floor(Math.random() * (max + 1 - min));
 }
+
+//калькулятор суммы
+function sum(){
+    $("#code_18").show();
+    var arr = [];
+    var p;
+    while (true) {
+
+        var value = prompt("Введите число", 0);
+
+        if (value === "" || value === null || isNaN(value)) break;
+
+        arr.push(+value);
+    }
+
+    var sum = 0;
+    for (var i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    alert( sum );
+
+}

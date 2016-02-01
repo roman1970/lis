@@ -113,13 +113,13 @@ class KhlController extends Controller
         $j = count($chars);
 
         for ($m = 0; $m < $j; $m++) {
-            $dom = new \DomDocument();
-            libxml_use_internal_errors(true);
+            //$dom = new \DomDocument();
+            //libxml_use_internal_errors(true);
             $head = file_get_contents(Url::to("@app/commands/header.html"));
-            $match = $head . $chars[$m]; //добавляем хэдер
-
-            $dom->loadHTML($match);
-
+            $match = $head . $chars[1]; //добавляем хэдер
+            //var_dump($match); exit;
+            //$dom->loadHTML($match);
+            $this->contentOfDomClasses($match); exit;
 
             $td = $dom->getElementsByTagName("td");
             foreach ($td as $node) {
@@ -259,6 +259,51 @@ class KhlController extends Controller
             }
             return $b;
         }
+    }
+
+    private static function contentOfDomClasses($match)
+    {
+        $dom = new \DomDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($match);
+        $dom->preserveWhiteSpace = true;
+
+        $xpath = new \DOMXPath($dom);
+
+        // Мы начали с корневого элемента
+        //$query = '/book/chapter/para/informaltable/tgroup/tbody/row/entry[. = "en"]';
+
+        // $entries = $xpath->query($query);
+        /* $entries = $xpath->query("div");
+         //var_dump($entries);
+
+         foreach ($entries as $entry) {
+             echo "Found {$entry->nodeName}," .
+                 " by {$entry->nodeValue}\n";
+         }
+         */
+        $els = $xpath->query(".//*/tr[@class='stage-header stage-14']");
+       // var_dump($els);
+        $arr = [];
+        if($els) {
+            foreach ($els as $el) {
+
+                $nodes = $el->childNodes;
+                if($nodes) {
+                    foreach ($nodes as $node) {
+                        $arr[][$node->nodeValue] = $node->nextSibling;
+                        $childNodes = $node->childNodes;
+                        if($childNodes){
+                            $arr[][$node->nodeValue] = $node->nextSibling->nodeValue;
+                        }
+                    }
+                }
+                else $arr[][$el->nodeName] = $el->nodeValue;
+                var_dump($arr);
+            }
+
+        }
+
     }
 
 

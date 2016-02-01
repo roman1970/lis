@@ -49,26 +49,25 @@ class DefaultController extends BackEndController
         
         //Человек
         $mod_maner = new Maner();
-        
-        $year = \Yii::$app->request->get('year', 2015);
+
+        $year = 2016;
         $max_id_maner = $mod_maner::find()
             ->select('MAX(id)')
             ->where(['year' => $year])
             ->scalar();
-        
+
         $last_maner = $mod_maner::find()
             ->where(['id' => $max_id_maner])
             ->one();
+        //var_dump($last_maner); exit;
 
-       //echo Url::base();  exit;
         @$this->pChart($mod_maner, $max_id_maner, 'day', 'weigth');
-		
+
         @$this->pChart($mod_maner, $max_id_maner, 'day', 'ocenka');
-        
-        $this->pChartBarGrafMonthes($this->avgMonthes($mod_maner, "weigth", 2014 ),$this->avgMonthes($mod_maner, "weigth", $year ));
-        
-		
-        
+
+        @$this->pChartBarGrafMonthes($this->avgMonthes($mod_maner, "weigth", 2014 ),$this->avgMonthes($mod_maner, "weigth", 2015 ),$this->avgMonthes($mod_maner, "weigth", $year ));
+
+
         $sum_bal_for_seven_days =  $mod_maner::find()
             ->select('SUM(ocenka)')
             ->andWhere("id > $max_id_maner - 7")
@@ -287,6 +286,7 @@ class DefaultController extends BackEndController
             ->andWhere("id > $max_id - 7")
             ->all();
         }
+
         
         else { $datas = $model::find()
             ->select([$x, $y, $y2])

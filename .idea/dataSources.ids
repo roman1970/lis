@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="MySQL - plis@localhost" uuid="4d6ed56c-e134-4b1b-8376-01b0a74f0d7e">
-    <database-info product="MySQL" version="5.5.46-0ubuntu0.14.04.2" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+    <database-info product="MySQL" version="5.5.47-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
@@ -142,8 +142,8 @@
       <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_events_ibfk_1" columns="player_id" ref-table="chl_players" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_chl_events_match_id" unique="false" columns="match_id"/>
       <index name="ux_chl_events_player_id" unique="false" columns="player_id"/>
     </table>
@@ -155,8 +155,8 @@
       <column name="guest_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="chl_matches_ibfk_2" columns="guest_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_matches_ibfk_1" columns="host_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_2" columns="guest_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="chl_events_ibfk_2" table="chl_events" schema="" catalog="plis" columns="match_id"/>
       <index name="ux_chl_matches_guest_id" unique="false" columns="guest_id"/>
       <index name="ux_chl_matches_host_id" unique="false" columns="host_id"/>
@@ -177,8 +177,8 @@
       <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="chl_teams_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
-      <exported-key name="chl_matches_ibfk_2" table="chl_matches" schema="" catalog="plis" columns="guest_id"/>
       <exported-key name="chl_matches_ibfk_1" table="chl_matches" schema="" catalog="plis" columns="host_id"/>
+      <exported-key name="chl_matches_ibfk_2" table="chl_matches" schema="" catalog="plis" columns="guest_id"/>
       <exported-key name="chl_players_ibfk_1" table="chl_players" schema="" catalog="plis" columns="team_id"/>
       <index name="ux_chl_teams_city_id" unique="false" columns="city_id"/>
     </table>

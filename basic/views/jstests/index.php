@@ -283,6 +283,16 @@ $this->title = 'Тесты';
                     return min + Math.floor(Math.random() * (max + 1 - min));
                 }
                 </pre>
+        <a onclick="sum()" class="testLink">18 Калькулятор суммы</a><br>
+                <pre class="brush: js;" id="code_18">
+                        function sum(){
+                $("#code_18").show();
+                var arr = [];
+                arr.push(prompt("Введите число", ""));
+                alert(arr);
+
+            }
+                </pre>
     </div>
 
 
