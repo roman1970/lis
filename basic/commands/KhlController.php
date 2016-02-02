@@ -282,27 +282,39 @@ class KhlController extends Controller
                  " by {$entry->nodeValue}\n";
          }
          */
-        $els = $xpath->query(".//*/tr[@class='stage-header stage-14']");
+        $node = $xpath->query(".//*/tr[@class='stage-header stage-14']")->item(0);
        // var_dump($els);
         $arr = [];
+
+        while ($node = $node->nextSibling) {
+            var_dump($node->textContent);
+        }
+        exit;
+
         if($els) {
             foreach ($els as $el) {
+                $period = $el->firstChild->textContent;
+                var_dump($period);
 
-                $nodes = $el->childNodes;
-                if($nodes) {
-                    foreach ($nodes as $node) {
-                        $arr[][$node->nodeValue] = $node->nextSibling;
-                        $childNodes = $node->childNodes;
-                        if($childNodes){
-                            $arr[][$node->nodeValue] = $node->nextSibling->nodeValue;
-                        }
+                        var_dump($el->nextSibling->nextSibling); exit;
+                        if ($el->nextSibling) {
+                            foreach ($el->nextSibling as $node) {
+                                $arr[$period][$node->nodeValue] = $node->nextSibling;
+                                $childNodes = $node->childNodes;
+                                if ($childNodes) {
+                                    $arr[$period][$node->nodeValue] = $node->nextSibling->nodeValue;
+                                }
+                            }
+                        } else break;
+                        var_dump($arr);
                     }
-                }
-                else $arr[][$el->nodeName] = $el->nodeValue;
-                var_dump($arr);
-            }
+
 
         }
+
+    }
+
+    public function getNextSibling(){
 
     }
 

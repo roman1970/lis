@@ -285,13 +285,26 @@ $this->title = 'Тесты';
                 </pre>
         <a onclick="sum()" class="testLink">18 Калькулятор суммы</a><br>
                 <pre class="brush: js;" id="code_18">
-                        function sum(){
-                $("#code_18").show();
-                var arr = [];
-                arr.push(prompt("Введите число", ""));
-                alert(arr);
+                    function sum(){
+                    $("#code_18").show();
+                    var arr = [];
+                    var p;
+                    while (true) {
 
-            }
+                        var value = prompt("Введите число", 0);
+
+                        if (value === "" || value === null || isNaN(value)) break;
+
+                        arr.push(+value);
+                    }
+
+                    var sum = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        sum += arr[i];
+                    }
+                    alert( sum );
+
+                }
                 </pre>
     </div>
 
