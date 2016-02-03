@@ -80,122 +80,22 @@ class KhlController extends Controller
      */
     public function actionAddNewMatches()
     {
-        $arr_datas_classes = [
-            'tname-home', //хозяин
-            'tname-away', //гость
-            'mstat-date', //дата
-            'mstat', // статус матча, напр, после буллитов
-            'current-result', // результат 2-2
-            'subincident-penalty', // удаление
-
-        ];
 
         $url = Url::to("@app/commands/khl.html");
-
         $content = file_get_contents($url);
-        $tnamehome = "";
-        $tnameguest = "";
-        $date = "";
-        $stat = "";
-        $wrapper = [];
-        $ud = "";
-
-        //var_dump(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true)); exit;
-
-        //$content = iconv(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true), 'Windows-1251', $content);
-
-        $content = str_replace(chr(9), '', $content);
-        $content = str_replace(chr(11), '', $content);  // заменяем табуляцию на пробел
-        $content = str_replace(chr(13), '', $content);
-        $content = str_replace(chr(10), '', $content);
 
         $chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
         $j = count($chars);
 
-        for ($m = 0; $m < $j; $m++) {
-            //$dom = new \DomDocument();
-            //libxml_use_internal_errors(true);
+
+        for ($m = 1; $m < $j; $m++) {
             $head = file_get_contents(Url::to("@app/commands/header.html"));
-            $match = $head . $chars[1]; //добавляем хэдер
-            //var_dump($match); exit;
-            //$dom->loadHTML($match);
-            $this->contentOfDomClasses($match); exit;
+            $match = $head . $chars[$m]; //добавляем хэдер
+            print_r($this->headOfMatchInArray($match));
+            print_r($this->eventOfMatchInArray($match));
 
-            $td = $dom->getElementsByTagName("td");
-            foreach ($td as $node) {
-
-                if ($node->getAttribute('class') == "tname-home logo-enable") {
-
-                    $tnamehome = self::clearString(trim($node->textContent));
-
-                    }
-                if ($node->getAttribute('class') == "tname-away logo-enable") {
-
-                    $tnameguest = self::clearString(trim($node->textContent));
-
-                }
-
-                if ($node->getAttribute('class') == "mstat-date") {
-
-                    $date = $node->textContent;
-
-                }
-
-                if ($node->getAttribute('class') == "mstat") {
-
-                    $stat = self::clearString(trim($node->textContent));
-
-                }
-
-            }
-
-            $div = $dom->getElementsByTagName("div");
-            foreach ($div as $node) {
-
-                if ($node->getAttribute('class') == "time-box-wide") {
-
-                    $wrapper[]['time'] = $node->textContent;
-
-                }
-            }
-
-            $td = $dom->getElementsByTagName("td");
-
-            foreach ($td as $node) {
-
-                if ($node->getAttribute('class') === 'summary-vertical fr') {
-                        $dt = $node->nodeValue;
-                        $dom_in = new \DomDocument();
-                        $html = $node->ownerDocument->saveHTML($node);
-                        $newhtml = $head . $html;
-                        $dom_in->loadHTML($newhtml);
-
-
-                        $dv = $dom_in->getElementsByTagName("div");
-
-
-                        foreach ($dv as $node) {
-
-                            if ($node->getAttribute('class') === 'wrapper') {
-                               // var_dump($node);
-
-                                $ud .= $node->nodeValue. ", ";
-                                var_dump($this->myTextNode($node, $a));
-
-                            }
-
-                        }
-
-                    }
-                }
-
-                    if($tnamehome) echo "хозяин - ".$tnamehome. "\n\r";
-            if($tnameguest) echo "гость - ".$tnameguest. "\n\r";
-            if($date) echo "дата-время - ".$date. "\n\r";
-            if($stat) echo "статус - ".$stat. "\n\r";
-            //if($ud) echo "уд - ". $ud. "\n\r";
-            //var_dump($wrapper);
         }
+
     }
 
     public static function unichr($dec) {
@@ -226,42 +126,13 @@ class KhlController extends Controller
         return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s]+/", "", $string);
     }
 
-    function myTextNode($n, &$a)
-    {
-        static $depth = 0;
-        static $sz = '';
-
-        if ($cn = $n->firstChild)
-        {
-            while ($cn)
-            {
-                if ($cn->nodeType == XML_TEXT_NODE)
-                {
-                    $sz .= $cn->nodeValue;
-                }
-                elseif ($cn->nodeType == XML_ELEMENT_NODE)
-                {
-                    $b = 1;
-                    if ($cn->hasChildNodes())
-                    {
-                        $depth++;
-                        if ($this->myHeadings($cn, $a))
-                        {
-                            if ($sz){
-                                array_push($a, $sz);
-                                $sz = '';
-                            }
-                        }
-                        $depth--;
-                    }
-                }
-                $cn = $cn->nextSibling;
-            }
-            return $b;
-        }
-    }
-
-    private static function contentOfDomClasses($match)
+    /**
+     * Возвращает массив событий матча
+     * @param $match
+     * @return array
+     * статусы 1 - гол, 2 - 2х минутное удаление, 3 - гол в серии булитов, 4 - нереализованный буллит
+     */
+    private static function eventOfMatchInArray($match)
     {
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
@@ -270,51 +141,125 @@ class KhlController extends Controller
 
         $xpath = new \DOMXPath($dom);
 
-        // Мы начали с корневого элемента
-        //$query = '/book/chapter/para/informaltable/tgroup/tbody/row/entry[. = "en"]';
-
-        // $entries = $xpath->query($query);
-        /* $entries = $xpath->query("div");
-         //var_dump($entries);
-
-         foreach ($entries as $entry) {
-             echo "Found {$entry->nodeName}," .
-                 " by {$entry->nodeValue}\n";
-         }
-         */
         $node = $xpath->query(".//*/tr[@class='stage-header stage-14']")->item(0);
        // var_dump($els);
         $arr = [];
+        $i = 0;
+        $period = 1;
+        $com = '';
+
 
         while ($node = $node->nextSibling) {
-            var_dump($node->textContent);
-        }
-        exit;
+            //$arr[$i]['period'] = 1;
+            //var_dump($node->childNodes);
+            foreach ($node->childNodes as $nodde) {
+                //var_dump($nodde->textContent); //== "2-й период")
+                if($nodde->attributes){
+                    foreach ($nodde->attributes as $attribute) {
 
-        if($els) {
-            foreach ($els as $el) {
-                $period = $el->firstChild->textContent;
-                var_dump($period);
+                        if($attribute->value == "h-part" && $nodde->textContent == "2-й период") $period = 2;
+                        if($attribute->value == "h-part" && $nodde->textContent == "3-й период") $period = 3;
+                        if($attribute->value == "h-part" && $nodde->textContent == "Овертайм") $period = 4;
+                        if($attribute->value == "h-part" && $nodde->textContent == "Буллиты") $period = 5;
+                        if($attribute->value == "summary-vertical fl") $com = 'host';
+                        if($attribute->value == "summary-vertical fr") $com = 'guest';
+                    }
+                }
 
-                        var_dump($el->nextSibling->nextSibling); exit;
-                        if ($el->nextSibling) {
-                            foreach ($el->nextSibling as $node) {
-                                $arr[$period][$node->nodeValue] = $node->nextSibling;
-                                $childNodes = $node->childNodes;
-                                if ($childNodes) {
-                                    $arr[$period][$node->nodeValue] = $node->nextSibling->nodeValue;
+               //var_dump($nodde->childNodes);
+                if($nodde->childNodes) {
+
+
+                    foreach ($nodde->childNodes as $child) {
+
+                            //var_dump($child); exit;
+                        if($child->attributes){
+                            foreach ($child->attributes as $attribute) {
+                                //if($attribute->value == "wrapper" && $child->textContent == "(Буллит)") echo "бул"; //$arr[]['score'] = $child->textContent;
+                            }
+                        }
+                        if($child->childNodes){
+                            foreach ($child->childNodes as $grandson) {
+                                if($grandson->attributes){
+                                    $arr[$i]['period'] = $period;
+                                    $arr[$i]['com'] = $com;
+                                    foreach ($grandson->attributes as $attribute) {
+                                        if($attribute->value == "time-box-wide") $arr[$i]['time'] = $grandson->textContent;
+                                        if($attribute->value == "icon-box hockey-penalty-2") {
+                                            $arr[$i]['status'] = 2;
+                                        }
+                                        if($attribute->value == "icon-box hockey-ball") {
+                                            if($period == 5)
+                                                $arr[$i]['status'] = 3;
+                                            else
+                                                $arr[$i]['status'] = 1;
+                                        }
+                                        if($attribute->value == "icon-box penalty-missed") {
+                                            $arr[$i]['status'] = 4;
+                                        }
+                                        if($attribute->value == "subincident-penalty") {
+                                            $arr[$i]['prim'] = $grandson->textContent;
+                                        }
+                                        if($attribute->value == "participant-name") {
+                                            $arr[$i]['subject'] = trim($grandson->textContent);
+                                        }
+                                        if($attribute->value == "assist") {
+                                            $arr[$i]['assist'] = trim($grandson->textContent);
+                                        }
+
+
+                                    }
                                 }
                             }
-                        } else break;
-                        var_dump($arr);
+                        }
+
+
                     }
+                }
 
-
+            }
+        $i++;
         }
+        return $arr;
 
     }
 
-    public function getNextSibling(){
+
+    /**
+     * Возвращает массив основных событий матча
+     * @param $match
+     * @return array
+     */
+    private static function  headOfMatchInArray($match){
+        $dom = new \DomDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($match);
+        $dom->preserveWhiteSpace = true;
+        $xpath = new \DOMXPath($dom);
+        $arr=[];
+        $date = '';
+        $st = '';
+
+        $node = $xpath->query(".//*/td[@class='tname-home logo-enable']/span[@class='tname']/a")->item(0);
+            $arr['host'] = $node->textContent;
+        $node = $xpath->query(".//*/td[@class='tname-away logo-enable']")->item(0);
+            $arr['guest'] = $node->firstChild->textContent;
+        $node = $xpath->query(".//*/td[@class='current-result']/span[@class='scoreboard']")->item(0);
+            $arr['host_g'] = $node->textContent;
+            $arr['guest_g'] = $node->nextSibling->nextSibling->textContent;
+        $node = $xpath->query(".//*/td[@id='utime']")->item(0);
+            $date = explode(' ',$node->textContent);
+            $arr['date'] = $date[0];
+            $arr['time_beg'] = $date[1];
+        $node = $xpath->query(".//*/td[@class='mstat']")->item(0);
+            $arr['status'] = $node->textContent;
+        $node = $xpath->query(".//*/tr[@class='stage-header']")->item(0);
+            $arr['judge'] = $node->nextSibling->firstChild->textContent;
+            $st = explode(',', $node->nextSibling->nextSibling->firstChild->textContent);
+            $arr['audience'] = $st[0];
+            $arr['stadium'] = $st[1];
+
+        return $arr;
 
     }
 
