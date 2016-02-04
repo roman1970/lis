@@ -306,6 +306,36 @@ $this->title = 'Тесты';
 
                 }
                 </pre>
+        <a onclick="findTest()" class="testLink">19 Поиск в массиве</a><br>
+                <pre class="brush: js;" id="code_19">
+                    function findTest(){
+                        $("#code_19").show();
+                        var array = ["test", 2, 1.5, false];
+
+                        if ([].indexOf) {
+                            var find = function(array, value) {
+                                return array.indexOf(value);
+                            }
+
+                        } else {
+                            var find = function(array, value) {
+                                for (var i = 0; i < array.length; i++) {
+                                    if (array[i] === value) return i;
+                                }
+
+                                return -1;
+                            }
+
+                        }
+
+                        alert(find(array, "test")); // 0
+                        alert(find(array, 2)); // 1
+                        alert(find(array, 1.5)); // 2
+                        alert(find(array, 0)); // -1
+
+                    }
+
+                </pre>
     </div>
 
 

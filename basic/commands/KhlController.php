@@ -4,6 +4,7 @@ namespace app\commands;
 
 use app\models\City;
 use app\models\Khlteams;
+use app\models\Khlplayers;
 use app\models\Matches;
 use yii\console\Controller;
 use app\components\DocxConverter;
@@ -73,6 +74,26 @@ class KhlController extends Controller
             $model->city_id = $city_id;
             $model->save(false);
         }
+    }
+
+    public function actionFillPlayers(){
+        $url = Url::to("@app/commands/sost.html");
+        $content = file_get_contents($url);
+
+        //$chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
+        //$j = count($chars);
+
+        $dom = new \DomDocument();
+        libxml_use_internal_errors(true);
+        $dom->loadHTML($content);
+        $dom->preserveWhiteSpace = true;
+
+        $xpath = new \DOMXPath($dom);
+
+        $node = $xpath->query(".//*/div[@class='team-name']")->item(0);
+
+        var_dump($node->nodeValue);
+
     }
 
     /**
@@ -262,6 +283,8 @@ class KhlController extends Controller
         return $arr;
 
     }
+
+
 
 
 }
