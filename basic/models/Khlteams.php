@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "country".
@@ -44,4 +45,12 @@ class Khlteams extends \yii\db\ActiveRecord
             'name' => 'Name',
         ];
     }
+
+    public static function nameId($name)
+    {
+        return Khlteams::find()->where(['name' => $name]);
+
+    }
+
+
 }

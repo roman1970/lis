@@ -29,6 +29,9 @@ $config = [
         'diary' => [
             'class' => 'app\modules\diary\Diary',
         ],
+        'repertuar' => [
+            'class' => 'app\modules\repertuar\Repertuar',
+        ],
 
     ],
     'components' => [

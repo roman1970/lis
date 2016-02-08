@@ -202,7 +202,7 @@ class DefaultController extends BackEndController
         $best_shops = $this->bestShops($datas);
         $spends = $this->spends($datas);
     
-        return $this->render('fourteen',[
+        return @$this->render('fourteen',[
                'last_maner' => $last_maner,
                'last_pogoda' => $last_pogoda,
                'yesterday' => $this->getYesterday(),

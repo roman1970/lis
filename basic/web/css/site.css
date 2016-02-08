@@ -98,3 +98,13 @@ a.desc:after {
 #code_10, #code_11, #code_12, #code_13, #code_14, #code_15, #code_16, #code_17, #code_18, #code_19, #code_20{
     display: none;
 }
+
+.song-text{
+    font-size: 14px;
+    color: #08150b;
+}
+
+.song-name{
+    font-size: 18px;
+    color: #e0d19a;
+}

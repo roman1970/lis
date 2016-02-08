@@ -77,6 +77,9 @@ class KhlController extends Controller
     }
 
     public function actionFillPlayers(){
+        $status = '';
+        $arr = [];
+        $i = 0;
         $url = Url::to("@app/commands/sost.html");
         $content = file_get_contents($url);
 
@@ -90,9 +93,37 @@ class KhlController extends Controller
 
         $xpath = new \DOMXPath($dom);
 
-        $node = $xpath->query(".//*/div[@class='team-name']")->item(0);
+        $nodeTeamName = $xpath->query(".//*/div[@class='team-name']")->item(0);
+        $teamId = Khlteams::find()->where(['name' => $nodeTeamName->nodeValue])->one()->id;
+        var_dump($teamId);
+        $nodeStatus = $xpath->query(".//*/tr[@class='player-type-title']")->item(0);
+        $status = $nodeStatus->textContent;
+        var_dump($status);
 
-        var_dump($node->nodeValue);
+        while ($nodeStatus = $nodeStatus->nextSibling) {
+
+            foreach ($nodeStatus->attributes as $attribute) {
+
+                if ($attribute->value == "player-type-title" && $nodeStatus->firstChild->textContent == "Защитники") $arr[$i]['status'] = 2;
+
+
+            }
+
+            foreach ($nodeStatus->childNodes as $nodde) {
+                //var_dump($nodde->textContent); //== "2-й период")
+                //exit;
+                if ($nodde->attributes) {
+                    foreach ($nodde->attributes as $attribute) {
+                        if ($attribute->value == "player-type-title" && $nodeStatus->textContent == "Защитники") $arr[$i]['status'] = 2;
+                        if ($attribute->value == "player-name" ) $arr[$i]['name'] = $nodde->textContent;
+
+                    }
+                }
+            }
+            var_dump($arr);
+            $i++;
+        }
+
 
     }
 

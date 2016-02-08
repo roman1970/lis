@@ -3,6 +3,10 @@ function hideCode() {
     alert("jj");
 }
 
+function showText(n){
+    $("#text_" + n).show();
+}
+
 //1 сложение двух чисел
 function addingTwoNumbers(){
     $("#code_1").show();
