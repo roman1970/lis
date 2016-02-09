@@ -76,54 +76,97 @@ class KhlController extends Controller
         }
     }
 
+    /**
+     * Заполнение таблицы Игроков
+     */
     public function actionFillPlayers(){
-        $status = '';
+        $status = 0;
+        $country = 0;
         $arr = [];
         $i = 0;
         $url = Url::to("@app/commands/sost.html");
         $content = file_get_contents($url);
 
-        //$chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
-        //$j = count($chars);
+        $chars = preg_split('/diretta-content/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
 
-        $dom = new \DomDocument();
-        libxml_use_internal_errors(true);
-        $dom->loadHTML($content);
-        $dom->preserveWhiteSpace = true;
+        array_shift($chars);
 
-        $xpath = new \DOMXPath($dom);
+        foreach($chars as $teamdom) {
 
-        $nodeTeamName = $xpath->query(".//*/div[@class='team-name']")->item(0);
-        $teamId = Khlteams::find()->where(['name' => $nodeTeamName->nodeValue])->one()->id;
-        var_dump($teamId);
-        $nodeStatus = $xpath->query(".//*/tr[@class='player-type-title']")->item(0);
-        $status = $nodeStatus->textContent;
-        var_dump($status);
+            $dom = new \DomDocument();
+            libxml_use_internal_errors(true);
+            $head = file_get_contents(Url::to("@app/commands/header.html"));
+            $match = $head . $teamdom; //добавляем хэдер
+            $dom->loadHTML($match);
+            $dom->preserveWhiteSpace = true;
 
-        while ($nodeStatus = $nodeStatus->nextSibling) {
+            $xpath = new \DOMXPath($dom);
 
-            foreach ($nodeStatus->attributes as $attribute) {
+            $nodeTeamName = $xpath->query(".//*/div[@class='team-name']")->item(0);
+            var_dump($nodeTeamName->nodeValue);
+            $teamId = Khlteams::find()->where("name like('%".$nodeTeamName->nodeValue."%')")->one()->id;
+            //->where("name like('%".$nodeTeamName->nodeValue."%') or guest like('%".$team."%')")
+            //var_dump($teamId);
+            $nodeStatus = $xpath->query(".//*/tr[@class='player-type-title']")->item(0);
+            if ($nodeStatus->textContent == "Вратари") $status = 1;
+            //var_dump($status);
 
-                if ($attribute->value == "player-type-title" && $nodeStatus->firstChild->textContent == "Защитники") $arr[$i]['status'] = 2;
+            while ($nodeStatus = $nodeStatus->nextSibling) {
+                if ($nodeStatus->attributes) {
+                    foreach ($nodeStatus->attributes as $attribute) {
 
-
-            }
-
-            foreach ($nodeStatus->childNodes as $nodde) {
-                //var_dump($nodde->textContent); //== "2-й период")
-                //exit;
-                if ($nodde->attributes) {
-                    foreach ($nodde->attributes as $attribute) {
-                        if ($attribute->value == "player-type-title" && $nodeStatus->textContent == "Защитники") $arr[$i]['status'] = 2;
-                        if ($attribute->value == "player-name" ) $arr[$i]['name'] = $nodde->textContent;
+                        if ($attribute->value == "player-type-title" && $nodeStatus->textContent == "Защитники") {
+                            $status = 2;
+                        }
+                        if ($attribute->value == "player-type-title" && $nodeStatus->textContent == "Нападающие") {
+                            $status = 3;
+                        }
+                        if ($attribute->value == "player-type-title" && $nodeStatus->textContent == "Тренер") {
+                            $status = 4;
+                        }
 
                     }
                 }
-            }
-            var_dump($arr);
-            $i++;
-        }
 
+                foreach ($nodeStatus->childNodes as $nodde) {
+
+                    if ($nodde->attributes) {
+                        foreach ($nodde->attributes as $attribute) {
+                            if ($attribute->value == "jersey-number") $arr[$i]['number'] = (int)$nodde->textContent;
+                            if ($attribute->value == "player-name") {
+                                $arr[$i]['name'] = $nodde->textContent;
+                                $f = 0;
+                                foreach ($nodde->firstChild->attributes as $attr) {
+                                    if ($f == 0)
+                                        $country = Country::find()->where(['name' => $attr->nodeValue])->one()->id;
+                                    $f++;
+                                };
+
+                                $arr[$i]['status'] = $status;
+                                $arr[$i]['team'] = $teamId;
+                                $arr[$i]['country'] = $country;
+                            }
+                        }
+                    }
+                }
+
+                $i++;
+            }
+
+            foreach($arr as $rec){
+                $player = new Khlplayers();
+                $player->name = $rec['name'];
+                $player->team_id = $rec['team'];
+                $player->status = $rec['status'];
+                $player->number = $rec['number'];
+                $player->country_id = $rec['country'];
+
+                $player->save(false);
+
+            }
+            //var_dump($arr);
+
+        }
 
     }
 
@@ -314,6 +357,8 @@ class KhlController extends Controller
         return $arr;
 
     }
+
+
 
 
 
