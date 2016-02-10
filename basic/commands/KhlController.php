@@ -82,7 +82,7 @@ class KhlController extends Controller
     public function actionFillPlayers(){
         $status = 0;
         $country = 0;
-        $arr = [];
+
         $i = 0;
         $url = Url::to("@app/commands/sost.html");
         $content = file_get_contents($url);
@@ -92,6 +92,7 @@ class KhlController extends Controller
         array_shift($chars);
 
         foreach($chars as $teamdom) {
+            $arr = [];
 
             $dom = new \DomDocument();
             libxml_use_internal_errors(true);
@@ -221,6 +222,10 @@ class KhlController extends Controller
         return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s]+/", "", $string);
     }
 
+    public static function clearSubject($string){
+        return  preg_replace("/[^A-Za-z\s]/", "", $string);
+    }
+
     /**
      * Возвращает массив событий матча
      * @param $match
@@ -296,7 +301,9 @@ class KhlController extends Controller
                                             $arr[$i]['prim'] = $grandson->textContent;
                                         }
                                         if($attribute->value == "participant-name") {
-                                            $arr[$i]['subject'] = trim($grandson->textContent);
+                                            //$arr[$i]['subject'] = trim($grandson->textContent);
+                                            $arr[$i]['subject'] = Khlplayers::find()->where("name like('%".self::clearSubject($grandson->textContent)."%')")->one()->id;
+                                           // var_dump(self::cutDot($grandson->textContent)); exit;
                                         }
                                         if($attribute->value == "assist") {
                                             $arr[$i]['assist'] = trim($grandson->textContent);
