@@ -6,6 +6,7 @@ use app\models\City;
 use app\models\Khlteams;
 use app\models\Khlplayers;
 use app\models\Matches;
+use yii\base\ErrorException;
 use yii\console\Controller;
 use app\components\DocxConverter;
 use app\models\Country;
@@ -188,7 +189,7 @@ class KhlController extends Controller
             $head = file_get_contents(Url::to("@app/commands/header.html"));
             $match = $head . $chars[$m]; //добавляем хэдер
             print_r($this->headOfMatchInArray($match));
-            print_r($this->eventOfMatchInArray($match));
+            //print_r($this->eventOfMatchInArray($match));
 
         }
 
@@ -219,17 +220,23 @@ class KhlController extends Controller
     }
 
     public static function clearString($string){
-        return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s]+/", "", $string);
+        return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
     }
 
     public static function clearSubject($string){
         return  preg_replace("/[^A-Za-z\s]/", "", $string);
     }
 
+    public static function sOff($string){
+        return  preg_replace("/\s/", "", $string);
+    }
+
+
     /**
      * Возвращает массив событий матча
      * @param $match
      * @return array
+     * @throws
      * статусы 1 - гол, 2 - 2х минутное удаление, 3 - гол в серии булитов, 4 - нереализованный буллит
      */
     private static function eventOfMatchInArray($match)
@@ -246,10 +253,11 @@ class KhlController extends Controller
         $arr = [];
         $i = 0;
         $period = 1;
-        $com = '';
+        $com = 0;
 
 
         while ($node = $node->nextSibling) {
+            $ar_as = [];
             //$arr[$i]['period'] = 1;
             //var_dump($node->childNodes);
             foreach ($node->childNodes as $nodde) {
@@ -261,8 +269,8 @@ class KhlController extends Controller
                         if($attribute->value == "h-part" && $nodde->textContent == "3-й период") $period = 3;
                         if($attribute->value == "h-part" && $nodde->textContent == "Овертайм") $period = 4;
                         if($attribute->value == "h-part" && $nodde->textContent == "Буллиты") $period = 5;
-                        if($attribute->value == "summary-vertical fl") $com = 'host';
-                        if($attribute->value == "summary-vertical fr") $com = 'guest';
+                        if($attribute->value == "summary-vertical fl") $com = 1;
+                        if($attribute->value == "summary-vertical fr") $com = 0;
                     }
                 }
 
@@ -282,7 +290,7 @@ class KhlController extends Controller
                             foreach ($child->childNodes as $grandson) {
                                 if($grandson->attributes){
                                     $arr[$i]['period'] = $period;
-                                    $arr[$i]['com'] = $com;
+                                    $arr[$i]['is_host'] = $com;
                                     foreach ($grandson->attributes as $attribute) {
                                         if($attribute->value == "time-box-wide") $arr[$i]['time'] = $grandson->textContent;
                                         if($attribute->value == "icon-box hockey-penalty-2") {
@@ -302,11 +310,25 @@ class KhlController extends Controller
                                         }
                                         if($attribute->value == "participant-name") {
                                             //$arr[$i]['subject'] = trim($grandson->textContent);
-                                            $arr[$i]['subject'] = Khlplayers::find()->where("name like('%".self::clearSubject($grandson->textContent)."%')")->one()->id;
+                                            try {
+                                                $arr[$i]['subject'] = Khlplayers::find()->where("name like('%" . self::clearSubject($grandson->textContent) . "%')")->one()->id;
+                                            } catch (ErrorException $e) {
+                                                $arr[$i]['subject'] = 947;
+                                            }
                                            // var_dump(self::cutDot($grandson->textContent)); exit;
                                         }
                                         if($attribute->value == "assist") {
-                                            $arr[$i]['assist'] = trim($grandson->textContent);
+                                            $ar_as = explode('+', $grandson->textContent);
+                                            //var_dump($ar_as); exit;
+                                            foreach ($ar_as as $ass) {
+                                                //var_dump(trim(self::clearSubject($ass)));
+                                                try {
+                                                    $arr[$i]['assist'][] = Khlplayers::find()->where("name like('%" . trim(self::clearSubject($ass)) . "%')")->one()->id;
+                                                } catch (ErrorException $e) {
+                                                    $arr[$i]['assist'][] = 947;
+                                                }
+                                            }
+
                                         }
 
 
@@ -342,10 +364,19 @@ class KhlController extends Controller
         $date = '';
         $st = '';
 
+
         $node = $xpath->query(".//*/td[@class='tname-home logo-enable']/span[@class='tname']/a")->item(0);
-            $arr['host'] = $node->textContent;
+        try {
+            $arr['host'] = Khlteams::find()->where("name like('%" . self::clearString($node->textContent) . "%')")->one()->id;
+        } catch (ErrorException $e) {
+            $arr['host'] = 29; //null
+        }
         $node = $xpath->query(".//*/td[@class='tname-away logo-enable']")->item(0);
-            $arr['guest'] = $node->firstChild->textContent;
+        try {
+            $arr['guest'] = Khlteams::find()->where("name like('%" . self::clearString($node->firstChild->textContent) . "%')")->one()->id;
+        } catch (ErrorException $e) {
+            $arr['guest'] = 29; //null
+        }
         $node = $xpath->query(".//*/td[@class='current-result']/span[@class='scoreboard']")->item(0);
             $arr['host_g'] = $node->textContent;
             $arr['guest_g'] = $node->nextSibling->nextSibling->textContent;
@@ -356,10 +387,41 @@ class KhlController extends Controller
         $node = $xpath->query(".//*/td[@class='mstat']")->item(0);
             $arr['status'] = $node->textContent;
         $node = $xpath->query(".//*/tr[@class='stage-header']")->item(0);
-            $arr['judge'] = $node->nextSibling->firstChild->textContent;
+            $arr['judges'] = substr($node->nextSibling->firstChild->textContent, strpos($node->nextSibling->firstChild->textContent,':')+2);
             $st = explode(',', $node->nextSibling->nextSibling->firstChild->textContent);
-            $arr['audience'] = $st[0];
-            $arr['stadium'] = $st[1];
+            $arr['audience'] = (int)self::sOff(substr($st[0], strpos($st[0],':')+2));
+            $arr['stadium'] = substr($st[1], strpos($st[1],':')+2);
+
+        $node = $xpath->query(".//*/table[@id='parts']")->item(2)->firstChild;
+        $first = $node->firstChild;
+        $i = 0;
+        while ($first = $first->nextSibling) {
+
+
+               // var_dump($first); exit;
+            if($first->childNodes) {
+                foreach ($first->childNodes as $nodde) {
+                    //var_dump($nodde->textContent); exit;
+                    if($nodde->childNodes) {
+                        foreach ($nodde->childNodes as $child) {
+
+                            if ($child->attributes) {
+                                foreach ($child->attributes as $attribute) {
+                                    if($attribute->value == "name") $arr['sost'][$i][] = $child->textContent;
+                                    if($attribute->value == "name-substitution") $arr['sost'][$i][] = $child->textContent;
+                                    if($attribute->value == "icon-lineup") {var_dump($attribute);exit;}
+                                }
+                            }
+                        }
+
+                    }
+                    $i++;
+                }
+
+            }
+
+        }
+
 
         return $arr;
 
