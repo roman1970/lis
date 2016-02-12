@@ -13,6 +13,7 @@ use app\models\Country;
 use app\models\Articles;
 use Yii;
 use yii\helpers\Url;
+use app\components\TranslateHelper;
 
 
 class KhlController extends Controller
@@ -231,6 +232,10 @@ class KhlController extends Controller
         return  preg_replace("/\s/", "", $string);
     }
 
+    public static function cutDotEnd($string){
+        return substr($string, 0, strpos($string,'.'));
+    }
+
 
     /**
      * Возвращает массив событий матча
@@ -363,6 +368,7 @@ class KhlController extends Controller
         $arr=[];
         $date = '';
         $st = '';
+        $gameOff = 0;
 
 
         $node = $xpath->query(".//*/td[@class='tname-home logo-enable']/span[@class='tname']/a")->item(0);
@@ -397,25 +403,41 @@ class KhlController extends Controller
         $i = 0;
         while ($first = $first->nextSibling) {
 
-
-               // var_dump($first); exit;
             if($first->childNodes) {
+
                 foreach ($first->childNodes as $nodde) {
+                    if($nodde->textContent == "Замены") $gameOff = 1;
+                    if($nodde->textContent == "Тренеры") $gameOff = 0;
                     //var_dump($nodde->textContent); exit;
                     if($nodde->childNodes) {
                         foreach ($nodde->childNodes as $child) {
 
                             if ($child->attributes) {
                                 foreach ($child->attributes as $attribute) {
-                                    if($attribute->value == "name") $arr['sost'][$i][] = $child->textContent;
-                                    if($attribute->value == "name-substitution") $arr['sost'][$i][] = $child->textContent;
-                                    if($attribute->value == "icon-lineup") {var_dump($attribute);exit;}
+                                    if($attribute->value == "name") {
+                                       // $arr['sost'][$gameOff][] = $child->textContent;
+                                        try {
+                                            $arr['sost'][$gameOff][] = Khlplayers::find()->where("name like('%" . self::cutDotEnd($child->textContent) . "%')")->one()->id;
+                                        } catch (ErrorException $e) {
+                                            $arr['sost'][$gameOff][] = 947;
+                                            $arr['errors'] = $child->textContent.' не попал в состав по ошибке';
+                                        }
+
+                                    }
+
+                                    if($attribute->nodeName == "title" && $child->firstChild != NULL) {
+                                        foreach($child->firstChild->attributes as $chAttr) {
+                                            if($chAttr->value == "icon substitution-out")
+                                                $arr['gk_substitution'][] = $attribute->value;
+                                        }
+
+                                   }
                                 }
                             }
                         }
 
                     }
-                    $i++;
+
                 }
 
             }
