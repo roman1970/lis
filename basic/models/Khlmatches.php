@@ -16,7 +16,7 @@ use yii\base\Model;
  * @property string $prim
  */
 
-class Khlteams extends \yii\db\ActiveRecord
+class Khlmatches extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

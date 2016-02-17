@@ -5,6 +5,7 @@ namespace app\commands;
 use app\models\City;
 use app\models\Khlteams;
 use app\models\Khlplayers;
+use app\models\Khlmatches;
 use app\models\Matches;
 use yii\base\ErrorException;
 use yii\console\Controller;
@@ -181,16 +182,28 @@ class KhlController extends Controller
 
         $url = Url::to("@app/commands/khl.html");
         $content = file_get_contents($url);
+        $thisMatch = [];
 
         $chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
         $j = count($chars);
+        $game = new Khlmatches();
 
 
         for ($m = 1; $m < $j; $m++) {
             $head = file_get_contents(Url::to("@app/commands/header.html"));
             $match = $head . $chars[$m]; //добавляем хэдер
-            print_r($this->headOfMatchInArray($match));
-            //print_r($this->eventOfMatchInArray($match));
+            $thisMatch = $this->headOfMatchInArray($match);
+            print_r($thisMatch);
+            $game->host_id = $thisMatch["host"];
+            $game->guest_id = $thisMatch["guest"];
+            $game->host_g = $thisMatch["host_g"];
+            $game->guest_g = $thisMatch["guest_g"];
+            $game->prim = $thisMatch["status"];
+            $game->players = implode(",", $thisMatch["sost"][0]);
+            $game->players_off = implode(",", $thisMatch["sost"][1]);
+
+
+           // print_r($this->eventOfMatchInArray($match));
 
         }
 
@@ -933,6 +946,13 @@ class KhlController extends Controller
             }
         }
 
+        $bet1 = $xpath->query(".//*/td[@class='kx o_1']")->item(0)->firstChild->nextSibling;
+        $arr["bet_vic_host"] = $bet1->textContent;
+        $bet2 = $xpath->query(".//*/td[@class='kx o_0 winner']")->item(0)->firstChild->nextSibling;
+        $arr["bet_nobody"] = $bet2->textContent;
+        $bet3 = $xpath->query(".//*/td[@class='kx o_2']")->item(0)->firstChild->nextSibling;
+        $arr["bet_vic_guest"] = $bet3->textContent;
+        //var_dump($bet1); exit;
 
         return $arr;
 
