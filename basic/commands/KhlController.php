@@ -3,6 +3,8 @@
 namespace app\commands;
 
 use app\models\City;
+use app\models\Khlevents;
+use app\models\Khlperiods;
 use app\models\Khlteams;
 use app\models\Khlplayers;
 use app\models\Khlmatches;
@@ -183,32 +185,119 @@ class KhlController extends Controller
         $url = Url::to("@app/commands/khl.html");
         $content = file_get_contents($url);
         $thisMatch = [];
+        $matchId = 0;
 
         $chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
         $j = count($chars);
-        $game = new Khlmatches();
 
 
         for ($m = 1; $m < $j; $m++) {
+
             $head = file_get_contents(Url::to("@app/commands/header.html"));
             $match = $head . $chars[$m]; //добавляем хэдер
             $thisMatch = $this->headOfMatchInArray($match);
-            print_r($thisMatch);
+            //print_r($thisMatch);
+
+            $game = new Khlmatches();
             $game->host_id = $thisMatch["host"];
             $game->guest_id = $thisMatch["guest"];
             $game->host_g = $thisMatch["host_g"];
             $game->guest_g = $thisMatch["guest_g"];
             $game->prim = $thisMatch["status"];
-            $game->players = implode(",", $thisMatch["sost"][0]);
-            $game->players_off = implode(",", $thisMatch["sost"][1]);
+            try {
+                $game->players = implode(",", $thisMatch["sost"][0]);
+            } catch (ErrorException $e) {
+                $game->players = $e->getMessage();
+            }
+            try {
+                $game->player_off = implode(",", $thisMatch["sost"][1]);
+            } catch (ErrorException $e) {
+                $game->player_off = $e->getMessage();
+            }
+
+            $game->shot_in_goals_host = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_host"]);
+            $game->shot_in_goals_guest = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_guest"]);
+            $game->shot_reflected_host = self::getIdOfPeriodsAfterIn($thisMatch["shot_reflected_host"]);
+            $game->shot_reflected_guest = self::getIdOfPeriodsAfterIn($thisMatch["shot_reflected_guest"]);
+            $game->removal_host = self::getIdOfPeriodsAfterIn($thisMatch["removal_host"]);
+            $game->removal_guest = self::getIdOfPeriodsAfterIn($thisMatch["removal_guest"]);
+            $game->penalty_time_host = self::getIdOfPeriodsAfterIn($thisMatch["penalty_time_host"]);
+            $game->penalty_time_guest = self::getIdOfPeriodsAfterIn($thisMatch["penalty_time_guest"]);
+            $game->goals_in_more_host = self::getIdOfPeriodsAfterIn($thisMatch["goals_in_more_host"]);
+            $game->goals_in_more_guest = self::getIdOfPeriodsAfterIn($thisMatch["goals_in_more_guest"]);
+            $game->goals_in_less_host = self::getIdOfPeriodsAfterIn($thisMatch["goals_in_less_host"]);
+            $game->goals_in_less_guest = self::getIdOfPeriodsAfterIn($thisMatch["goals_in_less_guest"]);
+            $game->force_dodge_host = self::getIdOfPeriodsAfterIn($thisMatch["force_dodge_host"]);
+            $game->force_dodge_guest = self::getIdOfPeriodsAfterIn($thisMatch["force_dodge_guest"]);
+            $game->facedown_vic_host = self::getIdOfPeriodsAfterIn($thisMatch["facedown_vic_host"]);
+            $game->facedown_vic_guest = self::getIdOfPeriodsAfterIn($thisMatch["facedown_vic_guest"]);
+
+            $game->bet_vic_host = $thisMatch["bet_vic_host"];
+            $game->bet_nobody = $thisMatch["bet_nobody"];
+            $game->bet_vic_guest = $thisMatch["bet_vic_guest"];
+            $game->date = $thisMatch["date"];
+            $game->time_beg = $thisMatch["time_beg"];
+            $game->judges = $thisMatch["judges"];
+            $game->audience = $thisMatch["audience"];
+            $game->stadium = $thisMatch["stadium"];
+            $game->gk_substitution = implode(',',$thisMatch["gk_substitution"]);
+
+            $subs = explode(" ", $game->gk_substitution);
+            //var_dump($subs); exit;
+            $current_per = explode(":", $subs[3]);
+            $sub_sec = (self::onlyDigit($subs[0])-1) * 1200 + (int)$current_per[0] * 60 + (int)$current_per[1];
+            //var_dump($subs[4]." ".$subs[5]); exit;
+            $gk = Khlplayers::find()->where("name like('%" .self::clearSubject($subs[4]." ".$subs[5]). "%')")->one()->id;
+            var_dump($gk); exit;
 
 
-           // print_r($this->eventOfMatchInArray($match));
+            $game->errors = $thisMatch["errors"];
+
+
+            $game->save(false);
+            $matchId = $game->id;
+            //var_dump($game->id); exit;
+
+            $arrOfEvents = $this->eventOfMatchInArray($match);
+
+            foreach ($arrOfEvents as $arr) {
+
+                print_r($arr);
+
+                //$game->save(false); exit;
+                $event = new Khlevents();
+                if(isset($arr["time"])) {
+                    $current_period = explode(":", $arr["time"]);
+                    $event->minute = ($arr["period"] - 1) * 1200 + (int)$current_period[0] * 60 + (int)$current_period[1];
+
+                } else $event->minute = 3900;
+
+                $event->status = $arr["status"];
+                $event->is_host = $arr["is_host"];
+                try {
+                    $event->player_id = (int)$arr["subject"];
+                } catch (ErrorException $e) {
+                    $event->player_id = 947;
+                }
+                $event->match_id = $matchId;
+                if(isset($arr["prim"])) $event->prim = $arr["prim"];
+                if(isset($arr["assist"])) $event->assist = implode(",", $arr["assist"]);
+
+                //var_dump($event);
+                $event->save(false);
+
+            }
+
+
+
 
         }
 
     }
 
+    /**
+     * Несколько вспомагательных методов
+     */
     public static function unichr($dec) {
         if ($dec < 128) {
             $utf = chr($dec);
@@ -413,7 +502,7 @@ class KhlController extends Controller
             $arr['judges'] = substr($node->nextSibling->firstChild->textContent, strpos($node->nextSibling->firstChild->textContent,':')+2);
             $st = explode(',', $node->nextSibling->nextSibling->firstChild->textContent);
             $arr['audience'] = (int)self::sOff(substr($st[0], strpos($st[0],':')+2));
-            $arr['stadium'] = substr($st[1], strpos($st[1],':')+2);
+            $arr['stadium'] = self::sOff(substr($st[1], strpos($st[1],':')+2));
 
         $node = $xpath->query(".//*/table[@id='parts']")->item(2)->firstChild;
         $first = $node->firstChild;
@@ -955,6 +1044,24 @@ class KhlController extends Controller
         //var_dump($bet1); exit;
 
         return $arr;
+
+    }
+
+    /**
+     * Полученин айдишника набора периодов матча при помещении в таблицу матчей
+     * @param $arrOfPeriods
+     * @return int
+     */
+    private static function getIdOfPeriodsAfterIn($arrOfPeriods){
+        $periods = new Khlperiods();
+        $periods->match = $arrOfPeriods[0];
+        $periods->first = $arrOfPeriods[1];
+        $periods->second = $arrOfPeriods[2];
+        $periods->third = $arrOfPeriods[3];
+        $periods->overtime = $arrOfPeriods[4];
+        $periods->save(false);
+
+        return $periods->id;
 
     }
 

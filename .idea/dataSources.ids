@@ -141,6 +141,10 @@
       <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="is_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="prim" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="assist" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gk" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="chl_events_ibfk_1" columns="player_id" ref-table="chl_players" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
@@ -183,11 +187,68 @@
       <column name="gk_substitution" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="errors" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_matches_ibfk_18" columns="facedown_vic_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_matches_ibfk_1" columns="host_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_10" columns="penalty_time_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_11" columns="goals_in_more_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_12" columns="goals_in_more_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_13" columns="goals_in_less_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_14" columns="goals_in_less_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_15" columns="force_dodge_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_16" columns="force_dodge_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_17" columns="facedown_vic_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_matches_ibfk_2" columns="guest_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_3" columns="shot_in_goals_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_4" columns="shot_in_goals_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_5" columns="shot_reflected_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_6" columns="shot_reflected_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_7" columns="removal_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_8" columns="removal_guest" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_9" columns="penalty_time_host" ref-table="chl_periods" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="chl_events_ibfk_2" table="chl_events" schema="" catalog="plis" columns="match_id"/>
+      <index name="ux_chl_matches_facedown_vic_guest" unique="false" columns="facedown_vic_guest"/>
+      <index name="ux_chl_matches_facedown_vic_host" unique="false" columns="facedown_vic_host"/>
+      <index name="ux_chl_matches_force_dodge_guest" unique="false" columns="force_dodge_guest"/>
+      <index name="ux_chl_matches_force_dodge_host" unique="false" columns="force_dodge_host"/>
+      <index name="ux_chl_matches_goals_in_less_guest" unique="false" columns="goals_in_less_guest"/>
+      <index name="ux_chl_matches_goals_in_less_host" unique="false" columns="goals_in_less_host"/>
+      <index name="ux_chl_matches_goals_in_more_guest" unique="false" columns="goals_in_more_guest"/>
+      <index name="ux_chl_matches_goals_in_more_host" unique="false" columns="goals_in_more_host"/>
       <index name="ux_chl_matches_guest_id" unique="false" columns="guest_id"/>
       <index name="ux_chl_matches_host_id" unique="false" columns="host_id"/>
+      <index name="ux_chl_matches_penalty_time_guest" unique="false" columns="penalty_time_guest"/>
+      <index name="ux_chl_matches_penalty_time_host" unique="false" columns="penalty_time_host"/>
+      <index name="ux_chl_matches_removal_guest" unique="false" columns="removal_guest"/>
+      <index name="ux_chl_matches_removal_host" unique="false" columns="removal_host"/>
+      <index name="ux_chl_matches_shot_in_goals_guest" unique="false" columns="shot_in_goals_guest"/>
+      <index name="ux_chl_matches_shot_in_goals_host" unique="false" columns="shot_in_goals_host"/>
+      <index name="ux_chl_matches_shot_reflected_guest" unique="false" columns="shot_reflected_guest"/>
+      <index name="ux_chl_matches_shot_reflected_host" unique="false" columns="shot_reflected_host"/>
+    </table>
+    <table name="chl_periods" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="match" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="first" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="second" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="third" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="overtime" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="chl_matches_ibfk_18" table="chl_matches" schema="" catalog="plis" columns="facedown_vic_guest"/>
+      <exported-key name="chl_matches_ibfk_10" table="chl_matches" schema="" catalog="plis" columns="penalty_time_guest"/>
+      <exported-key name="chl_matches_ibfk_11" table="chl_matches" schema="" catalog="plis" columns="goals_in_more_host"/>
+      <exported-key name="chl_matches_ibfk_12" table="chl_matches" schema="" catalog="plis" columns="goals_in_more_guest"/>
+      <exported-key name="chl_matches_ibfk_13" table="chl_matches" schema="" catalog="plis" columns="goals_in_less_host"/>
+      <exported-key name="chl_matches_ibfk_14" table="chl_matches" schema="" catalog="plis" columns="goals_in_less_guest"/>
+      <exported-key name="chl_matches_ibfk_15" table="chl_matches" schema="" catalog="plis" columns="force_dodge_host"/>
+      <exported-key name="chl_matches_ibfk_16" table="chl_matches" schema="" catalog="plis" columns="force_dodge_guest"/>
+      <exported-key name="chl_matches_ibfk_17" table="chl_matches" schema="" catalog="plis" columns="facedown_vic_host"/>
+      <exported-key name="chl_matches_ibfk_3" table="chl_matches" schema="" catalog="plis" columns="shot_in_goals_host"/>
+      <exported-key name="chl_matches_ibfk_4" table="chl_matches" schema="" catalog="plis" columns="shot_in_goals_guest"/>
+      <exported-key name="chl_matches_ibfk_5" table="chl_matches" schema="" catalog="plis" columns="shot_reflected_host"/>
+      <exported-key name="chl_matches_ibfk_6" table="chl_matches" schema="" catalog="plis" columns="shot_reflected_guest"/>
+      <exported-key name="chl_matches_ibfk_7" table="chl_matches" schema="" catalog="plis" columns="removal_host"/>
+      <exported-key name="chl_matches_ibfk_8" table="chl_matches" schema="" catalog="plis" columns="removal_guest"/>
+      <exported-key name="chl_matches_ibfk_9" table="chl_matches" schema="" catalog="plis" columns="penalty_time_host"/>
     </table>
     <table name="chl_players" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
