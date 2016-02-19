@@ -26,5 +26,8 @@ class m160218_072407_add_field_gk_khl_events extends Migration
     public function safeDown()
     {
     }
+    SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE table1;
+SET FOREIGN_KEY_CHECKS = 1;
     */
 }

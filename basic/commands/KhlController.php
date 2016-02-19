@@ -240,15 +240,35 @@ class KhlController extends Controller
             $game->judges = $thisMatch["judges"];
             $game->audience = $thisMatch["audience"];
             $game->stadium = $thisMatch["stadium"];
-            $game->gk_substitution = implode(',',$thisMatch["gk_substitution"]);
 
-            $subs = explode(" ", $game->gk_substitution);
-            //var_dump($subs); exit;
-            $current_per = explode(":", $subs[3]);
-            $sub_sec = (self::onlyDigit($subs[0])-1) * 1200 + (int)$current_per[0] * 60 + (int)$current_per[1];
-            //var_dump($subs[4]." ".$subs[5]); exit;
-            $gk = Khlplayers::find()->where("name like('%" .self::clearSubject($subs[4]." ".$subs[5]). "%')")->one()->id;
-            var_dump($gk); exit;
+            $gk = [];
+            $sub_sec = 0;
+
+            if(isset($thisMatch["gk_substitution"][1])) {
+
+                $game->gk_substitution = implode(',', $thisMatch["gk_substitution"][1]);
+                $subs = explode(" ", $game->gk_substitution);
+                //var_dump($subs); exit;
+                $current_per = explode(":", $subs[3]);
+                $sub_sec = (self::onlyDigit($subs[0]) - 1) * 1200 + (int)$current_per[0] * 60 + (int)$current_per[1];
+                //var_dump($subs[4]." ".$subs[5]); exit;
+                $gk[1][][$sub_sec] = Khlplayers::find()->where("name like('%" . self::clearSubject($subs[4] . " " . $subs[5]) . "%')")->one()->id;
+                $gk[1][][3900] = Khlplayers::find()->where("name like('%" . self::clearSubject($subs[6] . " " . $subs[7]) . "%')")->one()->id;
+                //var_dump($gk); exit;
+            }
+            if(isset($thisMatch["gk_substitution"][0])) {
+
+                $game->gk_substitution = implode(',', $thisMatch["gk_substitution"][0]);
+                $subs = explode(" ", $game->gk_substitution);
+                //var_dump($subs); exit;
+                $current_per = explode(":", $subs[3]);
+                $sub_sec = (self::onlyDigit($subs[0]) - 1) * 1200 + (int)$current_per[0] * 60 + (int)$current_per[1];
+                //var_dump($subs[4]." ".$subs[5]); exit;
+                $gk[0][][$sub_sec] = Khlplayers::find()->where("name like('%" . self::clearSubject($subs[4] . " " . $subs[5]) . "%')")->one()->id;
+                $gk[0][][3900] = Khlplayers::find()->where("name like('%" . self::clearSubject($subs[6] . " " . $subs[7]) . "%')")->one()->id;
+                //var_dump($gk); exit;
+            }
+            else $game->gk_substitution = '';
 
 
             $game->errors = $thisMatch["errors"];
@@ -266,7 +286,7 @@ class KhlController extends Controller
 
                 //$game->save(false); exit;
                 $event = new Khlevents();
-                if(isset($arr["time"])) {
+                if (isset($arr["time"])) {
                     $current_period = explode(":", $arr["time"]);
                     $event->minute = ($arr["period"] - 1) * 1200 + (int)$current_period[0] * 60 + (int)$current_period[1];
 
@@ -280,9 +300,23 @@ class KhlController extends Controller
                     $event->player_id = 947;
                 }
                 $event->match_id = $matchId;
-                if(isset($arr["prim"])) $event->prim = $arr["prim"];
-                if(isset($arr["assist"])) $event->assist = implode(",", $arr["assist"]);
+                if (isset($arr["prim"])) $event->prim = $arr["prim"];
+                if (isset($arr["assist"])) $event->assist = implode(",", $arr["assist"]);
+                //print_r($gk[0]);
 
+                if ($event->is_host) {
+
+                    if(isset($gk[1]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
+                    elseif(isset($gk[1]) && key($gk[1][1]) >= $event->minute) $event->gk = $gk[1][1][3900];
+                    else
+                        $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][1][0]) . "%')")->one()->id;
+                }
+                if($event->is_host == 0) { //var_dump($thisMatch["gk"]); exit;
+                    if(isset($gk[0]) && key($gk[0][0]) >= $event->minute) $event->gk = $gk[0][0][$sub_sec];
+                    elseif(isset($gk[0]) && key($gk[0][1]) >= $event->minute) $event->gk = $gk[0][1][3900];
+                    else
+                        $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][0][0]) . "%')")->one()->id;
+                }
                 //var_dump($event);
                 $event->save(false);
 
@@ -475,6 +509,7 @@ class KhlController extends Controller
         $date = '';
         $st = '';
         $gameOff = 0;
+        $host = 0;
 
 
         $node = $xpath->query(".//*/td[@class='tname-home logo-enable']/span[@class='tname']/a")->item(0);
@@ -514,14 +549,22 @@ class KhlController extends Controller
                 foreach ($first->childNodes as $nodde) {
                     if($nodde->textContent == "Замены") $gameOff = 1;
                     if($nodde->textContent == "Тренеры") $gameOff = 0;
+                    if($nodde->attributes) {
+                        foreach ($nodde->attributes as $attr) {
+                            if ($attr->value == "summary-vertical fl") $host = 1;
+                            if ($attr->value == "summary-vertical fr") $host = 0;
+                        }
+                    }
                     //var_dump($nodde->textContent); exit;
                     if($nodde->childNodes) {
                         foreach ($nodde->childNodes as $child) {
 
                             if ($child->attributes) {
                                 foreach ($child->attributes as $attribute) {
+
                                     if($attribute->value == "name") {
                                        // $arr['sost'][$gameOff][] = $child->textContent;
+                                        if(preg_match("/(В)/",$child->textContent)) $arr['gk'][$gameOff][$host][] =  self::cutDotEnd($child->textContent);
                                         try {
                                             $arr['sost'][$gameOff][] = Khlplayers::find()->where("name like('%" . self::cutDotEnd($child->textContent) . "%')")->one()->id;
                                         } catch (ErrorException $e) {
@@ -534,7 +577,7 @@ class KhlController extends Controller
                                     if($attribute->nodeName == "title" && $child->firstChild != NULL) {
                                         foreach($child->firstChild->attributes as $chAttr) {
                                             if($chAttr->value == "icon substitution-out")
-                                                $arr['gk_substitution'][] = $attribute->value;
+                                                $arr['gk_substitution'][$host][] = $attribute->value;
                                         }
 
                                    }
@@ -1041,7 +1084,7 @@ class KhlController extends Controller
         $arr["bet_nobody"] = $bet2->textContent;
         $bet3 = $xpath->query(".//*/td[@class='kx o_2']")->item(0)->firstChild->nextSibling;
         $arr["bet_vic_guest"] = $bet3->textContent;
-        //var_dump($bet1); exit;
+        //var_dump($arr['gk']); exit;
 
         return $arr;
 

@@ -146,8 +146,10 @@
       <column name="assist" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="gk" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_events_ibfk_3" columns="gk" ref-table="chl_players" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_events_ibfk_1" columns="player_id" ref-table="chl_players" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_chl_events_gk" unique="false" columns="gk"/>
       <index name="ux_chl_events_match_id" unique="false" columns="match_id"/>
       <index name="ux_chl_events_player_id" unique="false" columns="player_id"/>
     </table>
@@ -263,6 +265,7 @@
       <column name="penalty" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="chl_players_ibfk_1" columns="team_id" ref-table="chl_teams" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_events_ibfk_3" table="chl_events" schema="" catalog="plis" columns="gk"/>
       <exported-key name="chl_events_ibfk_1" table="chl_events" schema="" catalog="plis" columns="player_id"/>
       <index name="ux_chl_players_team_id" unique="false" columns="team_id"/>
     </table>
