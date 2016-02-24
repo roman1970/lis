@@ -419,3 +419,32 @@ function maxSubSum() {
     alert( getMaxSubSumQ([1, 2, 3]) ); // 6
     alert( getMaxSubSumQ([-1, -2, -3]) ); // 0
 }
+
+//Добавление в строку свойства объекта
+function addCls(){
+    addClass(obj, 'new');
+    addClass(obj, 'open');
+    addClass(obj, 'me');
+    alert(obj.className); // open menu new me
+}
+
+
+function addClass(obj, cls) {
+    var classes = obj.className ? obj.className.split(' ') : [];
+
+    for (var i = 0; i < classes.length; i++) {
+        if (classes[i] == cls) return; // класс уже есть
+    }
+
+    classes.push(cls); // добавить
+
+    obj.className = classes.join(' '); // и обновить свойство
+
+
+}
+
+var obj = {
+    className: 'open menu'
+};
+
+
