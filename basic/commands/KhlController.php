@@ -182,7 +182,7 @@ class KhlController extends Controller
     public function actionAddNewMatches()
     {
 
-        $url = Url::to("@app/commands/khl.html");
+        $url = Url::to("@app/commands/test.html");
         $content = file_get_contents($url);
         $thisMatch = [];
         $matchId = 0;
@@ -196,7 +196,7 @@ class KhlController extends Controller
             $head = file_get_contents(Url::to("@app/commands/header.html"));
             $match = $head . $chars[$m]; //добавляем хэдер
             $thisMatch = $this->headOfMatchInArray($match);
-            //print_r($thisMatch);
+           //print_r($thisMatch); exit;
 
             $game = new Khlmatches();
             $game->host_id = $thisMatch["host"];
@@ -271,7 +271,8 @@ class KhlController extends Controller
             else $game->gk_substitution = '';
 
 
-            $game->errors = $thisMatch["errors"];
+            $game->errors = implode("; ", $thisMatch["errors"]);
+            //var_dump($game); exit;
 
 
             $game->save(false);
@@ -282,7 +283,7 @@ class KhlController extends Controller
 
             foreach ($arrOfEvents as $arr) {
 
-                print_r($arr);
+                //print_r($arr);
 
                 //$game->save(false); exit;
                 $event = new Khlevents();
@@ -309,13 +310,21 @@ class KhlController extends Controller
                     if(isset($gk[1]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
                     elseif(isset($gk[1]) && key($gk[1][1]) >= $event->minute) $event->gk = $gk[1][1][3900];
                     else
-                        $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][1][0]) . "%')")->one()->id;
+                        try {
+                            $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][1][0]) . "%')")->one()->id;
+                        } catch (ErrorException $e) {
+                            $event->gk = 947;
+                        }
                 }
                 if($event->is_host == 0) { //var_dump($thisMatch["gk"]); exit;
                     if(isset($gk[0]) && key($gk[0][0]) >= $event->minute) $event->gk = $gk[0][0][$sub_sec];
                     elseif(isset($gk[0]) && key($gk[0][1]) >= $event->minute) $event->gk = $gk[0][1][3900];
                     else
-                        $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][0][0]) . "%')")->one()->id;
+                        try {
+                            $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][0][0]) . "%')")->one()->id;
+                        } catch (ErrorException $e) {
+                            $event->gk = 947;
+                        }
                 }
                 //var_dump($event);
                 $event->save(false);
@@ -357,7 +366,13 @@ class KhlController extends Controller
     }
 
     public static function clearString($string){
+
         return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
+    }
+
+    public static function clearTwoWordsString($string){
+
+        return  self::manySReplaceByOne(preg_replace("/[^СДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюя \t-]+/", "", $string));
     }
 
     public static function clearSubject($string){
@@ -366,6 +381,10 @@ class KhlController extends Controller
 
     public static function sOff($string){
         return  preg_replace("/\s/", "", $string);
+    }
+
+    public static function manySReplaceByOne($string){
+        return  preg_replace("/[\s]+/", " ", $string);
     }
 
     public static function cutDotEnd($string){
@@ -513,16 +532,21 @@ class KhlController extends Controller
 
 
         $node = $xpath->query(".//*/td[@class='tname-home logo-enable']/span[@class='tname']/a")->item(0);
+        //var_dump($node); exit;
         try {
-            $arr['host'] = Khlteams::find()->where("name like('%" . self::clearString($node->textContent) . "%')")->one()->id;
+            $arr['host'] = Khlteams::find()->where("name like('%" . self::clearTwoWordsString($node->textContent) . "%')")->one()->id;
         } catch (ErrorException $e) {
             $arr['host'] = 29; //null
+            $arr['errors'][] = 'Хозяин не схвачен: '.$node->textContent;
+            //var_dump(self::clearString($node->textContent)); exit;
         }
         $node = $xpath->query(".//*/td[@class='tname-away logo-enable']")->item(0);
         try {
             $arr['guest'] = Khlteams::find()->where("name like('%" . self::clearString($node->firstChild->textContent) . "%')")->one()->id;
         } catch (ErrorException $e) {
             $arr['guest'] = 29; //null
+            $arr['errors'][] = 'Гость не схвачен: '.$node->firstChild->textContent;
+            //var_dump(self::clearString($node->firstChild->textContent)); exit;
         }
         $node = $xpath->query(".//*/td[@class='current-result']/span[@class='scoreboard']")->item(0);
             $arr['host_g'] = $node->textContent;
@@ -569,12 +593,12 @@ class KhlController extends Controller
                                             $arr['sost'][$gameOff][] = Khlplayers::find()->where("name like('%" . self::cutDotEnd($child->textContent) . "%')")->one()->id;
                                         } catch (ErrorException $e) {
                                             $arr['sost'][$gameOff][] = 947;
-                                            $arr['errors'] = $child->textContent.' не попал в состав по ошибке';
+                                            $arr['errors'][] = $child->textContent.' не попал в состав по ошибке';
                                         }
 
                                     }
 
-                                    if($attribute->nodeName == "title" && $child->firstChild != NULL) {
+                                    if($attribute->nodeName == "title" && isset($child->firstChild->attributes)) {
                                         foreach($child->firstChild->attributes as $chAttr) {
                                             if($chAttr->value == "icon substitution-out")
                                                 $arr['gk_substitution'][$host][] = $attribute->value;
@@ -980,8 +1004,28 @@ class KhlController extends Controller
                 }
             }
         }
+        if(isset($xpath->query(".//*/td[@class='kx o_1']")->item(0)->firstChild->nextSibling)) {
+            $bet1 = $xpath->query(".//*/td[@class='kx o_1']")->item(0)->firstChild->nextSibling;
+            $arr["bet_vic_host"] = $bet1->textContent;
+        }
+        else $arr["bet_vic_host"] = 0;
 
-        $stats = $xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild;
+        if(isset($xpath->query(".//*/td[@class='kx o_0 winner']")->item(0)->firstChild->nextSibling)){
+            $bet2 = $xpath->query(".//*/td[@class='kx o_0 winner']")->item(0)->firstChild->nextSibling;
+            $arr["bet_nobody"] = $bet2->textContent;
+        }
+        else $arr["bet_nobody"] = 0;
+
+        if(isset($xpath->query(".//*/td[@class='kx o_2']")->item(0)->firstChild->nextSibling)) {
+            $bet3 = $xpath->query(".//*/td[@class='kx o_2']")->item(0)->firstChild->nextSibling;
+            $arr["bet_vic_guest"] = $bet3->textContent;
+        }
+        else  $arr["bet_vic_guest"] = 0;
+        //var_dump($arr['gk']); exit;
+
+        if(isset($xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild))
+            $stats = $xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild;
+        else  return $arr;
         //var_dump($stats);
 
         while ($stats = $stats->nextSibling) {
@@ -1078,13 +1122,7 @@ class KhlController extends Controller
             }
         }
 
-        $bet1 = $xpath->query(".//*/td[@class='kx o_1']")->item(0)->firstChild->nextSibling;
-        $arr["bet_vic_host"] = $bet1->textContent;
-        $bet2 = $xpath->query(".//*/td[@class='kx o_0 winner']")->item(0)->firstChild->nextSibling;
-        $arr["bet_nobody"] = $bet2->textContent;
-        $bet3 = $xpath->query(".//*/td[@class='kx o_2']")->item(0)->firstChild->nextSibling;
-        $arr["bet_vic_guest"] = $bet3->textContent;
-        //var_dump($arr['gk']); exit;
+
 
         return $arr;
 
@@ -1101,7 +1139,8 @@ class KhlController extends Controller
         $periods->first = $arrOfPeriods[1];
         $periods->second = $arrOfPeriods[2];
         $periods->third = $arrOfPeriods[3];
-        $periods->overtime = $arrOfPeriods[4];
+        if(isset($arrOfPeriods[4])) $periods->overtime = $arrOfPeriods[4];
+        else $periods->overtime = 0;
         $periods->save(false);
 
         return $periods->id;
