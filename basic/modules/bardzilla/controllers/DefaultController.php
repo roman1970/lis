@@ -5,6 +5,7 @@ namespace app\modules\bardzilla\controllers;
 use app\components\FrontEndController;
 use app\models\ArticlesContent;
 use app\models\ContactForm;
+use app\models\Visit;
 use Yii;
 use app\models\Categories;
 use app\models\Author;
@@ -28,6 +29,10 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex()
     {
+        $visit = new Visit();
+        $visit->ip = $_SERVER['REMOTE_ADDR'];
+        $visit->save(false);
+        //var_dump($_SERVER['REMOTE_ADDR']); exit;
 
         $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
 

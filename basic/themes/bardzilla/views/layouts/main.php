@@ -90,13 +90,47 @@ BardzillaAsset::register($this);
                     <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
                </a>
                     <br/>
+
                 </p>
             </div>
 
 
         </div>
 
+
     </div>
+    <div style="display: none">
+        <!-- counter.1gb.ru -->
+        <script language="javascript" type="text/javascript">
+            cgb_js="1.0"; cgb_r=""+Math.random()+"&r="+
+            escape(document.referrer)+"&pg="+
+            escape(window.location.href);
+            document.cookie="rqbct=1; path=/"; cgb_r+="&c="+
+            (document.cookie?"Y":"N");
+        </script><script language="javascript1.1" type="text/javascript">
+            cgb_js="1.1";cgb_r+="&j="+
+            (navigator.javaEnabled()?"Y":"N")</script>
+        <script language="javascript1.2" type="text/javascript">
+            cgb_js="1.2"; cgb_r+="&wh="+screen.width+
+            'x'+screen.height+"&px="+
+            (((navigator.appName.substring(0,3)=="Mic"))?
+                screen.colorDepth:screen.pixelDepth)</script>
+        <script language="javascript1.3" type="text/javascript">
+            cgb_js="1.3"</script>
+        <script language="javascript"
+                type="text/javascript">cgb_r+="&js="+cgb_js;
+            document.write("<a href='http://www.1gb.ru?cnt=92760'>"+
+            "<img src='http://counter.1gb.ru/cnt.aspx?"+
+            "u=92760&"+cgb_r+
+            "&' border=0 width=88 height=31 "+
+            "alt='1Gb.ru counter'><\/a>")</script>
+        <noscript><a href='http://www.1gb.ru?cnt=92760'>
+                <img src="http://counter.1gb.ru/cnt.aspx?u=92760"
+                     border=0 width="88" height="31" alt="1Gb.ru counter"></a>
+        </noscript>
+        <!-- /counter.1gb.ru -->
+    </div>
+
 </div>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">
