@@ -30,7 +30,10 @@ class DefaultController extends FrontEndController
     public function actionIndex()
     {
         $visit = new Visit();
-        $visit->ip = $_SERVER['REMOTE_ADDR'];
+        if(isset($_SERVER['REMOTE_ADDR'])) $visit->ip = $_SERVER['REMOTE_ADDR'];
+        //if(isset($_SERVER['HTTP_REFERER'])) $visit->refer = $_SERVER['HTTP_REFERER'];
+        $visit->refer = self::get_all_ip();
+        if(isset($_SERVER['HTTP_USER_AGENT'])) $visit->browser = $_SERVER['HTTP_USER_AGENT'];
         $visit->save(false);
         //var_dump($_SERVER['REMOTE_ADDR']); exit;
 
@@ -244,6 +247,19 @@ class DefaultController extends FrontEndController
 
 
 
+    }
+
+    /**
+     * Получаем все ip из $_SERVER
+     * @return string
+     */
+    function get_all_ip() {
+        $ip_pattern="#(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)#";
+        $ret="";
+        foreach ($_SERVER as $k => $v) {
+            if (substr($k,0,5)=="HTTP_" AND preg_match($ip_pattern,$v)) $ret.=$k.": ".$v."\n";
+        }
+        return $ret;
     }
 
 

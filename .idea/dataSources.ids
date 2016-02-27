@@ -1463,6 +1463,8 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="ip" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="refer" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="browser" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="weather" schema="" catalog="plis" type="TABLE">
@@ -1502,12 +1504,149 @@
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="sources_ibfk_1" table="sources" schema="" catalog="gb_x_qplis" columns="author_id"/>
     </table>
+    <table name="chl_events" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="minute" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="player_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="is_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="prim" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="assist" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gk" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_events_ibfk_3" columns="gk" ref-table="chl_players" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_events_ibfk_1" columns="player_id" ref-table="chl_players" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_events_ibfk_2" columns="match_id" ref-table="chl_matches" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_chl_events_gk" unique="false" columns="gk"/>
+      <index name="ux_chl_events_match_id" unique="false" columns="match_id"/>
+      <index name="ux_chl_events_player_id" unique="false" columns="player_id"/>
+    </table>
+    <table name="chl_matches" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="host_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guest_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="host_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guest_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="prim" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="players" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="shot_in_goals_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="shot_in_goals_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="shot_reflected_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="shot_reflected_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="removal_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="removal_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="penalty_time_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="penalty_time_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="goals_in_more_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="goals_in_more_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="force_dodge_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="force_dodge_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="facedown_vic_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="facedown_vic_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="goals_in_less_host" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="goals_in_less_guest" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="bet_vic_host" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_nobody" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="bet_vic_guest" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="time_beg" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="judges" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="audience" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="stadium" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="player_off" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="gk_substitution" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="errors" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_matches_ibfk_18" columns="facedown_vic_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_1" columns="host_id" ref-table="chl_teams" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_10" columns="penalty_time_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_11" columns="goals_in_more_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_12" columns="goals_in_more_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_13" columns="goals_in_less_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_14" columns="goals_in_less_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_15" columns="force_dodge_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_16" columns="force_dodge_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_17" columns="facedown_vic_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_2" columns="guest_id" ref-table="chl_teams" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_3" columns="shot_in_goals_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_4" columns="shot_in_goals_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_5" columns="shot_reflected_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_6" columns="shot_reflected_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_7" columns="removal_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_8" columns="removal_guest" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="chl_matches_ibfk_9" columns="penalty_time_host" ref-table="chl_periods" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_events_ibfk_2" table="chl_events" schema="" catalog="gb_x_qplis" columns="match_id"/>
+      <index name="ux_chl_matches_facedown_vic_guest" unique="false" columns="facedown_vic_guest"/>
+      <index name="ux_chl_matches_facedown_vic_host" unique="false" columns="facedown_vic_host"/>
+      <index name="ux_chl_matches_force_dodge_guest" unique="false" columns="force_dodge_guest"/>
+      <index name="ux_chl_matches_force_dodge_host" unique="false" columns="force_dodge_host"/>
+      <index name="ux_chl_matches_goals_in_less_guest" unique="false" columns="goals_in_less_guest"/>
+      <index name="ux_chl_matches_goals_in_less_host" unique="false" columns="goals_in_less_host"/>
+      <index name="ux_chl_matches_goals_in_more_guest" unique="false" columns="goals_in_more_guest"/>
+      <index name="ux_chl_matches_goals_in_more_host" unique="false" columns="goals_in_more_host"/>
+      <index name="ux_chl_matches_guest_id" unique="false" columns="guest_id"/>
+      <index name="ux_chl_matches_host_id" unique="false" columns="host_id"/>
+      <index name="ux_chl_matches_penalty_time_guest" unique="false" columns="penalty_time_guest"/>
+      <index name="ux_chl_matches_penalty_time_host" unique="false" columns="penalty_time_host"/>
+      <index name="ux_chl_matches_removal_guest" unique="false" columns="removal_guest"/>
+      <index name="ux_chl_matches_removal_host" unique="false" columns="removal_host"/>
+      <index name="ux_chl_matches_shot_in_goals_guest" unique="false" columns="shot_in_goals_guest"/>
+      <index name="ux_chl_matches_shot_in_goals_host" unique="false" columns="shot_in_goals_host"/>
+      <index name="ux_chl_matches_shot_reflected_guest" unique="false" columns="shot_reflected_guest"/>
+      <index name="ux_chl_matches_shot_reflected_host" unique="false" columns="shot_reflected_host"/>
+    </table>
+    <table name="chl_periods" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="match" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="first" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="second" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="third" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="overtime" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="chl_matches_ibfk_18" table="chl_matches" schema="" catalog="gb_x_qplis" columns="facedown_vic_guest"/>
+      <exported-key name="chl_matches_ibfk_10" table="chl_matches" schema="" catalog="gb_x_qplis" columns="penalty_time_guest"/>
+      <exported-key name="chl_matches_ibfk_11" table="chl_matches" schema="" catalog="gb_x_qplis" columns="goals_in_more_host"/>
+      <exported-key name="chl_matches_ibfk_12" table="chl_matches" schema="" catalog="gb_x_qplis" columns="goals_in_more_guest"/>
+      <exported-key name="chl_matches_ibfk_13" table="chl_matches" schema="" catalog="gb_x_qplis" columns="goals_in_less_host"/>
+      <exported-key name="chl_matches_ibfk_14" table="chl_matches" schema="" catalog="gb_x_qplis" columns="goals_in_less_guest"/>
+      <exported-key name="chl_matches_ibfk_15" table="chl_matches" schema="" catalog="gb_x_qplis" columns="force_dodge_host"/>
+      <exported-key name="chl_matches_ibfk_16" table="chl_matches" schema="" catalog="gb_x_qplis" columns="force_dodge_guest"/>
+      <exported-key name="chl_matches_ibfk_17" table="chl_matches" schema="" catalog="gb_x_qplis" columns="facedown_vic_host"/>
+      <exported-key name="chl_matches_ibfk_3" table="chl_matches" schema="" catalog="gb_x_qplis" columns="shot_in_goals_host"/>
+      <exported-key name="chl_matches_ibfk_4" table="chl_matches" schema="" catalog="gb_x_qplis" columns="shot_in_goals_guest"/>
+      <exported-key name="chl_matches_ibfk_5" table="chl_matches" schema="" catalog="gb_x_qplis" columns="shot_reflected_host"/>
+      <exported-key name="chl_matches_ibfk_6" table="chl_matches" schema="" catalog="gb_x_qplis" columns="shot_reflected_guest"/>
+      <exported-key name="chl_matches_ibfk_7" table="chl_matches" schema="" catalog="gb_x_qplis" columns="removal_host"/>
+      <exported-key name="chl_matches_ibfk_8" table="chl_matches" schema="" catalog="gb_x_qplis" columns="removal_guest"/>
+      <exported-key name="chl_matches_ibfk_9" table="chl_matches" schema="" catalog="gb_x_qplis" columns="penalty_time_host"/>
+    </table>
+    <table name="chl_players" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="team_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="number" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="country_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="goals" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="assist" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="game" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="penalty" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="chl_players_ibfk_1" columns="team_id" ref-table="chl_teams" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_events_ibfk_3" table="chl_events" schema="" catalog="gb_x_qplis" columns="gk"/>
+      <exported-key name="chl_events_ibfk_1" table="chl_events" schema="" catalog="gb_x_qplis" columns="player_id"/>
+      <index name="ux_chl_players_team_id" unique="false" columns="team_id"/>
+    </table>
     <table name="chl_teams" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="chl_teams_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="chl_matches_ibfk_1" table="chl_matches" schema="" catalog="gb_x_qplis" columns="host_id"/>
+      <exported-key name="chl_matches_ibfk_2" table="chl_matches" schema="" catalog="gb_x_qplis" columns="guest_id"/>
+      <exported-key name="chl_players_ibfk_1" table="chl_players" schema="" catalog="gb_x_qplis" columns="team_id"/>
       <index name="ux_chl_teams_city_id" unique="false" columns="city_id"/>
     </table>
     <table name="cities" schema="" catalog="gb_x_qplis" type="TABLE">
@@ -1628,6 +1767,7 @@
       <foreign-key name="qparticles_ibfk_2" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_ibfk_3" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_content_ibfk_1" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="articles_id"/>
+      <exported-key name="testing_ibfk_1" table="testing" schema="" catalog="gb_x_qplis" columns="article_id"/>
       <index name="ux_qparticles_qparticles_cat_id" unique="false" columns="cat_id"/>
       <index name="ux_qparticles_qparticles_site_id" unique="false" columns="site_id"/>
       <index name="ux_qparticles_qparticles_source_id" unique="false" columns="source_id"/>
@@ -1704,6 +1844,17 @@
       <exported-key name="qparticles_content_ibfk_2" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="source_id"/>
       <index name="ux_sources_sources_author_id" unique="false" columns="author_id"/>
     </table>
+    <table name="testing" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="question" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="answer" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="right" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="article_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="testing_ibfk_1" columns="article_id" ref-table="qparticles" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_testing_testing_article_id" unique="false" columns="article_id"/>
+    </table>
     <table name="token" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="code" sqlType="VARCHAR" precision="32" scale="0" nullable="false" jdbcType="12"/>
@@ -1731,6 +1882,12 @@
       <exported-key name="fk_user_token" table="token" schema="" catalog="gb_x_qplis" columns="user_id"/>
       <index name="user_unique_email" unique="true" columns="email"/>
       <index name="user_unique_username" unique="true" columns="username"/>
+    </table>
+    <table name="visit" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="time" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="ip" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="weather" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
