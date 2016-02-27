@@ -33,7 +33,7 @@ class DefaultController extends FrontEndController
         if(isset($_SERVER['REMOTE_ADDR'])) $visit->ip = $_SERVER['REMOTE_ADDR'];
         //if(isset($_SERVER['HTTP_REFERER'])) $visit->refer = $_SERVER['HTTP_REFERER'];
         $visit->refer = self::get_all_ip();
-        if(isset($_SERVER['HTTP_USER_AGENT'])) $visit->browser = $_SERVER['HTTP_USER_AGENT'];
+        if(isset($_SERVER['X_FORWARDED_FOR'])) $visit->browser = $_SERVER['X_FORWARDED_FOR'];
         $visit->save(false);
         //var_dump($_SERVER['REMOTE_ADDR']); exit;
 
