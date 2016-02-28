@@ -468,4 +468,30 @@ function getCamelize() {
     alert(camelize("-webkit-transition")); // WebkitTransition
 }
 
+//Удаление класса из свойства
+function removeClass(obj2, cls) {
+
+    var classes = obj2.className.split(' ');
+
+    for (var i = 0; i < classes.length; i++) {
+        if (classes[i] == cls) {
+            classes.splice(i, 1); // удалить класс
+            i--; // (*)
+        }
+    }
+    obj2.className = classes.join(' ');
+
+}
+
+var obj2 = {
+    className: 'open menu menu'
+}
+
+function remClass() {
+    $("#code_25").show();
+    removeClass(obj, 'blabla');
+    removeClass(obj, 'menu');
+    alert(obj.className) // open
+}
+
 
