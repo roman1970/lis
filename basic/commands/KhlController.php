@@ -372,7 +372,7 @@ class KhlController extends Controller
 
     public static function clearTwoWordsString($string){
 
-        return  self::manySReplaceByOne(preg_replace("/[^СДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюя \t-]+/", "", $string));
+        return  self::manySReplaceByOne(preg_replace("/[^СДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюяA-Za-z \t-]+/", "", $string));
     }
 
     public static function clearSubject($string){
@@ -535,6 +535,7 @@ class KhlController extends Controller
         //var_dump($node); exit;
         try {
             $arr['host'] = Khlteams::find()->where("name like('%" . self::clearTwoWordsString($node->textContent) . "%')")->one()->id;
+            $arr['errors'][] = '';
         } catch (ErrorException $e) {
             $arr['host'] = 29; //null
             $arr['errors'][] = 'Хозяин не схвачен: '.$node->textContent;
@@ -592,8 +593,15 @@ class KhlController extends Controller
                                         try {
                                             $arr['sost'][$gameOff][] = Khlplayers::find()->where("name like('%" . self::cutDotEnd($child->textContent) . "%')")->one()->id;
                                         } catch (ErrorException $e) {
-                                            $arr['sost'][$gameOff][] = 947;
-                                            $arr['errors'][] = $child->textContent.' не попал в состав по ошибке';
+                                            //$arr['sost'][$gameOff][] = 947;
+                                            //$arr['errors'][] = $child->textContent.' не попал в состав по ошибке';
+                                            $new_player = new Khlplayers();
+                                            $new_player->name = self::clearTwoWordsString($child->textContent);
+                                            if($host)$new_player->team_id = $arr['host'];
+                                            else $new_player->team_id = $arr['guest'];
+                                            $new_player->country_id = 162;
+                                            $new_player->save(false);
+                                            $arr['sost'][$gameOff][] = $new_player->id;
                                         }
 
                                     }
