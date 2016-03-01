@@ -39,24 +39,7 @@ AppAsset::register($this);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Сайты', 'url' => ['/sites/index']],
-            ['label' => 'Категории', 'url' => ['/categories/index']],
-            ['label' => 'Контент', 'url' => ['/articles/index']],
-            ['label' => 'Пользователи', 'url' => ['/user/index']],
-           ['label' => 'Страны', 'url' => ['/countries/index']],
-            ['label' => 'Источники', 'url' => ['/source/index']],
-            ['label' => 'Авторы', 'url' => ['/author/index']],
-            ['label' => 'CodeHelp', 'url' => ['/jstests/index']],
-            ['label' => 'Тесты', 'url' => ['/testing/index']],
-            ['label' => 'Diary', 'url' => ['/diary/default/index']],
-            ['label' => 'Репертуар', 'url' => ['/repertuar/default/index']],
 
-
-        ],
-    ]);
     NavBar::end();
 
     ?>
@@ -65,6 +48,24 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        <?= Nav::widget([
+            'options' => ['class' => 'nav nav-tabs'],
+            'items' => [
+            ['label' => 'Сайты', 'url' => ['/sites/index']],
+            ['label' => 'Категории', 'url' => ['/categories/index']],
+            ['label' => 'Контент', 'url' => ['/articles/index']],
+            ['label' => 'Пользователи', 'url' => ['/user/index']],
+            ['label' => 'Страны', 'url' => ['/countries/index']],
+            ['label' => 'Источники', 'url' => ['/source/index']],
+            ['label' => 'Авторы', 'url' => ['/author/index']],
+            ['label' => 'CodeHelp', 'url' => ['/jstests/index']],
+            ['label' => 'Тесты', 'url' => ['/testing/index']],
+            ['label' => 'Diary', 'url' => ['/diary/default/index']],
+            ['label' => 'Репертуар', 'url' => ['/repertuar/default/index']],
+            ['label' => 'КХЛ', 'url' => ['/khl/default/index']],
+            ],
+        ]);
+        ?>
         <?= $content ?>
     </div>
 </div>

@@ -29,6 +29,9 @@ $config = [
         'diary' => [
             'class' => 'app\modules\diary\Diary',
         ],
+        'khl' => [
+            'class' => 'app\modules\khl\Khl',
+        ],
         'repertuar' => [
             'class' => 'app\modules\repertuar\Repertuar',
         ],

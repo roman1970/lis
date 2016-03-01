@@ -332,8 +332,6 @@ class KhlController extends Controller
             }
 
 
-
-
         }
 
     }

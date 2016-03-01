@@ -43,21 +43,20 @@ BardzillaAsset::register($this);
 </div>
     <?= $content ?>
 <div id="wrapper_cont" >
-    <div class="cont row">
-        <div class="col-md-3 ">
+
+
+        <!-- Three columns of text below the carousel -->
+        <div class="row">
+            <div class="col-lg-2">
                 <div id="rom"> </div>
                 <div id="footer">
                     <p>    Copyright &copy;<?=date('Y')?> Б'КПЗ <br/>
 
                     </p>
                 </div>
-        </div>
-
-        <div class="col-md-6 col-sm-12 col-xs-12">
-
-
-
-            <p id='play'>О! Здравствуй, Мой Дорогой Гость! Ты забрёл ко мне случайно?<br />
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-6">
+                <p id='play'>О! Здравствуй, Мой Дорогой Гость! Ты забрёл ко мне случайно?<br />
                     Не спеши закрыть бездверие моей пещеры <br />
                     Почитай, посмотри, послушай...<br />
                     Что? Твой указательный палец невольно тянется к виску?<br />
@@ -67,38 +66,28 @@ BardzillaAsset::register($this);
                     ответит Король Анормального - Бард, который перевернул ЗИЛ! <br />
                     <br />
 
-
-            </p>
-
-
-
-            <p id="main">
-
-            </p>
-
-
-
-        </div>
-
-
-        <div class="col-md-3 " >
-            <div id="mish" >
-            </div>
-
-            <div id="footerr">
-                <p  id="site">
-                    <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
-               </a>
-                    <br/>
-
                 </p>
-            </div>
+
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-2">
+                <div id="mish" >
+                </div>
+
+                <div id="footerr">
+                    <p  id="site">
+                        <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
+                        </a>
+                        <br/>
+
+                    </p>
+                </div>
 
 
-        </div>
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
 
+</div>
 
-    </div>
     <div style="display: none">
         <!-- counter.1gb.ru -->
         <script language="javascript" type="text/javascript">

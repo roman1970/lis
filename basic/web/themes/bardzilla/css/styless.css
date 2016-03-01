@@ -16,7 +16,7 @@ body{
     //border-radius:0px;
     margin: 0 auto;
     margin-top: 20px;
-    width: 1280px;
+    width: 80%;
     //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
 
     //border-bottom: none;
@@ -32,7 +32,7 @@ body{
 //border-radius:0px;
     margin: 0 auto;
     margin-top: 20px;
-    width: 1280px;
+    width: 80%;
 //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
 
 //border-bottom: none;
@@ -48,7 +48,7 @@ body{
 //border-radius:0px;
     margin: 0 auto;
     margin-top: 20px;
-    width: 1280px;
+    width: 80%;
 //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
 
 //border-bottom: none;
@@ -154,7 +154,7 @@ p a:hover {
 }
 
 #nav {
-    width: 1280px;
+    width: 100%;
     color: #bd2c2c;
     height: 90px;
     position: relative;
@@ -250,7 +250,7 @@ h3 {
 
 .cont {
    // position: relative;
-    width: 1000px;
+    width: 50%;
     //height: 500px;
     background-color: #000;
     margin-top: 20px;
@@ -295,7 +295,7 @@ h3 {
 
 #phot_h{
     font-family: "Roboto", sans-serif;
-    font-size: 50px;
+    font-size: 3vw; /* 3% of viewport width */
     color: #bd2c2c;
     text-align: center;
     text-shadow:8px 8px 8px gray;
@@ -596,6 +596,8 @@ hr {
     text-align: right;
     padding-top: 15px;
     left: -40px;
+    max-width: 100%;
+    max-height: 90%;
 }
     
 #liv{
@@ -702,7 +704,16 @@ input {
 
 }
 
-@media screen and (max-width: 1100px) {
+
+@media (min-width:992px) and (max-width:1199px){
+    #rom,
+    #footer
+    {
+        left: -10000px;
+    }
+}
+
+@media(min-width:300px) and (max-width: 991px) {
     #mish,
     #rom,
     #footerr,

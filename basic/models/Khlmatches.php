@@ -46,4 +46,22 @@ class Khlmatches extends \yii\db\ActiveRecord
 
         ];
     }
+
+    /**
+     * Получаем имя команды-хозяина
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHost()
+    {
+        return $this->hasOne(Khlteams::className(), ['id' => 'host_id']);
+    }
+
+    /**
+     * Получаем имя команды-гостя
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGuest()
+    {
+        return $this->hasOne(Khlteams::className(), ['id' => 'guest_id']);
+    }
 }
