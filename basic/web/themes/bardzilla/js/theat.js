@@ -199,8 +199,8 @@
                
       
                 imgig.src = "themes/bardzilla/Img/" + phot_l[im];
-                imgig.width = 330;
-                imgig.height = 320;
+                imgig.width = 230;
+                imgig.height = 220;
                 el = lef.appendChild(imgig);
                 
                 
@@ -228,8 +228,8 @@ function getNextPhotoRight() {
                
       
                 imgig.src = "themes/bardzilla/Img/" + phot_l[im];
-                imgig.width = 330;
-                imgig.height = 320;
+                imgig.width = 230;
+                imgig.height = 220;
                 el = lef.appendChild(imgig);
                 
                 

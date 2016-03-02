@@ -10,7 +10,7 @@ BardzillaAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Бард, который перевернул ЗИЛ</title>
 
@@ -26,34 +26,21 @@ BardzillaAsset::register($this);
 
 <body>
 <?php $this->beginBody() ?>
-<div id="wrapper" >
-    <div id="logo" class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
+<div class="main-container">
 
-            <div id="phot_h">
-                Бард, который перевернул ЗИЛ и его друзья
-               <?php /* <img src="<?=$this->theme->getUrl('Img/teatr_nov_1.png')" alt="Бард, который перевернул ЗИЛ" width="1100" height="100" /> */?>
-            </div>
-
-            <div id="phrase"></div>
-        </div>
-
-
-    </div>
-</div>
     <?= $content ?>
-<div id="wrapper_cont" >
+    <div id="wrapper_cont" class="container">
 
 
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-            <div class="col-lg-2">
+             <div class="col-lg-3">
                 <div id="rom"> </div>
+                 <?php /*
                 <div id="footer">
                     <p>    Copyright &copy;<?=date('Y')?> Б'КПЗ <br/>
 
                     </p>
                 </div>
+                 */ ?>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-6">
                 <p id='play'>О! Здравствуй, Мой Дорогой Гость! Ты забрёл ко мне случайно?<br />
@@ -69,10 +56,10 @@ BardzillaAsset::register($this);
                 </p>
 
             </div><!-- /.col-lg-4 -->
-            <div class="col-lg-2">
+            <div class="col-lg-3">
                 <div id="mish" >
                 </div>
-
+                <?php /*
                 <div id="footerr">
                     <p  id="site">
                         <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
@@ -81,12 +68,15 @@ BardzillaAsset::register($this);
 
                     </p>
                 </div>
+                */ ?>
 
 
             </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
 
-</div>
+
+    </div>
+
+
 
     <div style="display: none">
         <!-- counter.1gb.ru -->
@@ -119,7 +109,6 @@ BardzillaAsset::register($this);
         </noscript>
         <!-- /counter.1gb.ru -->
     </div>
-
 </div>
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

@@ -41,7 +41,7 @@
     function more(){
         return r++;
     }
-
+/*
     $(document).ready(function() {
         $(".accord h3:first").addClass("active");
 
@@ -57,9 +57,13 @@
             $(this).siblings("h3").removeClass("active");
         });
     });
+    */
 </script>
-<div id="song" style="display: none;">
+<div id="song" >
+    <p id="site" class="blok transition1">
+        <a href="https://play.google.com/store/music/album/Бард_который_перевернул_ЗИЛ_зато_очень_недорого?id=Bqxvew7e7qbnwea7eqnjvr53ybu&hl=ru">Вы можете нам помочь купив наши альбомы за символическую цену</a>
 
+    </p>
 </div><br>
 <div class="accord" style="text-align: left">
 <?php /*

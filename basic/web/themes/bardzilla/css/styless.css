@@ -6,9 +6,12 @@ body{
     position: relative;
 }
 
-
+/*.wrap{
+    width: 1280px;
+}
+*/
 #wrapper{
-    position: absolute;
+    //position: absolute;
     left: 17%;
     //height: 1500px;
     
@@ -23,7 +26,7 @@ body{
 }
 
 #wrapper_cont{
-    position: absolute;
+   // position: absolute;
     left: 17%;
     top: 210px;
 //height: 1500px;
@@ -32,24 +35,54 @@ body{
 //border-radius:0px;
     margin: 0 auto;
     margin-top: 20px;
-    width: 80%;
+    width: 85%;
 //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
 
 //border-bottom: none;
 }
 
+/* ссылка на альбом */
+.blok {
+    background: darkgray;
+    color: #FFF;
+    cursor: pointer;
+}
+.blok:hover {
+    background: #d98f23;
+    color: #000;
+}
+p .blok a{
+    color: white;
+}
+
+.transition1 {
+    transition: background-color 3s cubic-bezier(0.1, 0.8, 0.5, 2), color 3s 1s linear;
+
+    /* или
+
+    transition-property: background-color, color;
+    transition-duration: 3s;
+    transition-delay: 0s, 1s;
+    transition-timing-function: cubic-bezier(0.1, 0.8, 0.5, 2), linear;
+    */
+}
+
+
+
 #wrapper_menu{
-   position: absolute;
-    top: 130px;
-    left: 17%;
+  // position: absolute;
+   // top: 130px;
+   // left: 17%;
 //height: 1500px;
     z-index: 1;
     background: black;
 //border-radius:0px;
     margin: 0 auto;
     margin-top: 20px;
-    width: 80%;
+    width: 85%;
+    //max-width: 1280px;
 //box-shadow: 0 0 10px 4px #fff; /*тень блока*/
+    min-height: 200px;
 
 //border-bottom: none;
 }
@@ -154,7 +187,7 @@ p a:hover {
 }
 
 #nav {
-    width: 100%;
+   // width: 85%;
     color: #bd2c2c;
     height: 90px;
     position: relative;
@@ -357,10 +390,11 @@ h3 {
         //width: 600px;
         //left: 230px;
         //transition: 10s;
-        width: 800px;
+       // width: 800px;
         font-size: 20px;
-        padding-left: 100px;
+        //padding-left: 100px;
         margin-top: 20px;
+        text-align: center;
     }
     
 #play  a{
@@ -399,7 +433,7 @@ h3 {
     }
 
 #player {
-    width: 600px;
+    //width: 600px;
     text-align: center;
 
 }
@@ -459,7 +493,7 @@ h3 {
 	background: gray; /* Цвет фона */
     border: 1px solid #fff; /* Параметры рамки */
     border-radius:10px;
-    width: 600px;
+   // width: 600px;
     margin-bottom: 20px;
 
    }
@@ -480,6 +514,7 @@ hr {
         color: #fff;
    }
 
+
 #count_ {
     font-size: 12px;
 }
@@ -494,7 +529,7 @@ hr {
         padding-left: 75px;
         color: #fff;
         font-size: 14px;
-        width: 400px;
+        //width: 400px;
     }
 
 #songs_name{
@@ -523,7 +558,7 @@ hr {
     }
     
 #footer{
-        position: absolute;
+       // position: absolute;
         color: white;
         width: 1280px;
        top: 350px;
@@ -541,7 +576,7 @@ hr {
     }
 
 .accord{
-    width: 600px;
+    //width: 600px;
    /* margin-left: 80px;*/
     text-align: center;
 }
@@ -553,7 +588,7 @@ hr {
     }
     
 #footerr{
-        position: absolute;
+        //position: absolute;
         color: white;
         width: 1280px;
         top: 345px;
@@ -585,21 +620,39 @@ hr {
     } 
     
 #mish{
-        position: absolute;
-        text-align: right;
-        padding-top: 15px;
-        left: 270px;
+       // position: absolute;
+        text-align: center;
+       // padding-top: 15px;
+       // left: 270px;
     }
 
 #rom{
-    position: absolute;
-    text-align: right;
+   // position: absolute;
+    text-align: center;
     padding-top: 15px;
-    left: -40px;
-    max-width: 100%;
-    max-height: 90%;
+   // left: -40px;
+   // max-width: 100%;
+   // max-height: 90%;
 }
-    
+/*
+#mish {
+    -webkit-animation: cssAnimation 15s 20 linear;
+    -moz-animation: cssAnimation 15s 20 linear;
+    -o-animation: cssAnimation 15s 20 linear;
+}
+@-webkit-keyframes cssAnimation {
+    from { -webkit-transform: rotate(140deg) scale(0.1) skew(92deg) translate(300px); }
+    to { -webkit-transform: rotate(360deg) scale(1.5) skew(180deg) translate(18px); }
+}
+@-moz-keyframes cssAnimation {
+    from { -moz-transform: rotate(140deg) scale(0.1) skew(92deg) translate(300px); }
+    to { -moz-transform: rotate(360deg) scale(1.5) skew(180deg) translate(18px); }
+}
+@-o-keyframes cssAnimation {
+    from { -o-transform: rotate(140deg) scale(0.1) skew(92deg) translate(300px); }
+    to { -o-transform: rotate(360deg) scale(1.5) skew(180deg) translate(18px); }
+}
+ */
 #liv{
         position: absolute;
         top: 710px;
@@ -711,6 +764,7 @@ input {
     {
         left: -10000px;
     }
+
 }
 
 @media(min-width:300px) and (max-width: 991px) {

@@ -1,12 +1,23 @@
-<div id="wrapper_menu" >
+<div id="wrapper_menu" class="container">
+    <div id="logo">
+
+
+        <div id="phot_h">
+            Бард, который перевернул ЗИЛ и его друзья
+            <?php /* <img src="<?=$this->theme->getUrl('Img/teatr_nov_1.png')" alt="Бард, который перевернул ЗИЛ" width="1100" height="100" /> */?>
+        </div>
+
+        <div id="phrase"></div>
+
+
+
+    </div>
     <div id="nav" class="row">
 
         <?php foreach($cats as $cat) : ?>
 
 
             <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2" >
-
-
 
             <?php $items = \app\models\Categories::findOne(['name' => $cat->name]);
             $leaves = $items->leaves()->all();
@@ -32,7 +43,7 @@
 
     <?php endforeach; ?>
 
-        </div>
+
     </div>
 </div>
 
