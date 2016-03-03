@@ -171,7 +171,7 @@ p {
 -------------------------------------------------------------- */
 
 #home {
-    height: 150px;
+    height: 550px;
     overflow: hidden;
     position: relative;
     background-color: rgba(0, 0, 0, 0.2);
@@ -183,7 +183,7 @@ p {
 }
 
 .hero {
-    padding: 16px 0;
+    padding: 160px 0;
     text-align: center;
     color: #fff;
 }
@@ -222,7 +222,7 @@ p {
 }*/
 
 .topnav {
-    background-color: #5A846A;
+    background-color: #13225d;
     margin: 0;
     border-radius: 0;
     border: 0;
@@ -232,7 +232,7 @@ p {
 
 .topnav .navbar-nav > li > a {
     text-transform: uppercase;
-    color: #bd2c2c;
+    color: #ffffff;
 }
 
 .topnav .navbar-nav > li{
@@ -240,8 +240,10 @@ p {
 }
 
 .topnav .navbar-nav > .active > a, .topnav .navbar-nav > .active > a:hover, .topnav .navbar-nav > .active > a:focus {
-    background-color: #fff;
-    color:#fff;
+    background-color: rgba(16, 11, 110, 0.90);
+    font-size: 23px;
+    font-weight: 400;
+    color: #ffba37;
 }
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
     color:#fff;

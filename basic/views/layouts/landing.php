@@ -17,7 +17,7 @@ LandberryAsset::register($this);
 
 <head>
     <meta charset="utf-8">
-    <title>ООП «Очкарики»</title>
+    <title>Интернет-решения</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="keywords" content="">
@@ -65,34 +65,26 @@ LandberryAsset::register($this);
                 <!-- Home Slider -->
 
                 <div class="home-slider">
-
                     <ul class="slides">
-
                         <li>
-
-                            <h1><span>ООП «Очкарики»</span></h1>
-
-                        </li>
-
-                        <li>
-
-                            <h1><span>ОБЪЕДКИ ОБРАЗОВАННЫХ ПРОГРАММИСТОВ</span></h1>
-
+                            <h1><span>ИНТЕРНЕТ-РЕШЕНИЯ</span></h1>
                         </li>
                         <li>
-
-                            <h1><span>КЛАДБИЩЕ НЕДОДЕЛАННЫХ ПРОЕКТОВ</span></h1>
-
+                            <h1><span>САЙТЫ </span></h1>
                         </li>
-
+                        <li>
+                            <h1><span>ИНТЕРНЕТ-МАГАЗИНЫ</span></h1>
+                        </li>
+                        <li>
+                            <h1><span>КОРПОРАТИВНЫЕ ПРИЛОЖЕНИЯ</span></h1>
+                        </li>
+                        <li>
+                            <h1><span>ЛЭНДИНГИ</span></h1>
+                        </li>
                     </ul>
-
                 </div>
 
                 <!-- End Home Slider -->
-
-
-
 
             </div>
 
@@ -103,8 +95,6 @@ LandberryAsset::register($this);
 </section>
 
 <!-- End Home Section -->
-
-
 
 <!-- Header -->
 
@@ -126,7 +116,7 @@ LandberryAsset::register($this);
 
             </button>
 
-            <a class="navbar-brand" href="#home" id="logo"><img src="images/logo1.png" width="133" alt="WP Media"></a>
+           <?php /* <a class="navbar-brand" href="#home" id="logo"><img src="images/logo1.png" width="133" alt="WP Media"></a> */ ?>
 
         </div>
 
@@ -174,13 +164,15 @@ LandberryAsset::register($this);
 
         <div class="title col-md-8 col-sm-10 col-xs-12">
 
-            <h1><img src="images/logo.png" alt="WP Media"></h1>
+          <?php /*  <h1><img src="images/logo.png" alt="WP Media"></h1> */ ?>
 
         </div>
 
         <!-- About Text -->
 
         <div class="promo-line">
+
+            <?php /*
 
             <div class="col-md-6 col-sm-6 col-xs-12">
 
@@ -213,8 +205,9 @@ LandberryAsset::register($this);
                 </div>
 
             </div>
+ */ ?>
 
-            <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="col-md-8 col-sm-10 col-xs-12">
 
                 <div class="row">
 
@@ -224,7 +217,7 @@ LandberryAsset::register($this);
 
                             <div class="promo-icon">
 
-                                <i class="fa fa-rocket"></i>
+                                <i class="fa fa-comment"></i>
 
                             </div>
 
@@ -232,11 +225,10 @@ LandberryAsset::register($this);
 
                         <div class="col-md-10 col-sm-11">
 
-                            <h4>ЧТО МЫ ДЕЛАЕМ</h4>
+                            <h4>Мы любим своё дело</h4>
 
-                            <p>Мы&nbsp;занимается развитием собственных контентных
-
-                                проектов, привлекаем активную целевую аудиторию и&nbsp;обеспечиваем уникальный пользовательский опыт. </p>
+                            <p>Мы&nbsp; занимаемся созданием сайтов любой сложности.
+                                С помощью нашей системы тестирования решений вы можете ежедневно следить за тем, как хорошеет дело </p>
 
                         </div>
 

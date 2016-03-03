@@ -62,7 +62,7 @@ ul{
 
 
 #nav{
-	background: url(../images/sonnik/nav-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/nav-bg.jpg*/;
+	//background: url(../images/sonnik/nav-bg.jpg)/*tpa=http://wp-media.ru/images/sonnik/nav-bg.jpg*/;
 	z-index: 1000;
 }
 	#nav ul{
@@ -81,7 +81,7 @@ ul{
 			color: #333;
 			display: block;
 			line-height: 43px;
-			border-left: 1px solid #bdbdbd;
+			//border-left: 1px solid #bdbdbd;
 		}
 
 		#nav ul li a:hover span{
