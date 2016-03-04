@@ -227,8 +227,12 @@ LandberryAsset::register($this);
 
                             <h4>Мы любим своё дело</h4>
 
-                            <p>Мы&nbsp; занимаемся созданием сайтов любой сложности.
-                                С помощью нашей системы тестирования решений вы можете ежедневно следить за тем, как хорошеет дело </p>
+                            <p>
+                                Мы&nbsp; занимаемся продвижением идей и не привязаны к зарабатыванию денег.
+                                Поэтому Ваши
+                                Чем интересней задумка, тем дешевле
+                                А с помощью нашей системы тестирования решений вы можете
+                                ежедневно следить за тем, как хорошеет дело </p>
 
                         </div>
 
@@ -246,8 +250,6 @@ LandberryAsset::register($this);
 
 <!-- End About Section -->
 
-
-
 <!-- Works Section -->
 
 <section id="works" class="section">
@@ -256,7 +258,7 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1>САМЫЕ <strong>ПОПУЛЯРНЫЕ ПРОЕКТЫ</strong></h1>
+            <h1><strong>НАШИ ПРОЕКТЫ</strong></h1>
 
             <hr>
 
@@ -268,11 +270,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/projects/kuking.jpg" alt="">
+                    <img src="images/soccer.jpg" alt="">
 
-                    <a href="http://kuking.net" target="_blank" class="team-overlay">
+                    <a href="http://soccer.qplis.ru" target="_blank" class="team-overlay">
 
-                        <span class="top">30000 уникальных посетителей<br>в день</span>
+                        <span class="top">Любителям футбольной статистики</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -282,9 +284,8 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>KUKING</h3>
-
-                    <p>Проект по женской тематике</p>
+                    <h3>SOCCER.QPLIS.RU</h3>
+                    <p>Статистика любого футбольного матча</p>
 
                 </div>
 
@@ -298,11 +299,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/projects/sonnik.jpg" alt="">
+                    <img src="images/bard.jpg" alt="">
 
                     <a href="http://sonnik-online.net" target="_blank" class="team-overlay">
 
-                        <span class="top">60000 уникальных посетителей<br>в день</span>
+                        <span class="top">Есть творческие талантливые люди</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -312,9 +313,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>SONNIK-ONLINE</h3>
+                    <h3>BARDZILLA.QPLIS.ru</h3>
 
-                    <p>Проект по гороскопам</p>
+                    <p>Любителям оригинальной авторской песни</p>
 
                 </div>
 
