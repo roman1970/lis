@@ -30,6 +30,7 @@ class CategoriesController extends BackEndController
         if($model->load(Yii::$app->request->post())){
             if (Yii::$app->request->post('Categories')['rootCat'] === '') {
                 $model = new Categories(['name' => Yii::$app->request->post('Categories')['name'],
+                    'site_id' => Yii::$app->request->post('Categories')['site_id'],
                     'title' => Yii::$app->request->post('Categories')['title'],
                     'cssclass' => md5(time()),
                     'action' => Yii::$app->request->post('Categories')['action']
@@ -42,6 +43,7 @@ class CategoriesController extends BackEndController
 
             else {
                 $model = new Categories(['name' => Yii::$app->request->post('Categories')['name'],
+                    'site_id' => Yii::$app->request->post('Categories')['site_id'],
                     'title' => Yii::$app->request->post('Categories')['title'],
                     'cssclass' => md5(time()),
                     'action' => Yii::$app->request->post('Categories')['action']
