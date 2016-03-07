@@ -541,6 +541,29 @@ $this->title = 'Тесты';
                     }
 
                 </pre>
+        <a onclick="filterArray()" class="testLink">26 Фильтрация массива в диапазоне передаваемых значений</a><br>
+                <pre class="brush: js;" id="code_26">
+
+                    //Фильтация массива
+                    function filterRangeInPlace(arr, a, b) {
+
+                        for (var i = 0; i < arr.length; i++) {
+                            var val = arr[i];
+                            if (val < a || val > b) {
+                                arr.splice(i--, 1);
+                            }
+                        }
+
+                    }
+
+                    function filterArray() {
+                        var arr = [5, 3, 8, 1];
+
+                        filterRangeInPlace(arr, 1, 4);
+                        alert(arr); // [3, 1]
+                    }
+
+                </pre>
     </div>
 
 
