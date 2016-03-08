@@ -9,7 +9,7 @@
 
                     <?php foreach ($articles as $article): ?>
                         <div class="article col-md-3 col-sm-3 col-xs-3">
-                            <a href="<?=Url::to('knoledges/default/show/'.$article->id);?>">
+                            <a href="<?='knoledges/default/show/'.$article->id;?>">
 
                                 <?=$article->title;?> </br>
                                 <?php if($article->img) : ?>

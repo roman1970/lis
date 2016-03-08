@@ -6,6 +6,7 @@ namespace app\modules\knoledges;
 class Knoledges extends \yii\base\Module
 {
     public $returnUrl = ["/knoledges/default/index"];
+    public $showUrl = ["/knoledges/default/show/"];
 
     public function init()
     {
