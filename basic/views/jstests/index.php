@@ -564,6 +564,23 @@ $this->title = 'Тесты';
                     }
 
                 </pre>
+        <a onclick="sortArr()" class="testLink">27 Сортировка массива в обратном порядке</a><br>
+                <pre class="brush: js;" id="code_27">
+                    //сортировка массива в обратном порядке
+                    function sortArr(){
+
+                        var arr = [5, 2, 1, -10, 8];
+                        alert("Этот массив " + arr + " будет отсортирован в обратном порядке");
+
+                        function compareReversed(a, b) {
+                            return b - a;
+                        }
+
+                        arr.sort(compareReversed);
+
+                        alert( arr );
+                    }
+                </pre>
     </div>
 
 

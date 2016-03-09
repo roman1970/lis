@@ -1031,6 +1031,7 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="qparticles_content_ibfk_1" columns="articles_id" ref-table="qparticles" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="qparticles_content_ibfk_2" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="qpcomments_ibfk_1" table="qpcomments" schema="" catalog="plis" columns="article_content_id"/>
       <index name="ux_qparticles_content_articles_id" unique="false" columns="articles_id"/>
       <index name="ux_qparticles_content_qparticles_content_source_id" unique="false" columns="source_id"/>
     </table>
@@ -1057,6 +1058,18 @@
       <foreign-key name="qpcategory_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="plis" columns="cat_id"/>
       <index name="ux_qpcategory_qpcategory_site_id" unique="false" columns="site_id"/>
+    </table>
+    <table name="qpcomments" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="body" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="d_created" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="article_content_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="ENUM" precision="9" scale="0" nullable="true" jdbcType="1" def="J3B1Ymxpc2hlZCc="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qpcomments_ibfk_1" columns="article_content_id" ref-table="qparticles_content" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_qpcomments_article_content_id" unique="false" columns="article_content_id"/>
     </table>
     <table name="qpsites" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

@@ -515,3 +515,20 @@ function filterArray() {
     alert(arr); // [3, 1]
 }
 
+
+//сортировка массива в обратном порядке
+function sortArr(){
+    $("#code_27").show();
+
+    var arr = [5, 2, 1, -10, 8];
+    alert("Этот массив " + arr + " будет отсортирован в обратном порядке");
+
+    function compareReversed(a, b) {
+        return b - a;
+    }
+
+    arr.sort(compareReversed);
+
+    alert( arr );
+}
+
