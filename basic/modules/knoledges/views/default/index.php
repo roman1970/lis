@@ -1,5 +1,5 @@
 <?php use yii\helpers\Url; ?>
-<div class="container">
+
     <div class="content">
             <div class="uli">
 
@@ -28,5 +28,4 @@
             <?php endif; ?>
             </div>
         </div>
-    </div>
 

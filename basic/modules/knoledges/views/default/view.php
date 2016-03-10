@@ -7,6 +7,7 @@ use yii\widgets\Pjax;
 $article_content_id = 1;
 ?>
 <?php
+/*
 $this->registerJs(
     '$("document").ready(function(){
             $("#new_note").on("pjax:end", function() {
@@ -14,7 +15,48 @@ $this->registerJs(
         });
     });'
 );
+*/
 ?>
+<script>
+    $(document).ready(function() {
+        var name = $("#comm_name");
+        var body = $("#comm_body");
+        var content_id = $("#comm_cont");
+
+        $("#send").click(
+            function() {
+
+                addComment(name.val(), body.val());
+            });
+
+        function addComment(name, body) {
+
+            //Валидация
+            if (name === "" ) {
+                alert("Введите Имя");
+                return false;
+            }
+
+            if (body === "") {
+                alert("Введите Текст");
+                return false;
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: "/knoledges/default/addcomment/",
+                data: "name="+name+"&body="+body+"&content_id="+content_id,
+                success: function(html){
+                    $("#base").html(html);
+                }
+
+            });
+
+        }
+
+    });
+</script>
 <div class="single">
 
 		<div class="mb20">
@@ -54,17 +96,24 @@ $this->registerJs(
 
     <?= \app\components\CommentsWidget::widget(['article_id' => $article_content_id,
         'module_path' => \Yii::$app->view->theme->baseUrl]) ?>
-    <?php Pjax::begin(['id' => 'my-pjax']); ?>
-    <?php $form = ActiveForm::begin(['options' => ['data-pjax' => true]]); ?>
+    <?php /*
+    <input type='text' class="aer" id="comm_name" size="30" placeholder="10"/>
+    <textarea rows="10" cols="45" name="text" id="comm_body"></textarea>
+    <button class="btn btn-primary" id="send" value="Комментировать"></button>
+
+    */
+    ?>
+    <div id="base"></div>
+    <?php
+
+    $form = ActiveForm::begin(); ?>
+        <?= $form->field($comment, 'name')->textInput(['size' => 45, 'id' => 'comm_name']); ?>
+        <?= $form->field($comment, 'body')->textarea(['rows' => 10, 'cols' => 45, 'id' => 'comm_body']) ?>
+        <?= $form->field($comment, 'article_content_id')->hiddenInput()->label(false);  ?>
+        <?= \yii\helpers\Html::button('Комментировать', ['class' => 'btn btn-primary', 'id' => 'send']);?>
+    <?php ActiveForm::end();?>
 
 
-        <?= $form->field($comment, 'name')->textInput(); ?>
-        <?= $form->field($comment, 'body')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id']) ?>
-
-
-        <?= \yii\helpers\Html::submitButton('Комментировать', ['class' => 'btn btn-primary']);?>
-        <?php ActiveForm::end();?>
-    <?php Pjax::end(); ?>
         <?php /*
         $form = ActiveForm::begin(/*[
             'id' => 'login-form',

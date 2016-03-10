@@ -65,4 +65,19 @@ class Comments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ArticlesContent::className(), ['id' => 'article_content_id']);
     }
+
+    public  function beforeSave($options = [])
+    {
+
+        if (parent::beforeSave(1)) {
+            if ($this->isNewRecord) {
+                $this->d_created = date('Y-m-d H:i:s');
+
+                return true;
+            } else
+
+                return true;
+        } else
+            return false;
+    }
 }

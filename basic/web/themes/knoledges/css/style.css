@@ -61,6 +61,32 @@ a:focus{color:#5d8df0; text-decoration: none; outline:none; outline-color: trans
 .row:after{display: table;  content: "";}
 .row{margin: 0; padding: 0;}
 
+.comment_name{
+    font-size: 10px;
+    color: gray;
+    float: left;
+}
+
+.comment_body{
+    font-size: 14px;
+    border-bottom: 1px;
+
+}
+.comm_table {
+    display: table;
+}
+
+.row_table{
+    display: table-row;
+}
+
+.cell{
+    width: 50%;
+}
+
+.simple{
+    margin: 0;
+}
 
 header{background: url(../img/hb.png) repeat 0 0;  display: table; width: 100%;margin-bottom: 30px;text-align: center;}
 header .logo{/* float: left; */padding: 22px 30px 17px;position: relative;}
@@ -84,7 +110,7 @@ header .logo img{max-width: 100%; }
 .post:nth-child(even) a:hover h2{color: #2f2f2f;}
 .post:nth-child(odd) a:hover h2{color: #2f2f2f;}
 
-.single{width: 1000px; margin-right: 25px; float: left;}
+.single{width: 800px; margin-right: 25px; float: left;}
 .single__title {
     font-size: 20px;
     line-height: 25px;
@@ -130,7 +156,7 @@ a.prev:before {content: '';position: absolute; border-right: 24px solid transpar
 .single__pager-inner a.next{float: right;}
 
 .single__col2{width: 270px;float: left;}
-aside{width: 270px;float: right;}
+aside{width: 270px;float: right;font-family: sans-serif}
 .aside__posts .post{margin: 0 0 20px;}
 footer{ padding: 50px 0; display: table; width: 100%; margin-top: 50px; min-height: 50px;}
 .source{

@@ -581,6 +581,19 @@ $this->title = 'Тесты';
                         alert( arr );
                     }
                 </pre>
+        <a onclick="sortAndCopyArrs()" class="testLink">28 Скопированный и отсортированный массивы</a><br>
+                <pre class="brush: js;" id="code_28">
+                  //скопировать и отсортировать массив
+                        function sortAndCopyArrs() {
+                            var arr = ["HTML", "JavaScript", "CSS"];
+
+                            var arrSorted = arr.slice().sort();
+
+                            alert(arrSorted + "скопированный и отсортированный");
+                            alert(arr + "данный");
+                        }
+
+                </pre>
     </div>
 
 

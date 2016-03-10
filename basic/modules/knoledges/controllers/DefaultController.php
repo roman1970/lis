@@ -70,13 +70,25 @@ class DefaultController extends FrontEndController
     }
 
     public function actionAddcomment(){
+
         $model = new Comments();
-        if ($model->load(Yii::$app->request->post())) {
-            var_dump($model);
-            $model->name = Yii::$app->request->post('Comments')['name'];
+
             $model->body = Yii::$app->request->post('Comments')['body'];
-            $model->save();
-        }
+            if(Yii::$app->getRequest()->getQueryParam('name'))
+                $model->name = Yii::$app->getRequest()->getQueryParam('name');
+
+            if(Yii::$app->getRequest()->getQueryParam('body'))
+                $model->body = Yii::$app->getRequest()->getQueryParam('body');
+
+            if(Yii::$app->getRequest()->getQueryParam('content_id'))
+                $model->article_content_id = (int)Yii::$app->getRequest()->getQueryParam('content_id');
+
+            $model->status = 'published';
+
+            if($model->save(false)) return "OK";
+
+        return var_dump(Yii::$app->getRequest()->getQueryParam('content_id'));
+
 
     }
 

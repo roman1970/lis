@@ -532,3 +532,15 @@ function sortArr(){
     alert( arr );
 }
 
+//скопировать и отсортировать массив
+function sortAndCopyArrs() {
+    $("#code_28").show();
+
+    var arr = ["HTML", "JavaScript", "CSS"];
+
+    var arrSorted = arr.slice().sort();
+
+    alert(arrSorted + " скопированный и отсортированный");
+    alert(arr + " данный");
+}
+

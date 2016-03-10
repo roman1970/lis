@@ -38,7 +38,9 @@ KnoledgesAsset::register($this);
                     </div>
                 </div>
             </header>
+        <div class="container">
             <?=$content;?>
+        </div>
         <footer>
             <div class="container"></div>
         </footer>
