@@ -544,3 +544,16 @@ function sortAndCopyArrs() {
     alert(arr + " данный");
 }
 
+//случайный порядок в массиве
+function randArr() {
+    $("#code_29").show();
+    var arr = [1, 2, 3, 4, 5];
+
+    function compareRandom(a, b) {
+        return Math.random() - 0.5;
+    }
+
+    arr.sort(compareRandom);
+
+    alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
+}

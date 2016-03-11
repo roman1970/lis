@@ -2,6 +2,7 @@
 
 namespace app\modules\knoledges\controllers;
 
+use app\components\CommentsWidget;
 use app\components\FrontEndController;
 use app\models\ArticlesContent;
 use app\models\Author;
@@ -23,6 +24,7 @@ class DefaultController extends FrontEndController
     public $title;
     public $source;
     public $author;
+    public static $content_id;
 
     /**
      * @return string
@@ -39,6 +41,11 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Показываем контент
+     * @param $id
+     * @return string
+     */
     public function actionShow($id){
         $article = Articles::findOne($id);
         $comment = new Comments();
@@ -69,6 +76,10 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Добавление комментариев
+     * @return string
+     */
     public function actionAddcomment(){
 
         $model = new Comments();
@@ -81,15 +92,26 @@ class DefaultController extends FrontEndController
                 $model->body = Yii::$app->getRequest()->getQueryParam('body');
 
             if(Yii::$app->getRequest()->getQueryParam('content_id'))
-                $model->article_content_id = (int)Yii::$app->getRequest()->getQueryParam('content_id');
+                self::$content_id = $model->article_content_id = (int)Yii::$app->getRequest()->getQueryParam('content_id');
 
             $model->status = 'published';
 
-            if($model->save(false)) return "OK";
+            if($model->save(false)) return "<p style='color: green'>Ответ опубликован</p>";
 
-        return var_dump(Yii::$app->getRequest()->getQueryParam('content_id'));
+        return "<p style='color: red'>Попробуйте ещё раз чуть позже</p>";
 
+    }
 
+    /**
+     * Вызов виджета комментариев без перезагрузки
+     * @param $id
+     * @throws \Exception
+     */
+    public function actionCallcomm($id){
+        if($id)
+            echo CommentsWidget::widget(['article_id' => $id,
+            'module_path' => \Yii::$app->view->theme->baseUrl]);
+        else echo 'ooppps!';
     }
 
 

@@ -23,10 +23,12 @@ class KnoledgesAsset extends AssetBundle
     public $css = [
         'css/style.css',
         'js/syntaxhighlighter/styles/shCore.css',
-        'js/syntaxhighlighter/styles/shThemeDefault.css'
+        'js/syntaxhighlighter/styles/shThemeDefault.css',
+
 
     ];
     public $js = [
+        'js/jquery-cookie/jquery.cookie.js'
 
     ];
 

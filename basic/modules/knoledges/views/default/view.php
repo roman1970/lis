@@ -6,30 +6,26 @@ use yii\widgets\Pjax;
 
 $article_content_id = 1;
 ?>
-<?php
-/*
-$this->registerJs(
-    '$("document").ready(function(){
-            $("#new_note").on("pjax:end", function() {
-            $.pjax.reload({container:"#notes"});
-        });
-    });'
-);
-*/
-?>
+
 <script>
     $(document).ready(function() {
         var name = $("#comm_name");
         var body = $("#comm_body");
         var content_id = $("#comm_cont");
+        var date = new Date();
+        $.cookie.raw = true;
+
 
         $("#send").click(
             function() {
+                addComment(name.val(), body.val(), content_id.val());
+                $("#comments").load("/knoledges/default/callcomm/"+content_id.val());
+                $('#w0').trigger( 'reset' ); //очищаем форму
+                $.cookie('lklklk', '54', { expires: 7 });
 
-                addComment(name.val(), body.val());
             });
 
-        function addComment(name, body) {
+        function addComment(name, body, content) {
 
             //Валидация
             if (name === "" ) {
@@ -46,7 +42,7 @@ $this->registerJs(
             $.ajax({
                 type: "GET",
                 url: "/knoledges/default/addcomment/",
-                data: "name="+name+"&body="+body+"&content_id="+content_id,
+                data: "name="+name+"&body="+body+"&content_id="+content,
                 success: function(html){
                     $("#base").html(html);
                 }
@@ -56,6 +52,8 @@ $this->registerJs(
         }
 
     });
+
+
 </script>
 <div class="single">
 
@@ -93,9 +91,12 @@ $this->registerJs(
 </div>
 <aside>
     <?php /*DatePicker::widget(['name' => 'date']) */ ?>
+    <div id="comments">
 
     <?= \app\components\CommentsWidget::widget(['article_id' => $article_content_id,
         'module_path' => \Yii::$app->view->theme->baseUrl]) ?>
+
+    </div>
     <?php /*
     <input type='text' class="aer" id="comm_name" size="30" placeholder="10"/>
     <textarea rows="10" cols="45" name="text" id="comm_body"></textarea>
@@ -109,25 +110,10 @@ $this->registerJs(
     $form = ActiveForm::begin(); ?>
         <?= $form->field($comment, 'name')->textInput(['size' => 45, 'id' => 'comm_name']); ?>
         <?= $form->field($comment, 'body')->textarea(['rows' => 10, 'cols' => 45, 'id' => 'comm_body']) ?>
-        <?= $form->field($comment, 'article_content_id')->hiddenInput()->label(false);  ?>
+        <?= $form->field($comment, 'article_content_id')->textInput([ 'id' => 'comm_cont', 'type' => 'hidden', 'value' => $article_content_id])->label(false); ?>
+
         <?= \yii\helpers\Html::button('Комментировать', ['class' => 'btn btn-primary', 'id' => 'send']);?>
     <?php ActiveForm::end();?>
-
-
-        <?php /*
-        $form = ActiveForm::begin(/*[
-            'id' => 'login-form',
-            'options' => ['class' => 'form-horizontal'],
-            'fieldConfig' => [
-            'template' => '{label}<div class="col-sm-10">{input}</div><div class="col-sm-10">{error}</div>',
-            'labelOptions' => ['class' => 'col-sm-2 control-label'],
-            ],
-        ]);
-        //var_dump($comment);
-        $form->field($comment, 'body')->textInput();
-        ActiveForm::end();
-       */ ?>
-
 
 
 </aside>

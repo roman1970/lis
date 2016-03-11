@@ -594,6 +594,21 @@ $this->title = 'Тесты';
                         }
 
                 </pre>
+        <a onclick="randArr()" class="testLink">29 Случайный порядок в массиве</a><br>
+                <pre class="brush: js;" id="code_29">
+                 //случайный порядок в массиве
+                    function randArr() {
+                        var arr = [1, 2, 3, 4, 5];
+
+                        function compareRandom(a, b) {
+                            return Math.random() - 0.5;
+                        }
+
+                        arr.sort(compareRandom);
+
+                        alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
+                    }
+                </pre>
     </div>
 
 

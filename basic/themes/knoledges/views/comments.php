@@ -1,4 +1,4 @@
-<h3>Комментарии</h3>
+<h3>Ответы</h3>
 <div id="comm">
     <?php foreach ($comments as $comment) : ?>
     <div class="comm_table">
@@ -10,7 +10,7 @@
             <div class="comment_body"><?=$comment->body?></div>
         </div>
         <hr class="simple">
-
+    </div>
         <?php endforeach; ?>
 
 </div>
