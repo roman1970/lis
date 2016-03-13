@@ -12,16 +12,31 @@ $article_content_id = 1;
         var name = $("#comm_name");
         var body = $("#comm_body");
         var content_id = $("#comm_cont");
+        var name_string = '';
+        var n = '';
+        var ball = 0;
+        if($.cookie('ball')) ball = $.cookie('ball');
+        else ball = 0;
+
         var date = new Date();
         $.cookie.raw = true;
 
 
         $("#send").click(
             function() {
+
+                 n = $.cookie('name');
+                if(n !== '') alert("Вы " + n);
+
                 addComment(name.val(), body.val(), content_id.val());
+                sleep(2000);
+                name_string = name.val();
+                alert(ball.toString());
                 $("#comments").load("/knoledges/default/callcomm/"+content_id.val());
                 $('#w0').trigger( 'reset' ); //очищаем форму
-                $.cookie('lklklk', '54', { expires: 7 });
+                $.cookie('name', name_string, { expires: 7 });
+                $.cookie('ball', ball.toString(), { expires: 7 });
+                //setCookie('name', name_string, { expires: 7 });
 
             });
 
@@ -49,6 +64,44 @@ $article_content_id = 1;
 
             });
 
+        }
+        /*Симуляция сна*/
+        function sleep(milliseconds) {
+            var start = new Date().getTime();
+            for (var i = 0; i < 1e7; i++) {
+                if ((new Date().getTime() - start) > milliseconds){
+                    break;
+                }
+            }
+        }
+
+        function setCookie(name, value, options) {
+            options = options || {};
+
+            var expires = options.expires;
+
+            if (typeof expires == "number" && expires) {
+                var d = new Date();
+                d.setTime(d.getTime() + expires * 1000);
+                expires = options.expires = d;
+            }
+            if (expires && expires.toUTCString) {
+                options.expires = expires.toUTCString();
+            }
+
+            value = encodeURIComponent(value);
+
+            var updatedCookie = name + "=" + value;
+
+            for (var propName in options) {
+                updatedCookie += "; " + propName;
+                var propValue = options[propName];
+                if (propValue !== true) {
+                    updatedCookie += "=" + propValue;
+                }
+            }
+
+            document.cookie = updatedCookie;
         }
 
     });

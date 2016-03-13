@@ -609,6 +609,31 @@ $this->title = 'Тесты';
                         alert(arr); // элементы в случайном порядке, например [3,5,1,2,4]
                     }
                 </pre>
+        <a onclick="compareObj()" class="testLink">30 Сортировка объектов</a><br>
+                <pre class="brush: js;" id="code_30">
+
+                    // Сортировка объектов
+                    function compareObj() {
+                    // проверка
+                        var vasya = {name: "Вася", age: 23};
+                        var masha = {name: "Маша", age: 18};
+                        var vovochka = {name: "Вовочка", age: 6};
+
+                        var people = [vasya, masha, vovochka];
+
+                        people.sort(compareAge);
+
+                    // вывести
+                        for (var i = 0; i < people.length; i++) {
+                            alert(people[i].name); // Вовочка Маша Вася
+                        }
+                    }
+
+                    // Наша функция сравнения
+                    function compareAge(personA, personB) {
+                        return personA.age - personB.age;
+                    }
+                </pre>
     </div>
 
 

@@ -16,7 +16,11 @@ class CommentsWidget extends Widget
     {
         parent::init();
         if ($this->article_id != null) {
-            $this->comments = Comments::find()->where('article_content_id ='.$this->article_id)->all();
+            $this->comments = Comments::find()
+                ->where('article_content_id ='.$this->article_id)
+                ->orderBy([
+                'id' => SORT_DESC,
+                ])->all();
         }
     }
 
