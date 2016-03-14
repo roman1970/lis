@@ -51,7 +51,7 @@ class Comments extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Ваше Имя',
             'email' => 'Email',
-            'body' => 'Ответ',
+            'body' => 'Комментарий',
             'd_created' => 'D Created',
             'article_content_id' => 'Article Content ID',
             'status' => 'Status',

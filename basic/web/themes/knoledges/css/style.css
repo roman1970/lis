@@ -90,8 +90,12 @@ a:focus{color:#5d8df0; text-decoration: none; outline:none; outline-color: trans
 }
 
 #comm{
-    height: 300px;
-    overflow: scroll;
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.right{
+    text-align: right;
 }
 
 header{background: url(../img/hb.png) repeat 0 0;  display: table; width: 100%;margin-bottom: 30px;text-align: center;}

@@ -96,7 +96,11 @@ class DefaultController extends FrontEndController
 
             $model->status = 'published';
 
-            if($model->save(false)) return "<p style='color: green'>Ответ опубликован</p>";
+            if($model->save(false)) return "<script>
+                if($.cookie('name')) $('.field-comments-name').html( 'Привет, ' +  $.cookie('name'));
+
+            </script><p style='color: green'>Ответ опубликован</p>";
+
 
         return "<p style='color: red'>Попробуйте ещё раз чуть позже</p>";
 

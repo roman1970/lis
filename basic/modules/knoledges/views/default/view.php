@@ -14,9 +14,7 @@ $article_content_id = 1;
         var content_id = $("#comm_cont");
         var name_string = '';
         var n = '';
-        var ball = 0;
-        if($.cookie('ball')) ball = $.cookie('ball');
-        else ball = 0;
+
 
         var date = new Date();
         $.cookie.raw = true;
@@ -24,18 +22,16 @@ $article_content_id = 1;
 
         $("#send").click(
             function() {
+                if($.cookie('name')) name_string = $.cookie('name');
+                else name_string = name.val();
 
-                 n = $.cookie('name');
-                if(n !== '') alert("Вы " + n);
-
-                addComment(name.val(), body.val(), content_id.val());
+                addComment(name_string, body.val(), content_id.val());
                 sleep(2000);
-                name_string = name.val();
-                alert(ball.toString());
+
                 $("#comments").load("/knoledges/default/callcomm/"+content_id.val());
                 $('#w0').trigger( 'reset' ); //очищаем форму
                 $.cookie('name', name_string, { expires: 7 });
-                $.cookie('ball', ball.toString(), { expires: 7 });
+
                 //setCookie('name', name_string, { expires: 7 });
 
             });
@@ -43,8 +39,8 @@ $article_content_id = 1;
         function addComment(name, body, content) {
 
             //Валидация
-            if (name === "" ) {
-                alert("Введите Имя");
+            if (name === "") {
+                alert("Введите Имя или перезагрузите страницу");
                 return false;
             }
 

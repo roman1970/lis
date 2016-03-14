@@ -2,6 +2,15 @@ html,
 body {
     height: 100%;
     background-color: #3c3c3c;
+    color: white;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: rgb(93, 93, 93);
+}
+
+.redactor-editor, .redactor-box{
+    background-color: rgb(93, 93, 93);
 }
 
 .wrap {
