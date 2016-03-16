@@ -28,7 +28,7 @@ class Author extends \yii\db\ActiveRecord
     {
         return [
 
-            [['name'], 'string', 'max' => 50]
+            [['name'], 'string', 'max' => 500]
         ];
     }
 
