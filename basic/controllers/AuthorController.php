@@ -24,7 +24,7 @@ class AuthorController extends BackEndController
     }
 
     /**
-     * Создание источника
+     * Создание автораа
      * @return string
      */
     public function actionCreate()

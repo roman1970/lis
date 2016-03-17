@@ -19,6 +19,7 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="/js/syntaxhighlighter/scripts/shCore.js"> </script>
     <script src="/js/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+    <script src="/js/syntaxhighlighter/scripts/shBrushPhp.js"></script>
 
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -51,7 +52,7 @@ AppAsset::register($this);
         <?= Nav::widget([
             'options' => ['class' => 'nav nav-tabs'],
             'items' => [
-            ['label' => 'Сайты', 'url' => ['/sites/index']],
+            ['label' => 'Сайты', 'url' => ['/qpsites/index']],
             ['label' => 'Категории', 'url' => ['/categories/index']],
             ['label' => 'Контент', 'url' => ['/articles/index']],
             ['label' => 'Пользователи', 'url' => ['/user/index']],

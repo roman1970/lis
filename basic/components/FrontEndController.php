@@ -21,7 +21,11 @@ class FrontEndController extends BaseController
         //if(isset($_GET['admin'])) {$this->theme = 'admin';}
         //@TODO $_GET сделать через request
         if (isset($_GET['siteParamIdForTheme'])) {
-           $this->site = Qpsites::find()->where(['theme' => $_GET['siteParamIdForTheme']])->one();
+            try {
+                $this->site = Qpsites::find()->where(['theme' => $_GET['siteParamIdForTheme']])->one();
+            } catch (\ErrorException $e) {
+                echo "Forbidden";
+            }
 
             $this->theme = $_GET['siteParamIdForTheme'];
            // $site = new Qpsites;
