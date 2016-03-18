@@ -4,8 +4,11 @@ namespace app\controllers;
 
 use app\components\BackEndController;
 use app\models\Qpsites;
+use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\Url;
 
 class QpsitesController extends BackEndController
@@ -49,6 +52,24 @@ class QpsitesController extends BackEndController
             ]);
         }
 
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => false,
+                        'actions'=>['create'],
+                        'roles' => ['admin'],
+                    ],
+
+                ],
+            ],
+
+        ];
     }
 
 }

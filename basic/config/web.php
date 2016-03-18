@@ -104,8 +104,8 @@ $config = [
         ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
-            'defaultRoles' => ['user'],
-            //'defaultRoles' => ['user','moder','admin'],
+            //'defaultRoles' => ['user'],
+            'defaultRoles' => ['user','moder','admin'],
 
             //зададим куда будут сохраняться наши файлы конфигураций RBAC
             'itemFile' => 'components/rbac/items.php',

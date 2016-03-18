@@ -634,6 +634,37 @@ $this->title = 'Тесты';
                         return personA.age - personB.age;
                     }
                 </pre>
+        <a onclick="cycleOneLinkedList()" class="testLink">31 Вывод списка в цикле</a><br>
+                <pre class="brush: js;" id="code_31">
+                    //Вывод односвязного списка в цикле
+                    function cycleOneLinkedList(){
+                        var list = {
+                            value: 1,
+                            next: {
+                                value: 2,
+                                next: {
+                                    value: 3,
+                                    next: {
+                                        value: 4,
+                                        next: null
+                                    }
+                                }
+                            }
+                        };
+
+                        printList(list);
+                    }
+
+                    function printList(list) {
+                        var tmp = list;
+
+                        while (tmp) {
+                            alert( tmp.value );
+                            tmp = tmp.next;
+                        }
+
+                    }
+                </pre>
     </div>
 
 

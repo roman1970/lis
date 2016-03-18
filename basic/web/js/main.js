@@ -581,3 +581,33 @@ function compareObj() {
 function compareAge(personA, personB) {
     return personA.age - personB.age;
 }
+
+//Вывод односвязного списка в цикле
+function cycleOneLinkedList(){
+    $("#code_31").show();
+    var list = {
+        value: 1,
+        next: {
+            value: 2,
+            next: {
+                value: 3,
+                next: {
+                    value: 4,
+                    next: null
+                }
+            }
+        }
+    };
+
+    printList(list);
+}
+
+function printList(list) {
+    var tmp = list;
+
+    while (tmp) {
+        alert( tmp.value );
+        tmp = tmp.next;
+    }
+
+}

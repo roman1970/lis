@@ -47,8 +47,10 @@ class User extends BaseUser
         }
 
         return null;
+    }
 
-	 
+    public function rules(){
+        ['role', 'in', 'range' => [self::ROLE_USER, self::ROLE_MODER, self::ROLE_ADMIN]];
     }
 
     /**
@@ -63,20 +65,20 @@ class User extends BaseUser
     
     /**
      * @inheritdoc
-     *
+     */
     public function getAuthKey()
     {
         return $this->authKey;
     }
-    */
+
     /**
      * @inheritdoc
-     *
+     */
     public function validateAuthKey($authKey)
     {
         return $this->authKey === $authKey;
     }
-    */
+
     /**
      * Validates password
      *
@@ -86,5 +88,15 @@ class User extends BaseUser
     public function validatePassword($password)
     {
         return $this->password === $password;
+    }
+
+    public static function isUserAdmin($username)
+    {
+        if (static::findOne(['username' => $username, 'role' => self::ROLE_ADMIN]))
+        {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

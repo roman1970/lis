@@ -7,11 +7,13 @@ use app\models\User;
 
 class UserRoleRule extends Rule
 {
-    public $name = 'userRole';
-    public function execute($user, $item, $params)
-    {
+    public $name = 'roman';
+   // public function execute($user, $item, $params)
+   // {
+        /*
         //Получаем массив пользователя из базы
         $user = ArrayHelper::getValue($params, 'user', User::findOne($user));
+        //var_dump($user); exit;
         if ($user) {
             $role = $user->role; //Значение из поля role базы данных
             if ($item->name === 'admin') {
@@ -19,12 +21,24 @@ class UserRoleRule extends Rule
             } elseif ($item->name === 'moder') {
                 //moder является потомком admin, который получает его права
                 return $role == User::ROLE_ADMIN || $role == User::ROLE_MODER;
-            } 
+            }
             elseif ($item->name === 'user') {
                 return $role == User::ROLE_ADMIN || $role == User::ROLE_MODER
                 || $role == User::ROLE_USER;
             }
         }
         return false;
+        */
+  //  }
+
+    /**
+     * @param string|integer $user the user ID.
+     * @param Item $item the role or permission that this rule is associated with
+     * @param array $params parameters passed to ManagerInterface::checkAccess().
+     * @return boolean a value indicating whether the rule permits the role or permission it is associated with.
+     */
+    public function execute($user, $item, $params)
+    {
+        return Yii::$app->user->identity->getId() == 1 ? true : false;
     }
 }

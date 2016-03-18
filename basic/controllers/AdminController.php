@@ -13,4 +13,10 @@ class AdminController extends BackEndController
         return $this->render('index');
     }
 
+    public function actionUsermod()
+    {
+        $this->layout = 'main';
+        return $this->render('usermod');
+    }
+
 }

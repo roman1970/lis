@@ -8,12 +8,10 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\models\User $user
  */
 
-$this->title = Yii::t('user', 'Sign up');
+$this->title = Yii::t('user', 'Регистрация');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="alert alert-success">
-    <p>This view file has been overriden!</p>
-</div>
+
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
         <div class="panel panel-default">
@@ -31,13 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Sign up'), ['class' => 'btn btn-success btn-block']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Вход'), ['class' => 'btn btn-success btn-block']) ?>
 
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
         <p class="text-center">
-            <?= Html::a(Yii::t('user', 'Already registered? Sign in!'), ['/user/security/login']) ?>
+            <?= Html::a(Yii::t('user', 'Уже зарегистрированы? Войдите!'), ['/user/security/login']) ?>
         </p>
     </div>
 </div>
