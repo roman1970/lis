@@ -43,7 +43,7 @@ AppAsset::register($this);
         'items' => [
 
 
-            ['label' => 'Создать сайт', 'url' => ['/user/profile/show']],
+            //['label' => 'Создать сайт', 'url' => ['/user/profile/show']],
             Yii::$app->user->isGuest ?
                ['label' => 'Войти', 'url' => ['/user/security/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',

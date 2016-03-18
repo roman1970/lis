@@ -23,7 +23,8 @@ class SecurityController extends BaseSecurityController
 
         $this->performAjaxValidation($model);
 
-        if ($model->load(Yii::$app->getRequest()->post()) && $model->login() && Yii::$app->user->identity->getId() == 1) {
+        if ($model->load(Yii::$app->getRequest()->post()) && $model->login() && (Yii::$app->user->identity->getId() == 1
+        || Yii::$app->user->identity->getId() == 4)) {
             return $this->redirect(\Yii::$app->urlManager->createUrl("admin/index"));
         }
 
