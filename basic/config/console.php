@@ -26,6 +26,7 @@ return [
                 ],
             ],
         ],
+        /*
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
             'defaultRoles' => ['user','moder','admin'], //здесь прописываем роли
@@ -33,6 +34,10 @@ return [
             'itemFile' => 'components/rbac/items.php',
             'assignmentFile' => 'components/rbac/assignments.php',
             'ruleFile' => 'components/rbac/rules.php'
+        ],
+        */
+        'authManager' => [
+            'class' => 'app\components\MyManager',
         ],
         'db' => $db,
         'urlManager' => [

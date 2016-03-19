@@ -109,6 +109,43 @@
       <index name="ux_articles_fields_content_articles_fields_content_af_id" unique="false" columns="af_id"/>
       <index name="ux_articles_fields_content_articles_fields_content_article_id" unique="false" columns="article_id"/>
     </table>
+    <table name="auth_assignment" schema="" catalog="plis" type="TABLE">
+      <column name="item_name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="user_id" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="created_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="item_name,user_id"/>
+      <foreign-key name="auth_assignment_ibfk_1" columns="item_name" ref-table="auth_item" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="auth_item" schema="" catalog="plis" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="rule_name" sqlType="VARCHAR" precision="64" scale="0" nullable="true" jdbcType="12"/>
+      <column name="data" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="updated_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="name"/>
+      <foreign-key name="auth_item_ibfk_1" columns="rule_name" ref-table="auth_rule" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="2" deferrability="2"/>
+      <exported-key name="auth_assignment_ibfk_1" table="auth_assignment" schema="" catalog="plis" columns="item_name"/>
+      <exported-key name="auth_item_child_ibfk_1" table="auth_item_child" schema="" catalog="plis" columns="parent"/>
+      <exported-key name="auth_item_child_ibfk_2" table="auth_item_child" schema="" catalog="plis" columns="child"/>
+      <index name="idx-auth_item-type" unique="false" columns="type"/>
+    </table>
+    <table name="auth_item_child" schema="" catalog="plis" type="TABLE">
+      <column name="parent" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="child" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="parent,child"/>
+      <foreign-key name="auth_item_child_ibfk_1" columns="parent" ref-table="auth_item" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="auth_item_child_ibfk_2" columns="child" ref-table="auth_item" ref-schema="" ref-catalog="plis" ref-columns="name" update-rule="0" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="auth_rule" schema="" catalog="plis" type="TABLE">
+      <column name="name" sqlType="VARCHAR" precision="64" scale="0" nullable="false" jdbcType="12"/>
+      <column name="data" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="created_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="updated_at" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="name"/>
+      <exported-key name="auth_item_ibfk_1" table="auth_item" schema="" catalog="plis" columns="rule_name"/>
+    </table>
     <table name="authors" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>

@@ -10,11 +10,17 @@ use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\web\ForbiddenHttpException;
 
 class QpsitesController extends BackEndController
 {
     public function actionIndex()
     {
+        /*
+        if (!\Yii::$app->user->can('index')) {
+            throw new ForbiddenHttpException('Access denied');
+        }
+        */
 
         $sites = Qpsites::find();
         $dataProvider = new ActiveDataProvider([
@@ -53,7 +59,7 @@ class QpsitesController extends BackEndController
         }
 
     }
-
+/*
     public function behaviors()
     {
         return [
@@ -71,5 +77,5 @@ class QpsitesController extends BackEndController
 
         ];
     }
-
+*/
 }

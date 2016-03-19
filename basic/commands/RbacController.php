@@ -9,7 +9,7 @@ class RbacController extends Controller
 
 
     public function actionInit()
-    {
+    { /*
         $auth = Yii::$app->authManager;	
         $auth->removeAll(); //удаляем старые данные
 
@@ -40,6 +40,43 @@ class RbacController extends Controller
         $auth->addChild($admin, $moder);
         $adminRole = $auth->getRole('admin');
         $auth->assign($adminRole, 1);
+*/
+        $authManager = \Yii::$app->authManager;
+
+        // Create roles
+        $moder  = $authManager->createRole('moder');
+        $user  = $authManager->createRole('user');
+        $admin  = $authManager->createRole('admin');
+
+        // Create simple, based on action{$NAME} permissions
+        $login  = $authManager->createPermission('login');
+        $logout = $authManager->createPermission('logout');
+        $error  = $authManager->createPermission('error');
+        $signUp = $authManager->createPermission('sign-up');
+        $index  = $authManager->createPermission('index');
+        $view   = $authManager->createPermission('view');
+        $update = $authManager->createPermission('update');
+        $delete = $authManager->createPermission('delete');
+
+        // Add permissions in Yii::$app->authManager
+        $authManager->add($login);
+        $authManager->add($logout);
+        $authManager->add($error);
+        $authManager->add($signUp);
+        $authManager->add($index);
+        $authManager->add($view);
+        $authManager->add($update);
+        $authManager->add($delete);
+
+
+        // Add rule, based on UserExt->group === $user->group
+        $userGroupRule = new UserRoleRule();
+        $authManager->add($userGroupRule);
+
+        // Add rule "UserGroupRule" in roles
+        $user->ruleName  = $userGroupRule->name;
+        $moder->ruleName  = $userGroupRule->name;
+        $admin->ruleName  = $userGroupRule->name;
 
     }
 }

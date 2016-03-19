@@ -7,7 +7,7 @@ use app\models\User;
 
 class UserRoleRule extends Rule
 {
-    public $name = 'roman';
+    public $name = 'admin';
    // public function execute($user, $item, $params)
    // {
         /*
@@ -39,6 +39,16 @@ class UserRoleRule extends Rule
      */
     public function execute($user, $item, $params)
     {
-        return Yii::$app->user->identity->getId() == 1 ? true : false;
+        if (!\Yii::$app->user->isGuest) {
+            $group = \Yii::$app->user->identity->group;
+            if ($item->name === 'admin') {
+                return $group == 'admin';
+            } elseif ($item->name === 'moder') {
+                return $group == 'admin' || $group == 'moder';
+            } elseif ($item->name === 'user') {
+                return $group == 'admin' || $group == 'user';
+            }
+        }
+        return true;
     }
 }

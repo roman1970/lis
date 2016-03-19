@@ -22,6 +22,9 @@ $config = [
             'cost' => 12,
             'admins' => ['roman']
         ],
+        'rbac' => [
+            'class' => 'dektrium\rbac\Module',
+        ],
         'weather' => [
             'class' => 'app\modules\weather\Weather',
 
@@ -102,7 +105,7 @@ $config = [
                 ],
             ],
         ],
-        'authManager' => [
+        /*'authManager' => [
             'class' => 'yii\rbac\PhpManager',
             //'defaultRoles' => ['user'],
             'defaultRoles' => ['user','moder','admin'],
@@ -112,6 +115,11 @@ $config = [
             'assignmentFile' => 'components/rbac/assignments.php',
             'ruleFile' => 'components/rbac/rules.php'
         ],
+        */
+        'authManager' => [
+                'class' => 'app\components\MyManager',
+        ],
+
         'db' => require(__DIR__ . '/db.php'),
 
         'urlManager' => [
