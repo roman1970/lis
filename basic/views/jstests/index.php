@@ -665,6 +665,41 @@ $this->title = 'Тесты';
 
                     }
                 </pre>
+        <a onclick="recurOneLinkedList()" class="testLink">32 Вывод односвязного списка рекурсией</a><br>
+                <pre class="brush: js;" id="code_32">
+
+                //Вывод односвязного списка рекурсией
+                // Рекурсивный вариант printList(list) следует простой логике: вывести текущее значение (1),
+                // а затем пропустить через себя следующее (2):
+                function recurOneLinkedList(){
+                    var list = {
+                        value: 1,
+                        next: {
+                            value: 2,
+                            next: {
+                                value: 3,
+                                next: {
+                                    value: 4,
+                                    next: null
+                                }
+                            }
+                        }
+                    };
+
+                    function printList(list) {
+
+                        alert( list.value ); // (1)
+
+                        if (list.next) {
+                            printList(list.next); // (2)
+                        }
+
+                    }
+
+                    printList(list);
+                }
+
+                </pre>
     </div>
 
 
