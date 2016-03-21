@@ -13,7 +13,7 @@ $config = [
             'controllerMap' => [
                 'admin' => [
                     'class'  => 'app\controllers\user\AdminController',
-                    'layout' => 'app\views',
+                    //'layout' => 'app\views',
                 ],
                 'security' => 'app\controllers\user\SecurityController'
             ],
@@ -34,6 +34,7 @@ $config = [
         ],
         'khl' => [
             'class' => 'app\modules\khl\Khl',
+            'admins' => ['roman']
         ],
         'repertuar' => [
             'class' => 'app\modules\repertuar\Repertuar',

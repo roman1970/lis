@@ -3,6 +3,7 @@ namespace app\commands;
 use Yii;
 use yii\console\Controller;
 use app\components\rbac\UserRoleRule;
+use yii\web\IdentityInterface;
 
 class RbacController extends Controller
 {
@@ -13,7 +14,7 @@ class RbacController extends Controller
         $auth = Yii::$app->authManager;
 
         // add "author" role and give this role the "createPost" permission
-        $user = $auth->createRole('author');
+        $user = $auth->createRole('user');
         $auth->add($user);
 
         // add "admin" role and give this role the "updatePost" permission
@@ -26,6 +27,7 @@ class RbacController extends Controller
         // usually implemented in your User model.
         $auth->assign($user, 2);
         $auth->assign($admin, 1);
+
 
     }
 }
