@@ -21,13 +21,18 @@ class QpsitesController extends BackEndController
             throw new ForbiddenHttpException('Access denied');
         }
         */
+        If(Yii::$app->user->can('superadmin')) {
 
-        $sites = Qpsites::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $sites,
-        ]);
+            $sites = Qpsites::find();
+            $dataProvider = new ActiveDataProvider([
+                'query' => $sites,
+            ]);
 
-        return $this->render('index', ['sites' => $dataProvider]);
+            return $this->render('index', ['sites' => $dataProvider]);
+        } else {
+            throw new ForbiddenHttpException('Access denied');
+        }
+
 
     }
 
@@ -59,7 +64,7 @@ class QpsitesController extends BackEndController
         }
 
     }
-/*
+
     public function behaviors()
     {
         return [
@@ -67,9 +72,9 @@ class QpsitesController extends BackEndController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => false,
-                        'actions'=>['create'],
-                        'roles' => ['admin'],
+                        'allow' => true,
+                        'actions'=>['index','create'],
+                        'roles' => ['@'],
                     ],
 
                 ],
@@ -77,5 +82,5 @@ class QpsitesController extends BackEndController
 
         ];
     }
-*/
+
 }

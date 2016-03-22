@@ -1,5 +1,7 @@
 <?php
 namespace app\commands;
+use app\components\MyManager;
+use app\components\rbac\GroupRule;
 use Yii;
 use yii\console\Controller;
 use app\components\rbac\UserRoleRule;
@@ -8,25 +10,46 @@ use yii\web\IdentityInterface;
 class RbacController extends Controller
 {
 
-
     public function actionInit()
     {
-        $auth = Yii::$app->authManager;
 
-        // add "author" role and give this role the "createPost" permission
+        $auth = new MyManager();
+        $auth->init();
+
+        $auth->removeAll(); //удаляем старые данные
+        // Rules
+        $groupRule = new GroupRule();
+
+        $auth->add($groupRule);
+
+        // Roles
         $user = $auth->createRole('user');
+        $user->description = 'User';
+        $user->ruleName = $groupRule->name;
         $auth->add($user);
 
-        // add "admin" role and give this role the "updatePost" permission
-        // as well as the permissions of the "author" role
-        $admin = $auth->createRole('admin');
-        $auth->add($admin);
-        $auth->addChild($admin, $user);
+        $moderator = $auth->createRole(' moderator ');
+        $moderator ->description = 'Moderator ';
+        $moderator ->ruleName = $groupRule->name;
+        $auth->add($moderator);
+        $auth->addChild($moderator, $user);
 
-        // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
-        // usually implemented in your User model.
-        $auth->assign($user, 2);
-        $auth->assign($admin, 1);
+        $admin = $auth->createRole('admin');
+        $admin->description = 'Admin';
+        $admin->ruleName = $groupRule->name;
+        $auth->add($admin);
+        $auth->addChild($admin, $moderator);
+
+        $superadmin = $auth->createRole('superadmin');
+        $superadmin->description = 'Superadmin';
+        $superadmin->ruleName = $groupRule->name;
+        $auth->add($superadmin);
+        $auth->addChild($superadmin, $admin);
+
+        //var_dump($auth->getRoles()); exit;
+
+        // Superadmin assignments
+        $auth->assign($superadmin, 1);
 
 
     }

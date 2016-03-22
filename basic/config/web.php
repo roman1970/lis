@@ -24,6 +24,12 @@ $config = [
         ],
         'rbac' => [
             'class' => 'dektrium\rbac\Module',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'dektrium\rbac\controllers\AssignmentController',
+                    'userClassName' => 'app\models\User',
+                ]
+            ]
         ],
         'weather' => [
             'class' => 'app\modules\weather\Weather',
