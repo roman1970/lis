@@ -13,13 +13,9 @@ $config = [
     'defaultRoute' => '/'.$mode.'/default/index',
     'modules' => [
         'user' => [
-            'class' => 'dektrium\user\Module',
-            'controllerMap' => [
-                'admin' => [
-                    'class'  => 'app\controllers\user\AdminController',
-                    'layout' => 'path-to-your-admin-layout',
-                ],
-            ],
+            'class'    => 'app\modules\user\Module',
+            'viewPath' => '@app/modules/user/views',
+            'admins'   => ['roman'],
         ],
         'weather' => [
             'class' => 'app\modules\weather\Weather',
@@ -32,6 +28,9 @@ $config = [
         ],
         'knoledges' => [
             'class' => 'app\modules\knoledges\Knoledges',
+        ],
+        'markself' => [
+            'class' => 'app\modules\markself\Markself',
         ],
 
     ],

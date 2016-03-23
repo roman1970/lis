@@ -49,7 +49,7 @@ class QpsitesController extends BackEndController
             $model->theme = Yii::$app->request->post('Qpsites')['theme'];
             $model->user_id = Yii::$app->user->identity->getId();
 
-            //$model->save(false);
+            $model->save(false);
 
             return $this->render('code', ['model' => $model]);
 

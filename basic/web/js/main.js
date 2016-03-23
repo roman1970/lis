@@ -631,15 +631,51 @@ function recurOneLinkedList(){
         }
     };
 
-    function printList(list) {
 
-        alert( list.value ); // (1)
 
-        if (list.next) {
-            printList(list.next); // (2)
-        }
+    printList2(list);
+}
 
+function printList2(list) {
+
+    alert( list.value ); // (1)
+
+    if (list.next) {
+        printList(list.next); // (2)
     }
 
-    printList(list);
+}
+
+
+// Обратный вывод с рекурсией
+//Обратный вывод – почти то же самое, что прямой,
+// просто сначала мы обрабатываем следующее значение, а потом – текущее
+function recurRevers(){
+    $("#code_33").show();
+    var list = {
+        value: 1,
+        next: {
+            value: 2,
+            next: {
+                value: 3,
+                next: {
+                    value: 4,
+                    next: null
+                }
+            }
+        }
+    };
+
+
+
+    printReverseList(list);
+}
+
+function printReverseList(list) {
+
+    if (list.next) {
+        printReverseList(list.next);
+    }
+
+    alert( list.value );
 }

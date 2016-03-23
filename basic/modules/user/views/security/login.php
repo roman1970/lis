@@ -1,3 +1,26 @@
+<script>
+    function login(){
+        alert("kkkkkk");
+
+        //$("#song").show();
+        $("#song").load("security/login");
+        /*
+
+        if (!last) {y = document.getElementById("song");
+            var last = y.lastChild;
+            last.parentNode.removeChild(last);
+        }
+
+        $("#count_").ajaxSuccess(function() { //убираем количество после голосования
+            $(this).text(name);
+            $(this).hide();
+
+        });
+        */
+
+    }
+</script>
+
 <?php
 
 /*
@@ -19,7 +42,7 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\Module           $module
  */
 
-$this->title = Yii::t('user', 'Залогинтесь');
+$this->title = Yii::t('user', 'Вход');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -47,9 +70,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '4']) ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Вход'), ['class' => 'btn btn-primary btn-block', 'tabindex' => '3']) ?>
+                <?= Html::submitButton(Yii::t('user', 'Вход'), ['class' => 'btn btn-primary btn-block', 'tabindex' => '3', 'onclick' => 'login()']) ?>
 
                 <?php ActiveForm::end(); ?>
+                <div id="song"></div>
             </div>
         </div>
         <?php if ($module->enableConfirmation): ?>

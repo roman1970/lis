@@ -700,6 +700,41 @@ $this->title = 'Тесты';
                 }
 
                 </pre>
+        <a onclick="recurRevers()" class="testLink">33 Обратный вывод с рекурсией односвязного списка </a><br>
+                <pre class="brush: js;" id="code_33">
+                    // Обратный вывод с рекурсией
+                    //Обратный вывод – почти то же самое, что прямой,
+                    // просто сначала мы обрабатываем следующее значение, а потом – текущее
+                    function recurRevers(){
+                        var list = {
+                            value: 1,
+                            next: {
+                                value: 2,
+                                next: {
+                                    value: 3,
+                                    next: {
+                                        value: 4,
+                                        next: null
+                                    }
+                                }
+                            }
+                        };
+
+
+
+                        printReverseList(list);
+                    }
+
+                    function printReverseList(list) {
+
+                        if (list.next) {
+                            printReverseList(list.next);
+                        }
+
+                        alert( list.value );
+                    }
+
+                </pre>
     </div>
 
 
