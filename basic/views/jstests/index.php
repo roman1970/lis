@@ -735,6 +735,44 @@ $this->title = 'Тесты';
                     }
 
                 </pre>
+
+        <a onclick="worecursRevers()" class="testLink">34 Обратный вывод без рекурсии односвязного списка </a><br>
+                <pre class="brush: js;" id="code_34">
+
+                // Обратный вывод односвязного списка без рекурсии
+                function worecursRevers(){
+                    var list = {
+                        value: 1,
+                        next: {
+                            value: 2,
+                            next: {
+                                value: 3,
+                                next: {
+                                    value: 4,
+                                    next: null
+                                }
+                            }
+                        }
+                    };
+
+
+                    printReverseListWoRec(list);
+                }
+
+                function printReverseListWoRec(list) {
+                    var arr = [];
+                    var tmp = list;
+
+                    while (tmp) {
+                        arr.push(tmp.value);
+                        tmp = tmp.next;
+                    }
+
+                    for (var i = arr.length - 1; i >= 0; i--) {
+                        alert( arr[i] );
+                    }
+                }
+                </pre>
     </div>
 
 

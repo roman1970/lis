@@ -14,6 +14,13 @@ $config = [
     'modules' => [
         'user' => [
             'class'    => 'app\modules\user\Module',
+            'controllerMap' => [
+                'admin' => [
+                    'class'  => 'app\controllers\user\AdminController',
+                    //'layout' => 'app\views',
+                ],
+                'security' => 'app\controllers\user\SecurityController'
+            ],
             'viewPath' => '@app/modules/user/views',
             'admins'   => ['roman'],
         ],

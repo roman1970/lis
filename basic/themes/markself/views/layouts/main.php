@@ -45,7 +45,7 @@ AppAsset::register($this);
 
             //['label' => 'Создать сайт', 'url' => ['/user/profile/show']],
             Yii::$app->user->isGuest ?
-               ['label' => 'Войти', 'url' => ['/user/security/login']] :
+               ['label' => 'Войти', 'url' => ['default/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/user/security/logout'],
                     'linkOptions' => ['data-method' => 'post']],

@@ -32,7 +32,7 @@ class SecurityController extends BaseSecurityController
             return $this->redirect(\Yii::$app->urlManager->createUrl("admin/usermod"));
         }
 
-      //  else $this->redirect("markself/default/index"));
+        elseif(Yii::$app->getRequest()->post()) return 'l';
 
 
         return $this->render('login', [

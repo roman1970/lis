@@ -40,11 +40,16 @@ class ArticlesContent extends \yii\db\ActiveRecord
     {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
+
         return [
-
-            [['articles_id','minititle','body'], 'required'],
-
+            [['articles_id','minititle', 'body', 'source_id'], 'required'],
+            [['body'], 'string'],
+            [['articles_id', 'source_id'], 'integer'],
+            [['minititle'], 'string', 'max' => 255],
+            [['articles_id'], 'exist', 'skipOnError' => true, 'targetClass' => Articles::className(), 'targetAttribute' => ['articles_id' => 'id']],
+            [['source_id'], 'exist', 'skipOnError' => true, 'targetClass' => Source::className(), 'targetAttribute' => ['source_id' => 'id']],
         ];
+
     }
     /*
     /**

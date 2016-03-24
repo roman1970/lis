@@ -635,10 +635,16 @@
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="mark_it_ibfk_3" columns="user_id" ref-table="mark_user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="mark_it_ibfk_2" columns="action_id" ref-table="mark_actions" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
-      <foreign-key name="mark_it_ibfk_1" columns="user_id" ref-table="user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_mark_it_action_id" unique="false" columns="action_id"/>
       <index name="ux_mark_it_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="mark_user" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="mark_it_ibfk_3" table="mark_it" schema="" catalog="plis" columns="user_id"/>
     </table>
     <table name="matches" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1516,7 +1522,6 @@
       <column name="updated_at" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="flags" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
-      <exported-key name="mark_it_ibfk_1" table="mark_it" schema="" catalog="plis" columns="user_id"/>
       <exported-key name="fk_user_profile" table="profile" schema="" catalog="plis" columns="user_id"/>
       <exported-key name="qpsites_ibfk_1" table="qpsites" schema="" catalog="plis" columns="user_id"/>
       <exported-key name="fk_user_account" table="social_account" schema="" catalog="plis" columns="user_id"/>
