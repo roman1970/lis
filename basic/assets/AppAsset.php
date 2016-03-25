@@ -25,7 +25,7 @@ class AppAsset extends AssetBundle
 
     ];
     public $js = [
-
+        'js/jquery-cookie/jquery.cookie.js',
         'js/main.js'
     ];
     public $depends = [

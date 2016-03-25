@@ -41,8 +41,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Зарегистрироваться', 'url' => ['default/registration']],
-            ['label' => 'Войти', 'url' => ['default/login']]
+            ['label' => 'Группы', 'url' => ['default/']],
+            ['label' => 'Статистика', 'url' => ['default/']]
         ],
     ]);
     NavBar::end();

@@ -1,43 +1,33 @@
 <script>
+
     function login(){
-        var log = $("#logg").val();
-        var pswd = $("#pswd").val();
-        alert(log);
+        var name = $("#logg").val();
+        var pseudo = $("#pswd").val();
+
         //Валидация
-        if (log === "" ) {
-            alert("Введите логин");
+        if (name  === "" ) {
+            alert("Введите имя");
             return false;
         }
 
-        if (pswd === "") {
-            alert("Введите пароль");
+        if (pseudo === "") {
+            alert("Введите псевдоним");
             return false;
         }
-        alert("khjkg");
-        //$("#song").show();
-        //$("#song").load("security/login");
-        /*$.ajax({
-            method: "POST",
-            url: "security/login",
-            data: { login: log, password: pswd }
-        })
-            .done(function( msg ) {
-                alert( "Data Saved: " + msg );
-            });
-        /*
+        $("#login").hide();
 
-        if (!last) {y = document.getElementById("song");
-            var last = y.lastChild;
-            last.parentNode.removeChild(last);
-        }
 
-        $("#count_").ajaxSuccess(function() { //убираем количество после голосования
-            $(this).text(name);
-            $(this).hide();
+        $.ajax({
+            type: "GET",
+            url: "/markself/default/login/",
+            data: "name="+name+"&pseudo="+pseudo,
+            success: function(html){
+                $("#res").html(html);
+                $.cookie('name', name, { expires: 7 });
+                $.session.set("myVar", "value");
+            }
 
         });
-        */
-
     }
 </script>
 
@@ -47,8 +37,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 
-$this->title = Yii::t('user', 'Вход');
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = 'Вход';
 ?>
 
 
@@ -81,12 +70,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 */
                 ?>
+                <p class="form">Имя</p>
+                <input type='text' class="form-control" id="logg" placeholder="Введите имя"/>
+                <p class="form">Псевдоимя</p>
+                <input type='text' class="form-control" id="pswd" placeholder="Введите псевдоним"/>
 
-                <input type='text' class="form-control" id="logg" />
-                <input type='password' class="form-control" id="pswd" />
-
-                <button class="button glyphicon glyphicon-search" id="choose_country" onclick="login()" ></button><br>
-                <div id="song"></div>
+                <button class="btn" id="login" onclick="login()" >Войти</button>
+                <div id="res"></div>
             </div>
         </div>
 
