@@ -19,6 +19,7 @@ use app\models\Articles;
 
 class DefaultController extends FrontEndController
 {
+    public static $current_user;
 
     public function actionIndex()
     {
@@ -36,7 +37,11 @@ class DefaultController extends FrontEndController
                 ->where("name like('%" . $name . "') and pseudo like('" . $pseudo . "')")
                 ->one();
             if($user) {
-                return $this->renderPartial('success_login', ['id' => $user->id]);
+                self::$current_user = $user->id;
+                $session = Yii::$app->session;
+                $session->open();
+                $session->set('user', $user->id);
+                return $this->renderPartial('success_login', ['id' => $_SESSION['user']]);
             }
 
         }
@@ -76,12 +81,11 @@ class DefaultController extends FrontEndController
     public function actionChoosegroup($id){
 
         $this->layout = '@app/themes/markself/views/layouts/pagein';
+        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
 
-        $user = MarkUser::find()
-            ->where(['id' => $id])
-            ->one();
-
-        return $this->render('group', ['name' => $user->name]);
+        if($user)
+            return $this->render('group', ['name' => $user]);
+        else return $this->render('login', ['name' => self::$current_user]);
 
     }
 

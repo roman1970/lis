@@ -24,7 +24,7 @@
             success: function(html){
                 $("#res").html(html);
                 $.cookie('name', name, { expires: 7 });
-                $.session.set("myVar", "value");
+
             }
 
         });
@@ -38,6 +38,7 @@ use yii\widgets\ActiveForm;
 
 
 $this->params['breadcrumbs'][] = 'Вход';
+if(isset($name)) echo $name;
 ?>
 
 
