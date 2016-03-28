@@ -15,6 +15,7 @@ use yii\data\Pagination;
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
 use app\models\Articles;
+use yii\helpers\Url;
 
 
 class DefaultController extends FrontEndController
@@ -37,12 +38,14 @@ class DefaultController extends FrontEndController
                 ->where("name like('%" . $name . "') and pseudo like('" . $pseudo . "')")
                 ->one();
             if($user) {
-                self::$current_user = $user->id;
-                $session = Yii::$app->session;
-                $session->open();
-                $session->set('user', $user->id);
-                return $this->renderPartial('success_login', ['id' => $_SESSION['user']]);
+
+                //$session = Yii::$app->session;
+                //$session->open();
+                //$session->set('user', $user->id);
+                //return $this->render('group', ['name' => $_SESSION['user']]);
+                return md5($user->id);
             }
+            else return $this->render('login');
 
         }
 
@@ -81,14 +84,26 @@ class DefaultController extends FrontEndController
     public function actionChoosegroup($id){
 
         $this->layout = '@app/themes/markself/views/layouts/pagein';
-        $user = isset($_SESSION['user']) ? $_SESSION['user'] : null;
+        $max_id = MarkUser::find()
+            ->select('MAX(id)')
+            ->scalar();
 
-        if($user)
-            return $this->render('group', ['name' => $user]);
-        else return $this->render('login', ['name' => self::$current_user]);
+        $i = 0;
+        while ($i <= $max_id){
+            $i++;
+            if($user = MarkUser::findOne($i)) {
+                if(md5($user->id) == $id){
+                    self::$current_user = $user->id;
+                    return $this->render('group', ['name' => $user->id ]);
+                }
+
+            }
+
+        }
+
+       return "Ошибка";
 
     }
-
 
 
 

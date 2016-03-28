@@ -30,7 +30,9 @@ class DefaultController extends FrontEndController
     public function actionIndex()
     {
         $visit = new Visit();
-        if(isset($_SERVER['REMOTE_ADDR'])) $visit->ip = $_SERVER['REMOTE_ADDR'];
+        //$userHost = Yii::$app->request->userHost;
+        $userIP = Yii::$app->request->userIP;
+        if($userIP) $visit->ip = $userIP;
         //if(isset($_SERVER['HTTP_REFERER'])) $visit->refer = $_SERVER['HTTP_REFERER'];
         $visit->refer = self::get_all_ip();
         $visit->browser = implode(';',$_SERVER);

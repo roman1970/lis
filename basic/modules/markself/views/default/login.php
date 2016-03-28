@@ -21,14 +21,17 @@
             type: "GET",
             url: "/markself/default/login/",
             data: "name="+name+"&pseudo="+pseudo,
-            success: function(html){
-                $("#res").html(html);
-                $.cookie('name', name, { expires: 7 });
+            success: function(user){
+
+                window.location = 'choosegroup/'+user;
+                $.cookie('username', user, { expires: 7 });
+               // var test = $.cookie('username'); // получение кук
 
             }
 
         });
     }
+
 </script>
 
 <?php
