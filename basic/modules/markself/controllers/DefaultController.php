@@ -5,12 +5,15 @@ namespace app\modules\markself\controllers;
 use app\components\FrontEndController;
 use app\models\ArticlesContent;
 use app\models\ContactForm;
+use app\models\MarkActions;
+use app\models\MarkGroup;
 use app\models\MarkUser;
 use app\models\Visit;
 use Yii;
 use app\models\Categories;
 use app\models\Author;
 use app\models\Source;
+use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
@@ -20,7 +23,7 @@ use yii\helpers\Url;
 
 class DefaultController extends FrontEndController
 {
-    public static $current_user;
+    public $current_user;
 
     public function actionIndex()
     {
@@ -93,8 +96,14 @@ class DefaultController extends FrontEndController
             $i++;
             if($user = MarkUser::findOne($i)) {
                 if(md5($user->id) == $id){
-                    self::$current_user = $user->id;
-                    return $this->render('group', ['name' => $user->id ]);
+                    $this->current_user = $user;
+                    //$groups = MarkGroup::find()->all();
+                    $groups = MarkGroup::find();
+
+                    $dataProvider = new ActiveDataProvider([
+                        'query' => $groups,
+                    ]);
+                    return $this->render('group', ['user' => $user, 'groups' => $dataProvider ]);
                 }
 
             }
@@ -104,6 +113,29 @@ class DefaultController extends FrontEndController
        return "Ошибка";
 
     }
+
+    public function actionPages($id) {
+
+        $this->layout = '@app/themes/markself/views/layouts/pagein';
+        //var_dump($this->layout); exit;
+        $actions = MarkActions::find()
+            ->where(['group_id' => $id]);
+
+        $datas = new ActiveDataProvider([
+            'query' => $actions,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+
+        ]);
+
+        return $this->render('mark_actions', [
+            'actions' => $datas,
+
+        ]);
+
+    }
+
 
 
 
