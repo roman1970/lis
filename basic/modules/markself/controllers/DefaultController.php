@@ -3,22 +3,13 @@
 namespace app\modules\markself\controllers;
 
 use app\components\FrontEndController;
-use app\models\ArticlesContent;
-use app\models\ContactForm;
 use app\models\MarkActions;
 use app\models\MarkGroup;
 use app\models\MarkUser;
-use app\models\Visit;
 use Yii;
-use app\models\Categories;
-use app\models\Author;
-use app\models\Source;
-use yii\data\ActiveDataProvider;
-use yii\data\Pagination;
+
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
-use app\models\Articles;
-use yii\helpers\Url;
 
 
 class DefaultController extends FrontEndController
@@ -87,55 +78,114 @@ class DefaultController extends FrontEndController
     public function actionChoosegroup($id){
 
         $this->layout = '@app/themes/markself/views/layouts/pagein';
+
+                if($this->userIfUserLegal($id)){
+
+                    $groups = MarkGroup::find()->all();
+
+                    return $this->render('group', ['user' => $this->current_user, 'groups' => $groups]);
+                }
+
+       return $this->render('index');
+
+    }
+
+    /**
+     * Показывает оцениваемые действия
+     * @return string
+     */
+    public function actionMarkact() {
+
+        if(Yii::$app->getRequest()->getQueryParam('group') && Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $group = Yii::$app->getRequest()->getQueryParam('group');
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+            $this->layout = '@app/themes/markself/views/layouts/pagein';
+
+
+            if($this->userIfUserLegal($user)){
+
+                $actions = MarkActions::find()
+                    ->where(['group_id' => $group])->all();
+
+                $group_name = MarkGroup::findOne($group)->name;
+
+
+                return $this->render('mark_actions', ['user' => $this->current_user, 'actions' => $actions, 'group_name' => $group_name ]);
+            }
+
+
+        }
+
+        return $this->render('index');
+
+    }
+
+
+    /**
+     * Создаём оцениваемые действия
+     */
+    public function actionMarkday(){
+
+
+        if(Yii::$app->getRequest()->getQueryParam('acts') &&
+            Yii::$app->getRequest()->getQueryParam('date')) {
+            //$this->layout = '@app/themes/markself/views/layouts/pagein';
+
+            //$model = new MarkActions();
+            $date = Yii::$app->formatter->asDate(Yii::$app->getRequest()->getQueryParam('date'), "dd-mm-yyyy");
+            return  Yii::$app->getRequest()->getQueryParam('acts'). '  '.$date ;
+
+            /*
+            $model->name = Yii::$app->getRequest()->getQueryParam('name');
+            $model->group_id = Yii::$app->getRequest()->getQueryParam('group_id');
+            if($model->validate()) {
+                try {
+                    $model->save();
+                    return "Данные сохранены";
+                } catch (\ErrorException $e) {
+                    return "Не получилось(((... Попробуйте позже ещё раз...";
+                }
+            }
+            else return "Ошибка при заполнении формы";
+            //else return "Не получилось(((... Попробуйте позже ещё раз...";
+             */
+        }
+
+        else {
+            return "oppps";
+        }
+
+
+
+    }
+
+    /**
+     * Проверка юзера
+     * @param $cuser
+     * @return bool
+     */
+    private function userIfUserLegal($cuser){
+
         $max_id = MarkUser::find()
             ->select('MAX(id)')
             ->scalar();
 
         $i = 0;
-        while ($i <= $max_id){
+        while ($i <= $max_id) {
             $i++;
-            if($user = MarkUser::findOne($i)) {
-                if(md5($user->id) == $id){
+            if ($user = MarkUser::findOne($i)) {
+                if (md5($user->id) == $cuser) {
                     $this->current_user = $user;
-                    //$groups = MarkGroup::find()->all();
-                    $groups = MarkGroup::find();
-
-                    $dataProvider = new ActiveDataProvider([
-                        'query' => $groups,
-                    ]);
-                    return $this->render('group', ['user' => $user, 'groups' => $dataProvider ]);
+                    return true;
                 }
-
             }
-
         }
 
-       return "Ошибка";
+        return false;
 
     }
-
-    public function actionPages($id) {
-
-        $this->layout = '@app/themes/markself/views/layouts/pagein';
-        //var_dump($this->layout); exit;
-        $actions = MarkActions::find()
-            ->where(['group_id' => $id]);
-
-        $datas = new ActiveDataProvider([
-            'query' => $actions,
-            'pagination' => [
-                'pageSize' => 10,
-            ],
-
-        ]);
-
-        return $this->render('mark_actions', [
-            'actions' => $datas,
-
-        ]);
-
-    }
-
 
 
 

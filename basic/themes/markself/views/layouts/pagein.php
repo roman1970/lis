@@ -32,7 +32,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Оцени себя, '/*. $this->context->current_user->name*/,
+        'brandLabel' => 'Оцени себя, '. $this->context->current_user->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',

@@ -1,12 +1,55 @@
+<script>
+
+    function mark(){
+        var i = 0;
+        var acts;
+        var arr = [];
+        var date = $("#date").val();
+        while (i < <?= (isset($actions)) ? count($actions) : 10 ?> ) {
+            if($("#act_"+i).val() === undefined) break;
+
+            if($("#mrk_"+i).val() !== undefined){
+                var data = {};
+                data.mrk = $("#mrk_"+i).val();
+                data.act = $("#act_"+i).val();
+                arr[arr.length] = data;
+
+
+            }
+            else {
+                alert("Не всё оценили!!!");
+                break;
+            }
+            i++;
+        }
+
+        acts = JSON.stringify(arr);
+
+
+        $.ajax({
+            type: "GET",
+            url: "/markself/default/markday/",
+            data: "acts="+acts+"&date="+date,
+            success: function(html){
+                $("#res").html(html);
+
+                //window.location = 'choosegroup/'+user;
+                //$.cookie('username', user, { expires: 7 });
+                // var test = $.cookie('username'); // получение кук
+
+            }
+
+        });
+
+
+    }
+
+</script>
+
 <?php
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use yii\grid\GridView;
-use yii\helpers\Url;
+use yii\bootstrap\Nav;
 
 AppAsset::register($this);
 ?>
@@ -28,39 +71,28 @@ AppAsset::register($this);
     </div>
 
     <div class="col-sm-9 col-md-10 main">
-    <h1 class="page-header">Оцениваемые действия</h1>
-<?php  //var_dump($articles); exit; ?>
-<?php if(isset($actions)) : ?>
+    <h1 class="page-header">Оцениваемые действия</h1>  <p> <?= $group_name ?></p>
+    <p>Выбрать день для оценки</p>
+        <span style="color: #000012" id="date">
+            <?= $date = \yii\jui\DatePicker::widget([
+            'name'  => 'from_date',
+            //'value'  => $value,
+            'language' => 'ru',
+            //'dateFormat' => 'yyyy-MM-dd',
+            ]);
+            ?>
+        </span>
+    <?php  $i = 0;
+        foreach ($actions as $act) : ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $actions,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            'name',
+        <h3 class="page-header"><?=$i+1 .' '. $act->name ?></h3>
+            <input type='text' class="form-control" id="mrk_<?=$i ?>" placeholder="Оценка" title="1,2,3,4 или 5"/>
+            <input type="hidden" id="act_<?=$i ?>" value="<?=$act->id ?>" />
 
-            ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete} {update}',
-                'buttons' =>
-                    [
-                        'delete' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['deletepage','id' => $model->id]), [
-                                'title' => Yii::t('yii', 'Delete'),
-                                'data-confirm' => Yii::t('yii', 'Уверены, что хотите удалить действие?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        },
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['updatepage','id' => $model->id]), [
-                                'title' => Yii::t('yii', 'Update'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        }
+        <p style="color: #ffa225"><?= $act->description ?></p>
+        <?php $i++; ?>
 
-                    ]
-            ]
-        ],
-    ]); ?>
+    <?php endforeach; ?>
 
-<?php endif; ?>
+    <button class="btn" id="mark" onclick="mark()" >Оценить</button>
+        <p id="res"></p>

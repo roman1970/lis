@@ -29,9 +29,18 @@ AppAsset::register($this);
 <div class="col-sm-9 col-md-10 main">
     <h1 class="page-header">Группы оцениваемых действий</h1>
 
-    <?= GridView::widget([
+    <?php foreach ($groups as $group) : ?>
+
+        <p><a href="<?=Url::toRoute(['default/markact/','group' => $group->id, 'user' => md5($user->id)]) ?>"><?= $group->name ?></a> </p>
+
+    <?php endforeach; ?>
+
+
+    <?php
+    /*
+     * GridView::widget([
         'dataProvider' => $groups,
-        'value' => $user,
+        //'value' => $user,
         //'filterModel' => $searchModel,
         'columns' => [
             'name',
@@ -65,5 +74,6 @@ AppAsset::register($this);
                     ]
             ]
         ],
-    ]); ?>
+    ]);
+ */ ?>
 </div>

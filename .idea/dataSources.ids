@@ -615,8 +615,9 @@
     </table>
     <table name="mark_actions" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="group_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="true" jdbcType="-1"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="mark_actions_ibfk_1" columns="group_id" ref-table="mark_group" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="mark_it_ibfk_2" table="mark_it" schema="" catalog="plis" columns="action_id"/>
@@ -624,7 +625,7 @@
     </table>
     <table name="mark_group" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="mark_actions_ibfk_1" table="mark_actions" schema="" catalog="plis" columns="group_id"/>
     </table>
