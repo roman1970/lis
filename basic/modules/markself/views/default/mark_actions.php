@@ -4,32 +4,30 @@
         var i = 0;
         var acts;
         var arr = [];
-        var date = $("#date").val();
+        //var date = $("#w1").val();
+        var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
         while (i < <?= (isset($actions)) ? count($actions) : 10 ?> ) {
-            if($("#act_"+i).val() === undefined) break;
+            if(!$("#act_"+i).val()) break;
 
-            if($("#mrk_"+i).val() !== undefined){
+            if($("#mrk_"+i).val()){
                 var data = {};
                 data.mrk = $("#mrk_"+i).val();
                 data.act = $("#act_"+i).val();
                 arr[arr.length] = data;
-
-
             }
             else {
                 alert("Не всё оценили!!!");
-                break;
+                return false;
             }
             i++;
         }
 
         acts = JSON.stringify(arr);
 
-
         $.ajax({
             type: "GET",
             url: "/markself/default/markday/",
-            data: "acts="+acts+"&date="+date,
+            data: "acts="+acts+"&user="+user,
             success: function(html){
                 $("#res").html(html);
 
@@ -41,6 +39,7 @@
 
         });
 
+      return true;
 
     }
 
@@ -72,8 +71,9 @@ AppAsset::register($this);
 
     <div class="col-sm-9 col-md-10 main">
     <h1 class="page-header">Оцениваемые действия</h1>  <p> <?= $group_name ?></p>
+    <?php /*
     <p>Выбрать день для оценки</p>
-        <span style="color: #000012" id="date">
+        <span style="color: #000012" >
             <?= $date = \yii\jui\DatePicker::widget([
             'name'  => 'from_date',
             //'value'  => $value,
@@ -82,6 +82,7 @@ AppAsset::register($this);
             ]);
             ?>
         </span>
+    */?>
     <?php  $i = 0;
         foreach ($actions as $act) : ?>
 

@@ -39,6 +39,9 @@ $config = [
         'markself' => [
             'class' => 'app\modules\markself\Markself',
         ],
+        'krokodile' => [
+            'class' => 'app\modules\krokodile\Krokodile',
+        ],
 
     ],
     'components' => [

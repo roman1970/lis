@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Faker\Provider\zh_TW\DateTime;
 use Yii;
 
 /**
@@ -33,7 +34,8 @@ class MarkIt extends \yii\db\ActiveRecord
     {
         return [
             [['date'], 'safe'],
-            [['ball'], 'string'],
+            //[['ball'], 'string'],
+            ['ball', 'in','range'=>range(1,5)],
             [['user_id', 'action_id'], 'required'],
             [['user_id', 'action_id'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarkUser::className(), 'targetAttribute' => ['user_id' => 'id']],

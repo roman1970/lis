@@ -5,6 +5,7 @@ namespace app\modules\markself\controllers;
 use app\components\FrontEndController;
 use app\models\MarkActions;
 use app\models\MarkGroup;
+use app\models\MarkIt;
 use app\models\MarkUser;
 use Yii;
 
@@ -75,6 +76,11 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Выбор группы
+     * @param $id
+     * @return string
+     */
     public function actionChoosegroup($id){
 
         $this->layout = '@app/themes/markself/views/layouts/pagein';
@@ -128,33 +134,47 @@ class DefaultController extends FrontEndController
      */
     public function actionMarkday(){
 
-
         if(Yii::$app->getRequest()->getQueryParam('acts') &&
-            Yii::$app->getRequest()->getQueryParam('date')) {
+            Yii::$app->getRequest()->getQueryParam('user')) {
             //$this->layout = '@app/themes/markself/views/layouts/pagein';
 
-            //$model = new MarkActions();
-            $date = Yii::$app->formatter->asDate(Yii::$app->getRequest()->getQueryParam('date'), "dd-mm-yyyy");
-            return  Yii::$app->getRequest()->getQueryParam('acts'). '  '.$date ;
+            $date = date("Y-m-d", time() - 60 * 60 * 24);
+            if(MarkIt::find()->where(['date' => $date, 'user_id' => Yii::$app->getRequest()->getQueryParam('user')])->one())
+                return "Вы уже оценили вчерашний день! До завтра!";
 
-            /*
-            $model->name = Yii::$app->getRequest()->getQueryParam('name');
-            $model->group_id = Yii::$app->getRequest()->getQueryParam('group_id');
-            if($model->validate()) {
-                try {
-                    $model->save();
-                    return "Данные сохранены";
-                } catch (\ErrorException $e) {
-                    return "Не получилось(((... Попробуйте позже ещё раз...";
+
+            $acts = Yii::$app->getRequest()->getQueryParam('acts');
+            $response = json_decode($acts, true); // преобразование строки в формате json в ассоциативный массив
+            for($i=0; $i < 10; $i++ ){
+                if(isset($response[$i])){
+                    $model = new MarkIt();
+                    $model->ball = $response[$i]['mrk'];
+                    $model->action_id = $response[$i]['act'];
+                    $model->user_id = Yii::$app->getRequest()->getQueryParam('user');
+
+
+                    if($model->validate()) {
+                        try {
+                            if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
+                        } catch (\ErrorException $e) {
+                            return "Не получилось(((... ";
+
+                        }
+                    }
+                    else return "Ошибка при заполнении формы - оценки должны быть 1,2,3,4 или 5";
+
                 }
             }
-            else return "Ошибка при заполнении формы";
-            //else return "Не получилось(((... Попробуйте позже ещё раз...";
-             */
+
+
+            //$date = Yii::$app->formatter->asDate(Yii::$app->getRequest()->getQueryParam('date'), "dd-mm-yyyy");
+            return  "Данные сохранены";
+
+
         }
 
         else {
-            return "oppps";
+            return var_dump(Yii::$app->getRequest()->getQueryParam('date'));
         }
 
 
