@@ -19,6 +19,7 @@ use Yii;
  */
 class MarkIt extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -72,4 +73,78 @@ class MarkIt extends \yii\db\ActiveRecord
     {
         return $this->hasOne(MarkActions::className(), ['id' => 'action_id']);
     }
+
+    /**
+     * Берём среднюю оценку по дате и юзеру
+     * @param $date
+     * @param $user
+     * @return bool|float
+     */
+    public static function getAverageForDateAndUser($date, $user)
+    {
+
+        $marks = self::find()
+            ->where(['date' => $date, 'user_id' => $user])
+            ->all();
+        return self::getAverageMark($marks);
+
+    }
+
+    /**
+     * Средний балл для юзера
+     * @param $user
+     * @return bool|float
+     */
+    public static function getAverageForUser($user){
+        $marks = self::find()
+            ->where(['user_id' => $user])
+            ->all();
+
+        return self::getAverageMark($marks);
+
+    }
+
+    /**
+     * Средняя оценка за все время
+     * @param $marks
+     * @return bool|float
+     */
+    public static function getAverageMark($marks){
+        if (count($marks)) {
+            $sum = 0;
+            foreach ($marks as $mark) {
+                $sum += (int)$mark->ball;
+            }
+            return $sum / (count($marks));
+
+        }
+        return false;
+
+    }
+
+    public static function getThisGroupUsersAverageMark($group_id){
+        $group_users = [];
+        $group_actions = MarkActions::findAll(['group_id' => $group_id]);
+        $id_actions = [];
+        foreach ($group_actions as $act){
+            $id_actions[] = $act->id;
+        }
+
+        $marks = self::find()
+            ->where('action_id IN ('.implode(',',$id_actions).')')
+            ->groupBy('user_id')
+            ->all();
+        //SELECT * FROM dates GROUP BY name;
+
+        $leadsCount = self::find()
+            ->select(['COUNT(*) AS cnt'])
+            ->where('action_id IN ('.implode(',',$id_actions).')')
+            ->groupBy('user_id')
+            ->all();
+
+
+        return var_dump($marks);
+
+    }
+
 }

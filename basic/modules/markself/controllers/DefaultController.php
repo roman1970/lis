@@ -34,10 +34,6 @@ class DefaultController extends FrontEndController
                 ->one();
             if($user) {
 
-                //$session = Yii::$app->session;
-                //$session->open();
-                //$session->set('user', $user->id);
-                //return $this->render('group', ['name' => $_SESSION['user']]);
                 return md5($user->id);
             }
             else return $this->render('login');
@@ -151,11 +147,13 @@ class DefaultController extends FrontEndController
                     $model->ball = $response[$i]['mrk'];
                     $model->action_id = $response[$i]['act'];
                     $model->user_id = Yii::$app->getRequest()->getQueryParam('user');
+                    $model->date = date('Y-m-d', time() - 60 * 60 * 24);
 
 
                     if($model->validate()) {
                         try {
                             if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
+
                         } catch (\ErrorException $e) {
                             return "Не получилось(((... ";
 
@@ -165,19 +163,44 @@ class DefaultController extends FrontEndController
 
                 }
             }
+            return 1;
 
 
             //$date = Yii::$app->formatter->asDate(Yii::$app->getRequest()->getQueryParam('date'), "dd-mm-yyyy");
-            return  "Данные сохранены";
+            //return  "Данные сохранены";
 
 
         }
 
         else {
-            return var_dump(Yii::$app->getRequest()->getQueryParam('date'));
+            return "Ошибка";
         }
 
 
+
+    }
+
+
+    public function actionStat($id){
+        $this->layout = '@app/themes/markself/views/layouts/pagein';
+
+        if($this->userIfUserLegal($id)){
+            $date = date("Y-m-d", time() - 60 * 60 * 24);
+                $marks = MarkIt::find()->where(['date' => $date, 'user_id' => $this->current_user->id])->all();
+
+                if(count($marks)) {
+                    $sum = 0;
+                    foreach ($marks as $mark) {
+                        $sum += (int)$mark->ball;
+                    }
+                    $average = $sum / (count($marks));
+                    return $this->render('stat', ['user' => $this->current_user, 'marks' => $marks, 'avmark' => $average]);
+                }
+
+
+        }
+
+        return $this->render('index');
 
     }
 

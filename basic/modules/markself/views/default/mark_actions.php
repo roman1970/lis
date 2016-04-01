@@ -6,6 +6,7 @@
         var arr = [];
         //var date = $("#w1").val();
         var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
+
         while (i < <?= (isset($actions)) ? count($actions) : 10 ?> ) {
             if(!$("#act_"+i).val()) break;
 
@@ -28,10 +29,12 @@
             type: "GET",
             url: "/markself/default/markday/",
             data: "acts="+acts+"&user="+user,
-            success: function(html){
-                $("#res").html(html);
+            success: function(res){
+                mduser = "<?= (isset($user->id)) ? md5($user->id) : md5(1) ?>";
+                if(res == 1) window.location = 'stat/'+mduser;
+                else $("#res").html(res);
 
-                //window.location = 'choosegroup/'+user;
+                //window.location = 'stat/'+user;
                 //$.cookie('username', user, { expires: 7 });
                 // var test = $.cookie('username'); // получение кук
 
@@ -53,19 +56,8 @@ use yii\bootstrap\Nav;
 AppAsset::register($this);
 ?>
     <div class="col-sm-3 col-md-2 sidebar">
-        <?php
+        <?= \app\components\LastMarksWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1]) ?>
 
-        echo Nav::widget([
-            'options' => ['class' => 'nav nav-sidebar'],
-            'items' => [
-                ['label' => 'Создать новое действие', 'url' => ['/default/accreate']],
-                //['label' => 'Показать контент', 'url' => ['/articles/index']],
-                //['label' => 'Добавить страницу', 'url' => ['/articles/addpage/'.$model->id]],
-
-            ],
-        ]);
-
-        ?>
 
     </div>
 
