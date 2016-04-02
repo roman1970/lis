@@ -17,7 +17,8 @@ AppAsset::register($this);
         <p style="color: red"> <?=$averball?> </p>
     <?php endif; ?>
     <p>Твои соперники</p>
-    <?= \app\models\MarkIt::getThisGroupUsersAverageMark(1)?>
+
+    <?= \app\components\UserAvgMarkWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1, 'group_id' => 1]) ?>
 
 
 

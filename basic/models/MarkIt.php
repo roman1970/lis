@@ -19,6 +19,7 @@ use Yii;
  */
 class MarkIt extends \yii\db\ActiveRecord
 {
+    public $avg;
 
     /**
      * @inheritdoc
@@ -122,6 +123,11 @@ class MarkIt extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Средняя оценка юзера
+     * @param $group_id
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public static function getThisGroupUsersAverageMark($group_id){
         $group_users = [];
         $group_actions = MarkActions::findAll(['group_id' => $group_id]);
@@ -130,20 +136,17 @@ class MarkIt extends \yii\db\ActiveRecord
             $id_actions[] = $act->id;
         }
 
-        $marks = self::find()
+        $usermarks = self::find()
+            ->select(['user_id, ball, AVG(ball) as avg '])
             ->where('action_id IN ('.implode(',',$id_actions).')')
             ->groupBy('user_id')
+            ->orderBy(['avg' => SORT_DESC])
             ->all();
+        //SELECT model, COUNT(model) AS Qty_model,
+        // AVG(price) AS Avg_price
         //SELECT * FROM dates GROUP BY name;
 
-        $leadsCount = self::find()
-            ->select(['COUNT(*) AS cnt'])
-            ->where('action_id IN ('.implode(',',$id_actions).')')
-            ->groupBy('user_id')
-            ->all();
-
-
-        return var_dump($marks);
+        return $usermarks;
 
     }
 
