@@ -193,10 +193,9 @@ class DefaultController extends FrontEndController
                     foreach ($marks as $mark) {
                         $sum += (int)$mark->ball;
                     }
-                    $average = $sum / (count($marks));
+                    $average = round($sum / (count($marks)), 1);
                     return $this->render('stat', ['user' => $this->current_user, 'marks' => $marks, 'avmark' => $average]);
                 }
-
 
         }
 

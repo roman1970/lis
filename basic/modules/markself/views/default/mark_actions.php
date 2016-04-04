@@ -16,10 +16,7 @@
                 data.act = $("#act_"+i).val();
                 arr[arr.length] = data;
             }
-            else {
-                alert("Не всё оценили!!!");
-                return false;
-            }
+
             i++;
         }
 

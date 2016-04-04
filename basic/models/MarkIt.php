@@ -116,7 +116,7 @@ class MarkIt extends \yii\db\ActiveRecord
             foreach ($marks as $mark) {
                 $sum += (int)$mark->ball;
             }
-            return $sum / (count($marks));
+            return round($sum / (count($marks)), 2);
 
         }
         return false;
