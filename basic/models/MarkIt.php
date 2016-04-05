@@ -20,6 +20,7 @@ use Yii;
 class MarkIt extends \yii\db\ActiveRecord
 {
     public $avg;
+    public $cnt;
 
     /**
      * @inheritdoc
@@ -137,7 +138,7 @@ class MarkIt extends \yii\db\ActiveRecord
         }
 
         $usermarks = self::find()
-            ->select(['user_id, ball, AVG(ball) as avg '])
+            ->select(['user_id, ball, COUNT(*) as cnt, AVG(ball) as avg '])
             ->where('action_id IN ('.implode(',',$id_actions).')')
             ->groupBy('user_id')
             ->orderBy(['avg' => SORT_DESC])
