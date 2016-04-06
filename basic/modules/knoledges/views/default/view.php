@@ -116,6 +116,7 @@ $article_content_id = 1;
                 $article_content_id = $article->id; ?>
            <?= app\components\KnoledgesPagination::widget([
                 'pagination' => $pages,
+                'article_id' => $article->articles_id
             ]);
             ?>
 
@@ -131,6 +132,7 @@ $article_content_id = 1;
 
             <?= app\components\KnoledgesPagination::widget([
                 'pagination' => $pages,
+                'article_id' => $article->articles_id
             ]);
             ?>
             <?php endforeach; ?>

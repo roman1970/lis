@@ -125,6 +125,7 @@ $config = [
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id>' => '<module>/<controller>/<action>/',
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id>/<page>' => '<module>/<controller>/<action>/',
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
 
 

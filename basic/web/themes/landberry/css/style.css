@@ -422,7 +422,7 @@ p {
 
 .team:hover .team-overlay {
     margin-top: 0;
-    background-color: rgba(0, 0, 0, 0.69);
+    background-color: rgba(0, 0, 0, 1);
 }
 
 .team-photo {
@@ -473,6 +473,8 @@ p {
     top: 70%;
     left: 20px;
     right: 20px;
+    color: #e4a001;
+    font-stretch: condensed;
 }
 
 .team-inner {

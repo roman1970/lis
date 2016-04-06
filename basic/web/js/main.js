@@ -785,4 +785,30 @@ function unique(arr) {
     return result;
 }
 
+//массив длин элементов входного массива
+// Метод «arr.map(callback[, thisArg])» используется для трансформации массива.
+//Он создаёт новый массив, который будет состоять из результатов вызова
+// callback(item, i, arr) для каждого элемента arr.
+function arrOfLengthsOfElementsByMap(){
+    $("#code_37").show();
+    var arr = ["Есть", "жизнь", "на", "Марсе"];
+
+    var arrLength = arr.map(function(item) {
+        return item.length;
+    });
+
+    alert( arrLength ); // 4,5,2,5
+}
+
+function arrOfLengthsOfElementsByIter(){
+    var arr = ["Есть", "жизнь", "на", "Марсе"];
+
+    var arrLength = [];
+    for (var i = 0; i < arr.length; i++) {
+        arrLength[i] = arr[i].length;
+    }
+
+    alert( arrLength ); // 4,5,2,5
+}
+
 

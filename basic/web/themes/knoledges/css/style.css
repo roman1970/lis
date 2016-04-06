@@ -98,6 +98,13 @@ a:focus{color:#5d8df0; text-decoration: none; outline:none; outline-color: trans
     text-align: right;
 }
 
+.team-photo img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+}
+
 header{background: url(../img/hb.png) repeat 0 0;  display: table; width: 100%;margin-bottom: 30px;text-align: center;}
 header .logo{/* float: left; */padding: 22px 30px 17px;position: relative;}
 header .logo img{max-width: 100%; }
@@ -180,13 +187,30 @@ footer{ padding: 50px 0; display: table; width: 100%; margin-top: 50px; min-heig
     font-size: 30px;
     margin-bottom: 10px;
 }
-.article{
+.article_title{
+    text-align: center;
+    color: #9E771D;
+    font-size: 20px;
+    font-family: "Verdana", "sans-serif";
 
+}
+
+.article{
+    height: 220px;
+    padding: 5px; /* Поля вокруг текста */
+     overflow: hidden;
 }
 
 .article img {
-    width: 300px;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+
+    border-radius: 4px 4px 0 0;
+    padding-bottom: 10px;
 }
+
+/*.cropImg span{height: 120px; overflow: hidden; display: block;}*/
 
 .audio{
     padding-left: 30px;
@@ -194,6 +218,13 @@ footer{ padding: 50px 0; display: table; width: 100%; margin-top: 50px; min-heig
 
 .red{
     color: red;
+}
+
+.theme_title h1{
+    font-size: 50px;
+    text-align: center;
+    font-family: "Verdana", "sans-serif";
+
 }
 
 /* RESPONSIVE

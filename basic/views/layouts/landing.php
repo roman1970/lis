@@ -36,30 +36,20 @@ LandberryAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-
-
 <!-- Preloader -->
 
 <div id="mask">
-
     <div id="loader">
-
     </div>
-
 </div>
 
 <!-- End Preloader -->
 
-
-
 <!-- Home Section -->
 
 <section id="home" class="parallax">
-
     <div class="parallax-overlay-light">
-
         <div class="container">
-
             <div class="hero">
 
                 <!-- Home Slider -->
@@ -87,11 +77,8 @@ LandberryAsset::register($this);
                 <!-- End Home Slider -->
 
             </div>
-
         </div>
-
     </div>
-
 </section>
 
 <!-- End Home Section -->
@@ -99,21 +86,13 @@ LandberryAsset::register($this);
 <!-- Header -->
 
 <header class="navbar navbar-default topnav" role="banner">
-
     <div class="container">
-
         <div class="navbar-header">
-
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
-
                 <span class="sr-only">Меню</span>
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
                 <span class="icon-bar"></span>
-
             </button>
 
            <?php /* <a class="navbar-brand" href="#home" id="logo"><img src="images/logo1.png" width="133" alt="WP Media"></a> */ ?>
@@ -134,7 +113,6 @@ LandberryAsset::register($this);
                 'linkOptions' => ['data-method' => 'post']],
                 ],
                 ]);
-
                 ?>
 
                 <li class=""><a href="#about">О НАС</a></li>
@@ -142,26 +120,17 @@ LandberryAsset::register($this);
                 <li><a href="#advertisers">АГЕНСТВАМ</a></li>
                 <li><a href="#promote">ПРЕЙМУЩЕСТВА</a></li>
                 <li><a href="#contact">КОНТАКТЫ</a></li>
-
             </ul>
-
-
         </div>
-
     </div>
-
 </header>
 
 <!-- End Header -->
 
-
-
 <!-- About Section -->
 
 <section id="about" class="section">
-
     <div class="container">
-
         <div class="title col-md-8 col-sm-10 col-xs-12">
 
           <?php /*  <h1><img src="images/logo.png" alt="WP Media"></h1> */ ?>
@@ -301,7 +270,7 @@ LandberryAsset::register($this);
 
                     <img src="images/bard.jpg" alt="">
 
-                    <a href="http://sonnik-online.net" target="_blank" class="team-overlay">
+                    <a href="http://bardzilla.qplis.ru" target="_blank" class="team-overlay">
 
                         <span class="top">Есть творческие талантливые люди</span>
 
@@ -313,7 +282,7 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>BARDZILLA.QPLIS.ru</h3>
+                    <h3>BARDZILLA.QPLIS.RU</h3>
 
                     <p>Любителям оригинальной авторской песни</p>
 
@@ -329,11 +298,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/projects/uk.jpg" alt="">
+                    <img src="images/oceny_site.jpg" alt="">
 
-                    <a href="http://uznai-kak.ru" target="_blank" class="team-overlay">
+                    <a href="http://markself.qplis.ru" target="_blank" class="team-overlay">
 
-                        <span class="top">40000 уникальных посетителей<br>в день</span>
+                        <span class="top">Дневник для оценки своих действий</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -343,9 +312,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>УЗНАЙ КАК!</h3>
+                    <h3>MARKPLIS.QPLIS.RU</h3>
 
-                    <p>Проект по женской тематике</p>
+                    <p>Мой сын использует эту систему для поддержания себя в форме</p>
 
                 </div>
 
@@ -359,11 +328,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/projects/8lap.jpg" alt="">
+                    <img src="images/wealth.jpg" alt="">
 
-                    <a href="http://8lap.ru" target="_blank" class="team-overlay">
+                    <a href="http://oppositions.qplis.ru" target="_blank" class="team-overlay">
 
-                        <span class="top">45000 уникальных посетителей<br>в день</span>
+                        <span class="top">Сайт-листинг с интересными фактами из историй противостояний</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -373,9 +342,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>8 ЛАП</h3>
+                    <h3>OPPOSITIONS.QPLIS.RU</h3>
 
-                    <p>Проект по животным</p>
+                    <p>Великие противостояния</p>
 
                 </div>
 

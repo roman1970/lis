@@ -10,6 +10,7 @@ use yii\data\Pagination;
 class KnoledgesPagination  extends \yii\widgets\LinkPager
 {
     public $cat;
+    public $article_id;
 
     public $nextPageLabel = 'Следующая';
 
@@ -74,7 +75,8 @@ class KnoledgesPagination  extends \yii\widgets\LinkPager
         }
         $linkOptions = $this->linkOptions;
         $linkOptions['data-page'] = $page;
+        $urlManager =  Yii::$app->getUrlManager();
 
-        return Html::tag('li', Html::a($label, $this->pagination->createUrl($page), $linkOptions), $options);
+        return Html::tag('li', Html::a($label, $urlManager->createUrl(['knoledges/default/show', 'id' => $this->article_id, 'page' => $page] ), $options));
     }
 }

@@ -60,8 +60,6 @@ class DefaultController extends FrontEndController
             'pageSize' => isset($article->onepages) ? $article->onepages : 0,
             'forcePageParam' => false,
             'pageSizeParam' => false,
-
-
         ]);
         $models = $allArticles->offset($pages->offset)
             ->limit($pages->limit)
