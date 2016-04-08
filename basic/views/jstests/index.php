@@ -861,6 +861,26 @@ $this->title = 'Тесты';
                     alert( arrLength ); // 4,5,2,5
                 }
                 </pre>
+        <a onclick="getPartialSums()" class="testLink">38 Получение массива частичных сумм</a><br>
+                <pre class="brush: js;" id="code_38">
+                    function getPartialSums(){
+                        alert(getSums([1,2,3,4,5])); // 1,3,6,10,15
+                        alert(getSums([-2,-1,0,1])); // -2,-3,-3,-2
+                    }
+
+                    function getSums(arr) {
+                        var result = [];
+                        if (!arr.length) return result;
+
+                        var totalSum = arr.reduce(function(sum, item) {
+                            result.push(sum);
+                            return sum + item;
+                        });
+                        result.push(totalSum);
+
+                        return result;
+                    }
+                </pre>
     </div>
 
 
