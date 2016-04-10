@@ -1137,6 +1137,541 @@ class DefaultController extends BackEndController
             "jul" => $avg_jul, "aug" => $avg_aug, "sep" => $avg_sep,  "oct" => $avg_oct, "nov" => $avg_nov, "dec" => $avg_dec, "name" => $par 
         ];
     }
+
+    public function actionGetdata(){
+
+        $cont = file_get_contents("forbd\\prod.txt");
+        $cont = str_replace('  ', ' ', $cont);
+        $cont = str_replace(chr(9), ' ', $cont);
+        $cont = str_replace(chr(11), ' ', $cont);
+
+
+        $ch = explode(" ", $cont);
+
+        $temmorn = $ch[767];
+        $hummorn = $ch[772];
+        $pressmorn = $ch[777];
+
+        $temday = $ch[782];
+        $humday = $ch[787];
+        $pressday = $ch[792];
+
+        $temev = $ch[797];
+        $humev = $ch[802];
+        $pressev = $ch[807];
+
+        $temcommax = $ch[812];
+        $temcommin = $ch[817];
+        $humcommax = $ch[822];
+        $humcommin = $ch[827];
+
+        $moonrise = "0:00";
+        $moonset = "0:00";
+        $sber = 0;
+        $ds = $ch[1064];
+
+        $sunrise = date_sunrise(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
+        $sunset = date_sunset(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
+
+
+        $sunrisest = date_sunrise(time(), SUNFUNCS_RET_TIMESTAMP, 55, 82, 90, 7);
+        $sunsetst = date_sunset(time(), SUNFUNCS_RET_TIMESTAMP, 55, 82, 90, 7);
+        $dolg = $sunsetst - $sunrisest;
+
+        $m = round((($dolg % 3600) / 60), 0);
+        $chh = round(($dolg / 3600), 0);
+        $dday = $chh . ':' . $m;
+
+        $ye = mktime(0, 0, 0, date("m"), date("d") - 1, date("Y"));
+        $y = date("Y", $ye);
+        $d = date("d", $ye);
+        $me = date("m", $ye);
+        $date = date("d-m-Y", $ye);
+        $dd = date("D", $ye);
+        $day = date("d", $ye);
+
+
+
+        $url = "http://www.astrolab.ru/cgi-bin/moonphases.cgi";
+        $conten = file_get_contents($url);
+        $tag_in = 'Видимость';
+        $tag_out = 'Будущие фазы';
+        $position = strpos($conten, $tag_in);
+        $conten = substr($conten, $position);
+        $position = strpos($conten, $tag_out);
+        $conten = substr($conten, 0, $position);
+
+        $conten = strip_tags($conten);
+
+        $mon = explode(" ", $conten);
+        $moonvid = $mon[1];
+        $moonold = $ch[1059];
+        $moonrast = $mon[9];
+
+        print_r($ch);
+        $salatmaskk = $ch[1];
+        $salatmasgr = $ch[2];
+        $salatmastot = $ch[3];
+        $banankk = $ch[6];
+        $banangr = $ch[7];
+        $banantot = $ch[8];
+        $bulkakk = $ch[11];
+        $bulkagr = $ch[12];
+        $bulkatot = $ch[13];
+        $garkrupkk = $ch[16];
+        $garkrupgr = $ch[17];
+        $garkruptot = $ch[18];
+        $karmaskk = $ch[21];
+        $karmasgr = $ch[22];
+        $karmastot = $ch[23];
+        $kashakk = $ch[26];
+        $kashagr = $ch[27];
+        $kashatot = $ch[28];
+        $konfkk = $ch[31];
+        $konfgr = $ch[32];
+        $konftot = $ch[33];
+        $kurkk = $ch[36];
+        $kurgr = $ch[37];
+        $kurtot = $ch[38];
+        $makarkk = $ch[41];
+        $makargr = $ch[42];
+        $makartot = $ch[43];
+        $maslokk = $ch[46];
+        $maslogr = $ch[47];
+        $maslotot = $ch[48];
+        $ogurkk = $ch[51];
+        $ogurgr = $ch[52];
+        $ogurtot = $ch[53];
+        $pelkk = $ch[56];
+        $pelgr = $ch[57];
+        $peltot = $ch[58];
+        $pechkk = $ch[61];
+        $pechgr = $ch[62];
+        $pechtot = $ch[63];
+        $pecheniekk = $ch[66];
+        $pecheniegr = $ch[67];
+        $pechenietot = $ch[68];
+        $pirogkk = $ch[71];
+        $piroggr = $ch[72];
+        $pirogtot = $ch[73];
+        $pybgkk = $ch[76];
+        $pybgr = $ch[77];
+        $pybtot = $ch[78];
+        $salatovkk = $ch[81];
+        $salatovgr = $ch[82];
+        $salatovtot = $ch[83];
+        $saharkk = $ch[86];
+        $sahargr = $ch[87];
+        $sahartot = $ch[88];
+        $sladkk = $ch[91];
+        $sladgr = $ch[92];
+        $sladtot = $ch[93];
+        $supzhirkk = $ch[96];
+        $supzhirgr = $ch[97];
+        $supzhirtot = $ch[98];
+        $supposkk = $ch[101];
+        $supposgr = $ch[102];
+        $suppostot = $ch[103];
+        $syrkolbkk = $ch[106];
+        $syrkolbgr = $ch[107];
+        $syrkolbtot = $ch[108];
+        $frutkk = $ch[111];
+        $frutgr = $ch[112];
+        $fruttot = $ch[113];
+        $hlebkk = $ch[116];
+        $hlebgr = $ch[117];
+        $hlebtot = $ch[118];
+        $morozhkkk = $ch[121];
+        $moroshgr = $ch[122];
+        $morozhtot = $ch[123];
+        $shokkk = $ch[126];
+        $shokgr = $ch[127];
+        $shoktot = $ch[128];
+        $totkk = $ch[131];
+        $totgr = $ch[132];
+        $tottot = $ch[133];
+        $alk = $ch[136];
+        $bat = $ch[141];
+        $bil = $ch[146];
+        $bol = $ch[151];
+        $dor = $ch[156];
+        $doshirab = $ch[161];
+        $zhvach = $ch[166];
+        $internet = $ch[171];
+        $canc = $ch[176];
+        $kvar = $ch[181];
+        $kolbas = $ch[186];
+        $koncer = $ch[191];
+        $kofe = $ch[196];
+        $krup = $ch[201];
+        $makar = $ch[206];
+        $maslorast = $ch[211];
+        $mebel = $ch[216];
+        $meloch = $ch[221];
+        $misha = $ch[226];
+        $moloco = $ch[231];
+        $mus = $ch[236];
+        $mjas = $ch[241];
+        $obuv = $ch[246];
+        $ovos = $ch[251];
+        $odezhd = $ch[256];
+        $paric = $ch[261];
+        $pelmen = $ch[266];
+        $prih_r = $ch[271];
+        $prih_s = $ch[276];
+        $ptic = $ch[281];
+        $puresh = $ch[286];
+        $rem = $ch[291];
+        $ryb = $ch[296];
+        $slad = $ch[301];
+        $sok = $ch[306];
+        $sot_r = $ch[311];
+        $sot_s = $ch[316];
+        $suhfr = $ch[321];
+        $tech = $ch[326];
+        $uch = $ch[331];
+        $fruct = $ch[336];
+        $hleb = $ch[341];
+        $hoz = $ch[346];
+        $hosting = $ch[351];
+        $much = $ch[356];
+        $totminus = $ch[361];
+        $totplus = $ch[366];
+
+        $rybday = $ch[515];
+        $ashan = $ch[520];
+        $ikea = $ch[525];
+        $holiday = $ch[530];
+        $gotti = $ch[535];
+        $mariara = $ch[540];
+        $leroy = $ch[545];
+        $ramos = $ch[550];
+        $chistmir = $ch[555];
+        $miaso = $ch[560];
+        $family = $ch[565];
+        $gloria_djins = $ch[571];
+        $det_mir = $ch[577];
+
+        $sib_gig = $ch[582];
+        $ostin = $ch[587];
+        $m_video = $ch[592];
+        $romika = $ch[597];
+        $avalone = $ch[602];
+        $lumen = $ch[607];
+        $mothercare = $ch[612];
+        $dochki_synochki = $ch[617];
+        $bystronom = $ch[622];
+        $e96 = $ch[627];
+        $dudnik = $ch[632];
+        $letual = $ch[637];
+        $mus_ars = $ch[642];
+        $master_best = $ch[647];
+        $pris = $ch[652];
+        $music_land = $ch[657];
+        $mango = $ch[662];
+        $sinar = $ch[667];
+        $limpopo = $ch[672];
+        $sportmaster = $ch[677];
+        $salamander = $ch[682];
+        $zolla = $ch[687];
+        $florange = $ch[692];
+        $marks_spenser = $ch[697];
+        $malonfashn = $ch[702];
+        $natti = $ch[707];
+        $dns = $ch[712];
+        $piaterochka = $ch[717];
+        $radiotehnika = $ch[722];
+        $levis = $ch[727];
+        $zavhoz = $ch[732];
+        $neposedy = $ch[737];
+        $tomas_munc = $ch[742];
+
+        $weigth = $ch[762];
+        $denzh = time() - mktime(0, 0, 0, 5, 3, 70);
+        $denzhisni = round(($denzh / 3600 / 24), 0);
+
+        $sport = $ch[958];
+        $dgp = $ch[847];
+        $dgt = $ch[852];
+        $vd = $ch[857];
+        $poezdk = $ch[862];
+        $mishvstal = $ch[867];
+        $mishkak = $ch[877];
+        $mishleg = $ch[872];
+        $mishout1 = $ch[882];
+        $mishout2 = $ch[887];
+        $mishdc1 = $ch[892];
+        $mishdc2 = $ch[897];
+        $mishoc = $ch[902];
+
+        $sum = $ch[907];
+        $seadm = $ch[912];
+        $progrm = $ch[917];
+        $job = $ch[922];
+        $read = $ch[927];
+        $hdeal = $ch[932];
+        $site = $ch[937];
+        $guitar = $ch[943];
+        $ele = $ch[948];
+        $eze = $ch[953];
+        $emo = $ch[963];
+        $kt = $ch[968];
+        $s = $ch[973];
+        $svo = $ch[978];
+        $svskob = $ch[983];
+        $altn1 = $ch[988];
+        $altn2 = $ch[989];
+        $altn3 = $ch[990];
+        $altn4 = $ch[991];
+        $altn5 = $ch[991];
+        $alkg = $ch[993];
+        $gn = $ch[999];
+        $rab = $ch[1003];
+
+        $svi = $ch[371];
+        $svv = $ch[372];
+        $svt = $ch[373];
+        $elei = $ch[376];
+        $elev = $ch[377];
+        $elet = $ch[378];
+        $rybi = $ch[381];
+        $rybv = $ch[382];
+        $rybt = $ch[383];
+        $chas9i = $ch[386];
+        $chas9v = $ch[387];
+        $chas9t = $ch[388];
+        $nfi = $ch[391];
+        $nfv = $ch[392];
+        $nft = $ch[393];
+        $onchi = $ch[396];
+        $onchv = $ch[397];
+        $oncht = $ch[398];
+        $conci = $ch[400];
+        $concv = $ch[401];
+        $conct = $ch[402];
+        $rabi = $ch[406];
+        $rabv = $ch[407];
+        $rabt = $ch[408];
+        $zhmayi = $ch[412];
+        $zhmayv = $ch[413];
+        $zhmayt = $ch[414];
+        $klinicsi = $ch[417];
+        $klinicsv = $ch[418];
+        $klinicst = $ch[419];
+        $kozlaevi = $ch[422];
+        $kozlaevv = $ch[423];
+        $kozlaevt = $ch[424];
+        $myshki = $ch[427];
+        $myshkv = $ch[428];
+        $myshkt = $ch[429];
+        $usli = $ch[432];
+        $uslv = $ch[433];
+        $uslt = $ch[434];
+        $anti = $ch[437];
+        $antv = $ch[438];
+        $antt = $ch[439];
+        $maxkleyi = $ch[443];
+        $maxkleyv = $ch[444];
+        $maxkleyt = $ch[445];
+        $zhni = $ch[448];
+        $zhnv = $ch[449];
+        $zhnt = $ch[450];
+        $rezervi = $ch[453];
+        $rezervv = $ch[454];
+        $rezervt = $ch[455];
+        $mtsi = $ch[459];
+        $mtsv = $ch[460];
+        $mtst = $ch[461];
+        $oshibi = $ch[464];
+        $oshibv = $ch[465];
+        $oshibt = $ch[466];
+        $ivanovi = $ch[469];
+        $ivanovv = $ch[470];
+        $ivanovt = $ch[471];
+        $katanti = $ch[475];
+        $katantv = $ch[476];
+        $katantt = $ch[477];
+        $zheui = $ch[480];
+        $zheuv = $ch[481];
+        $zheut = $ch[482];
+        $taxii = $ch[485];
+        $taxiv = $ch[486];
+        $taxit = $ch[487];
+        $itoi = $ch[510];
+        $itov = $ch[511];
+        $itot = $ch[512];
+
+
+
+
+
+        $cont = file_get_contents("forbd\\ormoncvs.txt");
+        $tag_in = '.2016';
+
+        $position = strpos($cont, $tag_in);
+        $cont = substr($cont, $position);
+        $cont = str_replace('  ', ' ', $cont);
+        $cont = str_replace(chr(9), ' ', $cont);
+        $cont = str_replace(chr(11), ' ', $cont);
+
+        $cht = explode(";", $cont);
+        $totalstep = $cht[1];
+        $aerostep = $cht[2];
+        $aerowalktime = $cht[3];
+        $calories = $cht[4];
+        $distance = $cht[5];
+        $fatburned = $cht[6];
+        $steph1 = $cht[7];
+        $steph2 = $cht[8];
+        $steph3 = $cht[9];
+        $steph4 = $cht[10];
+        $steph5 = $cht[11];
+        $steph6 = $cht[12];
+        $steph7 = $cht[13];
+        $steph8 = $cht[14];
+        $steph9 = $cht[15];
+        $steph10 = $cht[16];
+        $steph11 = $cht[17];
+        $steph12 = $cht[18];
+        $steph13 = $cht[19];
+        $steph14 = $cht[20];
+        $steph15 = $cht[21];
+        $steph16 = $cht[22];
+        $steph17 = $cht[23];
+        $steph18 = $cht[24];
+        $steph19 = $cht[25];
+        $steph20 = $cht[26];
+        $steph21 = $cht[28];
+        $steph22 = $cht[29];
+        $steph23 = $cht[30];
+        $steph24 = $cht[31];
+        $aerosteph1 = $cht[32];
+        $aerosteph2 = $cht[33];
+        $aerosteph3 = $cht[34];
+        $aerosteph4 = $cht[35];
+        $aerosteph5 = $cht[36];
+        $aerosteph6 = $cht[37];
+        $aerosteph7 = $cht[38];
+        $aerosteph8 = $cht[39];
+        $aerosteph9 = $cht[40];
+        $aerosteph10 = $cht[41];
+        $aerosteph11 = $cht[42];
+        $aerosteph12 = $cht[43];
+        $aerosteph13 = $cht[44];
+        $aerosteph14 = $cht[45];
+        $aerosteph15 = $cht[46];
+        $aerosteph16 = $cht[47];
+        $aerosteph17 = $cht[48];
+        $aerosteph18 = $cht[49];
+        $aerosteph19 = $cht[50];
+        $aerosteph20 = $cht[51];
+        $aerosteph21 = $cht[52];
+        $aerosteph22 = $cht[53];
+        $aerosteph23 = $cht[54];
+        $aerosteph24 = $cht[55];
+
+        $nesport = round(($ch[133] / 1000), 0);
+
+        echo "спорт" . $sport . "sum" . $sum . "seadm" . $seadm . "progrm" . $progrm . "job" . $job . "read" . $read . "hdeal" . $hdeal . "site" . $site . "guitar" . $guitar . "ele" . $ele . "eze" . $eze . "distanse" . $distance . "rab" . $rab . "kalor" . $tottot . "altn5:" . $altn1 . " " . $altn2 . " " . $altn3 . " " . $altn4 . " " . $altn5 . "mish" . $mishoc;
+
+
+        echo $ocenka = $sport + $sum + $seadm + $progrm + $job + $read + $hdeal + $site + $guitar + $ele + $eze + round($distance, 0) + $rab + (-($tottot - 3000) / 100) + (-($altn1 + $altn2 + $altn3 + $altn4 + $altn5) * 10) + $mishoc;
+        echo $ocenka = round($ocenka, 0);
+        if ($vd != 0)
+            $srskor = round(($dgt / $vd / 1000), 2);
+
+        $elcount = $ch[832];
+        $hotwatcount = $ch[842];
+        $coldwatcount = $ch[837];
+
+
+        $mts_s = $ch[1009];
+        $mts_r = $ch[1014];
+        $eg = $ch[1019];
+        $sv_kart = $ch[1024];
+        $r_kart = $ch[1029];
+        $vale = $ch[1034];
+        $dol = $ch[1039];
+        $eur = $ch[1044];
+        $brent = $ch[1049];
+        $mish_weight = $ch[1054];
+        $valrub = $vale * $eur;
+        $ostat = $sv_kart + $r_kart + $mts_s + $mts_r + $eg + $valrub;
+
+
+        $result = mysql_query("INSERT INTO money (year, month, day, dd, elcount, hotwatcount, coldwatcount, mts_s, mts_r,
+eg, sv_kart, r_kart, dol, eur, brent, valrub, ostat, sber, mts)
+
+ VALUES ('$y', '$me', '$d', '$dd', '$elcount', '$hotwatcount', '$coldwatcount', '$mts_s', '$mts_r', '$eg', '$sv_kart',
+ '$r_kart', '$dol', '$eur', '$brent', '$valrub', '$ostat', '$mish_weight', '$mts')")or die("Error in sql: <br>$sql<br>" .
+            mysql_error());
+
+        $result = mysql_query("INSERT INTO telephone (year, day, month, dd, svi, svv, svt, elei, elev, elet, rybi, rybv,
+rybt, chas9i, chas9v, chas9t, nfi, nfv, nft, onchi, onchv, oncht, conci, concv, conct, rabi, rabv, rabt, itoi, itov, itot, anti, antv, antt, soldi, soldv, soldt, zni, znv, znt, usli, uslv, uslt, levi, levv, levt, yuli, yulv, yult)
+
+ VALUES ( '$y', '$d', '$me', '$dd', '$svi', '$svv', '$svt', '$elei', '$elev', '$elet', '$rybi', '$rybv', '$rybt', '$chas9i',
+ '$chas9v', '$chas9t', '$nfi', '$nfv', '$nft', '$onchi', '$onchv', '$oncht', '$conci', '$concv', '$conct', '$rabi', '$rabv',
+ '$rabt', '$itoi', '$itov', '$itot','$anti', '$antv', '$antv', '$soldi', '$soldv', '$soldt', '$zhni', '$zhnv', '$zhnt', '$usli',
+ '$uslv', '$uslt', '$levi', '$levv', '$levt', '$yuli', '$yulv', '$yult')")or die("Error in sql: <br>$sql<br>" . mysql_error());
+
+        $result = mysql_query("INSERT INTO ormon (year, day, month, dd, totalstep, aerostep, aerowalktime, calories,
+distance, fatburned, steph1, steph2, steph3, steph4, steph5, steph6, steph7, steph8, steph9, steph10, steph11, steph12,
+ steph13, steph14, steph15, steph16, steph17, steph18, steph19, steph20, steph21, steph22, steph23, steph24, aerosteph1,
+ aerosteph2, aerosteph3, aerosteph4, aerosteph5, aerosteph6, aerosteph7, aerosteph8, aerosteph9, aerosteph10, aerosteph11,
+ aerosteph12, aerosteph13, aerosteph14, aerosteph15, aerosteph16, aerosteph17, aerosteph18, aerosteph19, aerosteph20,
+  aerosteph21, aerosteph22, aerosteph23, aerosteph24) VALUES ('$y', '$d', '$me', '$dd', '$totalstep', '$aerostep',
+  '$aerowalktime', '$calories', '$distance', '$fatburned', '$steph1', '$steph2', '$steph3', '$steph4', '$steph5',
+  '$steph6', '$steph7', '$steph8', '$steph9', '$steph10', '$steph11', '$steph12', '$steph13', '$steph14', '$steph15',
+   '$steph16', '$steph17', '$steph18', '$steph19', '$steph20', '$steph21', '$steph22', '$steph23', '$steph24', '$aerosteph1',
+   '$aerosteph2', '$aerosteph3', '$aerosteph4', '$aerosteph5', '$aerosteph6', '$aerosteph7', '$aerosteph8', '$aerosteph9',
+    '$aerosteph10', '$aerosteph11', '$aerosteph12', '$aerosteph13', '$aerosteph14', '$aerosteph15', '$aerosteph16', '$aerosteph17',
+    '$aerosteph18', '$aerosteph19', '$aerosteph20', '$aerosteph21', '$aerosteph22', '$aerosteph23', '$aerosteph24')")
+        or die("Error in sql: <br>$sql<br>" . mysql_error());
+
+        $result = mysql_query("INSERT INTO maner (year, day, month, dd, weigth, denzhisni, sport, dgp, dgt, vd, poezdk,
+        mishvstal, mishkak, mishleg, mishout1, mishout2, mishdc1, mishdc2, mishoc, sum, seadm, progrm, job, readd, hdeal,
+        site, guitar, ele, eze, emo, kt, s, svo, svskob, altn1, altn2, altn3, altn4, altn5, alkg, gn, nesport, rab, ocenka,
+         srskor, date, ds) VALUES ('$y', '$d', '$me', '$dd', '$weigth', '$denzhisni', '$sport', '$dgp', '$dgt', '$vd', '$poezdk',
+         '$mishvstal', '$mishkak', '$mishleg', '$mishout1', '$mishout2', '$mishdc1', '$mishdc2', '$mishoc', '$sum', '$seadm',
+          '$progrm', '$job', '$read', '$hdeal', '$site', '$guitar', '$ele', '$eze', '$emo', '$kt', '$s', '$svo', '$svskob',
+          '$altn1', '$altn2', '$altn3', '$altn4', '$altn5', '$alkg', '$gn', '$nesport', '$rab', '$ocenka', '$srskor', '$date',
+           '$ds')")or die("Error in sql: <br>$sql<br>" . mysql_error());
+
+        $result = mysql_query("INSERT INTO prod (year, day, month, dd, salatmastot, banantot, bulkatot, garkruptot,
+karmastot, kashatot, konftot, kurtot, makartot, maslotot, ogurtot, peltot, pechtot, pechenietot, pirogtot, pybtot,
+salatovtot, sahartot, sladtot, supzhirtot, suppostot, syrkolbtot, fruttot, hlebtot, morozhtot, shoktot, totkk, totgr,
+ tottot, alk, bat, bil, bol, dor, doshirab, zhvach, internet, canc, kvar, kolbas, koncer, kofe, krup, makar, maslorast,
+  mebel, meloch, misha, moloco, mus, mjas, obuv, ovos, odezhd, paric, pelmen, prih_r, prih_s, ptic, puresh, rem, ryb,
+  slad, sok, sot_r, sot_s, suhfr, tech, uch, fruct, hleb, hoz, hosting, much, totminus, totplus, rybday, ashan, ikea,
+   holiday, gotti, mariara, leroy, ramos, chistmir, miaso, family, gloria_djins, det_mir, sib_gig, ostin, m_video,
+   romika, avalone, lumen, mothercare, dochki_synochki, bystronom, e96, dudnik, letual, mus_ars, master_best, pris,
+    music_land, mango, sinar, limpopo, sportmaster, salamander, zolla, florange, marks_spenser, malonfashn, natti,
+     dns, piaterochka, radiotehnika, levis, zavhoz, neposedy, tomas_munc )
+ VALUES ( '$y', '$d', '$me', '$dd', '$salatmastot', '$banantot', '$bulkatot', '$garkruptot', '$karmastot', '$kashatot',
+ '$konftot', '$kurtot', '$makartot', '$maslotot', '$ogurtot', '$peltot', '$pechtot', '$pechenietot', '$pirogtot',
+ '$pybtot', '$salatovtot', '$sahartot', '$sladtot', '$supzhirtot', '$suppostot', '$syrkolbtot', '$fruttot',
+ '$hlebtot', '$morozhtot', '$shoktot', '$totkk', '$totgr', '$tottot', '$alk', '$bat', '$bil', '$bol', '$dor',
+  '$doshirab', '$zhvach', '$internet', '$canc', '$kvar', '$kolbas', '$koncer', '$kofe', '$krup', '$makar',
+   '$maslorast', '$mebel', '$meloch', '$misha', '$moloco', '$mus', '$mjas', '$obuv', '$ovos', '$odezhd', '$paric',
+   '$pelmen', '$prih_r', '$prih_s', '$ptic', '$puresh', '$rem', '$ryb', '$slad', '$sok', '$sot_r', '$sot_s', '$suhfr',
+    '$tech', '$uch', '$fruct', '$hleb', '$hoz', '$hosting', '$much', '$totminus', '$totplus', '$rybday', '$ashan', '$ikea',
+    '$holiday', '$gotti', '$mariara', '$leroy', '$ramos', '$chistmir', '$miaso', '$family', '$gloria_djins', '$det_mir',
+     '$sib_gig', '$ostin', '$m_video', '$romika', '$avalone', '$lumen', '$mothercare', '$dochki_synochki', '$bystronom',
+      '$e96', '$dudnik', '$letual', '$mus_ars', '$master_best', '$pris', '$music_land', '$mango', '$sinar', '$limpopo',
+       '$sportmaster', '$salamander', '$zolla', '$florange', '$marks_spenser', '$malonfashn', '$natti', '$dns', '$piaterochka',
+        '$radiotehnika', '$levis', '$zavhoz', '$neposedy', '$tomas_munc')")or die("Error in sql: <br>$sql<br>" . mysql_error());
+
+        $result = mysql_query("INSERT INTO pogoda (date, temmorn, hummorn, pressmorn,
+    temday, humday, pressday, temev, humev, pressev, temcommax, temcommin,
+    humcommax, humcommin, sunrise, sunset, dday, moonvid, moonold, moonrast,
+    dd, month, day, moonrise, moonset)
+
+ VALUES ('$date', '$temmorn', '$hummorn', '$pressmorn', '$temday', '$humday',
+     '$pressday', '$temev', '$humev', '$pressev', '$temcommax', '$temcommin',
+         '$humcommax', '$humcommin', '$sunrise', '$sunset', '$dday',
+             '$moonvid', '$moonold', '$moonrast', '$dd', '$me', '$day',
+                 '$moonrise', '$moonset')")or die("Error in sql: <br>$sql<br>" . mysql_error());
+    }
     
    
 }
