@@ -57,19 +57,22 @@ LandberryAsset::register($this);
                 <div class="home-slider">
                     <ul class="slides">
                         <li>
-                            <h1><span>ИНТЕРНЕТ-РЕШЕНИЯ</span></h1>
+                            <h1><span>ЛЮБЫЕ ИНТЕРНЕТ-РЕШЕНИЯ: </span></h1>
                         </li>
                         <li>
                             <h1><span>САЙТЫ </span></h1>
                         </li>
                         <li>
-                            <h1><span>ИНТЕРНЕТ-МАГАЗИНЫ</span></h1>
+                            <h1><span>ИНТЕРНЕТ-МАГАЗИНЫ </span></h1>
                         </li>
                         <li>
-                            <h1><span>КОРПОРАТИВНЫЕ ПРИЛОЖЕНИЯ</span></h1>
+                            <h1><span>КОРПОРАТИВНЫЕ ПРИЛОЖЕНИЯ </span></h1>
                         </li>
                         <li>
-                            <h1><span>ЛЭНДИНГИ</span></h1>
+                            <h1><span>ЛЭНДИНГИ </span></h1>
+                        </li>
+                        <li>
+                            <h1><span>ПАРСЕРЫ </span></h1>
                         </li>
                     </ul>
                 </div>
@@ -115,8 +118,8 @@ LandberryAsset::register($this);
                 ]);
                 ?>
 
-                <li class=""><a href="#about">О НАС</a></li>
-                <li><a href="#works">ПРОЕКТЫ</a></li>
+                <li class=""><a href="#about">О СЕБЕ</a></li>
+                <li><a href="#works">РАБОТЫ</a></li>
                 <li><a href="#advertisers">АГЕНСТВАМ</a></li>
                 <li><a href="#promote">ПРЕЙМУЩЕСТВА</a></li>
                 <li><a href="#contact">КОНТАКТЫ</a></li>
@@ -131,11 +134,7 @@ LandberryAsset::register($this);
 
 <section id="about" class="section">
     <div class="container">
-        <div class="title col-md-8 col-sm-10 col-xs-12">
 
-          <?php /*  <h1><img src="images/logo.png" alt="WP Media"></h1> */ ?>
-
-        </div>
 
         <!-- About Text -->
 
@@ -192,16 +191,24 @@ LandberryAsset::register($this);
 
                         </div>
 
-                        <div class="col-md-10 col-sm-11">
+                        <div class="col-md-10 col-sm-11" >
+                            <div id="slidebox">
 
-                            <h4>Мы любим своё дело</h4>
+                                <img src="images/roma_zek.png" alt="roma">
 
-                            <p>
-                                Мы&nbsp; занимаемся продвижением идей и не привязаны к зарабатыванию денег.
-                                Поэтому Ваши
-                                Чем интересней задумка, тем дешевле
-                                А с помощью нашей системы тестирования решений вы можете
-                                ежедневно следить за тем, как хорошеет дело </p>
+
+                            </div>
+
+                            <h4>Всем привет!<br> Меня зовут Роман</h4>
+
+
+                            <p id="hi">
+
+                                Хочу предложить Вам свои услуги в веб-разработке и реализации любых идей в этой сфере.<br>
+                                Как правило использую стэк HTML5-CSS(bootstrap)-JS(Jquery)-PHP(Yii2.0)-MySQL<br>
+                                Ниже приведены примеры работ, собранные в системе тестирования решений, с помощью которой<br>
+                                я и осуществляю работу с клиентами.<br>
+                            </p>
 
                         </div>
 
@@ -227,7 +234,7 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1><strong>НАШИ ПРОЕКТЫ</strong></h1>
+            <h1><strong>МОИ РАБОТЫ</strong></h1>
 
             <hr>
 
@@ -312,7 +319,7 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>MARKPLIS.QPLIS.RU</h3>
+                    <h3>MARKSELF.QPLIS.RU</h3>
 
                     <p>Мой сын использует эту систему для поддержания себя в форме</p>
 
@@ -352,132 +359,9 @@ LandberryAsset::register($this);
 
         </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
-
-            <div class="team animated hiding" data-animation="fadeInUp" data-delay="0">
-
-                <div class="team-photo">
-
-                    <img src="images/projects/snynet.jpg" alt="">
-
-                    <a href="http://сны.net" target="_blank" class="team-overlay">
-
-                        <span class="top">50000 уникальных посетителей<br>в день</span>
-
-                        <span class="bottom">Перейти на сайт</span>
-
-                    </a>
-
-                </div>
-
-                <div class="team-inner">
-
-                    <h3>СНЫ.НЕТ</h3>
-
-                    <p>Проект по гороскопам</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-md-3 col-sm-6 col-xs-12">
-
-            <div class="team animated hiding" data-animation="fadeInUp" data-delay="0">
-
-                <div class="team-photo">
-
-                    <img src="images/projects/yod.jpg" alt="">
-
-                    <a href="http://yod.ru" target="_blank" class="team-overlay">
-
-                        <span class="top">15000 уникальных посетителей<br>в день</span>
-
-                        <span class="bottom">Перейти на сайт</span>
-
-                    </a>
-
-                </div>
-
-                <div class="team-inner">
-
-                    <h3>YOD.RU</h3>
-
-                    <p>Проект по женской тематике</p>
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-
-            <div class="team animated hiding" data-animation="fadeInUp" data-delay="0">
-
-                <div class="team-photo">
-
-                    <img src="images/projects/pinetka.jpg" alt="">
-
-                    <a href="http://pinetka.com" target="_blank" class="team-overlay">
-
-                        <span class="top">10000 уникальных посетителей<br>в день</span>
-
-                        <span class="bottom">Перейти на сайт</span>
-
-                    </a>
-
-                </div>
-
-                <div class="team-inner">
-
-                    <h3>PINETKA</h3>
-
-                    <p>Проект по женской тематике</p>
-
-                </div>
-
-            </div>
-
-        </div>
-        <div class="col-md-3 col-sm-6 col-xs-12">
-
-            <div class="team animated hiding" data-animation="fadeInUp" data-delay="0">
-
-                <div class="team-photo">
-
-                    <img src="images/projects/misseva.jpg" alt="">
-
-                    <a href="http://misseva.ru" target="_blank" class="team-overlay">
-
-                        <span class="top">15000 уникальных посетителей<br>в день</span>
-
-                        <span class="bottom">Перейти на сайт</span>
-
-                    </a>
-
-                </div>
-
-                <div class="team-inner">
-
-                    <h3>MISSEVA</h3>
-
-                    <p>Проект по женской тематике</p>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </div>
+</div>
 
 </section>
-
-<!-- End Works Section -->
-
-
 
 <!-- Numbers Section -->
 
@@ -487,39 +371,51 @@ LandberryAsset::register($this);
 
         <div class="container">
 
-            <h3 class="center up"><span>[</span> В <b>цифрах</b> <span>]</span></h3>
+            <h3 class="center up"><span>ЦЕНЫ И СТАВКИ</span></h3>
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-md-3 col-sm-3 col-xs-12">
 
                 <div class="counter animated hiding rbc" data-animation="fadeInDown" data-delay="0">
 
-                    <div class="value-box"><span class="value" data-from="0" data-to="6">5</span>00 000</div>
-                    <img src="images/line.png" alt="">
-                    <small>уникальных пользователей в сутки</small>
+                    <div class="value-box"><span class="value" data-from="0" data-to="3">3</span> 000 </div>
+                    <p>руб/страница</p>
+                    <small>АДАПТИВНАЯ ВЕРСТКА</small>
 
                 </div>
 
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-md-3 col-sm-3 col-xs-12">
 
                 <div class="counter animated hiding rbc" data-animation="fadeInDown" data-delay="500">
 
-                    <div class="value-box"><span class="value" data-from="0" data-to="100">60</span></div>
-                    <img src="images/line.png" alt="">
-                    <small>сайтов самых разных тематик</small>
+                    <div class="value-box"><span class="value" data-from="0" data-to="5">6</span> 000</div>
+                    <p>руб</p>
+                    <small>САЙТ-ВИЗИТКА ИЛИ ЛЭНДИНГ</small>
 
                 </div>
 
             </div>
 
-            <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="col-md-3 col-sm-3 col-xs-12">
 
                 <div class="counter animated hiding rbc" data-animation="fadeInDown" data-delay="1000">
 
-                    <div class="value-box"><span class="value" data-from="0" data-to="36">45</span> 000 000</div>
-                    <img src="images/line.png" alt="">
-                    <small>просмотров в месяц</small>
+                    <div class="value-box"><span class="value" data-from="0" data-to="15">15</span> 000</div>
+                    <p>руб</p>
+                    <small>САЙТ-КОНТЕНТНИК</small>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-3 col-sm-3 col-xs-12">
+
+                <div class="counter animated hiding rbc" data-animation="fadeInDown" data-delay="2000">
+
+                    <div class="value-box"><span class="value" data-from="0" data-to="25">25</span> 000</div>
+                    <p>руб</p>
+                    <small>ИНТЕРНЕТ-МАГАЗИН</small>
 
                 </div>
 
@@ -1048,30 +944,36 @@ LandberryAsset::register($this);
 
 
 
-<script>
-    (function (window) {
-        var elem = document.querySelector('#year');
-        elem.appendChild(document.createTextNode((new Date).getFullYear()));
-    })(window);
+        <script>
+            <?php /*
+                (function (window) {
+                    var elem = document.querySelector('#year');
+                    elem.appendChild(document.createTextNode((new Date).getFullYear()));
+                })(window);
 
-    $('.for-event-akula').on('click', function(){
+                $('.for-event-akula').on('click', function(){
 
-        $.ajax({
-            type: 'POST',
-            url: 'send.php',
-            data: $("#contact-us").serialize(),
-            success: function(data) {
+                    $.ajax({
+                        type: 'POST',
+                        url: 'send.php',
+                        data: $("#contact-us").serialize(),
+                        success: function(data) {
 
-                $('#contact-us').hide();
-                $('.form-sent').show();
+                            $('#contact-us').hide();
+                            $('.form-sent').show();
 
-            }
-        });
+                        }
+                    });
 
 
-    });
-</script>
+                });
+
+             */?>
+
+        </script>
+
 <?php $this->endBody() ?>
 </body>
 </html>
+
 <?php $this->endPage() ?>

@@ -36,7 +36,7 @@ class LandberryAsset extends AssetBundle
         'js/jquery.appear.js',
         'js/jquery.backstretch.min.js',
         'js/jquery.countTo.js',
-        'js/jquery.min.js',
+        //'js/jquery.min.js',
         'js/jquery.mixitup.min.js',
         'js/jquery.nav.js',
         'js/jquery.validate.js',
@@ -47,9 +47,9 @@ class LandberryAsset extends AssetBundle
         'js/owl.carousel.min.js',
         'js/placeholders.js',
         'js/respond.js',
-        'js/scripts.js',
-        'js/traffic-calc.js',
-        'js/traffic-calc-settings.js'
+        //'js/scripts.js',
+        //'js/traffic-calc.js',
+        //'js/traffic-calc-settings.js'
     ];
    // public $images = [
    //     'images/bg/1.jpg'

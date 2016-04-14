@@ -17,7 +17,21 @@ $(document).ready(function(){
     }
   });
 
-  //Navigation Scrolling
+
+    $(document).scroll(function () {
+        // distanceTop = (высота: от начала страницы до эл-та #last) -
+        //- высота окна браузера
+        var distanceTop = $('#hi').offset().top - $(window).height();
+        // если величина прокрутки больше distanceTop
+        if ($(window).scrollTop() > distanceTop)
+            $('#slidebox').animate({'left': '15px'}, 300);
+        else
+            $('#slidebox').stop(true).animate({'left': '-830px'}, 100);
+    });
+
+
+
+    //Navigation Scrolling
   $('a[href*=#]').click(function() {
     if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
       var target = $(this.hash);
@@ -288,6 +302,8 @@ $(document).ready(function(){
       });
     }
   });
+
+
 
 
 

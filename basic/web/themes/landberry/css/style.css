@@ -175,7 +175,7 @@ p {
     overflow: hidden;
     position: relative;
     background-color: rgba(0, 0, 0, 0.2);
-    background-image: url(../images/bg/2.jpg)/*tpa=http://wp-media.ru/images/bg/1.jpg*/;
+    background-image: url(../images/bg/red_mount.jpg)/*tpa=http://wp-media.ru/images/bg/1.jpg*/;
 }
 
 #home.pattern {
@@ -222,7 +222,7 @@ p {
 }*/
 
 .topnav {
-    background-color: #13225d;
+    background-color:  rgb(93, 23, 19);
     margin: 0;
     border-radius: 0;
     border: 0;
@@ -240,10 +240,10 @@ p {
 }
 
 .topnav .navbar-nav > .active > a, .topnav .navbar-nav > .active > a:hover, .topnav .navbar-nav > .active > a:focus {
-    background-color: rgba(16, 11, 110, 0.90);
-    font-size: 23px;
-    font-weight: 400;
-    color: #ffba37;
+    background-color: rgba(224, 97, 52, 0.35);
+    font-size: 18px;
+    font-weight: 300;
+    color: #f7ffe4;
 }
 .navbar-default .navbar-nav>li>a:hover, .navbar-default .navbar-nav>li>a:focus{
     color:#fff;
@@ -583,6 +583,16 @@ p {
     text-transform: uppercase;
     color: #ccc;
     font-size: 18px;
+}
+
+#slidebox{
+    width:100px;
+    height:100px;
+
+    position:fixed;
+    bottom: 255px;
+    left:-830px;
+
 }
 
 /* =Services
@@ -1334,7 +1344,7 @@ footer .social-list a:hover .social-icon {
 
 /* =Media queries
 -------------------------------------------------------------- */
-
+/*
 @media (min-width: 992px) {
     .hiding {
         opacity: 0;
@@ -1452,3 +1462,4 @@ footer .social-list a:hover .social-icon {
 #services.section,
 #promote.section
 {padding-top:30px;}
+*/
