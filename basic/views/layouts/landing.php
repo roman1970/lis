@@ -120,7 +120,9 @@ LandberryAsset::register($this);
 
                 <li class=""><a href="#about">О СЕБЕ</a></li>
                 <li><a href="#works">РАБОТЫ</a></li>
-                <li><a href="#advertisers">АГЕНСТВАМ</a></li>
+                <li><a href="#numbers">ЦЕНЫ</a></li>
+                <li><a href="#services">ЗАКАЗ</a></li>
+                <li><a href="#advertisers">КОМПАНИЯМ</a></li>
                 <li><a href="#promote">ПРЕЙМУЩЕСТВА</a></li>
                 <li><a href="#contact">КОНТАКТЫ</a></li>
             </ul>
@@ -339,7 +341,7 @@ LandberryAsset::register($this);
 
                     <a href="http://oppositions.qplis.ru" target="_blank" class="team-overlay">
 
-                        <span class="top">Сайт-листинг с интересными фактами из историй противостояний</span>
+                        <span class="top">Сайт-листинг с интересными фактами</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -439,11 +441,11 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1>ТЕМАТИЧЕСКАЯ <strong>РЕКЛАМНАЯ КАМПАНИЯ</strong></h1>
+            <h1>Вам не придётся сразу платить деньги</h1>
 
             <hr>
 
-            <p>Интернет-издательство «Акула Пера» располагает обширным спектром проектов самых разных тематик для размещения специализированной рекламы. </p>
+            <p> "ПРЕДОПЛАТА" в размере 20% осуществляется после того, как 40% работы уже сделано и ВЫ ВИДИТЕ РЕЗУЛЬТАТ</p>
 
             <br>
 
@@ -457,13 +459,14 @@ LandberryAsset::register($this);
 
                             <i class="fa fa-circle fa-2x fa-stack-2x"></i>
 
-                            <i class="fa fa-github-square fa-stack-1x service-icon"></i>
+                            <i class="fa fa-star fa-stack-1x service-icon"></i>
 
                         </span>
 
-                <h3>ДОМАШНИЕ ЖИВОТНЫЕ</h3>
 
-                <p>8 000 000 просмотров в месяц</p>
+                <h3>ШАГ 1</h3>
+
+                <p>Свяжитесь со мной любым доступным для Вас способом (смотри <a href="#contact">КОНТАКТЫ</a>)</p>
 
             </div>
 
@@ -483,9 +486,11 @@ LandberryAsset::register($this);
 
                         </span>
 
-                <h3>АСТРОЛОГИЯ И ГОРОСКОПЫ</h3>
+                <h3>ШАГ 2</h3>
 
-                <p>12 500 000 просмотров в месяц</p>
+                <p>Если у Вас нет Технического Задания - не беда!
+                    Совместными усилиями мы оформим его и утвердим сроки выполнения,
+                 договорившись, на каком этапе следует внести предоплату.</p>
 
             </div>
 
@@ -499,17 +504,19 @@ LandberryAsset::register($this);
             <div class="service animated hiding" data-animation="fadeInUp"
                  data-delay="600">
 
-                        <span class="fa-stack fa-4x">
+                         <span class="fa-stack fa-4x">
 
                             <i class="fa fa-circle fa-2x fa-stack-2x"></i>
 
-                            <i class="fa fa-glass fa-stack-1x service-icon"></i>
+                            <i class="fa fa-star fa-stack-1x service-icon"></i>
 
                         </span>
 
-                <h3>ЖЕНСКИЕ ПОРТАЛЫ</h3>
 
-                <p>6 000 000 просмотров в месяц</p>
+                <h3>ШАГ 3</h3>
+
+                <p>Вы получаете ссылку на тестовый домен и следите за выполнением работы.
+                    Если Вам что-то не нравится, дорабатываем и переделываем...</p>
 
             </div>
 
@@ -520,17 +527,19 @@ LandberryAsset::register($this);
 
             <div class="service animated hiding" data-animation="fadeInUp" data-delay="900">
 
-                        <span class="fa-stack fa-4x">
+                       <span class="fa-stack fa-4x">
 
                             <i class="fa fa-circle fa-2x fa-stack-2x"></i>
 
-                            <i class="fa fa-heartbeat fa-stack-1x service-icon"></i>
+                            <i class="fa fa-star fa-stack-1x service-icon"></i>
 
                         </span>
 
-                <h3>МЕДИЦИНА</h3>
 
-                <p>3 500 000 просмотров в месяц</p>
+                <h3>ШАГ 4</h3>
+
+                <p>Оплата за выполненную работу производится после выполнения всех пунктов ТЗ
+                    и публикации проекта на домене заказчика.</p>
 
             </div>
 
@@ -568,13 +577,15 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1><strong><span>[</span></strong> АГЕНТСТВАМ <strong><span>]</span></strong></h1>
+            <h1>КОМПАНИЯМ</h1>
 
             <hr>
 
-            <p>На наших порталах вы можете провести полноценную имиджевую кампанию любой тематики. C помощью демографического
+            <h2> Предлагаю свои услуги web-программиста компаниям,
+                которым требуется поддержка или разработка сайтов и внутренних систем и сервисов.
+                Знатокам предлагаю ознакомиться с примерами кода из Системы Тестированния Решений,
+                разработанной на Yii2.0.
 
-                таргетинга AdRiver мы можем предложить вам показ рекламы только на определённую аудиторию. </p>
 
         </div>
         <div class="col-md-4 col-sm-4 col-xs-12">
@@ -585,13 +596,15 @@ LandberryAsset::register($this);
 
                 <div class="plan-heading">
 
-                    <h3>ЖЕНСКИЙ ТРАФИК</h3>
+                    <h3>ГЕО-ПОГОДНЫЙ ПАРСЕР ДЛЯ РАЗНЫХ API</h3>
 
                     <br><br>
 
                     <div class="hexagon">
 
-                        <i class="fa fa-venus"></i>
+                        <a href="https://github.com/roman1970/lis/blob/master/basic/commands/WeatherController.php">
+                            <i class="fa fa-umbrella"></i>
+                        </a>
 
                     </div>
 
@@ -599,21 +612,9 @@ LandberryAsset::register($this);
 
                 <ul>
 
-                    <!--  <li><strong>ЭФФЕКТИВНОСТЬ</strong> ТАРГЕТИРОВАНИЯ
 
-                           ПОДТВЕРЖДЕНА ИССЛЕДОВАНИЯМИ
+                    <li><a href="https://github.com/roman1970/lis/blob/master/basic/commands/WeatherController.php">ССЫЛКА НА GITHUB</a></li>
 
-                           TNS</li> -->
-
-                    <li>ОСНОВНАЯ ЧАСТЬ ЦЕЛЕВЫХ ПОСЕТИТЕЛЕЙ
-
-                        <strong>ЖЕНЩИНЫ</strong></li>
-
-                    <li>БОЛЕЕ <strong>6 МИЛЛИОНОВ</strong> ПРОСМОТРОВ В МЕСЯЦ</li>
-
-                    <li><strong>2 МИЛЛИОНА</strong> ПОКАЗОВ - МОСКВА</li>
-
-                    <li><strong>2 МИЛЛИОНА</strong> ПОКАЗОВ - САНКТ-ПЕТЕРБУРГ</li>
 
                 </ul>
                 <!--
@@ -638,13 +639,16 @@ LandberryAsset::register($this);
 
                 <div class="plan-heading">
 
-                    <h3>Медицина</h3>
+
+                    <h3>ВЬЮХА САЙТА ФУТБОЛЬНОЙ СТАТИСТИКИ</h3>
 
                     <br><br>
 
                     <div class="hexagon">
 
-                        <i class="fa fa-medkit"></i>
+                        <a href="https://github.com/roman1970/lis/blob/master/basic/modules/russia2018/views/default/index.php">
+                            <i class="fa fa-futbol-o"></i>
+                        </a>
 
                     </div>
 
@@ -652,15 +656,7 @@ LandberryAsset::register($this);
 
                 <ul>
 
-                    <li>ПРОДВИЖЕНИЕ <strong>клиники/лекарства/услуг</strong></li>
-                    <li>В <strong>ПАКЕТНОЕ ПРЕДЛОЖЕНИЕ</strong> ВХОДИТ: РАЗМЕЩЕНИЕ МЕДИЙНЫХ БАННЕРОВ, СОЗДАНИЕ СПЕЦРАЗДЕЛОВ НА САЙТАХ, ПРИВЛЕЧЕНИЕ ЦЕЛЕВОГО ТРАФИКА И Т.П.</li>
-
-
-                    <li><strong>2,5 МИЛЛИОНА</strong> ПОСЕТИТЕЛЕЙ В МЕСЯЦ</li>
-
-                    <li>БОЛЬШЕ <strong>25%</strong> ИЗ МОСКВЫ </li>
-
-                    <li><strong>10%</strong> - САНКТ-ПЕТЕРБУРГ</li>
+                    <li><a href="https://github.com/roman1970/lis/blob/master/basic/modules/russia2018/views/default/index.php">ССЫЛКА НА GITHUB</a></li>
 
                 </ul>
                 <!--
@@ -683,13 +679,15 @@ LandberryAsset::register($this);
 
                 <div class="plan-heading">
 
-                    <h3>ЭЗОТЕРИКА</h3>
+                    <h3>КАСТОМНЫЙ ПАГИНАТОР ДЛЯ ЛИСТИНГА</h3>
 
                     <br><br>
 
                     <div class="hexagon">
 
-                        <i class="fa fa-mars"></i>
+                        <a href="https://github.com/roman1970/lis/blob/master/basic/components/KnoledgesPagination.php">
+                            <i class="fa fa-book"></i>
+                        </a>
 
                     </div>
 
@@ -697,11 +695,7 @@ LandberryAsset::register($this);
 
                 <ul>
 
-
-                    <li>ПРИВЛЕЧЕНИЕ ТОЛЬКО ЦЕЛЕВОГО ТРАФИКА</li>
-                    <li>БОЛЕЕ 12,5 МИЛЛИОНОВ ПРОСМОТРОВ В МЕСЯЦ</li>
-                    <li>69% — РОССИЯ</li>
-                    <li>27% — СНГ</li>
+                    <li><a href="https://github.com/roman1970/lis/blob/master/basic/components/KnoledgesPagination.php">ССЫЛКА НА GITHUB</a></li>
 
 
                 </ul>
@@ -735,23 +729,19 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1>НАШИ <strong>ПРЕИМУЩЕСТВА</strong></h1>
+            <h1>В ЧЁМ ЖЕ ПРЕИМУЩЕСТВА?</strong></h1>
 
             <hr>
 
 
             <br />
 
-            <p><strong>Мы гарантируем:</strong> </p>
+            <p><strong>&#10004; Недорого, но качественно</strong></p>
 
+            <p><strong>&#10004; Бесплатная поддержка</strong></p>
 
-            <p><strong>&#10004; точный охват Вашей целевой аудитории</strong></p>
+            <p><strong>&#10004; Утром - стулья, вечером - деньги</strong></p>
 
-            <p><strong>&#10004; высокая активность аудитории</strong></p>
-
-            <p><strong>&#10004; распространение информации о ваших проектах</strong></p>
-
-            <p><strong>&#10004; рост лояльности к вашему бренду/товару/услуге</strong></p>
 
             <br>
 
@@ -774,10 +764,6 @@ LandberryAsset::register($this);
 
 <!-- End Contact Section-->
 
-
-
-
-
 <!-- Begin Contact Section-->
 
 <section id="contact" class="section">
@@ -786,12 +772,11 @@ LandberryAsset::register($this);
 
         <div class="title col-xs-12">
 
-            <h1><strong><span>[</span></strong> КОНТАКТЫ <strong><span>]</span></strong></h1>
+            <h1>КОНТАКТЫ</h1>
 
         </div>
 
     </div>
-
 
 
     <!-- Contact Details -->
@@ -818,7 +803,7 @@ LandberryAsset::register($this);
 
                     <i class="fa fa-phone"></i>
 
-                    <span>+7 383 2928455</span>
+                    <span>+7 913 924-73-88</span>
 
                 </div>
 
@@ -931,7 +916,7 @@ LandberryAsset::register($this);
 
 
         <!-- Copyright -->
-        <p class="center grey">2013 — 2015 <span id="year"></span> &copy; AKULA-PERA. All rights reserved.</p>
+        <p class="center grey">&copy; qpLIS <?= date('Y') ?></p>
         <!-- End Copyright -->
 
     </div>

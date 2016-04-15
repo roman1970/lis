@@ -36,7 +36,7 @@ class DefaultController extends FrontEndController
 
                 return md5($user->id);
             }
-            else return $this->render('login');
+            else return false;
 
         }
 

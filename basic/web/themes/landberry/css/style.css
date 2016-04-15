@@ -543,7 +543,7 @@ p {
 -------------------------------------------------------------- */
 
 #numbers {
-    background-image: url("../images/bg/bg3.jpg");
+    background-image: url("../images/bg/something-bg.jpg");
     background-size:cover;
     background-repeat:no-repeat;
     color: #fff;
@@ -615,7 +615,7 @@ p {
 .service {
     margin-top: 30px;
     padding: 45px 10px 00px 10px;
-    height: 13em;
+    height: 16em;
     border: 1px solid #ececec;
     border-radius: 4px;
     text-align: center;
@@ -641,7 +641,7 @@ p {
     text-transform: uppercase;
     font-size: 16px;
     font-weight: 700;
-    padding-top: 1em;
+    padding-top: 3em;
 }
 
 .service > .fa-stack {
@@ -860,7 +860,7 @@ p {
 
 #advertisers{
     padding-top: 0;
-    background: url("../images/bg/bg4.jpg") no-repeat fixed top center;
+    background: url("../images/bg/zakat.jpg") no-repeat fixed top center;
     background-size:cover;
 }
 
@@ -957,6 +957,10 @@ p {
     padding-bottom: 15px;
 }
 
+.adv-kam{
+    font-size: 20px;
+    color: #e4a001;
+}
 /* =Testimonials
 -------------------------------------------------------------- */
 
@@ -1025,7 +1029,7 @@ p {
 #contact {
     position: relative;
     background-color: #f6f6f6;
-    background: url("../images/bg/bg7.jpg") no-repeat fixed top center;
+    background: url("../images/bg/blue_forest.jpg") no-repeat fixed top center;
     background-size:cover;
 }
 
@@ -1254,6 +1258,7 @@ footer .social-list a:hover .social-icon {
 }
 .plan.selected .btn{color:white!important;}
 #advertisers .title h1{margin-top:40px;}
+#advertisers .title h2{font-size: 20px; color: white;}
 #advertisers .title h1 span,
 #contact h1 span{font-size:60px; margin: 0 20px; }
 
@@ -1294,7 +1299,8 @@ footer .social-list a:hover .social-icon {
     border-top: 35px solid #565656;
 }
 .hexagon i{z-index: 1;}
-.plan-heading h3{font-family: "Roboto Condensed", serif;   font-size: 32px;  font-weight: 700;}
+.plan-heading h3{font-family: "Roboto Condensed", serif;   font-size: 32px;  font-weight: 700; color: rgb(90, 88, 93);  }
+
 #contact-form .form-control{border-radius: 0; font-size:14px;}
 #contact-form .btn{ padding: 15px 60px; color:#333; font-weight:400;
                     background: rgba(255,255,255,1);

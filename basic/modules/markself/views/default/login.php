@@ -14,7 +14,7 @@
             alert("Введите псевдоним");
             return false;
         }
-        $("#login").hide();
+        //$("#login").hide();
 
 
         $.ajax({
@@ -22,9 +22,16 @@
             url: "/markself/default/login/",
             data: "name="+name+"&pseudo="+pseudo,
             success: function(user){
+                if(user){
+                    window.location = 'choosegroup/'+user;
+                }
+                 else {
+                    $('#logg').trigger('reset');
+                    $('#pswd').trigger('reset');
+                    alert("Такого пользователя нет");
 
-                window.location = 'choosegroup/'+user;
-                $.cookie('username', user, { expires: 7 });
+                }
+                //$.cookie('username', user, { expires: 7 });
                // var test = $.cookie('username'); // получение кук
 
             }

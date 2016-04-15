@@ -1,8 +1,8 @@
 # phpstorm project files
-/.idea
+.idea/
 
 # netbeans project files
-nbproject
+nbproject/
 
 # zend studio for eclipse project files
 .buildpath
@@ -26,5 +26,5 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-/sql/
+sql/
 worldcup.sql

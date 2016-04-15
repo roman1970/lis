@@ -24,12 +24,19 @@ $(document).ready(function(){
         var distanceTop = $('#hi').offset().top - $(window).height();
         // если величина прокрутки больше distanceTop
         if ($(window).scrollTop() > distanceTop)
-            $('#slidebox').animate({'left': '15px'}, 300);
+            $('#slidebox').animate({'left': '15px'}, 900);
         else
             $('#slidebox').stop(true).animate({'left': '-830px'}, 100);
     });
 
 
+    $(document).scroll(function() {
+        if ($(document).scrollTop() >= 2000) {
+            $('.topnav').css('background-color', '#13225D');
+        } else {
+            $('.topnav').css('background-color', '#5D1713');
+        }
+    });
 
     //Navigation Scrolling
   $('a[href*=#]').click(function() {
