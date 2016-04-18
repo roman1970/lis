@@ -50,4 +50,10 @@ class Helper
 
         return $result;
     }
+
+    public static function getDateIntervalYesterday(\DateTime $day, $interval){
+
+        $day->sub(new \DateInterval('P'.(int)$interval.'D'));
+        return $day->format('d/m/Y');
+    }
 }

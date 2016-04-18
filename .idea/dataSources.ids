@@ -366,6 +366,25 @@
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="cities_ibfk_1" table="cities" schema="" catalog="plis" columns="country_id"/>
     </table>
+    <table name="curr_history" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="currency_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="nominal" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="value" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="curr_history_ibfk_1" columns="currency_id" ref-table="currencies" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_curr_history_currency_id" unique="false" columns="currency_id"/>
+    </table>
+    <table name="currencies" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="valute_id" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="num_code" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <column name="char_code" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="curr_history_ibfk_1" table="curr_history" schema="" catalog="plis" columns="currency_id"/>
+    </table>
     <table name="dom_cult" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12" def="JzAn"/>
@@ -632,19 +651,19 @@
     <table name="mark_it" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
-      <column name="ball" sqlType="ENUM" precision="2" scale="0" nullable="true" jdbcType="1" def="JzAn"/>
+      <column name="ball" sqlType="ENUM" precision="2" scale="0" nullable="true" jdbcType="1" def="JzEn"/>
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="action_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="mark_it_ibfk_3" columns="user_id" ref-table="mark_user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="mark_it_ibfk_2" columns="action_id" ref-table="mark_actions" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="mark_it_ibfk_3" columns="user_id" ref-table="mark_user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_mark_it_action_id" unique="false" columns="action_id"/>
       <index name="ux_mark_it_user_id" unique="false" columns="user_id"/>
     </table>
     <table name="mark_user" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
-      <column name="pseudo" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="pseudo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="mark_it_ibfk_3" table="mark_it" schema="" catalog="plis" columns="user_id"/>
     </table>
