@@ -42,6 +42,9 @@ $config = [
         'krokodile' => [
             'class' => 'app\modules\krokodile\Krokodile',
         ],
+        'magazin' => [
+            'class' => 'app\modules\magazin\Magazin',
+        ],
 
     ],
     'components' => [

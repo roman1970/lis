@@ -368,10 +368,10 @@
     </table>
     <table name="curr_history" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
-      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="date" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="currency_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="nominal" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
-      <column name="value" sqlType="FLOAT" precision="12" scale="0" nullable="false" jdbcType="7"/>
+      <column name="value" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="curr_history_ibfk_1" columns="currency_id" ref-table="currencies" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_curr_history_currency_id" unique="false" columns="currency_id"/>
@@ -794,6 +794,17 @@
       <primary-key name="PRIMARY" columns="id"/>
       <index name="text" unique="false" columns="text"/>
     </table>
+    <table name="orders" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="prod_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="orders_ibfk_2" columns="user_id" ref-table="prod_user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="orders_ibfk_1" columns="prod_id" ref-table="products" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_orders_prod_id" unique="false" columns="prod_id"/>
+      <index name="ux_orders_user_id" unique="false" columns="user_id"/>
+    </table>
     <table name="ormon" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="year" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -1057,6 +1068,26 @@
       <column name="levis" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="prod_user" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="add" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="orders_ibfk_2" table="orders" schema="" catalog="plis" columns="user_id"/>
+    </table>
+    <table name="products" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="cat_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="price" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
+      <column name="photo" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="products_ibfk_1" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="orders_ibfk_1" table="orders" schema="" catalog="plis" columns="prod_id"/>
+      <index name="ux_products_cat_id" unique="false" columns="cat_id"/>
+    </table>
     <table name="profile" schema="" catalog="plis" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
@@ -1147,6 +1178,7 @@
       <column name="site_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="NA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="qpcategory_ibfk_1" columns="site_id" ref-table="qpsites" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="products_ibfk_1" table="products" schema="" catalog="plis" columns="cat_id"/>
       <exported-key name="qparticles_ibfk_2" table="qparticles" schema="" catalog="plis" columns="cat_id"/>
       <index name="ux_qpcategory_qpcategory_site_id" unique="false" columns="site_id"/>
     </table>

@@ -55,6 +55,7 @@ AppAsset::register($this);
             ['label' => 'Сайты', 'url' => ['/qpsites/index']],
             ['label' => 'Категории', 'url' => ['/categories/index']],
             ['label' => 'Контент', 'url' => ['/articles/index']],
+            ['label' => 'Товары', 'url' => ['/products/index']],
             ['label' => 'Пользователи', 'url' => ['/rbac/role/index']],
             ['label' => 'Страны', 'url' => ['/countries/index']],
             ['label' => 'Источники', 'url' => ['/source/index']],

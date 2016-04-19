@@ -51,9 +51,16 @@ class Helper
         return $result;
     }
 
-    public static function getDateIntervalYesterday(\DateTime $day, $interval){
-
+    public static function getDateIntervalYesterdayInDashOrSlashFormat(\DateTime $day, $interval, $delimiter){
         $day->sub(new \DateInterval('P'.(int)$interval.'D'));
-        return $day->format('d/m/Y');
+
+        if($delimiter == 'slash') {
+            return $day->format('d/m/Y');
+        }
+        else {
+            return $day->format('Y-m-d');
+        }
+
+
     }
 }
