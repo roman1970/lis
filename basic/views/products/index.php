@@ -54,13 +54,8 @@ AppAsset::register($this);
                             'data-method' => 'post',
                             'data-pjax' => '0',
                         ]);
-                    },
-                    'pages' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', Url::toRoute(['pages','id' => $model->id]), [
-                            'title' => Yii::t('yii', 'Посмотреть страницы'),
-                            'data-method' => 'post',
-                            'data-pjax' => '0',
-                        ]);
+
+
                     }
 
                 ]

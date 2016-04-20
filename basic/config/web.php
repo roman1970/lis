@@ -45,6 +45,9 @@ $config = [
         'repertuar' => [
             'class' => 'app\modules\repertuar\Repertuar',
         ],
+        'currency' => [
+            'class' => 'app\modules\currency\Module',
+        ],
 
     ],
     'components' => [

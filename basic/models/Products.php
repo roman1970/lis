@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\components\MoneyBehavior;
 use Yii;
 
 /**
@@ -15,7 +16,7 @@ use Yii;
  * @property string $description
  *
  * @property Orders[] $orders
- * @property Qpcategory $cat
+ * @property Categories[] $cat
  */
 class Products extends \yii\db\ActiveRecord
 {
@@ -70,6 +71,13 @@ class Products extends \yii\db\ActiveRecord
      */
     public function getCat()
     {
-        return $this->hasOne(Qpcategory::className(), ['id' => 'cat_id']);
+        return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
+    }
+
+    public function behaviors()
+    {
+        return [
+            MoneyBehavior::className()
+        ];
     }
 }

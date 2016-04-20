@@ -230,3 +230,10 @@ ul.next-pager {
     overflow: hidden;
     height: 220px;
 }
+
+.prod-photo{
+    display: block;
+    overflow: hidden;
+    height: 220px;
+    width: 220px;
+}

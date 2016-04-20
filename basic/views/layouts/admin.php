@@ -63,6 +63,7 @@ AppAsset::register($this);
             ['label' => 'CodeHelp', 'url' => ['/jstests/index']],
             ['label' => 'Тесты', 'url' => ['/testing/index']],
             ['label' => 'Diary', 'url' => ['/diary/default/index']],
+            ['label' => 'Currency', 'url' => ['/currency/default/index']],
             ['label' => 'Репертуар', 'url' => ['/repertuar/default/index']],
             ['label' => 'КХЛ', 'url' => ['/khl/default/index']],
             ],

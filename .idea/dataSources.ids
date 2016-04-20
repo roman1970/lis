@@ -372,6 +372,7 @@
       <column name="currency_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="nominal" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="value" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="formatted_val" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="curr_history_ibfk_1" columns="currency_id" ref-table="currencies" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_curr_history_currency_id" unique="false" columns="currency_id"/>
