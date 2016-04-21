@@ -55,7 +55,7 @@ class ProductsController extends BackEndController
 
             if(isset($uploadImg->img))
                 $model->photo = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
-            $model->save(false);
+            $model->save();
 
             return $this->redirect(Url::toRoute('products/index'));
 
@@ -96,7 +96,7 @@ class ProductsController extends BackEndController
 
             if(isset($uploadImg->img))
                 $model->photo = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
-            $model->save(false);
+            $model->save();
 
             return $this->redirect(Url::toRoute('products/index'));
         } else {

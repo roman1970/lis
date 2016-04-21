@@ -385,6 +385,8 @@
       <column name="char_code" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="curr_history_ibfk_1" table="curr_history" schema="" catalog="plis" columns="currency_id"/>
+      <exported-key name="products_ibfk_3" table="products" schema="" catalog="plis" columns="currency_out"/>
+      <exported-key name="products_ibfk_2" table="products" schema="" catalog="plis" columns="currency"/>
     </table>
     <table name="dom_cult" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -1084,10 +1086,17 @@
       <column name="price" sqlType="DECIMAL" precision="10" scale="2" nullable="true" jdbcType="3"/>
       <column name="photo" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="description" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="formatted_val" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="currency" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MzU="/>
+      <column name="currency_out" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MzU="/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="products_ibfk_3" columns="currency_out" ref-table="currencies" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="products_ibfk_1" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="products_ibfk_2" columns="currency" ref-table="currencies" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="orders_ibfk_1" table="orders" schema="" catalog="plis" columns="prod_id"/>
       <index name="ux_products_cat_id" unique="false" columns="cat_id"/>
+      <index name="ux_products_currency" unique="false" columns="currency"/>
+      <index name="ux_products_currency_out" unique="false" columns="currency_out"/>
     </table>
     <table name="profile" schema="" catalog="plis" type="TABLE">
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>

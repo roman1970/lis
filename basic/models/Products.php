@@ -34,8 +34,8 @@ class Products extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'cat_id', 'photo', 'description'], 'required'],
-            [['cat_id'], 'integer'],
+            [['name', 'cat_id', 'description', 'currency', 'currency_out'], 'required'],
+            [['cat_id', 'currency', 'currency_out'], 'integer'],
             [['price'], 'number'],
             [['description'], 'string'],
             [['name', 'photo'], 'string', 'max' => 255],
@@ -55,6 +55,8 @@ class Products extends \yii\db\ActiveRecord
             'price' => 'Price',
             'photo' => 'Photo',
             'description' => 'Description',
+            'currency' => 'Валюта ввода',
+            'currency_out' => 'Валюта вывода'
         ];
     }
 
@@ -77,7 +79,13 @@ class Products extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            MoneyBehavior::className()
+            'convertRubToRubCop' => [
+                'class' => MoneyBehavior::className(),
+                'money_in_rub' => 'price',
+                'prop_out' => 'formatted_val',
+                'currency_prop' => 'currency',
+                'currency_out_prop' => 'currency_out'
+            ]
         ];
     }
 }

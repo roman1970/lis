@@ -43,6 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'description')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?= $form->field($model, 'price')->textInput()  ?>
 
+            <?= $form->field($model, 'currency')->dropDownList(ArrayHelper::map(\app\models\Currencies::find()->all(),'id','char_code'),
+                ['prompt' => 'Выбрать валюту'])
+            ?>
+            <?= $form->field($model, 'currency_out')->dropDownList(ArrayHelper::map(\app\models\Currencies::find()->all(),'id','char_code'),
+                ['prompt' => 'Выбрать валюту'])
+            ?>
+
             <?= $form->field($uploadImg, 'img')->fileInput() ?>
 
             <div class="form-group">
