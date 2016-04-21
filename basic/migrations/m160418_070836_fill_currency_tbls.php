@@ -9,7 +9,7 @@ class m160418_070836_fill_currency_tbls extends Migration
     {
         for($i=0; $i<45; $i++) {
 
-            $data = Helper::getDateIntervalYesterday(new \DateTime(), $i);
+            $data = Helper::getDateIntervalYesterdayInDashOrSlashFormat(new \DateTime(), $i, 'slash');
 
             $url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.$data;
 
