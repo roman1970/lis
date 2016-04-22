@@ -13,10 +13,12 @@ class m150824_123109_create_table_country extends Migration
             'name' => 'varchar(255) NOT NULL',
         ), 'DEFAULT CHARSET=utf8 ENGINE = INNODB'
         );
+
         $this->createIndex("ux_cities_country_id", '{{cities}}', "country_id", false);
+        */
 
         $this->db->createCommand('ALTER TABLE {{cities}} ADD FOREIGN KEY (`country_id`) REFERENCES  {{country}} (`id`) ON DELETE CASCADE ON UPDATE NO ACTION ;')->execute();
-        */
+
     }
 
     public function down()

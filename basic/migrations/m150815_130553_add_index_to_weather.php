@@ -7,7 +7,9 @@ class m150815_130553_add_index_to_weather extends Migration
 {
     public function up()
     {
-        //$this->createIndex("ux_weather_city_id", '{{weather}}', "city_id", false);
+
+        $this->db->createCommand("ALTER TABLE {{weather}} CHANGE {{country_id}} {{city_id}} INT DEFAULT 1")->execute();
+        $this->createIndex("ux_weather_city_id", '{{weather}}', "city_id", false);
         $this->db->createCommand('ALTER TABLE {{weather}} ADD FOREIGN KEY (`city_id`) REFERENCES  {{cities}} (`id`) ON DELETE CASCADE ON UPDATE NO ACTION ;')->execute();
     }
 
