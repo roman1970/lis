@@ -28,3 +28,4 @@ phpunit.phar
 
 sql/
 worldcup.sql
+tests/_output/*
