@@ -9,7 +9,10 @@ require(YII_APP_BASE_PATH . '/vendor/yiisoft/yii2/Yii.php');
 
 Yii::setAlias('@tests', dirname(__DIR__));
 
-$config = require(__DIR__ . '/../config/web.php');
+$config = \yii\helpers\ArrayHelper::merge(
+    require(__DIR__ . '/../config/web.php'),
+    require(__DIR__ . '/../config/tests.php')
+);
 
 //(new yii\web\Application($config))->run();
 

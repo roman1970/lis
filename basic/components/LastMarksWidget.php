@@ -17,7 +17,7 @@ class LastMarksWidget extends Widget
     {
         parent::init();
         if ($this->user_id != null) {
-            for($i=0; $i < 7; $i++) {
+            for($i=0; $i < 15; $i++) {
                 $this->marks[$this->getPastDates($i)] =
                     ($mrk = MarkIt::getAverageForDateAndUser($this->getPastDates($i), $this->user_id)) ? $mrk : 0;
 

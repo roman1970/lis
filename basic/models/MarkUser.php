@@ -32,8 +32,8 @@ class MarkUser extends \yii\db\ActiveRecord
             [['name'], 'string', 'max' => 255],
             [['name', 'pseudo'], 'unique', 'targetAttribute' => ['name', 'pseudo']],
             [['pseudo'], 'string', 'max' => 255],
-           // ['name', 'match', 'pattern' => '/^[a-z]\w*$/i'],
-           // ['pseudo', 'match', 'pattern' => '/^[a-z]\w*$/i']
+            ['name', 'match', 'pattern' => '/^[a-z]\w*$/i'],
+            ['pseudo', 'match', 'pattern' => '/^[a-z]\w*$/i']
         ];
     }
 
