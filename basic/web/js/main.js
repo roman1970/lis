@@ -852,4 +852,14 @@ function getSums(arr) {
 // Например, в качестве «свёртки» мы хотим получить сумму всех элементов массива.
 
 
+// Узнать количество реально переданных аргументов можно по значению arguments.length:
+function isArgument(){
+    $("#code_39").show();
+    function f(x) {
+        alert( arguments.length ? 1 : 0 );
+    }
+
+    f(undefined); // 1
+    f(); // 0
+}
 

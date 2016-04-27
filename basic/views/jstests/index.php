@@ -881,6 +881,18 @@ $this->title = 'Тесты';
                         return result;
                     }
                 </pre>
+        <a onclick="isArgument()" class="testLink">39 Аргумент или неопределенность&</a><br>
+                <pre class="brush: js;" id="code_39">
+                    // Узнать количество реально переданных аргументов можно по значению arguments.length:
+                        function isArgument(){
+                            function f(x) {
+                                alert( arguments.length ? 1 : 0 );
+                            }
+
+                            f(undefined); // 1
+                            f(); // 0
+                        }
+                </pre>
     </div>
 
 
