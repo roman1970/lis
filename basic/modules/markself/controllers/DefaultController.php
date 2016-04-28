@@ -152,10 +152,12 @@ class DefaultController extends FrontEndController
 
                     if($model->validate()) {
                         try {
-                            if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
+                           if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
+
 
                         } catch (\ErrorException $e) {
-                            return "Не получилось(((... ";
+
+                            return "Не получилось(((... " . $e->getMessage();
 
                         }
                     }
@@ -163,7 +165,21 @@ class DefaultController extends FrontEndController
 
                 }
             }
+            try {
+                $this->addRandActionToSomeUser($response, 8);
+            } catch (\ErrorException $e) {
+                return $e->getMessage() . "У друга 8";
+            }
+            try {
+                $this->addRandActionToSomeUser($response, 9);
+            } catch (\ErrorException $e) {
+                return $e->getMessage() . "У друга 9";
+            }
+
             return 1;
+
+
+
 
 
             //$date = Yii::$app->formatter->asDate(Yii::$app->getRequest()->getQueryParam('date'), "dd-mm-yyyy");
@@ -226,6 +242,40 @@ class DefaultController extends FrontEndController
         }
 
         return false;
+
+    }
+
+
+    /**
+     * Добавление случайно оцененных действий пользователю
+     * @param array $response_for_core_user
+     * @param int $user_id
+     * @return bool|string
+     */
+    private function addRandActionToSomeUser($response_for_core_user, $user_id){
+        for($i=0; $i < 15; $i++ ){
+            if(isset($response_for_core_user[$i])){
+                $model = new MarkIt();
+                $model->ball = rand(3, 5);
+                $model->action_id = $response_for_core_user[$i]['act'];
+                $model->user_id = $user_id;
+                $model->date = date('Y-m-d', time() - 60 * 60 * 24);
+
+
+                if($model->validate()) {
+                    try {
+                        if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
+
+                    } catch (\ErrorException $e) {
+                        return "Не получилось(((... ";
+
+                    }
+                }
+                else return "Ошибка при заполнении формы - оценки должны быть 1,2,3,4 или 5";
+
+            }
+        }
+        return true;
 
     }
 

@@ -182,8 +182,10 @@ class KhlController extends Controller
     public function actionAddNewMatches()
     {
 
-        $url = Url::to("@app/commands/test.html");
+        $url = Url::to("/home/romanych/football_hockey_bds/khl/khl_2015_2016_08");
+
         $content = file_get_contents($url);
+        //echo $content; exit;
         $thisMatch = [];
         $matchId = 0;
 
@@ -214,6 +216,7 @@ class KhlController extends Controller
             } catch (ErrorException $e) {
                 $game->player_off = $e->getMessage();
             }
+            //print_r($thisMatch); exit;
 
             $game->shot_in_goals_host = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_host"]);
             $game->shot_in_goals_guest = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_guest"]);
@@ -365,12 +368,12 @@ class KhlController extends Controller
 
     public static function clearString($string){
 
-        return  preg_replace("/[^СДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
+        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
     }
 
     public static function clearTwoWordsString($string){
 
-        return  self::manySReplaceByOne(preg_replace("/[^СДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюяA-Za-z \t-]+/", "", $string));
+        return  self::manySReplaceByOne(preg_replace("/[^ЦСДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюяA-Za-z \t-]+/", "", $string));
     }
 
     public static function clearSubject($string){
@@ -401,7 +404,7 @@ class KhlController extends Controller
      * @throws
      * статусы 1 - гол, 2 - 2х минутное удаление, 3 - гол в серии булитов, 4 - нереализованный буллит
      */
-    private static function eventOfMatchInArray($match)
+    private function eventOfMatchInArray($match)
     {
         $dom = new \DomDocument();
         libxml_use_internal_errors(true);
@@ -624,19 +627,21 @@ class KhlController extends Controller
         }
 
         $stats = $xpath->query(".//*/div[@id='tab-statistics-0-statistic']")->item(0)->firstChild;
-        //var_dump($stats);
+        var_dump($stats);
+
 
         while ($stats = $stats->nextSibling) {
-            //var_dump($stats);
+            var_dump($stats); exit;
             if($stats->childNodes) {
 
                 foreach ($stats->childNodes as $nodde) {
-                    //var_dump($nodde);
+                    //var_dump($nodde); exit;
                     if($nodde->childNodes) {
 
                         foreach ($nodde->childNodes as $nod) {
-                           //var_dump($nod); exit;
+
                             if($nod->childNodes) {
+                                //var_dump($nod); exit;
 
                                 foreach ($nod->childNodes as $n) {
 

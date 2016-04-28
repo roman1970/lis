@@ -893,6 +893,28 @@ $this->title = 'Тесты';
                             f(); // 0
                         }
                 </pre>
+        <a onclick="argumentSum()" class="testLink">40 Сумма Аргументов </a><br>
+                <pre class="brush: js;" id="code_40">
+                  // функция, которая возвращает сумму всех своих аргументов:
+                        function argumentSum(){
+                            $("#code_40").show();
+                            alert(arg_sum() ); // 0
+                            alert(arg_sum(1) ); // 1
+                            alert(arg_sum(1, 2) ); // 3
+                            alert(arg_sum(1, 2, 3) ); // 6
+                            alert(arg_sum(1, 2, 3, 4) ); // 10
+                        }
+
+                        function arg_sum() {
+                            var result = 0;
+
+                            for (var i = 0; i < arguments.length; i++) {
+                                result += arguments[i];
+                            }
+
+                            return result;
+                        }
+                </pre>
     </div>
 
 
