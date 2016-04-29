@@ -165,6 +165,21 @@ class DefaultController extends FrontEndController
 
                 }
             }
+            $user_mod = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+
+            $average  = MarkIt::getAverageForDateAndUser($date, Yii::$app->getRequest()->getQueryParam('user'));
+
+            try {
+                $deposite = (int)round(($average - 4) * 100);
+                $user_mod->money += $deposite;
+                $user_mod->update(false);
+
+            } catch (\ErrorException $e) {
+                return $e->getMessage() . " ошибка кошелька";
+            }
+
+
             try {
                 $this->addRandActionToSomeUser($response, 8);
             } catch (\ErrorException $e) {

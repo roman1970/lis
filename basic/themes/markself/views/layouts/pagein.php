@@ -35,7 +35,9 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Оцени себя, '. $this->context->current_user->name,
+        'brandLabel' => 'Оцени себя, '. $this->context->current_user->name .
+            ',<span style="color:yellow"> В твоём кошельке ' .
+            round(\app\models\MarkUser::findOne($this->context->current_user->id)->money) . ' Р</span>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
