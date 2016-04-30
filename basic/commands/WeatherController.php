@@ -249,7 +249,12 @@ class WeatherController extends Controller
 
             $url =  'http://export.yandex.ru/weather-ng/forecasts/'.$cityIn->yndid.'.xml';
             //echo $url; exit;
-            $xml = simplexml_load_file($url);
+            try {
+                $xml = simplexml_load_file($url);
+            } catch (\ErrorException $e) {
+                echo $e->getMessage();
+                continue;
+            }
             $this->temp = $xml->fact->temperature;
             $this->weather_type = $xml->fact->weather_type;
             $this->wind_direction = $xml->fact->wind_direction;
@@ -261,6 +266,24 @@ class WeatherController extends Controller
             $this->putDatasInTableNew();
         }
 
+    }
+
+    public function actionOpenWeatherMap(){
+
+        $url =  'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=1a415db9cc13a7d753bcc5fc25ee5972';
+        $contents = file_get_contents($url);
+        echo $contents;
+
+    }
+
+    public function actionFillCityOWM(){
+        $url = "/home/romanych/public_html/plis/basic/data/citylist.txt";
+        $contents = file($url);
+        foreach ($contents as $cont) {
+            var_dump(json_decode($cont));
+        }
+
+        //echo $contents;
     }
 
     public function __toString() {
