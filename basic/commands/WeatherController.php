@@ -280,7 +280,20 @@ class WeatherController extends Controller
         $url = "/home/romanych/public_html/plis/basic/data/citylist.txt";
         $contents = file($url);
         foreach ($contents as $cont) {
-            var_dump(json_decode($cont));
+            $city = new City();
+            $cont = json_decode($cont, true); // as array
+            $city->own_id = $cont['_id'];
+            $city->name = $cont['name'];
+            try {
+                $city->country_id = Country::find()->where(['iso_code' => mb_strtolower($cont['country'])])->one()->id;
+            } catch (\ErrorException $e) {
+                $city->country_id = 236;
+            }
+            $city->lon = $cont['coord']['lon'];
+            $city->lat = $cont['coord']['lat'];
+            //print_r($city->lon);
+            //print_r($cont['country']);
+            $city->save(false);
         }
 
         //echo $contents;

@@ -326,6 +326,9 @@
       <column name="part" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="region" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="yndid" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="own_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="lon" sqlType="DECIMAL" precision="10" scale="6" nullable="true" jdbcType="3" def="MC4wMDAwMDA="/>
+      <column name="lat" sqlType="DECIMAL" precision="10" scale="6" nullable="true" jdbcType="3" def="MC4wMDAwMDA="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="cities_ibfk_1" columns="country_id" ref-table="country" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="chl_teams_ibfk_1" table="chl_teams" schema="" catalog="plis" columns="city_id"/>
