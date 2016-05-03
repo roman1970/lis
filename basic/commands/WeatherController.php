@@ -166,7 +166,7 @@ class WeatherController extends Controller
     }
 
     public function actionGetYHWeather($code='RSXX0063'){
-        $cities= Cities::findAll(['country_id' => 0]);
+        $cities= City::findAll(['country_id' => 162]);
         foreach($cities as $city) {
 
             if($city->yhcode) {
@@ -248,6 +248,7 @@ class WeatherController extends Controller
             $cityIn = City::findOne(['name' => $city]);
 
             $url =  'http://export.yandex.ru/weather-ng/forecasts/'.$cityIn->yndid.'.xml';
+            //$url =  'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=1a415db9cc13a7d753bcc5fc25ee5972';
             //echo $url; exit;
             try {
                 $xml = simplexml_load_file($url);
@@ -272,28 +273,40 @@ class WeatherController extends Controller
 
         $url =  'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=1a415db9cc13a7d753bcc5fc25ee5972';
         $contents = file_get_contents($url);
-        echo $contents;
+        //foreach ($contents as $cont) {
+            $cont = json_decode($contents, true); // as array
+            print_r($cont);
+      //  }
 
     }
 
     public function actionFillCityOWM(){
         $url = "/home/romanych/public_html/plis/basic/data/citylist.txt";
         $contents = file($url);
+        $f = 0;
         foreach ($contents as $cont) {
-            $city = new City();
+
             $cont = json_decode($cont, true); // as array
-            $city->own_id = $cont['_id'];
-            $city->name = $cont['name'];
-            try {
-                $city->country_id = Country::find()->where(['iso_code' => mb_strtolower($cont['country'])])->one()->id;
-            } catch (\ErrorException $e) {
-                $city->country_id = 236;
+            if($f) {
+                $city = new City();
+
+                $city->own_id = $cont['_id'];
+                $city->name = $cont['name'];
+                try {
+                    $city->country_id = Country::find()->where(['iso_code' => mb_strtolower($cont['country'])])->one()->id;
+                } catch (\ErrorException $e) {
+                    $city->country_id = 236;
+                }
+                $city->lon = $cont['coord']['lon'];
+                $city->lat = $cont['coord']['lat'];
+                //print_r($city->lon);
+                //print_r($cont['country']);
+                $city->save(false);
             }
-            $city->lon = $cont['coord']['lon'];
-            $city->lat = $cont['coord']['lat'];
-            //print_r($city->lon);
-            //print_r($cont['country']);
-            $city->save(false);
+            echo $cont['_id'];
+
+            if($cont['_id'] == 2644932)
+                $f = 1;
         }
 
         //echo $contents;
