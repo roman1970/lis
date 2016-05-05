@@ -65,6 +65,10 @@ $config = [
             'errorAction' => 'site/error',
         ],
 
+        'cart' => [
+            'class' => 'app\components\ShoppingCart'
+        ],
+
         /*
          * 'view' => [
             'theme' => [

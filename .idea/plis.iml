@@ -57,6 +57,7 @@
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-swiftmailer" />
           <root url="file://$MODULE_DIR$/basic/vendor/swiftmailer/swiftmailer" />
           <root url="file://$MODULE_DIR$/basic/vendor/kartik-v/yii2-krajee-base" />
+          <root url="file://$USER_HOME$/.composer/vendor" />
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-jui" />
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-faker" />
           <root url="file://$MODULE_DIR$/basic/vendor/creocoder/yii2-nested-sets" />
@@ -88,6 +89,7 @@
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-swiftmailer" />
           <root url="file://$MODULE_DIR$/basic/vendor/swiftmailer/swiftmailer" />
           <root url="file://$MODULE_DIR$/basic/vendor/kartik-v/yii2-krajee-base" />
+          <root url="file://$USER_HOME$/.composer/vendor" />
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-jui" />
           <root url="file://$MODULE_DIR$/basic/vendor/yiisoft/yii2-faker" />
           <root url="file://$MODULE_DIR$/basic/vendor/creocoder/yii2-nested-sets" />
