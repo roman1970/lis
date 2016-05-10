@@ -1073,6 +1073,10 @@
       <column name="piaterochka" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="radiotehnika" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="levis" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="zavhoz" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="neposedy" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="tomas_munc" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="marka_rus" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="prod_user" schema="" catalog="plis" type="TABLE">

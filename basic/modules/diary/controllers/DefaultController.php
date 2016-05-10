@@ -1637,7 +1637,7 @@ distance, fatburned, steph1, steph2, steph3, steph4, steph5, steph6, steph7, ste
           '$altn1', '$altn2', '$altn3', '$altn4', '$altn5', '$alkg', '$gn', '$nesport', '$rab', '$ocenka', '$srskor', '$date',
            '$ds')")or die("Error in sql: <br>$sql<br>" . mysql_error());
 
-        $result = mysql_query("INSERT INTO prod (year, day, month, dd, salatmastot, banantot, bulkatot, garkruptot,
+        $result = mysql_query("INSERT INTO prod2 (year, day, month, dd, salatmastot, banantot, bulkatot, garkruptot,
 karmastot, kashatot, konftot, kurtot, makartot, maslotot, ogurtot, peltot, pechtot, pechenietot, pirogtot, pybtot,
 salatovtot, sahartot, sladtot, supzhirtot, suppostot, syrkolbtot, fruttot, hlebtot, morozhtot, shoktot, totkk, totgr,
  tottot, alk, bat, bil, bol, dor, doshirab, zhvach, internet, canc, kvar, kolbas, koncer, kofe, krup, makar, maslorast,
