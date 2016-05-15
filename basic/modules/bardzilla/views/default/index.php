@@ -19,6 +19,7 @@
 
             <div class="col-md-2 col-sm-12 col-xs-12 col-lg-2" >
 
+
             <?php $items = \app\models\Categories::findOne(['name' => $cat->name]);
             $leaves = $items->leaves()->all();
             if($leaves) : ?>
@@ -42,6 +43,12 @@
 
 
     <?php endforeach; ?>
+                <?php /* Radio R
+                <audio autoplay="autoplay" >
+                   <source src='http://localhost:8000/ices' type='audio/mpeg'>
+                </audio>
+                */
+                ?>
 
 
     </div>

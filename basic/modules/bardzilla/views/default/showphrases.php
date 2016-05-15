@@ -25,6 +25,7 @@
     bounce.applyTo(document.querySelectorAll(".phrasa"));
     // or with jQuery: bounce.applyTo($(".animation-target"));
 </script>
+
 <?php if(isset($articles)): ?>
     <?php foreach($articles as $article): ?>
 
