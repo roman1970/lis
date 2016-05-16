@@ -40,7 +40,7 @@ class MarkIt extends \yii\db\ActiveRecord
             //[['ball'], 'string'],
             ['ball', 'in','range'=>range(1,5)],
             [['user_id', 'action_id'], 'required'],
-            [['user_id', 'action_id'], 'integer'],
+            [['user_id', 'action_id', 'ball'], 'integer'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarkUser::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['action_id'], 'exist', 'skipOnError' => true, 'targetClass' => MarkActions::className(), 'targetAttribute' => ['action_id' => 'id']],
         ];

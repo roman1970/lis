@@ -5,6 +5,7 @@ namespace app\commands;
 use app\models\Currencies;
 use app\models\CurrHistory;
 use yii\console\Controller;
+use yii\helpers\Url;
 use Yii;
 use app\components\Helper;
 use app\components\TranslateHelper;
@@ -45,6 +46,82 @@ class ParsersController extends Controller
         if ($test) echo 'Данные в файл успешно занесены.';
         else echo 'Ошибка при записи в файл.';
         fclose($fp); //Закрытие файла
+
+
+    }
+
+    public function  actionSeParser(){
+
+        //Error_Reporting(E_ALL & ~E_NOTICE);
+        header('Content-Type: text/html; charset=utf-8');
+        $head = file_get_contents(Url::to("@app/commands/header.html"));
+        $year = 2016;
+        $m = date("m");
+        $d = date("d");
+        $date = "$year-$m-$d";
+        $url = "http://www.sport-express.ru/newspaper/$date/";
+        $content = file_get_contents($url);
+        if ($pos = strpos($content, 'Номер за это число не выходил'))
+                   {
+                       $handle = fopen("/home/romanych/se/$year/SE$date-nevyh.txt", "a");
+                       fwrite($handle, 'Номер за это '. $date .' число не выходил');
+                       fclose($handle);
+                       die();
+                   }
+            $handle = fopen("/home/romanych/se/$year/se$date.html", "a");
+            fwrite($handle, $head);
+
+            for ($j = 1; $j <= 16; $j++) {
+
+                for ($i = 1; $i <= 10; $i++) {
+
+                    $url = "http://www.sport-express.ru/newspaper/$date/$j" . "_$i/?view=page";
+
+                    try {
+                        $content = file_get_contents($url);
+                    } catch (\ErrorException $e) {
+                        continue;
+                    }
+
+                    $tag_in = '<div class="art_item">';
+                    //$tag_in2 = '<b><font color="white">ФУТБОЛ</font></b>';
+                    $tag_out = '<div class="se2_paginator">';
+
+
+
+                    //отрезка нужного куска сайта
+                    $position = strpos($content, $tag_in);
+                    /*
+                    if (!$position)
+                        $position = strpos($content, $tag_in2);
+                    if (!$position)
+                        continue;
+                    */
+                    $content = substr($content, $position);
+                    $position = strpos($content, $tag_out);
+                    $content = substr($content, 0, $position);
+                    /*
+
+                    $content = str_replace('</p>', '  ', $content);
+                    $content = str_replace('</a>', '  ', $content);
+                    $content = str_replace('</td>', '  ', $content);
+                    $content = str_replace('</a>', '  ', $content);
+                    $content = str_replace('<br />', '  ', $content);
+                    $content = str_replace('<br />', '  ', $content);
+                    $content = str_replace('</b>', '  ', $content);
+                    $content = strip_tags($content);
+                    */
+
+                    echo 'Страница'. $j .','. 'Статья'. $i . PHP_EOL;
+                    $content = iconv("windows-1251", "UTF-8", $content);
+
+                    fwrite($handle, $content);
+
+                }
+            }
+            fclose($handle);
+            if (filesize("/home/romanych/se/$year/se$date.html") == 0)
+                unlink("/home/romanych/se/$year/se$date.html");
 
 
     }
