@@ -14,6 +14,7 @@ use app\components\TranslateHelper;
 class ParsersController extends Controller
 {
     public $arr = [];
+    public static $str = '';
 
     public function actionIndex()
     {
@@ -50,6 +51,9 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Спорт-Экспресс парсер
+     */
     public function  actionSeParser(){
 
         //Error_Reporting(E_ALL & ~E_NOTICE);
@@ -112,7 +116,8 @@ class ParsersController extends Controller
                     $content = strip_tags($content);
                     */
 
-                    echo 'Страница'. $j .','. 'Статья'. $i . PHP_EOL;
+
+                    echo 'Страница '. $j .', '. 'Статья '. $i . PHP_EOL;
                     $content = iconv("windows-1251", "UTF-8", $content);
 
                     fwrite($handle, $content);
@@ -122,6 +127,14 @@ class ParsersController extends Controller
             fclose($handle);
             if (filesize("/home/romanych/se/$year/se$date.html") == 0)
                 unlink("/home/romanych/se/$year/se$date.html");
+
+        echo 'Генерим дерево'. PHP_EOL;
+        //генерим страницу с файловым деревом
+        $f_tree = fopen("/home/romanych/se/ftree.html", "w");
+        $this->directory_tree("/home/romanych/se", "2016/");
+        fwrite($f_tree, self::$str);
+        fclose($f_tree);
+
 
 
     }
@@ -174,6 +187,70 @@ class ParsersController extends Controller
 
         }
 
+
+    }
+
+    public function actionMusicDirGenerator(){
+        echo 'Генерим дерево'. PHP_EOL;
+        //генерим страницу с файловым деревом
+        $f_tree = fopen("/home/romanych/www/vrs/music.html", "w");
+        self::$str = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+        $this->directory_tree("/home/romanych/music/Music", "music/");
+        fwrite($f_tree, self::$str);
+        fclose($f_tree);
+    }
+
+    /**
+     * Кэшит дерево директории
+     * @param string $dir
+     * @return string
+     */
+
+    public static function directory_tree($dir) {
+        //$add = $addDir;
+        $list = scandir($dir);
+        //var_dump($list); exit;
+
+
+        if (is_array($list)) {
+            self::$str .= '<ul>';
+            $list = array_diff($list, array('.', '..'));
+            if ($list) {
+                $i = 0;
+
+                foreach ($list as $name) {
+                    $i++;
+                    echo $i . PHP_EOL;
+                    //if ($i > 5) break;
+                    $path = $dir . '/' . $name;
+                    //var_dump($path);
+                    $is_dir = is_dir($path);
+                    self::$str .= '<li>';
+                    /*
+                    $ref = str_replace('/home/romanych','',$path);
+
+                    if($name != 'ftree.html') {
+
+                        self::$str .= '<a href="'.$ref.'">'. htmlspecialchars($name). '</a>';
+                    }
+                    */
+                    if($name != 'ftree.html') {
+                        self::$str .= '<a href="2016/'.$name.'">'. htmlspecialchars($name). '</a>';
+                    }
+
+
+                    if ($is_dir)
+                        self::directory_tree($path);
+                    //var_dump(self::$str);
+
+                    self::$str .= '</li>';
+                }
+                self::$str .= '</ul>';
+            }
+        }
+        else {
+            self::$str .= '<i>не могу прочитать</i>';
+        }
 
     }
 }
