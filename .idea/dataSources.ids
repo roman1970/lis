@@ -333,6 +333,7 @@
       <foreign-key name="cities_ibfk_1" columns="country_id" ref-table="country" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="chl_teams_ibfk_1" table="chl_teams" schema="" catalog="plis" columns="city_id"/>
       <exported-key name="weather_ibfk_1" table="weather" schema="" catalog="plis" columns="city_id"/>
+      <exported-key name="weathernew_ibfk_1" table="weathernew" schema="" catalog="plis" columns="city_id"/>
       <index name="ux_cities_country_id" unique="false" columns="country_id"/>
     </table>
     <table name="comments" schema="" catalog="plis" type="TABLE">
@@ -1640,6 +1641,32 @@
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="weather_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_weather_city_id" unique="false" columns="city_id"/>
+    </table>
+    <table name="weathernew" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="main" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="icon" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="temp" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="temp_min" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="temp_max" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="pressure" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="humidity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="visibility" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wind_speed" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wind_deg" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sea_level" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rain_3h" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="grnd_level" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="clouds" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sunrise" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sunset" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="res_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="weathernew_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_weathernew_city_id" unique="false" columns="city_id"/>
     </table>
   </data-source>
   <data-source name="MySQL - @localhost" uuid="cffa2510-1a04-45ec-8b81-3cbfc9f7ec96">

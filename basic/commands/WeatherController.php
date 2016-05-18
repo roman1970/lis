@@ -3,10 +3,10 @@
 namespace app\commands;
 use app\models\City;
 use app\models\Country;
+use app\models\Weathernew;
 use Yii;
 use yii\console\Controller;
 use app\components\rbac\UserRoleRule;
-use app\models\Cities;
 use app\models\Weather;
 
 class WeatherController extends Controller
@@ -37,6 +37,7 @@ class WeatherController extends Controller
     public $units;
 
     private $cities;
+    private $cities_map;
     public $cityId;
 
     public $y;
@@ -45,6 +46,8 @@ class WeatherController extends Controller
     public $dod;
     public $chas;
     public $date;
+
+    //public $cities = [];
     
 
    public function init()
@@ -88,6 +91,14 @@ class WeatherController extends Controller
            'Ханты-Мансийск',
            'Анадырь',
            'Ярославль'
+       ];
+       $this->cities_map = [
+           'London' => 'uk',
+           'Novosibirsk' => 'ru',
+           'Moscow' => 'ru',
+           'Muenchen' => 'de',
+           'Sankt-Peterburg' => 'ru'
+
        ];
        $cityUrls = [
            "http://meteoinfo.ru/pogoda/russia/novosibirsk-area/novosibirsk",
@@ -269,14 +280,142 @@ class WeatherController extends Controller
 
     }
 
+    /**
+     * Берем погоду с openweathermap.org
+     */
     public function actionOpenWeatherMap(){
 
-        $url =  'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=1a415db9cc13a7d753bcc5fc25ee5972';
-        $contents = file_get_contents($url);
-        //foreach ($contents as $cont) {
+
+        foreach ($this->cities_map as $city => $country) {
+            $model = new Weathernew();
+            $url =  'http://api.openweathermap.org/data/2.5/weather?q='.$city.','.$country.'&appid=1a415db9cc13a7d753bcc5fc25ee5972';
+            $contents = file_get_contents($url);
             $cont = json_decode($contents, true); // as array
-            print_r($cont);
-      //  }
+
+            try {
+                $model->main = $cont['weather'][0]['main'];
+            } catch (\ErrorException $e) {
+                $model->main = 'empty';
+            }
+
+            try {
+                $model->description = $cont['weather'][0]['description'];
+            } catch (\ErrorException $e) {
+                $model->description = 'empty';
+            }
+
+            try {
+                $model->icon = $cont['weather'][0]['icon'];
+            } catch (\ErrorException $e) {
+                $model->icon = 'empty';
+            }
+
+            try {
+                $model->temp = $cont['main']['temp'];
+            } catch (\ErrorException $e) {
+                $model->temp = 0;
+            }
+
+            try {
+                $model->temp_min = $cont['main']['temp_min'];
+            } catch (\ErrorException $e) {
+                $model->temp_min = 0;
+            }
+
+            try {
+                $model->temp_max = $cont['main']['temp_max'];
+            } catch (\ErrorException $e) {
+                $model->temp_max = 0;
+            }
+
+            try {
+                $model->pressure = $cont['main']['pressure'];
+            } catch (\ErrorException $e) {
+                $model->pressure = 0;
+            }
+
+            try {
+                $model->humidity = $cont['main']['humidity'];
+            } catch (\ErrorException $e) {
+                $model->humidity = 0;
+            }
+
+            try {
+                $model->visibility = $cont['visibility'];
+            } catch (\ErrorException $e) {
+                $model->visibility = 0;
+            }
+
+            try {
+                $model->wind_speed = $cont['wind']['speed'];
+            } catch (\ErrorException $e) {
+                $model->wind_speed = 0;
+            }
+
+            try {
+                $model->wind_deg = $cont['wind']['deg'];
+            } catch (\ErrorException $e) {
+                $model->wind_deg = 0;
+            }
+
+            try {
+                $model->sea_level = $cont['main']['sea_level'];
+            } catch (\ErrorException $e) {
+                $model->sea_level = 0;
+            }
+
+            try {
+                $model->rain_3h = $cont['rain']['3h'];
+            } catch (\ErrorException $e) {
+                $model->rain_3h = 0;
+            }
+
+            try {
+                $model->grnd_level = $cont['main']['grnd_level'];
+            } catch (\ErrorException $e) {
+                $model->grnd_level = 0;
+            }
+
+            try {
+                $model->clouds = $cont['clouds']['all'];
+            } catch (\ErrorException $e) {
+                $model->clouds = 0;
+            }
+
+            try {
+                $model->time = $cont['dt'];
+            } catch (\ErrorException $e) {
+                $model->time = 0;
+
+            }
+
+            try {
+                $model->sunset = $cont['sys']['sunset'];
+            } catch (\ErrorException $e) {
+                $model->sunset = 0;
+            }
+
+            try {
+                $model->sunrise = $cont['sys']['sunrise'];
+            } catch (\ErrorException $e) {
+                $model->sunrise = 0;
+            }
+
+            try {
+                $model->res_code = $cont['cod'];
+            } catch (\ErrorException $e) {
+                $model->res_code = 404;
+            }
+
+            try {
+                $model->city_id = City::find()->where("name like('%" . $city . "%')")->one()->id;
+            } catch (\ErrorException $e) {
+                $model->city_id = 7;  //default old Newcastl
+            }
+           // print_r($model);
+            $model->save(false);
+
+        };
 
     }
 
