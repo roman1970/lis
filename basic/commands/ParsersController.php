@@ -77,24 +77,24 @@ class ParsersController extends Controller
 
             for ($j = 1; $j <= 16; $j++) {
 
-                for ($i = 1; $i <= 10; $i++) {
+                for ($i = 1; $i <= 16; $i++) {
 
                     $url = "http://www.sport-express.ru/newspaper/$date/$j" . "_$i/?view=page";
 
                     try {
                         $content = file_get_contents($url);
                     } catch (\ErrorException $e) {
-                        continue;
+                        break;
                     }
 
-                    $tag_in = '<div class="art_item">';
-                    //$tag_in2 = '<b><font color="white">ФУТБОЛ</font></b>';
+                    //$tag_in = '<div class="art_item">';
+                    $tag_in = 'article_text publication blackcolor mt_30';
                     $tag_out = '<div class="se2_paginator">';
 
 
 
                     //отрезка нужного куска сайта
-                    $position = strpos($content, $tag_in);
+                    $position = strpos($content, $tag_in, strlen($tag_in));
                     /*
                     if (!$position)
                         $position = strpos($content, $tag_in2);
@@ -104,8 +104,8 @@ class ParsersController extends Controller
                     $content = substr($content, $position);
                     $position = strpos($content, $tag_out);
                     $content = substr($content, 0, $position);
-                    /*
 
+                    /*
                     $content = str_replace('</p>', '  ', $content);
                     $content = str_replace('</a>', '  ', $content);
                     $content = str_replace('</td>', '  ', $content);
@@ -113,8 +113,13 @@ class ParsersController extends Controller
                     $content = str_replace('<br />', '  ', $content);
                     $content = str_replace('<br />', '  ', $content);
                     $content = str_replace('</b>', '  ', $content);
-                    $content = strip_tags($content);
                     */
+
+                    $allowedTags='<a><br><b><h1><h2><h3><h4><i>' .
+                        '<img><li><ol><p><strong><table>' .
+                        '<tr><td><th><u><ul>';
+                    $content = strip_tags($content, $allowedTags);
+
 
 
                     echo 'Страница '. $j .', '. 'Статья '. $i . PHP_EOL;
@@ -131,7 +136,7 @@ class ParsersController extends Controller
         echo 'Генерим дерево'. PHP_EOL;
         //генерим страницу с файловым деревом
         $f_tree = fopen("/home/romanych/se/ftree.html", "w");
-        $this->directory_tree("/home/romanych/se", "2016/");
+        $this->directory_tree("/home/romanych/se");
         fwrite($f_tree, self::$str);
         fclose($f_tree);
 
@@ -226,18 +231,21 @@ class ParsersController extends Controller
                     //var_dump($path);
                     $is_dir = is_dir($path);
                     self::$str .= '<li>';
-                    /*
+
                     $ref = str_replace('/home/romanych','',$path);
+                    var_dump(strstr($path,'gsdata'));
 
-                    if($name != 'ftree.html') {
 
-                        self::$str .= '<a href="'.$ref.'">'. htmlspecialchars($name). '</a>';
-                    }
-                    */
+                    if(strstr($path,'gsdata')) break;
+                    if(strstr($path,'rutracker')) continue;
+
+                    self::$str .= '<a href="'.$ref.'">'. htmlspecialchars($name). '</a>';
+
+                    /*
                     if($name != 'ftree.html') {
                         self::$str .= '<a href="2016/'.$name.'">'. htmlspecialchars($name). '</a>';
                     }
-
+                    */
 
                     if ($is_dir)
                         self::directory_tree($path);
