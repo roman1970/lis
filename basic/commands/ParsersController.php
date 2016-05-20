@@ -235,17 +235,17 @@ class ParsersController extends Controller
                     $ref = str_replace('/home/romanych','',$path);
                     var_dump(strstr($path,'gsdata'));
 
-
-                    if(strstr($path,'gsdata')) break;
-                    if(strstr($path,'rutracker')) continue;
-
-                    self::$str .= '<a href="'.$ref.'">'. htmlspecialchars($name). '</a>';
-
                     /*
-                    if($name != 'ftree.html') {
-                        self::$str .= '<a href="2016/'.$name.'">'. htmlspecialchars($name). '</a>';
-                    }
+                   if(strstr($path,'gsdata')) break;
+                   if(strstr($path,'rutracker')) continue;
+
+                   self::$str .= '<a href="'.$ref.'">'. htmlspecialchars($name). '</a>';
+
                     */
+                   if($name != 'ftree.html') {
+                       self::$str .= '<a href="2016/'.$name.'">'. htmlspecialchars($name). '</a>';
+                   }
+
 
                     if ($is_dir)
                         self::directory_tree($path);
