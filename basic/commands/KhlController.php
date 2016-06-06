@@ -26,9 +26,9 @@ class KhlController extends Controller
         'Салават Юлаев' => 'Уфа',
         'Сибирь' => 'Новосибирск',
         'Динамо Мн' => 'Минск',
-        'Динамо Р' => 'Рига',
+        'Динамо Рига' => 'Рига',
         'Йокерит' => 'Хельсинки',
-        'Медвешчак' => 'Загреб',
+        'Медвешчак Загреб' => 'Загреб',
         'СКА' => 'Санкт-Петербург',
         'Слован' => 'Братислава',
         'Спартак' => 'Москва',
@@ -198,7 +198,7 @@ class KhlController extends Controller
             $head = file_get_contents(Url::to("@app/commands/header.html"));
             $match = $head . $chars[$m]; //добавляем хэдер
             $thisMatch = $this->headOfMatchInArray($match);
-            print_r($thisMatch); exit;
+            //print_r($thisMatch); exit;
 
             $game = new Khlmatches();
             $game->host_id = $thisMatch["host"];
@@ -216,7 +216,7 @@ class KhlController extends Controller
             } catch (ErrorException $e) {
                 $game->player_off = $e->getMessage();
             }
-            print_r($thisMatch); exit;
+           //print_r($thisMatch); exit;
 
             $game->shot_in_goals_host = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_host"]);
             $game->shot_in_goals_guest = self::getIdOfPeriodsAfterIn($thisMatch["shot_in_goals_guest"]);
@@ -310,7 +310,7 @@ class KhlController extends Controller
 
                 if ($event->is_host) {
 
-                    if(isset($gk[1]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
+                    if(isset($gk[1][0][$sub_sec]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
                     elseif(isset($gk[1]) && key($gk[1][1]) >= $event->minute) $event->gk = $gk[1][1][3900];
                     else
                         try {
@@ -320,7 +320,7 @@ class KhlController extends Controller
                         }
                 }
                 if($event->is_host == 0) { //var_dump($thisMatch["gk"]); exit;
-                    if(isset($gk[0]) && key($gk[0][0]) >= $event->minute) $event->gk = $gk[0][0][$sub_sec];
+                    if(isset($gk[0][0][$sub_sec]) && key($gk[0][0]) >= $event->minute) $event->gk = $gk[0][0][$sub_sec];
                     elseif(isset($gk[0]) && key($gk[0][1]) >= $event->minute) $event->gk = $gk[0][1][3900];
                     else
                         try {
@@ -368,12 +368,12 @@ class KhlController extends Controller
 
     public static function clearString($string){
 
-        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
+        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя \s-]+/", "", $string);
     }
 
     public static function clearTwoWordsString($string){
 
-        return  self::manySReplaceByOne(preg_replace("/[^ЦСДМЮЙВЛТХКАБНПРабвгдеёжзийклмнопрстуфхчцшщъыьэюяA-Za-z \t-]+/", "", $string));
+        return  self::manySReplaceByOne(preg_replace("/[^ЦСДМЮЙВЛТХКАБНПРЗабвгдеёжзийклмнопрстуфхчцшщъыьэюяA-Za-z \t-]+/", "", $string));
     }
 
     public static function clearSubject($string){
@@ -467,9 +467,12 @@ class KhlController extends Controller
                                             else
                                                 $arr[$i]['status'] = 1;
                                         }
+
                                         if($attribute->value == "icon-box penalty-missed") {
                                             $arr[$i]['status'] = 4;
                                         }
+                                         if(!isset($arr[$i]['status'])) $arr[$i]['status'] = 1;
+
                                         if($attribute->value == "subincident-penalty") {
                                             $arr[$i]['prim'] = $grandson->textContent;
                                         }
@@ -537,6 +540,7 @@ class KhlController extends Controller
         try {
             $arr['host'] = Khlteams::find()->where("name like('%" . self::clearTwoWordsString($node->textContent) . "%')")->one()->id;
             $arr['errors'][] = '';
+            //echo "Хозяин ".$node->textContent;
         } catch (ErrorException $e) {
             $arr['host'] = 29; //null
             $arr['errors'][] = 'Хозяин не схвачен: '.$node->textContent;
@@ -545,6 +549,7 @@ class KhlController extends Controller
         $node = $xpath->query(".//*/td[@class='tname-away logo-enable']")->item(0);
         try {
             $arr['guest'] = Khlteams::find()->where("name like('%" . self::clearString($node->firstChild->textContent) . "%')")->one()->id;
+            //echo "Гость ". $node->firstChild->textContent;
         } catch (ErrorException $e) {
             $arr['guest'] = 29; //null
             $arr['errors'][] = 'Гость не схвачен: '.$node->firstChild->textContent;
@@ -563,7 +568,8 @@ class KhlController extends Controller
             $arr['judges'] = substr($node->nextSibling->firstChild->textContent, strpos($node->nextSibling->firstChild->textContent,':')+2);
             $st = explode(',', $node->nextSibling->nextSibling->firstChild->textContent);
             $arr['audience'] = (int)self::sOff(substr($st[0], strpos($st[0],':')+2));
-            $arr['stadium'] = self::sOff(substr($st[1], strpos($st[1],':')+2));
+            if(isset($st[1]))$arr['stadium'] = self::sOff(substr($st[1], strpos($st[1],':')+2));
+            else $arr['stadium'] = '?';
 
         $node = $xpath->query(".//*/table[@id='parts']")->item(2)->firstChild;
         $first = $node->firstChild;
@@ -626,15 +632,20 @@ class KhlController extends Controller
 
         }
 
+
+
         $stats = $xpath->query(".//*/div[@id='tab-statistics-0-statistic']")->item(0)->firstChild;
         //var_dump($stats);
         if($stats->childNodes) {
+            $i = 0;
 
             foreach ($stats->childNodes as $nodde) {
                 //var_dump($nodde);
                 if($nodde->childNodes) {
 
+
                     foreach ($nodde->childNodes as $nod) {
+                        //echo $i;
 
                         if($nod->childNodes) {
                             //var_dump($nod);
@@ -693,10 +704,12 @@ class KhlController extends Controller
                                         if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
                                             && $new->nextSibling->textContent == "Силовые приемы")
                                             $arr['force_dodge_host'][0]  = (int)$new->textContent;
+                                        else $arr['force_dodge_host'][0]  = 0;
 
                                         if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
                                             && $new->previousSibling->textContent == "Силовые приемы")
                                             $arr['force_dodge_guest'][0]  = (int)$new->textContent;
+                                        else $arr['force_dodge_guest'][0]  = 0;
 
                                         if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
                                             && $new->nextSibling->textContent == "Выигр. вбрасывания")
@@ -719,12 +732,457 @@ class KhlController extends Controller
 
 
                         }
+                        //$i++;
 
                     }
+
                 }
+
             }
+
         }
-        print_r($arr); exit;
+
+        $stats = $xpath->query(".//*/div[@id='tab-statistics-1-statistic']")->item(0)->firstChild;
+        //var_dump($stats);
+        if($stats->childNodes) {
+            $i = 0;
+
+            foreach ($stats->childNodes as $nodde) {
+                //var_dump($nodde);
+                if($nodde->childNodes) {
+
+
+                    foreach ($nodde->childNodes as $nod) {
+                        //echo $i;
+
+                        if($nod->childNodes) {
+                            //var_dump($nod);
+
+                            foreach ($nod->childNodes as $new) {
+                                //var_dump($new);
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Удаления")
+                                    $arr['removal_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Удаления")
+                                    $arr['removal_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_host'][1]  = (int)$new->textContent;
+                                else $arr['force_dodge_host'][1]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_guest'][1]  = (int)$new->textContent;
+                                else $arr['force_dodge_guest'][1]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_guest'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_host'][1]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_guest'][1]  = (int)$new->textContent;
+
+
+                            }
+
+
+                        }
+                        //$i++;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        $stats = $xpath->query(".//*/div[@id='tab-statistics-2-statistic']")->item(0)->firstChild;
+        //var_dump($stats);
+        if($stats->childNodes) {
+            $i = 0;
+
+            foreach ($stats->childNodes as $nodde) {
+                //var_dump($nodde);
+                if($nodde->childNodes) {
+
+
+                    foreach ($nodde->childNodes as $nod) {
+                        //echo $i;
+
+                        if($nod->childNodes) {
+                            //var_dump($nod);
+
+                            foreach ($nod->childNodes as $new) {
+                                //var_dump($new);
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Удаления")
+                                    $arr['removal_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Удаления")
+                                    $arr['removal_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_host'][2]  = (int)$new->textContent;
+                                else $arr['force_dodge_host'][2]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_guest'][2]  = (int)$new->textContent;
+                                else $arr['force_dodge_guest'][2]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_guest'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_host'][2]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_guest'][2]  = (int)$new->textContent;
+
+
+                            }
+
+
+                        }
+                        //$i++;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        $stats = $xpath->query(".//*/div[@id='tab-statistics-3-statistic']")->item(0)->firstChild;
+        //var_dump($stats);
+        if($stats->childNodes) {
+            $i = 0;
+
+            foreach ($stats->childNodes as $nodde) {
+                //var_dump($nodde);
+                if($nodde->childNodes) {
+
+
+                    foreach ($nodde->childNodes as $nod) {
+                        //echo $i;
+
+                        if($nod->childNodes) {
+                            //var_dump($nod);
+
+                            foreach ($nod->childNodes as $new) {
+                                //var_dump($new);
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Броски в створ ворот")
+                                    $arr['shot_in_goals_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Отраженные броски")
+                                    $arr['shot_reflected_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Удаления")
+                                    $arr['removal_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Удаления")
+                                    $arr['removal_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Штрафное время")
+                                    $arr['penalty_time_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в большинстве")
+                                    $arr['goals_in_more_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Шайбы в меньшинстве")
+                                    $arr['goals_in_less_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_host'][3]  = (int)$new->textContent;
+                                else $arr['force_dodge_host'][3]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Силовые приемы")
+                                    $arr['force_dodge_guest'][3]  = (int)$new->textContent;
+                                else $arr['force_dodge_guest'][3]  = 0;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Выигр. вбрасывания")
+                                    $arr['facedown_vic_guest'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                    && $new->nextSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_host'][3]  = (int)$new->textContent;
+
+                                if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                    && $new->previousSibling->textContent == "Голы в пустые ворота")
+                                    $arr['empty_goals_guest'][3]  = (int)$new->textContent;
+
+
+                            }
+
+
+                        }
+                        //$i++;
+
+                    }
+
+                }
+
+            }
+
+        }
+
+        if(isset($xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild)) {
+
+            $stats = $xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild;
+            //var_dump($stats);
+            if($stats->childNodes) {
+                $i = 0;
+
+                foreach ($stats->childNodes as $nodde) {
+                    //var_dump($nodde);
+                    if($nodde->childNodes) {
+
+
+                        foreach ($nodde->childNodes as $nod) {
+                            //echo $i;
+
+                            if($nod->childNodes) {
+                                //var_dump($nod);
+
+                                foreach ($nod->childNodes as $new) {
+                                    //var_dump($new);
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Броски в створ ворот")
+                                        $arr['shot_in_goals_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Броски в створ ворот")
+                                        $arr['shot_in_goals_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Отраженные броски")
+                                        $arr['shot_reflected_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Отраженные броски")
+                                        $arr['shot_reflected_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Удаления")
+                                        $arr['removal_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Удаления")
+                                        $arr['removal_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Штрафное время")
+                                        $arr['penalty_time_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Штрафное время")
+                                        $arr['penalty_time_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Шайбы в большинстве")
+                                        $arr['goals_in_more_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Шайбы в большинстве")
+                                        $arr['goals_in_more_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Шайбы в меньшинстве")
+                                        $arr['goals_in_less_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Шайбы в меньшинстве")
+                                        $arr['goals_in_less_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Силовые приемы")
+                                        $arr['force_dodge_host'][4]  = (int)$new->textContent;
+                                    else $arr['force_dodge_host'][4]  = 0;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Силовые приемы")
+                                        $arr['force_dodge_guest'][4]  = (int)$new->textContent;
+                                    else $arr['force_dodge_guest'][4]  = 0;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Выигр. вбрасывания")
+                                        $arr['facedown_vic_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Выигр. вбрасывания")
+                                        $arr['facedown_vic_guest'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->nextSibling)
+                                        && $new->nextSibling->textContent == "Голы в пустые ворота")
+                                        $arr['empty_goals_host'][4]  = (int)$new->textContent;
+
+                                    if($new->nodeName == "td" && strlen($new->textContent) < 3 && isset($new->previousSibling)
+                                        && $new->previousSibling->textContent == "Голы в пустые ворота")
+                                        $arr['empty_goals_guest'][4]  = (int)$new->textContent;
+
+
+                                }
+
+
+                            }
+                            //$i++;
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+
+
+        }
+
+
+
+        //print_r($arr); exit;
 
         while ($stats = $stats->nextSibling) {
            // var_dump($stats); exit;
@@ -750,106 +1208,6 @@ class KhlController extends Controller
         else  $arr["bet_vic_guest"] = 0;
         //var_dump($arr['gk']); exit;
 
-        if(isset($xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild))
-            $stats = $xpath->query(".//*/div[@id='tab-statistics-4-statistic']")->item(0)->firstChild;
-        else  return $arr;
-        //var_dump($stats);
-
-        while ($stats = $stats->nextSibling) {
-            //var_dump($stats);
-            if($stats->childNodes) {
-
-                foreach ($stats->childNodes as $nodde) {
-                    //var_dump($nodde);
-                    if($nodde->childNodes) {
-
-                        foreach ($nodde->childNodes as $nod) {
-                            //var_dump($nod); exit;
-                            if($nod->childNodes) {
-
-                                foreach ($nod->childNodes as $n) {
-
-                                    if($n->childNodes) {
-
-                                        foreach ($n->childNodes as $new) {
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Броски в створ ворот")
-                                                $arr['shot_in_goals_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Броски в створ ворот")
-                                                $arr['shot_in_goals_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Отраженные броски")
-                                                $arr['shot_reflected_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Отраженные броски")
-                                                $arr['shot_reflected_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Удаления")
-                                                $arr['removal_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Удаления")
-                                                $arr['removal_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Штрафное время")
-                                                $arr['penalty_time_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Штрафное время")
-                                                $arr['penalty_time_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Шайбы в большинстве")
-                                                $arr['goals_in_more_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Шайбы в большинстве")
-                                                $arr['goals_in_more_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Шайбы в меньшинстве")
-                                                $arr['goals_in_less_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Шайбы в меньшинстве")
-                                                $arr['goals_in_less_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Силовые приемы")
-                                                $arr['force_dodge_host'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Силовые приемы")
-                                                $arr['force_dodge_guest'][4]  = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->nextSibling->nextSibling)
-                                                && $new->parentNode->nextSibling->nextSibling->textContent == "Выигр. вбрасывания")
-                                                $arr['facedown_vic_host'][4] = (int)$new->textContent;
-
-                                            if($new->nodeName == "div" && strlen($new->textContent) < 3 && isset($new->parentNode->previousSibling->previousSibling)
-                                                && $new->parentNode->previousSibling->previousSibling->textContent == "Выигр. вбрасывания")
-                                                $arr['facedown_vic_guest'][4]  = (int)$new->textContent;
-
-
-                                        }
-                                    }
-
-                                }
-                            }
-
-                        }
-                    }
-                }
-            }
-        }
-
-
 
         return $arr;
 
@@ -861,6 +1219,7 @@ class KhlController extends Controller
      * @return int
      */
     private static function getIdOfPeriodsAfterIn($arrOfPeriods){
+        //print_r($arrOfPeriods);
         $periods = new Khlperiods();
         $periods->match = $arrOfPeriods[0];
         $periods->first = $arrOfPeriods[1];
