@@ -368,7 +368,7 @@ class KhlController extends Controller
 
     public static function clearString($string){
 
-        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя \s-]+/", "", $string);
+        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
     }
 
     public static function clearTwoWordsString($string){
@@ -553,7 +553,7 @@ class KhlController extends Controller
         } catch (ErrorException $e) {
             $arr['guest'] = 29; //null
             $arr['errors'][] = 'Гость не схвачен: '.$node->firstChild->textContent;
-            //var_dump(self::clearString($node->firstChild->textContent)); exit;
+            var_dump($node->textContent); exit;
         }
         $node = $xpath->query(".//*/td[@class='current-result']/span[@class='scoreboard']")->item(0);
             $arr['host_g'] = $node->textContent;
