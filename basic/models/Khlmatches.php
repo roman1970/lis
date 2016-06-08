@@ -64,4 +64,28 @@ class Khlmatches extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Khlteams::className(), ['id' => 'guest_id']);
     }
+
+    /**
+     * Броски в створ - хозяева
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShotsHost(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'shot_in_goals_host']);
+    }
+
+    /**
+     * Броски в свор - гости
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShotsGuest(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'shot_in_goals_guest']);
+    }
+
+    public function getReflectedHost(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'shot_reflected_host']);
+    }
+
+    public function getReflectedGuest(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'shot_reflected_guest']);
+    }
 }

@@ -40,7 +40,7 @@ $config = [
         ],
         'khl' => [
             'class' => 'app\modules\khl\Khl',
-            'admins' => ['roman']
+            //'admins' => ['roman']
         ],
         'repertuar' => [
             'class' => 'app\modules\repertuar\Repertuar',
@@ -141,7 +141,8 @@ $config = [
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
-                //'<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
 
 
             ],

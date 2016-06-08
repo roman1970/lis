@@ -368,7 +368,7 @@ class KhlController extends Controller
 
     public static function clearString($string){
 
-        return  preg_replace("/[^ЦСДМЮЙВЛТХКАБНПабвгдеёжзийклмнопрстуфхчцшщъыьэюя\s-]+/", "", $string);
+        return  preg_replace("/[^-0-9а-яёА-ЯЁa-zA-Z.,!?:()№ ]+/iu", "", $string);
     }
 
     public static function clearTwoWordsString($string){

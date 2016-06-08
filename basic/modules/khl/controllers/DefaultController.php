@@ -26,6 +26,13 @@ class DefaultController extends FrontEndController
 
     }
 
+    public function actionMatch($id)
+    {
+        $match = Khlmatches::findOne($id);
+        $events_of_match = Khlevents::find()->where(['match_id' => $id])->all();
+        return $this->render('match', ['match' => $match, 'events_of_match' => $events_of_match]);
+    }
+
 
 
 }
