@@ -310,21 +310,21 @@ class KhlController extends Controller
 
                 if ($event->is_host) {
 
-                    if(isset($gk[1][0][$sub_sec]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
-                    elseif(isset($gk[1]) && key($gk[1][1]) >= $event->minute) $event->gk = $gk[1][1][3900];
-                    else
-                        try {
-                            $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][1][0]) . "%')")->one()->id;
-                        } catch (ErrorException $e) {
-                            $event->gk = 947;
-                        }
-                }
-                if($event->is_host == 0) { //var_dump($thisMatch["gk"]); exit;
                     if(isset($gk[0][0][$sub_sec]) && key($gk[0][0]) >= $event->minute) $event->gk = $gk[0][0][$sub_sec];
                     elseif(isset($gk[0]) && key($gk[0][1]) >= $event->minute) $event->gk = $gk[0][1][3900];
                     else
                         try {
                             $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][0][0]) . "%')")->one()->id;
+                        } catch (ErrorException $e) {
+                            $event->gk = 947;
+                        }
+                }
+                if($event->is_host == 0) { //var_dump($thisMatch["gk"]); exit;
+                    if(isset($gk[1][0][$sub_sec]) && key($gk[1][0]) >= $event->minute) $event->gk = $gk[1][0][$sub_sec];
+                    elseif(isset($gk[1]) && key($gk[1][1]) >= $event->minute) $event->gk = $gk[1][1][3900];
+                    else
+                        try {
+                            $event->gk = Khlplayers::find()->where("name like('%" . self::clearSubject($thisMatch["gk"][0][1][0]) . "%')")->one()->id;
                         } catch (ErrorException $e) {
                             $event->gk = 947;
                         }

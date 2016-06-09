@@ -50,4 +50,16 @@ class Khlevents extends \yii\db\ActiveRecord
 
         ];
     }
+
+    /**
+     * Игрок
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPlayer(){
+        return $this->hasOne(Khlplayers::className(), ['id' => 'player_id']);
+    }
+
+    public function getGoalKeeper(){
+        return $this->hasOne(Khlplayers::className(), ['id' => 'gk']);
+    }
 }

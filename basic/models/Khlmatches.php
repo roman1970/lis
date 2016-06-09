@@ -81,11 +81,37 @@ class Khlmatches extends \yii\db\ActiveRecord
         return $this->hasOne(Khlperiods::className(), ['id' => 'shot_in_goals_guest']);
     }
 
+    /**
+     * Отраженные броски - хозяева
+     * @return \yii\db\ActiveQuery
+     */
     public function getReflectedHost(){
         return $this->hasOne(Khlperiods::className(), ['id' => 'shot_reflected_host']);
     }
 
+    /**
+     * Отраженные броски - гости
+     * @return \yii\db\ActiveQuery
+     */
     public function getReflectedGuest(){
         return $this->hasOne(Khlperiods::className(), ['id' => 'shot_reflected_guest']);
     }
+
+    /**
+     * Удаления - хозяева
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRemovalHost(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'removal_host']);
+    }
+
+    /**
+     * Удаления - гости
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRemovalGuest(){
+        return $this->hasOne(Khlperiods::className(), ['id' => 'removal_guest']);
+    }
+
+
 }

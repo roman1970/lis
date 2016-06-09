@@ -15,6 +15,7 @@ use app\models\Khlteams;
 
 class DefaultController extends FrontEndController
 {
+    public $layout = 'hockey';
 
     /**
      * @return string
