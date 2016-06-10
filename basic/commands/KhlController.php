@@ -283,6 +283,7 @@ class KhlController extends Controller
             //var_dump($game->id); exit;
 
             $arrOfEvents = $this->eventOfMatchInArray($match);
+            //print_r($arrOfEvents); exit;
 
             foreach ($arrOfEvents as $arr) {
 
@@ -304,7 +305,15 @@ class KhlController extends Controller
                     $event->player_id = 947;
                 }
                 $event->match_id = $matchId;
-                if (isset($arr["prim"])) $event->prim = $arr["prim"];
+                if (isset($arr["prim2"])) $prim2 = $arr["prim2"];
+                else $prim2 = "";
+                if (isset($arr["prim5"])) $prim2 = $arr["prim5"];
+                else $prim5 = "";
+                if (isset($arr["prim10"])) $prim2 = $arr["prim10"];
+                else $prim10 = "";
+                if (isset($arr["prim"])) $event->prim = $arr["prim"] . " " . $prim2 . " " . $prim5 . " " . $prim10;
+                //$event->prim = $arr["prim2"];
+                //echo $event->prim;
                 if (isset($arr["assist"])) $event->assist = implode(",", $arr["assist"]);
                 //print_r($gk[0]);
 
@@ -456,10 +465,18 @@ class KhlController extends Controller
                                 if($grandson->attributes){
                                     $arr[$i]['period'] = $period;
                                     $arr[$i]['is_host'] = $com;
+
                                     foreach ($grandson->attributes as $attribute) {
                                         if($attribute->value == "time-box-wide") $arr[$i]['time'] = $grandson->textContent;
                                         if($attribute->value == "icon-box hockey-penalty-2") {
+
                                             $arr[$i]['status'] = 2;
+                                        }
+                                        if($attribute->value == "icon hockey-penalty-5"){
+                                            $arr[$i]['status'] = 5;
+                                        }
+                                        if($attribute->value == "icon hockey-penalty-game-misconduct"){
+                                            $arr[$i]['status'] = 10;
                                         }
                                         if($attribute->value == "icon-box hockey-ball") {
                                             if($period == 5)
@@ -469,13 +486,25 @@ class KhlController extends Controller
                                         }
 
                                         if($attribute->value == "icon-box penalty-missed") {
-                                            $arr[$i]['status'] = 4;
+                                            $arr[$i]['status'] = 0;
                                         }
+
                                          if(!isset($arr[$i]['status'])) $arr[$i]['status'] = 1;
 
                                         if($attribute->value == "subincident-penalty") {
                                             $arr[$i]['prim'] = $grandson->textContent;
                                         }
+                                        if($attribute->value == "Штраф - 5 минут"){
+                                            $arr[$i]['prim5'] = "Штраф - 5 минут";
+                                           // print_r($arr); exit;
+                                        }
+                                        if($attribute->value == "Штраф - 2 минуты"){
+                                            $arr[$i]['prim2'] = "Штраф - 2 минуты";
+                                        }
+                                        if($attribute->value == "Дисциплинарный штраф"){
+                                            $arr[$i]['prim10'] = "Дисциплинарный штраф";
+                                        }
+
                                         if($attribute->value == "participant-name") {
                                             //$arr[$i]['subject'] = trim($grandson->textContent);
                                             try {
