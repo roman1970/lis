@@ -305,13 +305,28 @@ class KhlController extends Controller
                     $event->player_id = 947;
                 }
                 $event->match_id = $matchId;
-                if (isset($arr["prim2"])) $prim2 = $arr["prim2"];
+
+                $str = "";
+
+                if (isset($arr["prim2"])) {
+                    $i = 0;
+                    foreach ( $arr["prim2"] as $primtwo) {
+                        if($i) $str .= " + ".$primtwo;
+                        else $str .= $primtwo;
+                        $i++;
+                    }
+                    $prim2 = $str;
+                }
                 else $prim2 = "";
-                if (isset($arr["prim5"])) $prim2 = $arr["prim5"];
+
+
+                if (isset($arr["prim5"])) $prim5 = " + ".$arr["prim5"];
                 else $prim5 = "";
-                if (isset($arr["prim10"])) $prim2 = $arr["prim10"];
+                if (isset($arr["prim10"])) $prim10 = " + ".$arr["prim10"];
                 else $prim10 = "";
-                if (isset($arr["prim"])) $event->prim = $arr["prim"] . " " . $prim2 . " " . $prim5 . " " . $prim10;
+                if (isset($arr["prim11"])) $prim11 = " + ".$arr["prim11"];
+                else $prim11 = "";
+                if (isset($arr["prim"])) $event->prim = $arr["prim"] . " " . $prim2 . " " . $prim5 . " " . $prim10 . " " . $prim11;
                 //$event->prim = $arr["prim2"];
                 //echo $event->prim;
                 if (isset($arr["assist"])) $event->assist = implode(",", $arr["assist"]);
@@ -495,14 +510,17 @@ class KhlController extends Controller
                                             $arr[$i]['prim'] = $grandson->textContent;
                                         }
                                         if($attribute->value == "Штраф - 5 минут"){
-                                            $arr[$i]['prim5'] = "Штраф - 5 минут";
+                                            $arr[$i]['prim5'] = "5 мин";
                                            // print_r($arr); exit;
                                         }
                                         if($attribute->value == "Штраф - 2 минуты"){
-                                            $arr[$i]['prim2'] = "Штраф - 2 минуты";
+                                            $arr[$i]['prim2'][] = "2 мин";
                                         }
                                         if($attribute->value == "Дисциплинарный штраф"){
-                                            $arr[$i]['prim10'] = "Дисциплинарный штраф";
+                                            $arr[$i]['prim10'] = "10 мин";
+                                        }
+                                        if($attribute->value == "Персональный фол"){
+                                            $arr[$i]['prim11'] = "10 мин";
                                         }
 
                                         if($attribute->value == "participant-name") {
