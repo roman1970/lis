@@ -23,7 +23,7 @@ class LandberryAsset extends AssetBundle
         'css/bootstrap.min.css',
         'css/flexslider.css',
         'css/font-awesome.css',
-        'css/index.css',
+        //'css/index.css',
         'css/owl.carousel.css',
         'css/sonnik_style.css',
         'css/style.css',

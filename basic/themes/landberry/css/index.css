@@ -87,7 +87,7 @@ a:hover{opacity:0.7;outline: medium none; border: 0px none;}
 .jscarousal-contents-horizontal{width:850px;height:124px;float:left;position:relative;overflow:hidden;}
 .jscarousal-contents-horizontal > div{position:absolute;width:100%;height:124px;}
 .jscarousal-contents-horizontal > div > div{float:left;margin-left:8px;margin-right:8px;}
-.jscarousal-contents-horizontal img{ height:73px; } 
+.jscarousal-contents-horizontal img{ height:73px; }
 .jscarousal-vertical{width:140px;height:460px;background-color:#121212;border:solid 1px #7A7677;margin:0;padding:0;position:relative;overflow:hidden;}
 .jscarousal-vertical-back, .jscarousal-vertical-forward{width:100%;height:30px;background-color:#121212;color:White;position:relative;cursor:pointer;z-index:100;}
 .jscarousal-vertical-back{background-image:url(top_arrow.jpg)/*tpa=http://wp-media.ru/css/top_arrow.jpg*/;background-repeat:no-repeat;background-position:bottom;}

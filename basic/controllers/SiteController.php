@@ -105,4 +105,44 @@ class SiteController extends BackEndController
         $names = User::findByUsername('roman');
         return $this->render('about', ['names' => $names]);
     }
+
+    public function actionSend(){
+        if(Yii::$app->getRequest()->getQueryParam('name'))
+            $name = Yii::$app->getRequest()->getQueryParam('name');
+        else $name = "";
+
+        if(Yii::$app->getRequest()->getQueryParam('email'))
+            $email = Yii::$app->getRequest()->getQueryParam('email');
+        else $email = "";
+
+        if(Yii::$app->getRequest()->getQueryParam('message'))
+            $message = (int)Yii::$app->getRequest()->getQueryParam('message');
+        else $message = "";
+
+        if(Yii::$app->getRequest()->getQueryParam('phone'))
+            $phone = (int)Yii::$app->getRequest()->getQueryParam('phone');
+        else $phone = "";
+
+        if (empty($_POST['name'])) {
+
+            $address = "r0man4ernyshev@gmail.com";
+            $sub = "Письмо с сайта qplis";
+
+            $mes = "Автор указал такое имя: $name \r\n Оставил такой E-mail: $email
+            \r\n Оставил такой телефон : $phone \r\n Содержание письма: $message";
+
+
+            $send = mail ($address,$sub,$mes,"Content-type:text/plain; charset = utf-8; From: $email");
+            if ($send == 'true')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        echo "Bot!";
+
+    }
 }

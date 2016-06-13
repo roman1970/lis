@@ -228,6 +228,15 @@ p {
     border: 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
+    height: 50px;
+
+    position: fixed;
+
+
+    top: 6px;
+    width: 100%;
+    z-index: 9999;
 }
 
 .topnav .navbar-nav > li > a {
@@ -590,7 +599,7 @@ p {
     height:100px;
 
     position:fixed;
-    bottom: 255px;
+    bottom: 243px;
     left:-830px;
 
 }
@@ -1347,7 +1356,20 @@ footer .social-list a:hover .social-icon {
     transform: rotateY(180deg); 
 }
 
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video{border:0px none;font:inherit;vertical-align:baseline;margin:0px;padding:0px;box-sizing: border-box ;} body{line-height:1;} ol, ul{list-style:none outside none;} *, *:before, *:after{-moz-box-sizing:border-box;} html, body{font-size:100%;} body{background:none repeat scroll 0% 0% white;color:rgb(34, 34, 34);padding:0px;margin:0px;font-weight:normal;font-style:normal;line-height:1;position:relative;cursor:default;} a:hover{cursor:pointer;} a:focus{outline:medium none;} article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section{display:block;} body{line-height:1;} ol, ul{list-style:none outside none;} *, *:before, *:after{-moz-box-sizing:border-box;} html, body{font-size:100%;} body{background:none repeat scroll 0% 0% white;color:rgb(34, 34, 34);padding:0px;margin:0px;font-weight:normal;font-style:normal;line-height:1;position:relative;cursor:default;} a:hover{cursor:pointer;} a:focus{outline:medium none;} img, object, embed{max-width:100%;height:auto;}
+body{font-family: 'Roboto', sans-serif;font-weight:100;color:#555; }
+/*
+.topnav {
+    height: 50px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    position: fixed;
+    background: rgb(255, 255, 255);
 
+    top: 6px;
+    width: 100%;
+    z-index: 9999;
+}
+*/
 /* =Media queries
 -------------------------------------------------------------- */
 /*

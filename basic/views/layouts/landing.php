@@ -772,7 +772,7 @@ LandberryAsset::register($this);
 
         <div class="title col-xs-12">
 
-            <h1>КОНТАКТЫ</h1>
+            <h1 style="color: rgb(98, 116, 206); font-weight: 800;">КОНТАКТЫ</h1>
 
         </div>
 
@@ -791,7 +791,7 @@ LandberryAsset::register($this);
 
                     <i class="fa fa-skype"></i>
 
-                    <span>grishkovd</span>
+                    <span>roman.4ernyshev</span>
 
                 </div>
 
@@ -815,7 +815,7 @@ LandberryAsset::register($this);
 
                     <i class="fa fa-envelope"></i>
 
-                    <span>adv@akulapera.com</span>
+                    <span>r0man4ernyshev@gmail.com</span>
 
                 </div>
 
@@ -853,25 +853,20 @@ LandberryAsset::register($this);
 
                         <div class="form-group">
 
-                            <input type="text" name="fullname" class="form-control input-lg" placeholder="Имя">
+                            <input type="text" name="name" class="form-control input-lg" id="name"  placeholder="Имя">
 
                         </div>
 
-                        <div class="form-group" style="display: none">
 
-                            <input type="text" name="name" class="form-control input-lg" placeholder="Имя">
+                        <div class="form-group">
+
+                            <input type="email" name="email" class="form-control input-lg" id="email" placeholder="Email">
 
                         </div>
 
                         <div class="form-group">
 
-                            <input type="email" name="email" class="form-control input-lg" placeholder="Email">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <input type="text" name="phone" class="form-control input-lg" placeholder="Телефон">
+                            <input type="text" name="phone" class="form-control input-lg" id="phone" placeholder="Телефон">
 
                         </div>
 
@@ -883,13 +878,13 @@ LandberryAsset::register($this);
 
                         <div class="form-group">
 
-                            <textarea name="message" class="form-control input-lg" placeholder="Сообщение"></textarea>
+                            <textarea name="message" class="form-control input-lg" id="message" placeholder="Сообщение"></textarea>
 
                         </div>
 
                     </div>
 
-                    <input type="submit" class="btn btn-custom up animated hiding for-event-akula" value="Отправить" data-animation="fadeInUpBig">
+                    <input type="submit" class="btn btn-custom up animated hiding letter" value="Отправить" data-animation="fadeInUpBig">
                     <input type="hidden" name="hash" value="contact" />
                 </form>
 
@@ -926,38 +921,32 @@ LandberryAsset::register($this);
 <!-- End Footer -->
 
 
-
-
-
-        <script>
-            <?php /*
-                (function (window) {
-                    var elem = document.querySelector('#year');
-                    elem.appendChild(document.createTextNode((new Date).getFullYear()));
-                })(window);
-
-                $('.for-event-akula').on('click', function(){
-
-                    $.ajax({
-                        type: 'POST',
-                        url: 'send.php',
-                        data: $("#contact-us").serialize(),
-                        success: function(data) {
-
-                            $('#contact-us').hide();
-                            $('.form-sent').show();
-
-                        }
-                    });
-
-
-                });
-
-             */?>
-
-        </script>
-
 <?php $this->endBody() ?>
+<script>
+
+    $('.letter').on('click', function(){
+
+        var name = $("#name");
+        var email = $("#email");
+        var message = $("#message");
+        var phone = $("#phone");
+
+        $.ajax({
+            type: "GET",
+            url: "/site/send/",
+            data: "name="+name+"&email="+email+"&message="+message+"&phone="+phone,
+            cache: false,
+            success: function(html){
+                $(".form-sent").html(html);
+            }
+        });
+
+
+    });
+
+
+
+</script>
 </body>
 </html>
 
