@@ -8,6 +8,11 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use app\assets\LandberryAsset;
 use app\assets\AppAsset;
+use yii\bootstrap\ActiveForm;
+use yii\captcha\Captcha;
+
+$this->title = 'Contact';
+$this->params['breadcrumbs'][] = $this->title;
 
 LandberryAsset::register($this);
 ?>
@@ -108,7 +113,7 @@ LandberryAsset::register($this);
                 <?php echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-
+                ['label' => 'Контакт', 'url' => ['/site/contact']],
                 Yii::$app->user->isGuest ?
                 ['label' => 'Войти', 'url' => ['/user/security/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
@@ -827,79 +832,11 @@ LandberryAsset::register($this);
 
     <!-- End Contact Details -->
 
+    <?= $content ?>
 
 
-    <div class="container">
-
-        <div class="col-sm-12">
-
-            <!-- Contact Form -->
-
-            <div id="contact-form">
-
-                <div class="form-sent">
-
-                    <div class="alert alert-success">
-
-                        <strong>Ваше сообщение отправлено.</strong> Спасибо!
-
-                    </div>
-
-                </div>
-
-                <form method="post" action="" id="contact-us"> <!-- contact.php -->
-
-                    <div class="col-md-5 col-sm-5 col-xs-12 animated hiding" data-animation="slideInLeft">
-
-                        <div class="form-group">
-
-                            <input type="text" name="name" class="form-control input-lg" id="name"  placeholder="Имя">
-
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <input type="email" name="email" class="form-control input-lg" id="email" placeholder="Email">
-
-                        </div>
-
-                        <div class="form-group">
-
-                            <input type="text" name="phone" class="form-control input-lg" id="phone" placeholder="Телефон">
-
-                        </div>
-
-
-
-                    </div>
-
-                    <div class="col-md-7 col-sm-7 col-xs-12 animated hiding" data-animation="slideInRight">
-
-                        <div class="form-group">
-
-                            <textarea name="message" class="form-control input-lg" id="message" placeholder="Сообщение"></textarea>
-
-                        </div>
-
-                    </div>
-
-                    <input type="submit" class="btn btn-custom up animated hiding letter" value="Отправить" data-animation="fadeInUpBig">
-                    <input type="hidden" name="hash" value="contact" />
-                </form>
-
-            </div>
-
-            <!-- End Contact Form -->
-
-        </div>
-
-    </div>
 
 </section>
-
-<!-- End Contact Section-->
-
 
 
 <!-- Footer -->
@@ -926,23 +863,8 @@ LandberryAsset::register($this);
 
     $('.letter').on('click', function(){
 
-        var name = $("#name");
-        var email = $("#email");
-        var message = $("#message");
-        var phone = $("#phone");
-
-        $.ajax({
-            type: "GET",
-            url: "/site/send/",
-            data: "name="+name+"&email="+email+"&message="+message+"&phone="+phone,
-            cache: false,
-            success: function(html){
-                $(".form-sent").html(html);
-            }
-        });
-
-
-    });
+                $(".form-sent").show();
+            });
 
 
 

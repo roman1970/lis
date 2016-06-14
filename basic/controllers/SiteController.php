@@ -15,7 +15,7 @@ use dektrium\user\models\User as User;
 
 class SiteController extends BackEndController
 {
-   //public $layout = 'landing';
+   public $layout = 'landing';
 
     public function behaviors()
     {
@@ -61,8 +61,17 @@ class SiteController extends BackEndController
 
     public function actionIndex()
     {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            Yii::$app->session->setFlash('contactFormSubmitted');
+            exit;
 
-        return $this->render('index');
+            //return $this->refresh();
+        }
+
+        return $this->render('contact_lend', [
+            'model' => $model,
+        ]);
     }
 
     public function actionLogin()
@@ -106,43 +115,4 @@ class SiteController extends BackEndController
         return $this->render('about', ['names' => $names]);
     }
 
-    public function actionSend(){
-        if(Yii::$app->getRequest()->getQueryParam('name'))
-            $name = Yii::$app->getRequest()->getQueryParam('name');
-        else $name = "";
-
-        if(Yii::$app->getRequest()->getQueryParam('email'))
-            $email = Yii::$app->getRequest()->getQueryParam('email');
-        else $email = "";
-
-        if(Yii::$app->getRequest()->getQueryParam('message'))
-            $message = (int)Yii::$app->getRequest()->getQueryParam('message');
-        else $message = "";
-
-        if(Yii::$app->getRequest()->getQueryParam('phone'))
-            $phone = (int)Yii::$app->getRequest()->getQueryParam('phone');
-        else $phone = "";
-
-        if (empty($_POST['name'])) {
-
-            $address = "r0man4ernyshev@gmail.com";
-            $sub = "Письмо с сайта qplis";
-
-            $mes = "Автор указал такое имя: $name \r\n Оставил такой E-mail: $email
-            \r\n Оставил такой телефон : $phone \r\n Содержание письма: $message";
-
-
-            $send = mail ($address,$sub,$mes,"Content-type:text/plain; charset = utf-8; From: $email");
-            if ($send == 'true')
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        echo "Bot!";
-
-    }
 }

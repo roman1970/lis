@@ -77,6 +77,6 @@ class KnoledgesPagination  extends \yii\widgets\LinkPager
         $linkOptions['data-page'] = $page;
         $urlManager =  Yii::$app->getUrlManager();
 
-        return Html::tag('li', Html::a($label, $urlManager->createUrl(['knoledges/default/show', 'id' => $this->article_id, 'page' => $page] ), $options));
+        return Html::tag('li', Html::a($label, $urlManager->createUrl(['knoledges/default/show', 'id' => $this->article_id, 'page' => $page+1] ), $options));
     }
 }

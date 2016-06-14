@@ -99,11 +99,11 @@ $config = [
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp-20.1gb.ru',
-                'username' => 'u424229',
-                'password' => '280699b4gh',
-                'port' => '465',
-                //'encryption' => 'tls',
+                'host' => 'smtp.gmail.com',
+                'username' => 'r0man4ernyshev@gmail.com',
+                'password' => 'vbif10cdtnf79',
+                'port' => '587',
+                'encryption' => 'tls',
             ],
         ],
         'log' => [
