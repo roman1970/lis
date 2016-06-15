@@ -35,6 +35,11 @@ LandberryAsset::register($this);
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,100italic,100,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <?php $this->head() ?>
+    <style>
+        .has-error .help-block, .control-label {
+            color: #f7ffe4;
+        }
+    </style>
 
 </head>
 
@@ -113,7 +118,7 @@ LandberryAsset::register($this);
                 <?php echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                ['label' => 'Контакт', 'url' => ['/site/contact']],
+                //['label' => 'Контакт', 'url' => ['/site/contact']],
                 Yii::$app->user->isGuest ?
                 ['label' => 'Войти', 'url' => ['/user/security/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
@@ -859,6 +864,7 @@ LandberryAsset::register($this);
 
 
 <?php $this->endBody() ?>
+<?php /*
 <script>
 
     $('.letter').on('click', function(){
@@ -869,6 +875,8 @@ LandberryAsset::register($this);
 
 
 </script>
+
+ */ ?>
 </body>
 </html>
 

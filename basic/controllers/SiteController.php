@@ -62,11 +62,12 @@ class SiteController extends BackEndController
     public function actionIndex()
     {
         $model = new ContactForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-            exit;
 
-            //return $this->refresh();
+
+            return $this->refresh('#contact');
         }
 
         return $this->render('contact_lend', [

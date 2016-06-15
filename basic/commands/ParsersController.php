@@ -64,7 +64,10 @@ class ParsersController extends Controller
         $d = date("d");
         $date = "$year-$m-$d";
         $url = "http://www.sport-express.ru/newspaper/$date/";
-        $content = file_get_contents($url);
+
+        $content = $this->get_page($url);
+        //echo $content; exit;
+        //$content = file_get_contents($url);
         if ($pos = strpos($content, 'Номер за это число не выходил'))
                    {
                        $handle = fopen("/home/romanych/se/$year/SE$date-nevyh.txt", "a");
@@ -82,7 +85,7 @@ class ParsersController extends Controller
                     $url = "http://www.sport-express.ru/newspaper/$date/$j" . "_$i/?view=page";
 
                     try {
-                        $content = file_get_contents($url);
+                        $content = $this->get_page($url);;
                     } catch (\ErrorException $e) {
                         break;
                     }
@@ -94,7 +97,11 @@ class ParsersController extends Controller
 
 
                     //отрезка нужного куска сайта
-                    $position = strpos($content, $tag_in, strlen($tag_in));
+                    try {
+                        $position = strpos($content, $tag_in, strlen($tag_in));
+                    } catch (\ErrorException $e) {
+                        continue;
+                    }
                     /*
                     if (!$position)
                         $position = strpos($content, $tag_in2);
@@ -142,6 +149,20 @@ class ParsersController extends Controller
 
 
 
+    }
+
+    function get_page($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HEADER, true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // возвратить то что вернул сервер
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+        curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)");
+        $data = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return ($httpCode == 200) ? $data : false;
     }
 
     public function actionCurrencyTest()

@@ -588,6 +588,18 @@
       <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="items" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="tags" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="items_ibfk_1" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_items_source_id" unique="false" columns="source_id"/>
+    </table>
     <table name="maner" schema="" catalog="plis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="date" sqlType="VARCHAR" precision="20" scale="0" nullable="false" jdbcType="12"/>
@@ -1403,6 +1415,7 @@
       <column name="author_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="sources_ibfk_1" columns="author_id" ref-table="authors" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="items_ibfk_1" table="items" schema="" catalog="plis" columns="source_id"/>
       <exported-key name="qparticles_ibfk_3" table="qparticles" schema="" catalog="plis" columns="source_id"/>
       <exported-key name="qparticles_content_ibfk_2" table="qparticles_content" schema="" catalog="plis" columns="source_id"/>
       <index name="ux_sources_sources_author_id" unique="false" columns="author_id"/>
@@ -1442,6 +1455,12 @@
       <column name="inx" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="outx" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <column name="dlit" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="tag" schema="" catalog="plis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="frequency" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="tbl_migration" schema="" catalog="plis" type="TABLE">

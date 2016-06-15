@@ -12,9 +12,8 @@ use yii\captcha\Captcha;
 
         <!-- Contact Form -->
 
-
-
-            <div class="form-sent">
+        <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
+             <div class="form-sent" style="display: block">
 
                 <div class="alert alert-success">
 
@@ -23,6 +22,8 @@ use yii\captcha\Captcha;
                 </div>
 
             </div>
+        <?php endif; ?>
+
 
         <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
 
@@ -47,8 +48,11 @@ use yii\captcha\Captcha;
 
                         <?= $form->field($model, 'subject')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Subject'])->label(false)  ?>
 
-
                     </div>
+
+                    <?= $form->field($model, 'verifyCode')->widget(Captcha::className(), [
+                        'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
+                    ]) ?>
 
 
 
@@ -64,8 +68,11 @@ use yii\captcha\Captcha;
 
                 </div>
 
-                <?= Html::submitButton('Отправить', ['class' => 'btn btn-custom up animated hiding letter', 'value' => 'Отправить', 'data-animation' => 'fadeInUpBig']) ?>
+                <div class="form-group">
 
+                    <?= Html::submitButton('Отправить', ['class' => 'btn btn-custom up animated hiding letter', 'value' => 'Отправить', 'data-animation' => 'fadeInUpBig']) ?>
+
+                </div>
 
 
         <?php ActiveForm::end(); ?>

@@ -66,6 +66,7 @@ AppAsset::register($this);
             ['label' => 'Currency', 'url' => ['/currency/default/index']],
             ['label' => 'Репертуар', 'url' => ['/repertuar/default/index']],
             ['label' => 'КХЛ', 'url' => ['/khl/default/index']],
+            ['label' => 'Item', 'url' => ['/item/index']],
             ],
         ]);
         ?>
