@@ -4,6 +4,8 @@ namespace app\commands;
 
 use app\models\Currencies;
 use app\models\CurrHistory;
+use app\models\Items;
+use app\models\Tag;
 use yii\console\Controller;
 use yii\helpers\Url;
 use Yii;
@@ -151,6 +153,35 @@ class ParsersController extends Controller
 
     }
 
+    public function actionGetTags(){
+
+        $tags = Tag::find()
+            ->orderBy('name')
+            ->all();
+        //var_dump($tags); exit;
+
+        $file =  fopen("/home/romanych/www/vrs/tags.html", "w");
+
+        fwrite($file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+
+        foreach ($tags as $tag){
+            //echo $tag->name . PHP_EOL;
+            fwrite($file, "<p><a href='pages/". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
+            $page = fopen("/home/romanych/www/vrs/pages/". TranslateHelper::translit($tag->name) .".html", "w");
+            fwrite($page, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+            $items = explode(",", $tag->items);
+            foreach($items as $item) {
+
+                $text = Items::findOne(['id' => (int)$item])->text;
+                fwrite($page, "<p>$text</p>");
+
+            }
+            fclose($page);
+
+        }
+        fclose($file);
+    }
+
     function get_page($url) {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -216,6 +247,9 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Генерирует страницу с деревом файлов музыкальной директории
+     */
     public function actionMusicDirGenerator(){
         echo 'Генерим дерево'. PHP_EOL;
         //генерим страницу с файловым деревом
@@ -225,6 +259,8 @@ class ParsersController extends Controller
         fwrite($f_tree, self::$str);
         fclose($f_tree);
     }
+
+
 
     /**
      * Кэшит дерево директории

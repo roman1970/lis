@@ -1461,6 +1461,7 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="frequency" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="items" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="tbl_migration" schema="" catalog="plis" type="TABLE">
