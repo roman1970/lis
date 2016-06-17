@@ -46,7 +46,7 @@ class Tag extends \yii\db\ActiveRecord
         ];
     }
 
-    public static function addTags($tags_str)
+    public static function addTags($tags_str, $id)
     {
         $tags = self::string2array($tags_str);
 
@@ -62,10 +62,12 @@ class Tag extends \yii\db\ActiveRecord
                 $tag = new Tag;
                 $tag->name = $one;
                 $tag->frequency = 1;
+                $tag->items .= $id;
                 $tag->save();
             }
             else{
                 $tag_exists->frequency++;
+                $tag_exists->items .= ",".$id;
                 $tag_exists->update();
             }
         }
@@ -77,13 +79,6 @@ class Tag extends \yii\db\ActiveRecord
 
     public static function array2string($tags) {
         return implode(', ', $tags);
-    }
-
-    public function updateFrequency($oldTags, $newTags) {
-        $oldTags = self::string2array($oldTags);
-        $newTags = self::string2array($newTags);
-        $this->addTags(array_values(array_diff($newTags, $oldTags)));
-        $this->removeTags(array_values(array_diff($oldTags, $newTags)));
     }
 
 

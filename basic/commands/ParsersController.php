@@ -17,6 +17,47 @@ class ParsersController extends Controller
 {
     public $arr = [];
     public static $str = '';
+    public static $header = "<head>
+        <meta charset='utf-8'>
+        <title>Тэги</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <meta name='description' content=''>
+        <meta name='keywords' content=''>
+        <meta name='author' content=''>
+
+        <!--[if lt IE 9]>
+        <script src='../html5shim.googlecode.com/svn/trunk/html5.js' tppabs='http://html5shim.googlecode.com/svn/trunk/html5.js'></script>
+        <![endif]-->
+        <!-- Fonts -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,300italic,100italic,100,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+        <!-- Stylesheets -->
+        <link href='css/normalize.min.css' rel='stylesheet'>
+        <link href='css/style.css' rel='stylesheet'>
+        <link rel='stylesheet' type='text/css' href='css/bootstrap.min.css'>
+
+        <style>
+            .letters{
+                font-weight: bold;
+                border: 4px double black;
+                width: 100%;
+                text-align: center;
+            }
+
+        </style>
+
+    </head><body> 
+        <header>
+            <div class='container'>
+
+            </div>
+        </header>
+
+
+            <div class='container'>";
+
+    public static $footer = "</body></html></div>";
 
     public function actionIndex()
     {
@@ -155,30 +196,75 @@ class ParsersController extends Controller
 
     public function actionGetTags(){
 
+        $list = scandir('/home/romanych/www/vrs/pages/');
+        $list = array_diff($list, ['.', '..']);
+        //var_dump($list); exit;
+
+        $alphabet = fopen("/home/romanych/www/vrs/alphabet.html", "w");
+        fwrite($alphabet, self::$header);
+
+        foreach($list as $letter) {
+            fwrite($alphabet, "<div class='letters'><a href='pages/".$letter."/tags.html'>".$letter."</a></div>");
+            $alfa_tags = fopen("/home/romanych/www/vrs/pages/".$letter."/tags.html", "w");
+            fwrite($alfa_tags, self::$header);
+            fwrite($alfa_tags, self::$footer);
+            fclose($alfa_tags);
+
+        }
+
+        fwrite($alphabet, self::$footer);
+        fclose($alphabet);
+
+
         $tags = Tag::find()
             ->orderBy('name')
             ->all();
         //var_dump($tags); exit;
 
+
+
         $file =  fopen("/home/romanych/www/vrs/tags.html", "w");
 
-        fwrite($file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+        fwrite($file, self::$header);
 
         foreach ($tags as $tag){
-            //echo $tag->name . PHP_EOL;
-            fwrite($file, "<p><a href='pages/". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
-            $page = fopen("/home/romanych/www/vrs/pages/". TranslateHelper::translit($tag->name) .".html", "w");
-            fwrite($page, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />');
+
+            $first_letter = mb_substr($tag->name,0,1,'UTF-8');
+
+            $big_first_letter = mb_strtoupper($first_letter, 'UTF-8');
+
+            $alfa_tags = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/tags.html", "a");
+
+            fwrite($alfa_tags, "<p><a href='". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
+            fwrite($alfa_tags, self::$footer);
+            fclose($alfa_tags);
+
+            fwrite($file, "<p><a href='pages/".$big_first_letter."/". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
+
+            $page = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/". TranslateHelper::translit($tag->name) .".html", "w");
+            fwrite($page, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+                            <style>.item_head{color:#63ff62;}</style>');
             $items = explode(",", $tag->items);
+            $r=1;
             foreach($items as $item) {
 
-                $text = Items::findOne(['id' => (int)$item])->text;
-                fwrite($page, "<p>$text</p>");
+                try {
+                    $item = Items::findOne(['id' => (int)$item]);
+                    fwrite($page, "<p class='item_head'>". $r."--------------------------------".$item->title.nl2br("<p>$item->text</p>")."</p>
+                    <p class='small'><a href='../../".$item->audio_link."'><span class='glyphicon glyphicon-play'>аудио</span></a></p>");
+                } catch (\ErrorException $e) {
+                    echo  $e->getMessage().PHP_EOL;
+                    var_dump(Items::findOne(['id' => (int)$item]));
+                }
+            $r++;
 
             }
+            fwrite($page, self::$footer);
             fclose($page);
 
         }
+        fwrite($file, self::$footer);
         fclose($file);
     }
 

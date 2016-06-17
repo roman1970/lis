@@ -56,8 +56,7 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
-
-            Tag::addTags($model->tags);
+            $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
 
 
             if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
@@ -68,6 +67,8 @@ class ItemController extends BackEndController
             if(isset($uploadImg->img))
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
             $model->save(false);
+            //var_dump($model->id); exit;
+            Tag::addTags($model->tags, $model->id);
 
 
             return $this->redirect(Url::toRoute('item/index'));
@@ -109,8 +110,9 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
+            $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
 
-            Tag::addTags($model->tags);
+            Tag::addTags($model->tags, $id);
 
 
             if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];

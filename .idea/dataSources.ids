@@ -596,6 +596,7 @@
       <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="audio_link" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="items_ibfk_1" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_items_source_id" unique="false" columns="source_id"/>
