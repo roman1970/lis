@@ -194,6 +194,9 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Генератор тэговых страниц
+     */
     public function actionGetTags(){
 
         $list = scandir('/home/romanych/www/vrs/pages/');
@@ -223,9 +226,9 @@ class ParsersController extends Controller
 
 
 
-        $file =  fopen("/home/romanych/www/vrs/tags.html", "w");
+        //$file =  fopen("/home/romanych/www/vrs/tags.html", "w");
 
-        fwrite($file, self::$header);
+        //fwrite($file, self::$header);
 
         foreach ($tags as $tag){
 
@@ -235,24 +238,27 @@ class ParsersController extends Controller
 
             $alfa_tags = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/tags.html", "a");
 
-            fwrite($alfa_tags, "<p><a href='". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
+            fwrite($alfa_tags, "<p><a href='". TranslateHelper::translit($tag->name) .".html'><button type='button' class='btn btn-default btn-lg'>$tag->name</button></a></p>");
             fwrite($alfa_tags, self::$footer);
             fclose($alfa_tags);
 
-            fwrite($file, "<p><a href='pages/".$big_first_letter."/". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
+            //fwrite($file, "<p><a href='pages/".$big_first_letter."/". TranslateHelper::translit($tag->name) .".html'>$tag->name</a></p>");
 
             $page = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/". TranslateHelper::translit($tag->name) .".html", "w");
             fwrite($page, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
-                            <style>.item_head{color:#63ff62;}</style>');
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>.item_head{color:#63ff62;} body{padding-left: 20px; padding-top: 20px;} </style>');
             $items = explode(",", $tag->items);
             $r=1;
             foreach($items as $item) {
 
                 try {
                     $item = Items::findOne(['id' => (int)$item]);
-                    fwrite($page, "<p class='item_head'>". $r."--------------------------------".$item->title.nl2br("<p>$item->text</p>")."</p>
-                    <p class='small'><a href='../../".$item->audio_link."'><span class='glyphicon glyphicon-play'>аудио</span></a></p>");
+                    fwrite($page, "<p class='item_head'><a href='../../".$item->audio_link."'>
+                    <button type='button' class='btn btn-default btn-sm'>$r $item->title</button></a>".nl2br("<p>$item->text</p>")."</p>
+
+                    ");
                 } catch (\ErrorException $e) {
                     echo  $e->getMessage().PHP_EOL;
                     var_dump(Items::findOne(['id' => (int)$item]));
@@ -264,8 +270,8 @@ class ParsersController extends Controller
             fclose($page);
 
         }
-        fwrite($file, self::$footer);
-        fclose($file);
+        //fwrite($file, self::$footer);
+        //fclose($file);
     }
 
     function get_page($url) {

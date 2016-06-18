@@ -66,9 +66,17 @@ class Tag extends \yii\db\ActiveRecord
                 $tag->save();
             }
             else{
-                $tag_exists->frequency++;
-                $tag_exists->items .= ",".$id;
-                $tag_exists->update();
+
+                if((array_search($id, self::string2array($tag_exists->items)) === false) || (array_search($id, self::string2array($tag_exists->items)) < 0)){
+                    //var_dump($id);
+                    //var_dump(self::string2array($tag_exists->items));
+                    //var_dump(array_search($id, self::string2array($tag_exists->items)) === false);
+                    //var_dump(array_search($id, self::string2array($tag_exists->items)) < 0); exit;
+                    $tag_exists->frequency++;
+                    $tag_exists->items .= ",".$id;
+                    $tag_exists->update();
+                }
+
             }
         }
     }
