@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Nav;
+use yii\jui\AutoComplete;
+use app\models\Tag;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -24,11 +26,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 'options' => ['class' => 'nav nav-sidebar'],
                 'items' => [
 
-
-
                 ],
             ]);
 
+            ?>
+
+            <?php
+            //фомируем список автокомплита
+            $listdata = Tag::find()
+                ->select(['name as label'])
+                ->asArray()
+                ->all();
             ?>
 
         </div>
@@ -41,8 +49,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt' => 'Выбрать источник'])  ?>
 
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
-            <?= $form->field($model, 'tags')->textInput()  ?>
-
+            <?php  $form->field($model, 'tags')->textInput()  ?>
+            <?php echo $form->field($model, 'tags')->widget(
+                AutoComplete::className(), [
+                'clientOptions' => [
+                    'source' => $listdata,
+                    'minLength'=>'3',
+                    'autoFill'=>true
+                ],
+                'options'=>[
+                    'class'=>'form-control'
+                ]
+            ]);
+            ?>
             <?= $form->field($model, 'audio_link')->textInput()  ?>
             <?= $form->field($uploadFile, 'file')->fileInput() ?>
             <?= $form->field($uploadImg, 'img')->fileInput() ?>

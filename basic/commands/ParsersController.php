@@ -238,7 +238,7 @@ class ParsersController extends Controller
 
             $alfa_tags = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/tags.html", "a");
 
-            fwrite($alfa_tags, "<p><a href='". TranslateHelper::translit($tag->name) .".html'><button type='button' class='btn btn-default btn-lg'>$tag->name</button></a></p>");
+            fwrite($alfa_tags, "<a href='". TranslateHelper::translit($tag->name) .".html'><button type='button' class='btn btn-default btn-lg'>$tag->name</button></a>");
             fwrite($alfa_tags, self::$footer);
             fclose($alfa_tags);
 
@@ -248,15 +248,18 @@ class ParsersController extends Controller
             fwrite($page, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <style>.item_head{color:#63ff62;} body{padding-left: 20px; padding-top: 20px;} </style>');
+                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
             $items = explode(",", $tag->items);
             $r=1;
             foreach($items as $item) {
 
                 try {
                     $item = Items::findOne(['id' => (int)$item]);
-                    fwrite($page, "<p class='item_head'><a href='../../".$item->audio_link."'>
-                    <button type='button' class='btn btn-default btn-sm'>$r $item->title</button></a>".nl2br("<p>$item->text</p>")."</p>
+                    fwrite($page, "<p class='item_head'>$r $item->title</p>
+                    <audio controls>
+                        <source src='../../".$item->audio_link."'>
+                    </audio>
+                    ".nl2br("<p>$item->text</p>")."
 
                     ");
                 } catch (\ErrorException $e) {
