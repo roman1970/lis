@@ -2,9 +2,11 @@
 namespace app\commands;
 
 
+use app\models\Author;
 use app\models\Currencies;
 use app\models\CurrHistory;
 use app\models\Items;
+use app\models\Source;
 use app\models\Tag;
 use yii\console\Controller;
 use yii\helpers\Url;
@@ -255,7 +257,9 @@ class ParsersController extends Controller
 
                 try {
                     $item = Items::findOne(['id' => (int)$item]);
-                    fwrite($page, "<p class='item_head'>$r $item->title</p>
+                    $source = Source::findOne(['id' => $item->source_id]);
+                    $author = Author::findOne(['id' => $source->author_id]);
+                    fwrite($page, "<p class='item_head'>$r $item->title ($author->name - $source->title)</p>
                     <audio controls>
                         <source src='../../".$item->audio_link."'>
                     </audio>
