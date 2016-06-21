@@ -39,6 +39,9 @@ $config = [
         'markself' => [
             'class' => 'app\modules\markself\Markself',
         ],
+        'prognose' => [
+            'class' => 'app\modules\prognose\Prognose',
+        ],
         'krokodile' => [
             'class' => 'app\modules\krokodile\Krokodile',
         ],

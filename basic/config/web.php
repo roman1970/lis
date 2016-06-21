@@ -8,6 +8,10 @@ $config = [
     'bootstrap' => ['log'],
     //'defaultRoute' => '/weather/default/index',
     'modules' => [
+        'debug' => [
+            'class' => 'yii\debug\Module',
+            'allowedIPs' => ['192.168.1.33']
+        ],
         'user' => [
             'class' => 'dektrium\user\Module',
             'controllerMap' => [
