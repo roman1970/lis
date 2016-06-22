@@ -29,12 +29,31 @@ AppAsset::register($this);
 <div class="col-sm-9 col-md-10 main">
     <h1 class="page-header">Список матчей</h1>
 
-    <?php foreach ($match_list as $match) : ?>
+    <table class="table table-striped">
+        <tbody>
 
-        <p><a href="<?=Url::toRoute(['default/markact/','group' => $match->id, 'user' => md5($user->id)]) ?>"><?= $match->match_id ?></a> </p>
+        <?php foreach ($match_list as $match) :  ?>
 
-    <?php endforeach; ?>
+            <?php
+            $model = new \app\models\Totpredict();
+            $form = \yii\widgets\ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+            <tr>
+                <td><?= $form->field($model, 'date')->textInput(['value' => $match->date])  ?></td>
+                <td><?= $match->tournament ?></td>
+                <td><?= $match->host ?></td>
+                <td><?= $match->guest ?></td>
+                <td><?= $form->field($model, 'host_g')->textInput()  ?></td>
+                <td><?= $form->field($model, 'guest_g')->textInput()  ?></td>
+                <td>
+                    <?= Html::submitButton('Прогноз!',['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
+                    <a href="/khl/default/match/<?= $match->id?>"> <span class="glyphicon glyphicon-eye-open"></span></a>
+                </td>
+            </tr>
+            <?php \yii\widgets\ActiveForm::end(); ?>
 
+        <?php endforeach; ?>
+        </tbody>
+    </table>
 
     <?php
     /*

@@ -217,6 +217,60 @@ class Matches extends \yii\db\ActiveRecord
     }
 
     /**
+     * Фильтруем и выводим состав хозяев
+     */
+    public function getSost_h(){
+        if($this->stra_h != ''){
+            $sost = '';
+            $i = 0;
+            $sost_arr = explode(',', $this->stra_h);
+
+            while($i < 11){
+                $sost .= $sost_arr[$i];
+                $i++;
+            }
+
+            echo self::clearString($sost);
+
+        }
+        else echo '?';
+
+    }
+
+    /**
+     * Фильтруем и выводим состав гостей
+     */
+    public function getSost_g(){
+        if($this->stra_g != ''){
+            $sost = '';
+            $i = 0;
+            $sost_arr = explode(',', $this->stra_g);
+
+            while($i < 11){
+                $sost .= $sost_arr[$i];
+                $i++;
+            }
+
+            echo self::clearString($sost);
+
+        }
+        else echo '?';
+
+    }
+
+    /**
+     * Оставляем буквы и кое-какие знаки в строке
+     * @param $string
+     * @return mixed
+     */
+    public static function clearString($string){
+
+        $string = preg_replace("/-/", "- ", $string);
+
+        return  preg_replace("/[^-а-яёА-ЯЁa-zA-Z.() ]+/iu", "", $string);
+    }
+
+    /**
      * Все события матча у хоэяев
      */
     public function allMatchEventsH(){

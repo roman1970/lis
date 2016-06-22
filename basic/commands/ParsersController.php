@@ -8,6 +8,7 @@ use app\models\CurrHistory;
 use app\models\Items;
 use app\models\Source;
 use app\models\Tag;
+use app\models\Totmatch;
 use yii\console\Controller;
 use yii\helpers\Url;
 use Yii;
@@ -18,6 +19,7 @@ use app\components\TranslateHelper;
 class ParsersController extends Controller
 {
     public $arr = [];
+    public $tournament = '';
     public static $str = '';
     public static $header = "<head>
         <meta charset='utf-8'>
@@ -416,5 +418,49 @@ class ParsersController extends Controller
             self::$str .= '<i>не могу прочитать</i>';
         }
 
+    }
+
+    public function actionPrognosematch(){
+        $content = file_get_contents('/home/romanych//my/Моё/матчи2.txt');
+        $cont = explode('[block]', $content);
+        $con = explode(PHP_EOL, $cont[1]);
+        //var_dump($con);
+        $i = 0;
+
+        foreach ($con as $match){
+
+            $match_arr = explode(' ', $this->clearMatchString($match));
+            //var_dump($match_arr);
+
+            $play = new Totmatch();
+            if($i == 0) {
+                $this->tournament = $match;
+            }
+            else {
+                try {
+                    $play->date = $match_arr[0] . "2016 " . $match_arr[1];
+                    $play->host = $match_arr[2];
+                    $play->guest = $match_arr[3];
+                    $play->tournament = $this->tournament;
+                    $play->foo_match_id = 1;
+                    //var_dump($play);
+                    $play->save();
+                } catch (\ErrorException $e) {
+                    $i++;
+                    continue;
+                }
+            }
+            $i++;
+
+        }
+        $this->tournament = '';
+    }
+
+    public function clearMatchString($content){
+        $content = str_replace(chr(9), ' ', $content);
+        $content = str_replace(chr(11), ' ', $content);  // заменяем табуляцию на пробел
+        $content = str_replace(chr(13), ' ', $content);
+        $content = str_replace(chr(10), ' ', $content);
+        return $content;
     }
 }

@@ -18,7 +18,7 @@ class ItemController extends BackEndController
 
     public function actionIndex()
     {
-        $items = Items::find();
+        $items = Items::find()->orderBy('id DESC');;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,

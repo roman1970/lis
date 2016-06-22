@@ -14,7 +14,7 @@ use Yii;
  * @property string $tournament
  * @property integer $foo_match_id
  *
- * @property FooMatches $fooMatch
+ * @property Matches $fooMatch
  * @property TotPredict[] $totPredicts
  */
 class Totmatch extends \yii\db\ActiveRecord
@@ -36,7 +36,7 @@ class Totmatch extends \yii\db\ActiveRecord
             [['date', 'host', 'guest', 'tournament', 'foo_match_id'], 'required'],
             [['foo_match_id'], 'integer'],
             [['date', 'host', 'guest', 'tournament'], 'string', 'max' => 255],
-            [['foo_match_id'], 'exist', 'skipOnError' => true, 'targetClass' => FooMatches::className(), 'targetAttribute' => ['foo_match_id' => 'id']],
+            [['foo_match_id'], 'exist', 'skipOnError' => true, 'targetClass' => Matches::className(), 'targetAttribute' => ['foo_match_id' => 'id']],
         ];
     }
 
@@ -60,7 +60,7 @@ class Totmatch extends \yii\db\ActiveRecord
      */
     public function getFooMatch()
     {
-        return $this->hasOne(FooMatches::className(), ['id' => 'foo_match_id']);
+        return $this->hasOne(Matches::className(), ['id' => 'foo_match_id']);
     }
 
     /**

@@ -29,10 +29,17 @@ AppAsset::register($this);
     <?php  //var_dump($articles); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $sources,
-        //'filterModel' => $searchModel,
+        //'filterModel' => $sources->search(),
         'columns' => [
             'id',
             'title',
+
+            [
+                'label' => 'Автор',
+                'value' => function($sources){
+                    return $sources->author->name;
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
                 'template' => '{delete} {update}',

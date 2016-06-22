@@ -15,7 +15,7 @@ class SourceController extends BackEndController
 
     public function actionIndex()
     {
-        $sources = Source::find();
+        $sources = Source::find()->orderBy('id DESC');
         $dataProvider = new ActiveDataProvider([
             'query' => $sources,
         ]);
@@ -53,5 +53,54 @@ class SourceController extends BackEndController
         }
 
     }
+
+    public function actionUpdate($id){
+
+        $model = $this->loadModel($id);
+
+
+        //var_dump($uploadImg); exit;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->title = Yii::$app->request->post('Source')['title'];
+            $model->author_id = Yii::$app->request->post('Source')['author_id'];
+            $model->save(false);
+
+            return $this->redirect(Url::toRoute('source/index'));
+        } else {
+
+            return $this->render('_form', [
+                'model' => $model,
+            ]);
+        }
+
+    }
+
+    public function actionDelete($id)
+    {
+
+        if ($model = $this->loadModel($id)->delete()) {
+            $source = Source::find();
+            $dataProvider = new ActiveDataProvider([
+                'query' => $source,
+            ]);
+
+            return $this->render('index', ['sources' => $dataProvider]);
+        } else {
+            throw new \yii\web\HttpException(404, 'Cant delete record.');
+        };
+
+    }
+
+    public function loadModel($id)
+    {
+
+        $model = Source::findOne($id);
+
+        if ($model === null)
+            throw new \yii\web\HttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+
+
 
 }

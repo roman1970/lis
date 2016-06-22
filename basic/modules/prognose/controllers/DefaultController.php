@@ -3,6 +3,7 @@
 namespace app\modules\prognose\controllers;
 
 use app\components\FrontEndController;
+use app\models\Totmatch;
 use app\models\Totpredict;
 use app\models\Totuser;
 use Yii;
@@ -83,7 +84,7 @@ class DefaultController extends FrontEndController
                 if($this->userIfUserLegal($id)){
 
 
-                    $match_list = Totpredict::find()->all();
+                    $match_list = Totmatch::find()->all();
                     //var_dump( $match_list); exit;
 
                     return $this->render('group', ['user' => $this->current_user, 'match_list' => $match_list]);

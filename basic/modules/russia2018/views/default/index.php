@@ -404,9 +404,9 @@ use yii\bootstrap\Nav;
 
                         <table id="mems_match" cellpadding="0" >
                             <tr>
-                                <td class="left"><?php echo $match->host; ?></td>
+                                <td class="left" title="Состав: <?=$match->getSost_h()?>" style="cursor: pointer"><?php echo $match->host; ?></td>
                                 <td class="center"><?php echo $match->gett; ?>:<?php echo $match->lett; ?> </td>
-                                <td class="right"><?php echo $match->guest; ?></td>
+                                <td class="right" title="Состав: <?=$match->getSost_g()?>" style="cursor: pointer"><?php echo $match->guest; ?></td>
 
                             </tr>
                         </table>
