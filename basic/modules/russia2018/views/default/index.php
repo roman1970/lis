@@ -50,7 +50,7 @@ use yii\bootstrap\Nav;
             function() {
                 getMatchesStrict(hoster.val(),guester.val());
             }
-        )
+        );
 
 
         $("#statusMess").ajaxError(

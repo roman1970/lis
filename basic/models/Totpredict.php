@@ -36,8 +36,8 @@ class Totpredict extends \yii\db\ActiveRecord
             [['user_id', 'host_g', 'guest_g', 'match_id'], 'required'],
             [['user_id', 'host_g', 'guest_g', 'match_id'], 'integer'],
             [['date'], 'safe'],
-            [['match_id'], 'exist', 'skipOnError' => true, 'targetClass' => TotMatch::className(), 'targetAttribute' => ['match_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => TotUser::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['match_id'], 'exist', 'skipOnError' => true, 'targetClass' => Totmatch::className(), 'targetAttribute' => ['match_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Totuser::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -61,7 +61,7 @@ class Totpredict extends \yii\db\ActiveRecord
      */
     public function getMatch()
     {
-        return $this->hasOne(TotMatch::className(), ['id' => 'match_id']);
+        return $this->hasOne(Totmatch::className(), ['id' => 'match_id']);
     }
 
     /**
@@ -69,6 +69,21 @@ class Totpredict extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(TotUser::className(), ['id' => 'user_id']);
+        return $this->hasOne(Totuser::className(), ['id' => 'user_id']);
+    }
+
+    public  function beforeSave($options = [])
+    {
+
+        if (parent::beforeSave(1)) {
+            if ($this->isNewRecord) {
+                $this->date = date('Y-m-d H:i:s');
+
+                return true;
+            } else
+
+                return true;
+        } else
+            return false;
     }
 }

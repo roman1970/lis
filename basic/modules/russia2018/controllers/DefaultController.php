@@ -371,15 +371,15 @@ class DefaultController extends FrontEndController
         if($hoster === 'null') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
-                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("guest =('"  .$guester. "')")
+                ->where("guest like('.$guester._')")
+                //->where(['guest' => $guester])
                 ->all();
         }
         elseif($guester === 'null') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('%".$hoster."')")
+                ->where("host like('_".$hoster."')")
                 ->all();
         }
         else {
@@ -387,7 +387,7 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('%" . $hoster . "') and guest like('" . $guester . "')")
+                ->where("host like('_" . $hoster . "') and guest like('" . $guester . "_')")
                 ->all();
         }
 
@@ -427,14 +427,14 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("guest =('" .$guester. "')")
+                ->where("guest like('" .$guester. "_')")
                 ->all();
         }
         elseif($guester === 'null') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('%".$hoster."')")
+                ->where("host like('_".$hoster."')")
                 ->all();
         }
         else {
@@ -442,7 +442,7 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('" . $hoster . "') and guest like('" . $guester . "')")
+                ->where("host like('_" . $hoster . "') and guest like('" . $guester . "_')")
                 ->all();
         }
 

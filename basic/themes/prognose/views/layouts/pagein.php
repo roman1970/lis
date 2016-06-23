@@ -37,7 +37,7 @@ AppAsset::register($this);
     NavBar::begin([
         'brandLabel' => 'Предскажи счет, '. $this->context->current_user->name .
             ',<span style="color:yellow"> В твоём кошельке ' .
-            round(\app\models\MarkUser::findOne($this->context->current_user->id)->money) . ' Р</span>',
+            round(\app\models\Totuser::findOne($this->context->current_user->id)->money) . ' Р</span>',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',

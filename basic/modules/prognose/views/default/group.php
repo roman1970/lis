@@ -1,3 +1,35 @@
+<script>
+
+    function prognos(match,i){
+
+        var host_g = $("#host_g_"+i).val();
+        var guest_g = $("#guest_g_"+i).val();
+
+        var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
+
+            if(host_g && guest_g){
+                $.ajax({
+                    type: "GET",
+                    url: "/prognose/default/match/",
+                    data: "host_g="+host_g+"&guest_g="+guest_g+"&user="+user+"&match="+match,
+                    success: function(res){
+                        $("#prognose_"+i).hide();
+                        $("#res_"+i).html(res);
+                    }
+
+                });
+            }
+        else alert("Введите счёт прогнозируемого матча!");
+
+
+
+        return true;
+
+
+    }
+
+</script>
+
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
@@ -10,14 +42,29 @@ use yii\helpers\Url;
 AppAsset::register($this);
 //var_dump($user); exit;
 ?>
+<style>
+    .form-control{
+        width: auto;
+        display: inline;
+    }
+    .table > tbody > tr > td{
+        vertical-align: middle;
+        text-align: center;
+    }
+    .team {
+        font-size: 20px;
+    }
+    .form-group {
+        margin-bottom: 0;
+    }
+</style>
 <div class="col-sm-3 col-md-2 sidebar">
     <?php
 
     echo Nav::widget([
         'options' => ['class' => 'nav nav-sidebar'],
         'items' => [
-            ['label' => 'Создать', 'url' => ['/default/grcreate']],
-            ['label' => 'Редактировать', 'url' => ['/default/grupdate']],
+            ['label' => 'Твои прогнозы', 'url' => ['/prognose/default/predicted/?id='.md5($user->id)]],
 
         ],
     ]);
@@ -32,67 +79,30 @@ AppAsset::register($this);
     <table class="table table-striped">
         <tbody>
 
-        <?php foreach ($match_list as $match) :  ?>
+        <?php  $i = 0;
+            foreach ($match_list as $match) :  ?>
 
-            <?php
-            $model = new \app\models\Totpredict();
-            $form = \yii\widgets\ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
             <tr>
-                <td><?= $form->field($model, 'date')->textInput(['value' => $match->date])  ?></td>
-                <td><?= $match->tournament ?></td>
-                <td><?= $match->host ?></td>
-                <td><?= $match->guest ?></td>
-                <td><?= $form->field($model, 'host_g')->textInput()  ?></td>
-                <td><?= $form->field($model, 'guest_g')->textInput()  ?></td>
+                <td><p class="team"><?= $match->date  ?></p></td>
+                <td><p class="team"><?= $match->tournament ?></p></td>
+                <td><p class="team"><?= $match->host ?></p>
+                    <input type='text' class="form-control" id="host_g_<?=$i ?>" size="2" />
+                </td>
+                <td><p class="team"><?= $match->guest ?></p>
+                    <input type='text' class="form-control" id="guest_g_<?=$i ?>" size="2" />
+                </td>
+
+
                 <td>
-                    <?= Html::submitButton('Прогноз!',['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
-                    <a href="/khl/default/match/<?= $match->id?>"> <span class="glyphicon glyphicon-eye-open"></span></a>
+                    <button class="btn btn-primary" id="prognose_<?=$i ?>" onclick="prognos(<?=$match->id?>, <?=$i?>)" >Прогноз!</button>
+                    <p id="res_<?=$i?>"></p>
+
                 </td>
             </tr>
-            <?php \yii\widgets\ActiveForm::end(); ?>
 
-        <?php endforeach; ?>
+
+        <?php $i++; endforeach; ?>
         </tbody>
     </table>
 
-    <?php
-    /*
-     * GridView::widget([
-        'dataProvider' => $groups,
-        //'value' => $user,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            'name',
-            ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete} {update} {pages}',
-                'buttons' =>
-                    [
-                        'delete' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['delete','id' => $model->id]), [
-                                'title' => Yii::t('yii', 'Удалить'),
-                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        },
-                        'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['update','id' => $model->id]), [
-                                'title' => Yii::t('yii', 'Редактировать'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        },
-                        'pages' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', Url::toRoute(['pages','id' => $model->id]), [
-                                'title' => Yii::t('yii', 'Список действий'),
-                                'data-method' => 'post',
-                                'data-pjax' => '0',
-                            ]);
-                        }
-
-                    ]
-            ]
-        ],
-    ]);
- */ ?>
 </div>
