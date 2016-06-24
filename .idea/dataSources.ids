@@ -1617,9 +1617,11 @@
       <column name="host_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="guest_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="bet_balance" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="tot_predict_ibfk_2" columns="match_id" ref-table="tot_match" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="tot_predict_ibfk_1" columns="user_id" ref-table="tot_user" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="tot_predict_ibfk_2" columns="match_id" ref-table="tot_match" ref-schema="" ref-catalog="plis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_tot_predict_match_id" unique="false" columns="match_id"/>
       <index name="ux_tot_predict_user_id" unique="false" columns="user_id"/>
     </table>

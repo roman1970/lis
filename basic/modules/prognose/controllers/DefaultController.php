@@ -3,6 +3,7 @@
 namespace app\modules\prognose\controllers;
 
 use app\components\FrontEndController;
+use app\models\Matches;
 use app\models\Totmatch;
 use app\models\Totpredict;
 use app\models\Totuser;
@@ -78,14 +79,15 @@ class DefaultController extends FrontEndController
      * @return string
      */
     public function actionPrognose($id){
+        $this->layout = '@app/themes/prognose/views/layouts/pagein';
 
 
             if($this->userIfUserLegal($id)){
 
                     $users_predicted_matches = implode(',',ArrayHelper::map(Totpredict::find()->where(['user_id' => $this->current_user->id])->all(), 'id', 'match_id'));
 
-                    $match_list = Totmatch::find()->where("id NOT IN (".$users_predicted_matches.")")->all();
-                    //var_dump($users_predicted_matches); exit;
+                    if($users_predicted_matches)$match_list = Totmatch::find()->where("id NOT IN (".$users_predicted_matches.")")->all();
+                    else $match_list = Totmatch::find()->all();
 
                     return $this->render('group', ['user' => $this->current_user, 'match_list' => $match_list]);
                 }
@@ -97,7 +99,7 @@ class DefaultController extends FrontEndController
     public function actionMatch(){
         $this->layout = '@app/themes/prognose/views/layouts/pagein';
 
-        if(Yii::$app->getRequest()->getQueryParam('host_g') && Yii::$app->getRequest()->getQueryParam('guest_g')) {
+        if(Yii::$app->getRequest()->getQueryParam('host_g') !== null && Yii::$app->getRequest()->getQueryParam('guest_g') !== null) {
 
             $predict = new Totpredict();
 
@@ -123,6 +125,8 @@ class DefaultController extends FrontEndController
 
            $predicted = Totpredict::find()->where(['user_id' => $this->current_user->id])->all();
             //var_dump($predicted); exit;
+
+
             return $this->render('stat', ['user' => $this->current_user, 'predicted' => $predicted]);
 
         }

@@ -421,7 +421,7 @@ class ParsersController extends Controller
     }
 
     public function actionPrognosematch(){
-        $content = file_get_contents('/home/romanych//my/Моё/матчи2.txt');
+        $content = file_get_contents('/home/romanych/my/Моё/матчи2.txt');
         $cont = explode('[block]', $content);
         $con = explode(PHP_EOL, $cont[1]);
         //var_dump($con);
@@ -439,8 +439,8 @@ class ParsersController extends Controller
             else {
                 try {
                     $play->date = $match_arr[0] . "2016 " . $match_arr[1];
-                    $play->host = $match_arr[2];
-                    $play->guest = $match_arr[3];
+                    $play->host = $this->backTeamString($match_arr[2]);
+                    $play->guest = $this->backTeamString($match_arr[3]);
                     $play->tournament = $this->tournament;
                     $play->foo_match_id = 1;
                     //var_dump($play);
@@ -457,10 +457,16 @@ class ParsersController extends Controller
     }
 
     public function clearMatchString($content){
-        $content = str_replace(chr(9), ' ', $content);
+        $content = str_replace(chr(9), ' ', $content);//Северная Ирландия
         $content = str_replace(chr(11), ' ', $content);  // заменяем табуляцию на пробел
         $content = str_replace(chr(13), ' ', $content);
         $content = str_replace(chr(10), ' ', $content);
+        $content = str_replace('Северная Ирландия', 'Северная_Ирландия', $content);
+        return $content;
+    }
+
+    public function backTeamString($content){
+        $content = str_replace('Северная_Ирландия', 'Северная Ирландия', $content);
         return $content;
     }
 }

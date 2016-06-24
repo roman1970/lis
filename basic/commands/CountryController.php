@@ -8,6 +8,8 @@
 namespace app\commands;
 
 use app\models\Matches;
+use app\models\Totmatch;
+use app\models\Totpredict;
 use yii\console\Controller;
 use app\components\DocxConverter;
 use app\models\Country;
@@ -939,4 +941,70 @@ class CountryController extends Controller
 
         }
     }
+
+    /**
+     * Проверка прогнозов
+     * @throws \Exception
+     */
+    public function actionMarkPredictedMatches(){
+        $predicted = Totmatch::find()->where(['foo_match_id' => 1])->all();
+
+        //var_dump($predicted); exit;
+
+        foreach ($predicted as $match){
+            $date = explode(" ", $match->date);
+            try {
+                $d = $date[0];
+            } catch (\ErrorException $e) {
+                $d = '';
+            }
+            $m = Matches::find()
+                ->where("host like('_".$match->host."') and guest like('".$match->guest."_') and date like('".$d."')")
+                ->one();
+            if($m) {
+                $match->foo_match_id = $m->id;
+                $match->update();
+            }
+            $tested = Totpredict::find()->where(['match_id' => $match->id])->all();
+            foreach ($tested as $play){
+
+                if($play->host_g == $m->gett && $play->guest_g == $m->lett) {
+                    $play->status = Totpredict::STATUS_RIGHT_SCORE;
+                    $play->bet_balance = $this->getMatchBet($m->gett, $m->lett, $m->bet_h, $m->bet_n, $m->bet_g);
+                    $play->update();
+
+                }
+                elseif(($play->host_g > $play->guest_g && $m->gett > $m->lett) ||
+                    ($play->host_g == $play->guest_g && $m->gett == $m->lett) ||
+                    ($play->host_g < $play->guest_g && $m->gett < $m->lett)
+                ) {
+                    $play->status = Totpredict::STATUS_RIGHT_RESULT;
+                    $play->bet_balance = $this->getMatchBet($m->gett, $m->lett, $m->bet_h, $m->bet_n, $m->bet_g);
+                    $play->update();
+                }
+                else {
+                    $play->status = Totpredict::STATUS_BAD_PROGNOSE;
+                    $play->bet_balance = -1;
+                    $play->update();
+                }
+
+            }
+        }
+
+    }
+
+    public function getMatchBet($host_g, $guest_g, $bet_h, $bet_n, $bet_g){
+        if($bet_h != 0 && $bet_n != 0 && $bet_g != 0) {
+            if($host_g > $guest_g) {
+                return $bet_h - 1;
+            }
+            elseif($host_g == $guest_g) {
+                return $bet_n - 1;
+            }
+            else
+                return $bet_g - 1;
+            }
+        else return 0;
+        }
+
 }

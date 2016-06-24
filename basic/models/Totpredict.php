@@ -13,12 +13,18 @@ use Yii;
  * @property integer $host_g
  * @property integer $guest_g
  * @property integer $match_id
+ * @property integer $status
  *
- * @property TotMatch $match
- * @property TotUser $user
+ * @property Totmatch $match
+ * @property Totuser $user
  */
 class Totpredict extends \yii\db\ActiveRecord
 {
+    const STATUS_NON_TESTED = 0;
+    const STATUS_BAD_PROGNOSE = 1;
+    const STATUS_RIGHT_RESULT = 2;
+    const STATUS_RIGHT_SCORE = 3;
+
     /**
      * @inheritdoc
      */
@@ -34,7 +40,7 @@ class Totpredict extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'host_g', 'guest_g', 'match_id'], 'required'],
-            [['user_id', 'host_g', 'guest_g', 'match_id'], 'integer'],
+            [['user_id', 'host_g', 'guest_g', 'match_id', 'status'], 'integer'],
             [['date'], 'safe'],
             [['match_id'], 'exist', 'skipOnError' => true, 'targetClass' => Totmatch::className(), 'targetAttribute' => ['match_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Totuser::className(), 'targetAttribute' => ['user_id' => 'id']],
