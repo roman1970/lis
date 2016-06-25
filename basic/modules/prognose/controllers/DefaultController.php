@@ -83,11 +83,26 @@ class DefaultController extends FrontEndController
 
 
             if($this->userIfUserLegal($id)){
+                    $now_id = 1;
 
                     $users_predicted_matches = implode(',',ArrayHelper::map(Totpredict::find()->where(['user_id' => $this->current_user->id])->all(), 'id', 'match_id'));
 
-                    if($users_predicted_matches)$match_list = Totmatch::find()->where("id NOT IN (".$users_predicted_matches.")")->all();
-                    else $match_list = Totmatch::find()->all();
+                    $all = Totmatch::find()->all();
+                        foreach ($all as $one) {
+                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0])+36000 >= time()) {
+                                $now_id = $one->id;
+                                break;
+                            }
+                        }
+                    //echo $now_id; exit;
+
+                    if($users_predicted_matches)
+                        $match_list = Totmatch::find()
+                            ->where("id NOT IN (".$users_predicted_matches.") AND id >= ".$now_id)
+                            ->all();
+                    else $match_list = Totmatch::find()
+                        ->where("id >= ".$now_id)
+                        ->all();
 
                     return $this->render('group', ['user' => $this->current_user, 'match_list' => $match_list]);
                 }

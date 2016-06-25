@@ -270,6 +270,9 @@ class Matches extends \yii\db\ActiveRecord
         return  preg_replace("/[^-а-яёА-ЯЁa-zA-Z.() ]+/iu", "", $string);
     }
 
+
+
+
     /**
      * Все события матча у хоэяев
      */

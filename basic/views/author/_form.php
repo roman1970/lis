@@ -25,6 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'name')->textInput()  ?>
 
+            <?= $form->field($model, 'status')->dropDownList([0, 1, 2])->label('0 - неопубликованно, 1 - музыка, 2 - книга');  ?>
+
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
             </div>

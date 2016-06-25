@@ -31,6 +31,7 @@
 
     <?= \app\components\BetBalanceWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1]) ?>
 
+
 </div>
 
 <div class="col-sm-8 col-md-9 main">
@@ -46,6 +47,7 @@
                     ?>
                     <?php if ($one->match->foo_match_id > 1) :
                         $mtch = \app\models\Matches::findOne($one->match->foo_match_id);
+
                         if($one->status == \app\models\Totpredict::STATUS_RIGHT_SCORE) {
                             $class = 'green';
                             $title = 'Угадан счет';
@@ -69,7 +71,7 @@
                     </tr>
                     <?php endif ?>
                     <tr title="<?=$title?>">
-                        <td><p class="<?=$class?>">Прогноз</p></td>
+                        <td><p class="<?=$class?>">Прогноз </p></td>
                         <td><p class="<?=$class?>"><?= $one->match->host ?></p></td>
                         <td><p class="<?=$class?>"><?= $one->match->guest ?></p></td>
                         <td><p class="<?=$class?>""><?= $one->host_g ?></td>

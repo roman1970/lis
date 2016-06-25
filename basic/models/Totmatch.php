@@ -70,4 +70,21 @@ class Totmatch extends \yii\db\ActiveRecord
     {
         return $this->hasMany(TotPredict::className(), ['match_id' => 'id']);
     }
+
+    /**
+     * Превряшает дату таблицы matches в метку
+     * @param $date
+     * @return int
+     */
+    public static function formatMatchDateToTime($date){
+        $d = explode('.', $date);
+        $day = (int)$d[0];
+        $month = (int)$d[1];
+        $year = (int)$d[2];
+        $time = mktime(0, 0, 0, $month, $day, $year);
+        //$newDay = date('Y-m-d', $time);
+        return $time;
+
+    }
+
 }

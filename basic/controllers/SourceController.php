@@ -35,6 +35,7 @@ class SourceController extends BackEndController
         if ($model->load(Yii::$app->request->post())) {
             $model->title = Yii::$app->request->post('Source')['title'];
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
+            $model->status = Yii::$app->request->post('Source')['status'];
           $model->save(false);
 
             $sources = Source::find();
@@ -63,6 +64,7 @@ class SourceController extends BackEndController
         if ($model->load(Yii::$app->request->post())) {
             $model->title = Yii::$app->request->post('Source')['title'];
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
+            $model->status = Yii::$app->request->post('Source')['status'];
             $model->save(false);
 
             return $this->redirect(Url::toRoute('source/index'));

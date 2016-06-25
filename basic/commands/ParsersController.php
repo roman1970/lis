@@ -61,7 +61,7 @@ class ParsersController extends Controller
 
             <div class='container'>";
 
-    public static $footer = "</body></html></div>";
+    public static $footer = "</div></body></html>";
 
     public function actionIndex()
     {
@@ -349,16 +349,58 @@ class ParsersController extends Controller
     }
 
     /**
-     * Генерирует страницу с деревом файлов музыкальной директории
+     * Генерирует страницу с музыкой
      */
     public function actionMusicDirGenerator(){
-        echo 'Генерим дерево'. PHP_EOL;
-        //генерим страницу с файловым деревом
-        $f_tree = fopen("/home/romanych/www/vrs/music.html", "w");
-        self::$str = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
-        $this->directory_tree("/home/romanych/music/Music", "music/");
-        fwrite($f_tree, self::$str);
-        fclose($f_tree);
+
+        $music = fopen("/home/romanych/www/vrs/music.html", "w");
+        fwrite($music, self::$header);
+
+        $authors = Author::find()->where(['status' => 1])->all();
+
+        foreach ($authors as $author){
+            //var_dump($author->name);
+
+            $alboms = Source::find()->where(['author_id' => $author->id])->all();
+            $author_file = fopen("/home/romanych/www/vrs/music/".TranslateHelper::translit($author->name).".html", "w");
+            fwrite($author_file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                            <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
+
+            foreach ($alboms as $albom){
+
+                $songs = Items::find()->where(['source_id' => $albom->id])->all();
+                $songs_list = fopen("/home/romanych/www/vrs/music/".TranslateHelper::translit($albom->title).".html", "w");
+                fwrite($songs_list, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                            <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
+                $r=1;
+                fwrite($songs_list, '<audio oncanplay="playSound()" src="..."></audio>');
+                foreach ($songs as $song) {
+                    fwrite($songs_list, "<p class='item_head'>$r $song->title ($author->name - $albom->title)</p>
+                    <audio controls>
+                        <source src='".$song->audio_link."'>
+                    </audio>
+                    ".nl2br("<p>$song->text</p>")."
+
+                    ");
+                    $r++;
+                }
+                fwrite($songs_list, self::$footer);
+                fclose($songs_list);
+
+                fwrite($author_file, "<a href='".TranslateHelper::translit($albom->title).".html'><button type='button' class='btn btn-default btn-lg'> $albom->title </button></a>");
+            }
+            fwrite($author_file, self::$footer);
+            fclose($author_file);
+
+            fwrite($music, "<a href='music/".TranslateHelper::translit($author->name).".html'><button type='button' class='btn btn-default btn-lg'> $author->name </button></a>");
+        }
+
+        fwrite($music, self::$footer);
+        fclose($music);
     }
 
 
