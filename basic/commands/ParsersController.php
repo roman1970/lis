@@ -363,7 +363,7 @@ class ParsersController extends Controller
 
             $alboms = Source::find()->where(['author_id' => $author->id])->all();
             $author_file = fopen("/home/romanych/www/vrs/music/".TranslateHelper::translit($author->name).".html", "w");
-            fwrite($author_file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            fwrite($author_file, '<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                             <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                             <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
@@ -372,12 +372,35 @@ class ParsersController extends Controller
 
                 $songs = Items::find()->where(['source_id' => $albom->id])->all();
                 $songs_list = fopen("/home/romanych/www/vrs/music/".TranslateHelper::translit($albom->title).".html", "w");
-                fwrite($songs_list, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+                fwrite($songs_list, '<html><head>
+                            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                             <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+                            <link href="/css/audio.css" rel="stylesheet" type="text/css" />
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
+                            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                            <script type="text/javascript" src="/js/js-jquery-ui-1.8.21.custom.min.js"></script>
+                            <script type="text/javascript" src="/js/audio.js"></script>
+                            </head>
+                            <body>
+                            <div>
+                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>
+
+                            <div id="audioPlayer">
+                                <a onclick="playSound()">
+                                    <audio class="audioPlayer" onended="nextSong()" >
+
+                                        <source type="audio/mpeg"  class="audio-mp3" />
+
+                                    </audio>
+                                    <img src="/img/loupe.png" alt="Play" />
+                                </a>
+                            </div>
+
+                            ');
+
                 $r=1;
-                fwrite($songs_list, '<audio oncanplay="playSound()" src="..."></audio>');
+
                 foreach ($songs as $song) {
                     fwrite($songs_list, "<p class='item_head'>$r $song->title ($author->name - $albom->title)</p>
                     <audio controls>
