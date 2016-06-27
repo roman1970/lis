@@ -5,6 +5,13 @@
         var host_g = $("#host_g_"+i).val();
         var guest_g = $("#guest_g_"+i).val();
 
+        //Валидация
+        if (host_g  === "" || guest_g === "") {
+            alert("Введите счет");
+            return false;
+        }
+
+
         var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
 
             if(host_g && guest_g){

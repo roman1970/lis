@@ -965,14 +965,33 @@ class CountryController extends Controller
                 $match->foo_match_id = $m->id;
                 $match->update();
             }
+            else break;
             $tested = Totpredict::find()->where(['match_id' => $match->id])->all();
             foreach ($tested as $play){
 
+                var_dump($play->host_g);
+                var_dump($m->gett);
+                var_dump($play->guest_g);
+                var_dump($m->lett);
                 if($play->host_g == $m->gett && $play->guest_g == $m->lett) {
                     $play->status = Totpredict::STATUS_RIGHT_SCORE;
                     $play->bet_balance = $this->getMatchBet($m->gett, $m->lett, $m->bet_h, $m->bet_n, $m->bet_g);
                     $play->update();
 
+                }
+                elseif($play->host_g == $play->guest_g && ($m->prim == ' После серии пенальти' ||
+                        $m->prim == ' После дополнительного времени')){
+                   var_dump($play);
+                    $play->status = Totpredict::STATUS_RIGHT_RESULT;
+                    $play->bet_balance = $this->getMatchBet(1, 1, $m->bet_h, $m->bet_n, $m->bet_g);
+                    $play->update();
+                }
+                elseif($play->host_g <> $play->guest_g && ($m->prim == ' После серии пенальти' ||
+                        $m->prim == ' После дополнительного времени')) {
+                    var_dump($play);
+                    $play->status = Totpredict::STATUS_BAD_PROGNOSE;
+                    $play->bet_balance = -1;
+                    $play->update();
                 }
                 elseif(($play->host_g > $play->guest_g && $m->gett > $m->lett) ||
                     ($play->host_g == $play->guest_g && $m->gett == $m->lett) ||

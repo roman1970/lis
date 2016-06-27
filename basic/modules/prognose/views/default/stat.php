@@ -5,6 +5,10 @@
     }
     .table > tbody > tr > td{
         vertical-align: middle;
+        text-align: left;
+    }
+    table td .progn{
+        width: 400px;
         text-align: center;
     }
     .team {
@@ -16,6 +20,9 @@
     .left{
         text-align: left;
         font-size: 20px;
+    }
+    .right{
+        text-align: right;
     }
     .green{
         color: green;
@@ -63,18 +70,22 @@
 
                     ?>
                     <tr>
-                        <td><p><?= $mtch->date ?> <?= $mtch->tournament ?></p></td>
+                        <td><p class="progn""><?= $mtch->date ?> <?= $mtch->tournament ?> </br> <?= $mtch->prim == '' ? '' : $mtch->prim ?></p></td>
                         <td><p><?= $mtch->host ?></p></td>
-                        <td><p><?= $mtch->guest ?></p></td>
-                        <td><p><?= $mtch->gett ?></p></td>
+                        <td><p>-</p></td>
+                        <td><p class="right"><?= $mtch->guest ?></p></td>
+                        <td><p ><?= $mtch->gett ?></p></td>
+                        <td><p>:</p></td>
                         <td><p><?= $mtch->lett ?></p></td>
                     </tr>
                     <?php endif ?>
                     <tr title="<?=$title?>">
-                        <td><p class="<?=$class?>">Прогноз </p></td>
+                        <td><p class="<?=$class?> progn">Прогноз </p></td>
                         <td><p class="<?=$class?>"><?= $one->match->host ?></p></td>
+                        <td><p class="<?=$class?>">-</p></td>
                         <td><p class="<?=$class?>"><?= $one->match->guest ?></p></td>
-                        <td><p class="<?=$class?>""><?= $one->host_g ?></td>
+                        <td><p class="<?=$class?> right"><?= $one->host_g ?></p></td>
+                        <td><p class="<?=$class?>">:</p></td>
                         <td><p class="<?=$class?>""><?= $one->guest_g ?></p></td>
                     </tr>
 

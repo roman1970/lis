@@ -380,24 +380,27 @@ class ParsersController extends Controller
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
                             <script type="text/javascript" src="/js/js-jquery-ui-1.8.21.custom.min.js"></script>
+                            <script>
+                            var songs = [');
+                foreach ($songs as $song) {
+                    fwrite($songs_list, "{url:'$song->audio_link', name: '$author->name - $albom->title - $song->title'},");
+                }
+
+                 fwrite($songs_list, '];
+                            </script>
                             <script type="text/javascript" src="/js/audio.js"></script>
                             </head>
                             <body>
                             <div>
                             <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>
-
-                            <div id="audioPlayer">
+                            <div id="audioPlayer" style="cursor: pointer">
                                 <a onclick="playSound()">
-                                    <audio class="audioPlayer" onended="nextSong()" >
-
-                                        <source type="audio/mpeg"  class="audio-mp3" />
-
-                                    </audio>
-                                    <img src="/img/loupe.png" alt="Play" />
+                                    <p>Воспроизвести весь альбом</p>
                                 </a>
                             </div>
-
-                            ');
+                            <div id="currSong">
+                            </div>
+                         ');
 
                 $r=1;
 
