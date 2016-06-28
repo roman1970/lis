@@ -25,18 +25,19 @@
         text-align: right;
     }
     .green{
-        color: green;
+        color: #c1ff65;
     }
     .blue{
         color: #4bbeff;
     }
     .red{
-        color: red;
+        color: #ff9148;
     }
 </style>
 <div class="col-sm-4 col-md-3 sidebar" xmlns="http://www.w3.org/1999/html">
 
     <?= \app\components\BetBalanceWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1]) ?>
+    <?= \app\components\BetChempionWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1]) ?>
 
 
 </div>
@@ -73,7 +74,7 @@
                         <td><p class="progn""><?= $mtch->date ?> <?= $mtch->tournament ?> </br> <?= $mtch->prim == '' ? '' : $mtch->prim ?></p></td>
                         <td><p><?= $mtch->host ?></p></td>
                         <td><p>-</p></td>
-                        <td><p class="right"><?= $mtch->guest ?></p></td>
+                        <td><p><?= $mtch->guest ?></p></td>
                         <td><p ><?= $mtch->gett ?></p></td>
                         <td><p>:</p></td>
                         <td><p><?= $mtch->lett ?></p></td>
@@ -84,7 +85,7 @@
                         <td><p class="<?=$class?>"><?= $one->match->host ?></p></td>
                         <td><p class="<?=$class?>">-</p></td>
                         <td><p class="<?=$class?>"><?= $one->match->guest ?></p></td>
-                        <td><p class="<?=$class?> right"><?= $one->host_g ?></p></td>
+                        <td><p class="<?=$class?>"><?= $one->host_g ?></p></td>
                         <td><p class="<?=$class?>">:</p></td>
                         <td><p class="<?=$class?>""><?= $one->guest_g ?></p></td>
                     </tr>

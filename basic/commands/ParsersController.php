@@ -8,6 +8,7 @@ use app\models\CurrHistory;
 use app\models\Items;
 use app\models\Source;
 use app\models\Tag;
+use app\models\Telbase;
 use app\models\Totmatch;
 use yii\console\Controller;
 use yii\helpers\Url;
@@ -536,5 +537,46 @@ class ParsersController extends Controller
     public function backTeamString($content){
         $content = str_replace('Северная_Ирландия', 'Северная Ирландия', $content);
         return $content;
+    }
+
+    /**
+     * Парсим xml с mts- детализацией
+     */
+    public function actionMtsDetalization()
+    {
+        $dom = new \DomDocument();
+        $url = Url::to("@app/commands/teldoc.xml");
+        $dom->load($url);
+        $titles = $dom->getElementsByTagName("i");
+
+        foreach ($titles as $node) {
+
+            $rec = new Telbase();
+
+            $datime_nach = $node->getAttribute('d');
+            $ch = explode(" ", $datime_nach);
+            $rec->date_nach = $ch[0];
+            $rec->time_nach = $ch[1];
+            $rec->nom_tel = $node->getAttribute('n');
+            $rec->zak_gr = $node->getAttribute('zp');
+            $rec->zv = $node->getAttribute('zv');
+            $rec->source = $node->getAttribute('s');
+            $rec->a = $node->getAttribute('a');
+            $rec->dlitelnost = $node->getAttribute('du');
+            $rec->c = $node->getAttribute('s');
+            $rec->dut = $node->getAttribute('dup');
+            $f = $node->getAttribute('f');
+            $rec->f = str_replace(",", ".", $f);
+            //echo floatval($f) . "<br />";
+            $datime_okon = $node->getAttribute('bd');
+            $ch = explode(" ", $datime_okon);
+            $rec->date_okon = $ch[0];
+            $rec->time_okon = $ch[1];
+            $rec->cur = $node->getAttribute('cur');
+            $rec->gmt = $node->getAttribute('gmt');
+            $rec->save();
+
+
+        }
     }
 }

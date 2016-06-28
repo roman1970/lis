@@ -20,6 +20,13 @@ use Yii;
  */
 class Totpredict extends \yii\db\ActiveRecord
 {
+
+    public $sum;
+    public $cnt;
+    public $cnt_good;
+    public $cnt_middle;
+    public $cnt_bad;
+
     const STATUS_NON_TESTED = 0;
     const STATUS_BAD_PROGNOSE = 1;
     const STATUS_RIGHT_RESULT = 2;
@@ -92,4 +99,43 @@ class Totpredict extends \yii\db\ActiveRecord
         } else
             return false;
     }
+
+    /**
+     * Баланс по ставкам каждого юзера
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getUsersBalls(){
+        $user_balls = self::find()
+            ->select(['user_id, COUNT(*) as cnt, SUM(bet_balance) as sum '])
+            ->groupBy('user_id')
+            ->all();
+
+        return $user_balls;
+    }
+
+
+    public static function getUsersStatus(){
+        $users_status['bad'] = self::find()
+            ->select(['user_id, status, COUNT(status) as cnt'])
+            ->where(['status' => 1])
+            ->groupBy('user_id')
+            ->all();
+        //var_dump($users_status); exit;
+        $users_status['middle'] = self::find()
+            ->select(['user_id, status, COUNT(status) as cnt'])
+            ->where(['status' => 2])
+            ->groupBy('user_id')
+            ->all();
+        $users_status['good'] = self::find()
+            ->select(['user_id, status, COUNT(status) as cnt'])
+            ->where(['status' => 3])
+            ->groupBy('user_id')
+            ->all();
+
+        return $users_status;
+    }
+
+
+
+
 }

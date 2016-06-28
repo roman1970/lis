@@ -89,7 +89,7 @@ class DefaultController extends FrontEndController
 
                     $all = Totmatch::find()->all();
                         foreach ($all as $one) {
-                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0])+36000 >= time()) {
+                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) >= time()) {
                                 $now_id = $one->id;
                                 break;
                             }
@@ -114,6 +114,16 @@ class DefaultController extends FrontEndController
     public function actionMatch(){
         $this->layout = '@app/themes/prognose/views/layouts/pagein';
 
+        if(!Totpredict::find()->where(['user_id' => 6, 'match_id' => Yii::$app->getRequest()->getQueryParam('match') ])->one() &&
+            Yii::$app->getRequest()->getQueryParam('match') !== null) {
+            $pred_comp = new Totpredict();
+            $pred_comp->match_id = Yii::$app->getRequest()->getQueryParam('match');
+            $pred_comp->user_id = 6;
+            $pred_comp->host_g = mt_rand(0,3);
+            $pred_comp->guest_g = mt_rand(0,3);
+            $pred_comp->save();
+        }
+
         if(Yii::$app->getRequest()->getQueryParam('host_g') !== null && Yii::$app->getRequest()->getQueryParam('guest_g') !== null) {
 
             $predict = new Totpredict();
@@ -125,7 +135,9 @@ class DefaultController extends FrontEndController
 
             if($predict->save()) return "<span style='color:green'>Прогноз сохранен</span>";
             else return "<span style='color:red'>Ошибка сохранения</span>";
+
         }
+
 
         return "Ошибка";
 
@@ -138,7 +150,10 @@ class DefaultController extends FrontEndController
 
         if($this->userIfUserLegal($id)){
 
-           $predicted = Totpredict::find()->where(['user_id' => $this->current_user->id])->all();
+           $predicted = Totpredict::find()->where(['user_id' => $this->current_user->id])
+               ->limit(10)
+               ->orderBy('id DESC')
+               ->all();
             //var_dump($predicted); exit;
 
 
