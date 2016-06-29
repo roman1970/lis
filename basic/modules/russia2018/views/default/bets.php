@@ -1,4 +1,4 @@
-<?php if(isset($tournament)) {echo $tournament; $tournament = null;} ?>
+<?php if(isset($tournament)) {echo $tournament; $tournament = null;} /* ?>
 <p>Если поставить на один исход во всех этих матчах</p>
 <table id="bet" cellpadding="0" >
     <tr>
@@ -16,3 +16,28 @@
         <td class="right_bet_cyph"><?=$bet_g ?></td>
     </tr>
 </table>
+<?php
+
+ $arr['vic'] = 0;
+        $arr['nob'] = 0;
+        $arr['def'] = 0;
+        $arr['sum_gett'] = 0;
+        $arr['sum_lett'] = 0;
+        $arr['ball_h'] = 0;
+        $arr['ball_g'] = 0;
+  */
+?>
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td><?= $summary['count'] ?> </td>
+                <td>+<?= $summary['vic'] ?> </td>
+                <td>=<?= $summary['nob'] ?></td>
+                <td>-<?= $summary['def'] ?></td>
+                <td><?= $summary['ball_h'] ?></td>
+                <td>:</td>
+                <td><?= $summary['ball_g'] ?></td>
+            </tr>
+
+        </tbody>
+    </table>

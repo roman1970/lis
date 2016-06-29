@@ -35,7 +35,9 @@ use yii\bootstrap\Nav;
             });
 
         $("#choose_country").click(
+
             function() {
+
                 getCont(country.val(),country_limit.val(),country_bet.val());
             }
         );
@@ -69,9 +71,31 @@ use yii\bootstrap\Nav;
             });
 
 
+        $("#country").click(
+            function() {
+                $("#planet").animate({left: "+=700", top: "+=600"}, 10000);
+            });
+        $("#host").click(
+            function() {
+                $("#planet").animate({left: "-=700", top: "-=600"}, 10000);
+            });
+        $("#hoster").click(
+            function() {
+                $("#planet").animate({left: "+=700", top: "+=600"}, 10000);
+            });
+        $("#guester").click(
+            function() {
+                $("#planet").animate({left: "-=700", top: "-=600"}, 10000);
+            });
+
+
+
+
 
 
     });
+
+
 
     function sendMess(limit, host,  bet) {
 
@@ -232,56 +256,58 @@ use yii\bootstrap\Nav;
 
 
 </script>
+<style>
+    .jumbotron {
+        background-color: rgb(31, 97, 78);
+    }
+    .container {
+        max-width: 720px;
+    }
+
+    @media (min-width: 1200px)
+        .container {
+            max-width: 720px;
+        }
+
+</style>
 
 
-<div id="wrapper">
 
 
-    <div id="head" >
 
+    <div class="container">
 
-            <div id="fam"><h3>Футбольные матчи мира 2014-2018</h3>
-
-                    <span>Страна</span><input type='text' class="aer" id="country" size="35" placeholder="Первые буквы страны и кол-во последних матчей>"/>
-                    <input type='text' class="aer" id="country_limit" size="1" placeholder="10"/>
+        <div class="jumbotron">
+            <h3>Футбольные матчи мира 2014-2018</h3>
+            <form role="form">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Страна</label>
+                    <input type="text" class="form-control" id="country"  placeholder="Введите название страны, чьи турниры хотите посмотреть">
                     <input type='hidden' class="aer" id="country_bet" size="30"/>
-                    <button class="button glyphicon glyphicon-search" id="choose_country" ></button><br>
-
-
-                    <span>Команда</span><input type='text' class="aer" id="host" size="35" placeholder="Команда и кол-во последних матчей>"/>
-                    <input type='text' class="aer" id="limit" size="1" placeholder="10"/>
-                    <input type='hidden' class="aer" id="bet" size="30"/>
-                    <button class="button glyphicon glyphicon-search" id="send" ></button>
-
-                    <p>Матч</p>
-
-                    <input type='text' class="aer" id="hoster"  size="20"/> - <input type='text' class="aer" id="guester"  size="20"/>
-                    <button class="button glyphicon glyphicon-search" id="two_teams"  ></button>
-                    <button class="button glyphicon glyphicon-search" id="two_teams_strict"  ></button>
-                <div id="bets">
-                    <p>Если поставить на один исход во всех этих матчах</p>
-                    <table id="bet" cellpadding="0" >
-                        <tr>
-                            <td class="left_bet">На хозяев</td>
-                            <td class="center_bet">На ничью</td>
-                            <td class="right_bet">На гостей</td>
-
-                        </tr>
-                    </table>
-                    <p>Можно было бы выиграть (- проиграть) *ставка</p>
-                    <table id="bet" cellpadding="0" >
-                        <tr>
-                            <td class="left_bet_cyph"><?=$bet_h ?></td>
-                            <td class="center_bet_cyph"><?=$bet_n ?></td>
-                            <td class="right_bet_cyph"><?=$bet_g ?></td>
-                        </tr>
-                    </table>
+                    <p><button type="button" class="btn btn-success" id="choose_country">Показать</button></p>
                 </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Команда</label>
+                    <input type="text" class="form-control" id="host"  placeholder="Команда и кол-во последних матчей">
+                    <input type='hidden' class="aer" id="bet" size="30"/>
+                    <p><button type="button" class="btn btn-success" id="send" >Показать</button></p>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Матч</label>
+                    <input type="text"  id="hoster"  placeholder="Хозяин">- <input type="text"  id="guester"  placeholder="Гость">
+                    <p><button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p>
+                    <p><button type="button" class="btn btn-success" id="two_teams_strict" >Строгий поиск</button></p>
+                </div>
+
+            </form>
+            <div id="bets">
 
             </div>
 
+        </div>
 
-    </div>
+
+
 
     <?php /*
 
@@ -386,7 +412,7 @@ use yii\bootstrap\Nav;
         </div>
 
  */ ?>
-        <div id="base">
+        <div class="row marketing" id="base">
 
                 <?php $r=0; foreach ($matchs as $match) : ?>
                     <div class="view">
@@ -534,6 +560,4 @@ use yii\bootstrap\Nav;
         */ ?>
 
 </div>
-
-
 

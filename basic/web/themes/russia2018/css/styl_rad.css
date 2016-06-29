@@ -319,8 +319,8 @@ body{
     filter: alpha(Opacity=25);
     opacity: 0.25;
     position: absolute;
-    left:42%;
-    top: 100px;
+    left: 50%;
+    top: 180px;
     border-radius:50%
 }
 
@@ -547,19 +547,20 @@ select {
     /* position: absolute;*/
    /*top: 40px;*/
    /* background: url(img/images/pole.jpg) no-repeat;*/
-    width: 830px;
+   /* width: 830px;*/
     /* left: 530px; */
     /*border-radius: 10px;*/
     /* border: 1px #006600 solid; */
-    padding-left: 90px;
-    height: 1161px;
+   /* padding-left: 90px;
+   /* height: 1161px;*/
     /*left: 530px;*/
     /*border: 1px #006600 solid;*/
-    color: #a7ecfc;
+   /* color: #a7ecfc;
     font-size: 30px;
-    overflow: auto;
+    overflow: auto;*/
     
 }
+
 #base input{
     width: 50%;
 }

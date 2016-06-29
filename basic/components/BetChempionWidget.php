@@ -23,7 +23,8 @@ class BetChempionWidget extends Widget
 
     public function run()
     {
-        return $this->render('usersum', ['user_sum' => $this->user_sum, 'users_status' => $this->users_status
+        return $this->render('usersum', ['user_sum' => $this->user_sum, 'users_status' => $this->users_status,
+            'user_id' => $this->user_id
             ]);
     }
 

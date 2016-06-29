@@ -371,7 +371,7 @@ class DefaultController extends FrontEndController
         if($hoster === 'null') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
-                ->where("guest like('.$guester._')")
+                ->where("guest like('" . $guester . "_')")
                 //->where(['guest' => $guester])
                 ->all();
         }
@@ -419,7 +419,7 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('guester')) {
 
             $guester = Yii::$app->getRequest()->getQueryParam('guester');
-            $guester = trim($guester);
+            //$guester = trim($guester);
         }
         else $guester = 'Манчестер Юнайтед';
 
@@ -448,10 +448,13 @@ class DefaultController extends FrontEndController
 
         $this->betsGenerate($matchs);
 
+        $summary = $this->summary($matchs);
+
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h,
             'bet_n' => $this->bet_n,
             'bet_g' => $this->bet_g,
+            'summary' => $summary
         ]);
 
 
@@ -480,6 +483,40 @@ class DefaultController extends FrontEndController
         }
     }
 
+
+    public function summary($matches){
+        $arr['count'] = count($matches);
+        $arr['vic'] = 0;
+        $arr['nob'] = 0;
+        $arr['def'] = 0;
+        $arr['sum_gett'] = 0;
+        $arr['sum_lett'] = 0;
+        $arr['ball_h'] = 0;
+        $arr['ball_g'] = 0;
+        foreach ($matches as $match) {
+            if($match->gett > $match->lett) {
+                $arr['vic'] += 1;
+                $arr['sum_gett'] += $match->gett;
+                $arr['sum_lett'] += $match->lett;
+                $arr['ball_h'] += 3;
+            }
+            elseif($match->gett == $match->lett){
+                $arr['nob'] += 1;
+                $arr['sum_gett'] += $match->gett;
+                $arr['sum_lett'] += $match->lett;
+                $arr['ball_h'] += 1;
+                $arr['ball_g'] += 1;
+            }
+            else{
+                $arr['def'] += 1;
+                $arr['sum_gett'] += $match->gett;
+                $arr['sum_lett'] += $match->lett;
+                $arr['ball_g'] += 3;
+            }
+        }
+       return $arr;
+
+    }
 
 
 }
