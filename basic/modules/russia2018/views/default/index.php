@@ -6,7 +6,6 @@ use yii\bootstrap\Nav;
 ?>
 <script>
 
-
     $(document).ready(function() {
         var host = $("#host");
         var guest = $("#guest");
@@ -82,6 +81,7 @@ use yii\bootstrap\Nav;
         $("#hoster").click(
             function() {
                 $("#planet").animate({left: "+=700", top: "+=600"}, 10000);
+
             });
         $("#guester").click(
             function() {
@@ -89,10 +89,70 @@ use yii\bootstrap\Nav;
             });
 
 
+        /*
+        $("#hoster").autocomplete({
+            source: $.getJSON( "russia2018/default/teams/", function( data ) {console.log(data);}, "json" )
+        });
+
+  window.onload = function() {
+
+        $.getJSON( "bardzilla/default/getphrases/", function( data ) {
+            phr = data;
+            var phrase = document.getElementById("phrase");
+            var p = document.createElement("P");
+            var str = phr[index];
+            var text = document.createTextNode(str);
+            el = phrase.appendChild(p);
+            el.className = "sl";
+            txt = el.appendChild(text);
+            setTimeout("getNextPhrase()", 10000);
+
+            getNextPhotoLeft();
+            getNextPhotoRight();
+            getTemp();
+        }, "json" );
+    };
+
+*/
 
 
 
+    });
 
+
+    var availableTags;
+    $(function() {
+
+        $.getJSON( "russia2018/default/teams/", function( data ) {
+            console.log(data);
+            availableTags = data;
+
+        }, "json" );
+
+        /*$( "#hoster" ).autocomplete({
+            source: "/russia2018/default/teams/",
+            minLength: 3
+        });
+        */
+        $('#hoster').autocomplete({
+            lookup: function (query, done) {
+                // Do Ajax call or lookup locally, when done,
+                // call the callback and pass your results:
+                var result = {
+                    suggestions: [
+                        { "value": "United Arab Emirates", "data": "AE" },
+                        { "value": "United Kingdom",       "data": "UK" },
+                        { "value": "United States",        "data": "US" }
+                    ]
+                };
+
+                done(result);
+            },
+
+            minLength: 0,
+            delay: 3
+
+        });
     });
 
 
@@ -260,6 +320,9 @@ use yii\bootstrap\Nav;
     .jumbotron {
         background-color: rgb(31, 97, 78);
     }
+    .jumbotron h3{
+        color: white;
+    }
     .container {
         max-width: 720px;
     }
@@ -278,27 +341,36 @@ use yii\bootstrap\Nav;
     <div class="container">
 
         <div class="jumbotron">
-            <h3>Футбольные матчи мира 2014-2018</h3>
-            <form role="form">
+            <h3>Поиск статистики футбольных матчей</h3>
+            <form class="form-inline" role="form">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Страна</label>
-                    <input type="text" class="form-control" id="country"  placeholder="Введите название страны, чьи турниры хотите посмотреть">
-                    <input type='hidden' class="aer" id="country_bet" size="30"/>
-                    <p><button type="button" class="btn btn-success" id="choose_country">Показать</button></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Команда</label>
-                    <input type="text" class="form-control" id="host"  placeholder="Команда и кол-во последних матчей">
-                    <input type='hidden' class="aer" id="bet" size="30"/>
-                    <p><button type="button" class="btn btn-success" id="send" >Показать</button></p>
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Матч</label>
-                    <input type="text"  id="hoster"  placeholder="Хозяин">- <input type="text"  id="guester"  placeholder="Гость">
-                    <p><button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p>
-                    <p><button type="button" class="btn btn-success" id="two_teams_strict" >Строгий поиск</button></p>
-                </div>
 
+                    <input type='hidden' class="aer" id="country_bet" size="30"/>
+                    <p><input type="text" class="form-control" id="country"  placeholder="Название страны или региона">
+                        <button type="button" class="btn btn-success" id="choose_country">Показать</button>
+                    </p>
+                    <div id="outputbox">
+                        <p id="outputcontent"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <input type='hidden' class="aer" id="bet" size="30"/>
+                    <p>
+                        <input type="text" class="form-control" id="host"  placeholder="Название команды">
+                        <button type="button" class="btn btn-success" id="send" >Показать</button>
+                    </p>
+                </div>
+            </form>
+            <form class="form-inline" role="form">
+                <div class="form-group">
+                    <p>
+                        <input type="text" class="form-control" id="hoster"  placeholder="Хозяин"> -
+                        <input type="text" class="form-control" id="guester"  placeholder="Гость">
+                       <?php /*<button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p> */ ?>
+                        <button type="button" class="btn btn-success" id="two_teams_strict" >Поиск</button>
+                        </p>
+                </div>
             </form>
             <div id="bets">
 

@@ -14,12 +14,61 @@ class DefaultController extends FrontEndController
     public $bet_n = 0;
     public $bet_g = 0;
     public $host;
+    public $autocomplete_json;
 
     /**
      * @return string
      */
     public function actionIndex()
     {
+        $this->autocomplete_json = '{
+                "suggestions": [
+                    {
+                        "value": "Россия",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Словакия",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Германия",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 03",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 04",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 05",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 06",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 07",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 08",
+                        "data": "750"
+                    },
+                    {
+                        "value": "Paris 09",
+                        "data": "750"
+                    }
+                ]
+            }';
+        if(Yii::$app->getRequest()->getQueryParam('query')) {
+
+           echo $this->autocomplete_json; exit;
+        }
 
         $model = new Strategy();
 
@@ -459,6 +508,14 @@ class DefaultController extends FrontEndController
 
 
 
+    }
+
+    public function actionTeams(){
+
+
+        $res = ['Россия', 'Словакия'];
+
+        return  json_encode($res);
     }
 
     public function betsGenerate($matches) {

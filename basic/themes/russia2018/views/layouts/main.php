@@ -15,6 +15,8 @@ Russia2018Asset::register($this);
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="language" content="ru" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+       <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <link href="css/flags.css" rel="stylesheet">
 
         <?php $this->head() ?>

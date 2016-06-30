@@ -23,7 +23,10 @@ class Russia2018Asset extends AssetBundle
 
     ];
     public $js = [
-        'js/main.js'
+        'js/main.js',
+        'js/jquery.autocomplete.js',
+       // 'js/autocomplete-0.3.0.js',
+        //'js/acomp_script.js',
 
     ];
     // public $images = [
