@@ -16,6 +16,7 @@ class Matches extends \yii\db\ActiveRecord
 {
     public $events_h;
     public $events_g;
+    public $cnt;
 
     /**
      * @inheritdoc
@@ -226,7 +227,7 @@ class Matches extends \yii\db\ActiveRecord
             $sost_arr = explode(',', $this->stra_h);
 
             while($i < 11){
-                $sost .= $sost_arr[$i];
+                if(isset($sost_arr[$i])) $sost .= $sost_arr[$i];
                 $i++;
             }
 
@@ -247,7 +248,7 @@ class Matches extends \yii\db\ActiveRecord
             $sost_arr = explode(',', $this->stra_g);
 
             while($i < 11){
-                $sost .= $sost_arr[$i];
+                if(isset($sost_arr[$i])) $sost .= $sost_arr[$i];
                 $i++;
             }
 

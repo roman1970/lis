@@ -16,6 +16,7 @@ use yii\bootstrap\Nav;
         var country_bet = $("#country_bet");
         var hoster = $("#hoster");
         var guester = $("#guester");
+        var choices;
 
 
         var k = false;
@@ -88,71 +89,41 @@ use yii\bootstrap\Nav;
                 $("#planet").animate({left: "-=700", top: "-=600"}, 10000);
             });
 
+        $('#hoster').autoComplete({
+            minChars: 3,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                $.getJSON( "russia2018/default/teams/", function( data ) {
+                    console.log(data);
+                    choices = data;
+                    var suggestions = [];
+                    for (i=0;i<choices.length;i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
 
-        /*
-        $("#hoster").autocomplete({
-            source: $.getJSON( "russia2018/default/teams/", function( data ) {console.log(data);}, "json" )
+                }, "json" );
+
+            }
         });
 
-  window.onload = function() {
+        $('#guester').autoComplete({
+            minChars: 3,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                $.getJSON( "russia2018/default/teams/", function( data ) {
+                    console.log(data);
+                    choices = data;
+                    var suggestions = [];
+                    for (i=0;i<choices.length;i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
 
-        $.getJSON( "bardzilla/default/getphrases/", function( data ) {
-            phr = data;
-            var phrase = document.getElementById("phrase");
-            var p = document.createElement("P");
-            var str = phr[index];
-            var text = document.createTextNode(str);
-            el = phrase.appendChild(p);
-            el.className = "sl";
-            txt = el.appendChild(text);
-            setTimeout("getNextPhrase()", 10000);
+                }, "json" );
 
-            getNextPhotoLeft();
-            getNextPhotoRight();
-            getTemp();
-        }, "json" );
-    };
-
-*/
-
-
-
-    });
-
-
-    var availableTags;
-    $(function() {
-
-        $.getJSON( "russia2018/default/teams/", function( data ) {
-            console.log(data);
-            availableTags = data;
-
-        }, "json" );
-
-        /*$( "#hoster" ).autocomplete({
-            source: "/russia2018/default/teams/",
-            minLength: 3
+            }
         });
-        */
-        $('#hoster').autocomplete({
-            lookup: function (query, done) {
-                // Do Ajax call or lookup locally, when done,
-                // call the callback and pass your results:
-                var result = {
-                    suggestions: [
-                        { "value": "United Arab Emirates", "data": "AE" },
-                        { "value": "United Kingdom",       "data": "UK" },
-                        { "value": "United States",        "data": "US" }
-                    ]
-                };
 
-                done(result);
-            },
 
-            minLength: 0,
-            delay: 3
-
-        });
     });
 
 
@@ -335,13 +306,11 @@ use yii\bootstrap\Nav;
 </style>
 
 
-
-
-
     <div class="container">
 
+
         <div class="jumbotron">
-            <h3>Поиск статистики футбольных матчей</h3>
+            <h3>Статистика футбольных матчей</h3>
             <form class="form-inline" role="form">
                 <div class="form-group">
 

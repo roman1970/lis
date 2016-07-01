@@ -20,11 +20,13 @@ class Russia2018Asset extends AssetBundle
     //public $sourcePath = '@a';
     public $css = [
         'css/styl_rad.css',
+        'js/jQuery-autoComplete-master/jquery.auto-complete.css'
 
     ];
     public $js = [
         'js/main.js',
-        'js/jquery.autocomplete.js',
+        //'js/jquery.autocomplete.js',
+        'js/jQuery-autoComplete-master/jquery.auto-complete.min.js'
        // 'js/autocomplete-0.3.0.js',
         //'js/acomp_script.js',
 

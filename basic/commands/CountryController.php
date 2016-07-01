@@ -1012,6 +1012,18 @@ class CountryController extends Controller
 
     }
 
+    public function actionFillFTeams(){
+       $m = Matches::find()
+            ->select(['host, COUNT(*) as cnt'])
+            ->groupBy('host')
+            ->all();
+        foreach ($m as $h){
+            //echo substr($h->host, 1);
+            echo iconv_substr ($h->host, 1 , 80 , 'UTF-8' );
+        }
+        //var_dump($m);
+    }
+
     public function getMatchBet($host_g, $guest_g, $bet_h, $bet_n, $bet_g){
         if($bet_h != 0 && $bet_n != 0 && $bet_g != 0) {
             if($host_g > $guest_g) {

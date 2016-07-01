@@ -152,10 +152,13 @@ class DefaultController extends FrontEndController
         //$cats = Categories::find()->leaves()->all();
         $this->betsGenerate($matchs);
 
+        $summary = $this->summary($matchs);
+
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h*$bet,
             'bet_n' => $this->bet_n*$bet,
             'bet_g' => $this->bet_g*$bet,
+            'summary' => $summary
 
         ]);
     }
@@ -224,10 +227,13 @@ class DefaultController extends FrontEndController
         //$cats = Categories::find()->leaves()->all();
         $this->betsGenerate($matchs);
 
+        $summary = $this->summary($matchs);
+
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h*$country_bet,
             'bet_n' => $this->bet_n*$country_bet,
             'bet_g' => $this->bet_g*$country_bet,
+            'summary' => $summary
         ]);
 
     }
@@ -282,11 +288,14 @@ class DefaultController extends FrontEndController
 
         $this->betsGenerate($matchs);
 
+        $summary = $this->summary($matchs);
+
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h,
             'bet_n' => $this->bet_n,
             'bet_g' => $this->bet_g,
-            'tournament' => $matchs[0]->tournament
+            'tournament' => $matchs[0]->tournament,
+            'summary' => $summary
         ]);
 
     }
@@ -343,7 +352,6 @@ class DefaultController extends FrontEndController
         ]);
 
 
-
     }
 
     /**
@@ -389,10 +397,13 @@ class DefaultController extends FrontEndController
 
         $this->betsGenerate($matchs);
 
+        $summary = $this->summary($matchs);
+
         return $this->renderPartial('bets', [
             'bet_h' => $this->bet_h,
             'bet_n' => $this->bet_n,
             'bet_g' => $this->bet_g,
+            'summary' => $summary
         ]);
 
 
@@ -441,7 +452,6 @@ class DefaultController extends FrontEndController
         }
 
         $this->betsGenerate($matchs);
-
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
