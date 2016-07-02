@@ -4,6 +4,7 @@ namespace app\modules\russia2018\controllers;
 
 use app\components\FrontEndController;
 use app\models\Matches;
+use app\models\Team;
 use app\modules\russia2018\models\Strategy;
 use app\modules\russia2018\models;
 use Yii;
@@ -417,14 +418,43 @@ class DefaultController extends FrontEndController
     public function actionMatchstrict() {
         $model = new Strategy();
         if(Yii::$app->getRequest()->getQueryParam('hoster')) {
-            $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
-            $hoster = trim($hoster);
+
+            if(Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()) {
+                $hoster = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->name;
+                $reg_h = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->reg;
+
+            }
+            elseif(Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()) {
+                $hoster = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->name;
+                $reg_h = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->reg;
+
+            }
+
+            else {
+                $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
+                $reg_h = '';
+            }
         }
         else $hoster = '---';
         if(Yii::$app->getRequest()->getQueryParam('guester')) {
 
-            $guester = Yii::$app->getRequest()->getQueryParam('guester');
-            $guester = trim($guester);
+
+            if(Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()) {
+                $guester = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->name;
+                $reg_g = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->reg;
+
+                    }
+            elseif(Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()) {
+                $guester = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->name;
+                $reg_g = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->reg;
+
+            }
+
+            else {
+                $guester = Yii::$app->getRequest()->getQueryParam('guester');
+                $reg_g = '';
+            }
+
         }
         else $guester = '---';
 
@@ -443,7 +473,6 @@ class DefaultController extends FrontEndController
                 ->all();
         }
         else {
-
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
@@ -516,14 +545,23 @@ class DefaultController extends FrontEndController
             'summary' => $summary
         ]);
 
-
-
     }
 
     public function actionTeams(){
-
-
-        $res = ['Россия', 'Словакия'];
+        $res = [];
+        /*
+        $m = Matches::find()
+            ->select(['host, COUNT(*) as cnt'])
+            ->groupBy('host')
+            ->all();
+        */
+        $m = Team::find()
+            ->all();
+        foreach ($m as $h){
+            //echo substr($h->host, 1);
+            if($h->adapt_name) $res[] = $h->adapt_name;
+            else $res[] = $h->name;
+        }
 
         return  json_encode($res);
     }

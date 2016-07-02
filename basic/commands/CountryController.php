@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use app\models\Matches;
+use app\models\Team;
 use app\models\Totmatch;
 use app\models\Totpredict;
 use yii\console\Controller;
@@ -1012,14 +1013,29 @@ class CountryController extends Controller
 
     }
 
+    /**
+     * Заполнение таблицы команд
+     */
     public function actionFillFTeams(){
        $m = Matches::find()
-            ->select(['host, COUNT(*) as cnt'])
+            ->select(['host, tournament, COUNT(*) as cnt'])
             ->groupBy('host')
             ->all();
+
         foreach ($m as $h){
-            //echo substr($h->host, 1);
-            echo iconv_substr ($h->host, 1 , 80 , 'UTF-8' );
+
+
+            $team = new Team();
+            $tournament = explode(':', $h->tournament);
+
+            $team->name = iconv_substr($h->host, 1 , 80 , 'UTF-8' );
+            if(strripos($team->name, '(')) {
+                $host = explode(' ', $team->name);
+                array_pop($host);
+                $team->adapt_name = trim(implode(' ',$host));
+            }
+            $team->reg = isset($tournament[0]) ? $tournament[0] : '';
+            $team->save(false);
         }
         //var_dump($m);
     }
