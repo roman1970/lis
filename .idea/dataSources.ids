@@ -1786,6 +1786,7 @@
     <table name="authors" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="sources_ibfk_1" table="sources" schema="" catalog="gb_x_qplis" columns="author_id"/>
     </table>
@@ -1943,9 +1944,13 @@
       <column name="part" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="region" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="yndid" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="own_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="lon" sqlType="DECIMAL" precision="10" scale="6" nullable="true" jdbcType="3" def="MC4wMDAwMDA="/>
+      <column name="lat" sqlType="DECIMAL" precision="10" scale="6" nullable="true" jdbcType="3" def="MC4wMDAwMDA="/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="chl_teams_ibfk_1" table="chl_teams" schema="" catalog="gb_x_qplis" columns="city_id"/>
       <exported-key name="weather_ibfk_1" table="weather" schema="" catalog="gb_x_qplis" columns="city_id"/>
+      <exported-key name="weathernew_ibfk_1" table="weathernew" schema="" catalog="gb_x_qplis" columns="city_id"/>
       <index name="ux_cities_country_id" unique="false" columns="country_id"/>
     </table>
     <table name="country" schema="" catalog="gb_x_qplis" type="TABLE">
@@ -1976,8 +1981,8 @@
       <column name="char_code" sqlType="VARCHAR" precision="10" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="curr_history_ibfk_1" table="curr_history" schema="" catalog="gb_x_qplis" columns="currency_id"/>
-      <exported-key name="products_ibfk_3" table="products" schema="" catalog="gb_x_qplis" columns="currency_out"/>
       <exported-key name="products_ibfk_2" table="products" schema="" catalog="gb_x_qplis" columns="currency"/>
+      <exported-key name="products_ibfk_3" table="products" schema="" catalog="gb_x_qplis" columns="currency_out"/>
     </table>
     <table name="foo_matches" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -2032,7 +2037,28 @@
       <column name="bet_n" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
       <column name="bet_g" sqlType="FLOAT" precision="4" scale="2" nullable="true" jdbcType="7"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="tot_match_ibfk_1" table="tot_match" schema="" catalog="gb_x_qplis" columns="foo_match_id"/>
       <index name="id" unique="false" columns="id"/>
+    </table>
+    <table name="football_teams" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="reg" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="adapt_name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="items" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="source_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="text" sqlType="TEXT" precision="65535" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="tags" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="audio" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="img" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="audio_link" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="items_ibfk_1" columns="source_id" ref-table="sources" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_items_source_id" unique="false" columns="source_id"/>
     </table>
     <table name="mark_actions" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -2066,6 +2092,7 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="pseudo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="money" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="mark_it_ibfk_3" table="mark_it" schema="" catalog="gb_x_qplis" columns="user_id"/>
     </table>
@@ -2080,8 +2107,8 @@
       <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="orders_ibfk_2" columns="user_id" ref-table="prod_user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="orders_ibfk_1" columns="prod_id" ref-table="products" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="orders_ibfk_2" columns="user_id" ref-table="prod_user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="ux_orders_prod_id" unique="false" columns="prod_id"/>
       <index name="ux_orders_user_id" unique="false" columns="user_id"/>
     </table>
@@ -2104,9 +2131,9 @@
       <column name="currency" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MzU="/>
       <column name="currency_out" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MzU="/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="products_ibfk_3" columns="currency_out" ref-table="currencies" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="products_ibfk_1" columns="cat_id" ref-table="qpcategory" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <foreign-key name="products_ibfk_2" columns="currency" ref-table="currencies" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="products_ibfk_3" columns="currency_out" ref-table="currencies" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <exported-key name="orders_ibfk_1" table="orders" schema="" catalog="gb_x_qplis" columns="prod_id"/>
       <index name="ux_products_cat_id" unique="false" columns="cat_id"/>
       <index name="ux_products_currency" unique="false" columns="currency"/>
@@ -2232,11 +2259,20 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="title" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="author_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="sources_ibfk_1" columns="author_id" ref-table="authors" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="items_ibfk_1" table="items" schema="" catalog="gb_x_qplis" columns="source_id"/>
       <exported-key name="qparticles_ibfk_3" table="qparticles" schema="" catalog="gb_x_qplis" columns="source_id"/>
       <exported-key name="qparticles_content_ibfk_2" table="qparticles_content" schema="" catalog="gb_x_qplis" columns="source_id"/>
       <index name="ux_sources_sources_author_id" unique="false" columns="author_id"/>
+    </table>
+    <table name="tag" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="frequency" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="items" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="testing" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -2256,6 +2292,41 @@
       <column name="type" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5"/>
       <foreign-key name="fk_user_token" columns="user_id" ref-table="user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
       <index name="token_unique" unique="true" columns="user_id,code,type"/>
+    </table>
+    <table name="tot_match" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="date" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="host" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="guest" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="tournament" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="foo_match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="tot_match_ibfk_1" columns="foo_match_id" ref-table="foo_matches" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <exported-key name="tot_predict_ibfk_2" table="tot_predict" schema="" catalog="gb_x_qplis" columns="match_id"/>
+      <index name="ux_tot_match_foo_match_id" unique="false" columns="foo_match_id"/>
+    </table>
+    <table name="tot_predict" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="date" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="host_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="guest_g" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="match_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="status" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <column name="bet_balance" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="tot_predict_ibfk_1" columns="user_id" ref-table="tot_user" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="tot_predict_ibfk_2" columns="match_id" ref-table="tot_match" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_tot_predict_match_id" unique="false" columns="match_id"/>
+      <index name="ux_tot_predict_user_id" unique="false" columns="user_id"/>
+    </table>
+    <table name="tot_user" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="pseudo" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="money" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="tot_predict_ibfk_1" table="tot_predict" schema="" catalog="gb_x_qplis" columns="user_id"/>
     </table>
     <table name="user" schema="" catalog="gb_x_qplis" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -2303,6 +2374,32 @@
       <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="weather_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+    </table>
+    <table name="weathernew" schema="" catalog="gb_x_qplis" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="main" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="icon" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="temp" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="temp_min" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="temp_max" sqlType="DECIMAL" precision="10" scale="4" nullable="true" jdbcType="3" def="MC4wMDAw"/>
+      <column name="pressure" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="humidity" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="visibility" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wind_speed" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="wind_deg" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sea_level" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="rain_3h" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="grnd_level" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="clouds" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="time" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sunrise" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="sunset" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="res_code" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="city_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="weathernew_ibfk_1" columns="city_id" ref-table="cities" ref-schema="" ref-catalog="gb_x_qplis" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="ux_weathernew_city_id" unique="false" columns="city_id"/>
     </table>
   </data-source>
   <data-source name="MySQL - ffbase@localhost" uuid="eeb1392a-8955-4dee-8c23-2a50a07c58cc">
