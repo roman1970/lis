@@ -123,14 +123,28 @@ use yii\bootstrap\Nav;
             }
         });
 
+        $('#host').autoComplete({
+            minChars: 3,
+            source: function(term, suggest){
+                term = term.toLowerCase();
+                $.getJSON( "russia2018/default/teams/", function( data ) {
+                    console.log(data);
+                    choices = data;
+                    var suggestions = [];
+                    for (i=0;i<choices.length;i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json" );
+
+            }
+        });
+
 
     });
 
 
-
     function sendMess(limit, host,  bet) {
-
-
         //Валидация
         if (host === "" && guest === "") {
             alert("Введите хотя бы одну команду");

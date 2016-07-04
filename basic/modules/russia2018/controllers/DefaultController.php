@@ -15,61 +15,13 @@ class DefaultController extends FrontEndController
     public $bet_n = 0;
     public $bet_g = 0;
     public $host;
-    public $autocomplete_json;
+    
 
     /**
      * @return string
      */
     public function actionIndex()
     {
-        $this->autocomplete_json = '{
-                "suggestions": [
-                    {
-                        "value": "Россия",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Словакия",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Германия",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 03",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 04",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 05",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 06",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 07",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 08",
-                        "data": "750"
-                    },
-                    {
-                        "value": "Paris 09",
-                        "data": "750"
-                    }
-                ]
-            }';
-        if(Yii::$app->getRequest()->getQueryParam('query')) {
-
-           echo $this->autocomplete_json; exit;
-        }
 
         $model = new Strategy();
 
@@ -112,18 +64,22 @@ class DefaultController extends FrontEndController
         $matchs = Matches::find()
             ->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('%".$team."%') or guest like('%".$team."%')")
+            ->where("host like('_".$team."') or guest like('".$team."_')")
             ->limit($limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
         $this->betsGenerate($matchs);
 
-        return $this->renderPartial('strat', ['matchs' => $matchs,
+       
+
+        return $this->renderPartial('strat', [
+            'matchs' => $matchs,
             'model' => $model,
             'bet_h' => $this->bet_h*$bet,
             'bet_n' => $this->bet_n*$bet,
             'bet_g' => $this->bet_g*$bet,
-            'bet' => $bet
+            'bet' => $bet,
+            
         ]);
     }
 
@@ -147,19 +103,22 @@ class DefaultController extends FrontEndController
         $matchs = Matches::find()
             ->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('%".$team."%') or guest like('%".$team."%')")
+            ->where("host like('_".$team."') or guest like('".$team."_')")
             ->limit($limit)
             ->all();
         //$cats = Categories::find()->leaves()->all();
         $this->betsGenerate($matchs);
 
         $summary = $this->summary($matchs);
+        //$arrteam = ;
 
-        return $this->renderPartial('bets', [
+
+        return $this->renderPartial('teams', [
             'bet_h' => $this->bet_h*$bet,
             'bet_n' => $this->bet_n*$bet,
             'bet_g' => $this->bet_g*$bet,
-            'summary' => $summary
+            'summary' => $this->teamsSummary($matchs, $team),
+            
 
         ]);
     }
@@ -345,6 +304,7 @@ class DefaultController extends FrontEndController
         $this->betsGenerate($matchs);
 
 
+
         return $this->renderPartial('strat', ['matchs' => $matchs,
             'model' => $model,
             'bet_h' => $this->bet_h,
@@ -427,9 +387,7 @@ class DefaultController extends FrontEndController
             elseif(Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()) {
                 $hoster = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->name;
                 $reg_h = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->reg;
-
             }
-
             else {
                 $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
                 $reg_h = '';
@@ -453,6 +411,7 @@ class DefaultController extends FrontEndController
             else {
                 $guester = Yii::$app->getRequest()->getQueryParam('guester');
                 $reg_g = '';
+
             }
 
         }
@@ -620,6 +579,73 @@ class DefaultController extends FrontEndController
             }
         }
        return $arr;
+
+    }
+
+    /**
+     * Статистика команды
+     * @param $matches
+     * @param $team
+     * @return mixed
+     */
+    public function teamsSummary($matches, $team){
+        $arr['team'] = $team;
+        $arr['vic'] = 0;
+        $arr['nob'] = 0;
+        $arr['def'] = 0;
+        $arr['sum_gett'] = 0;
+        $arr['sum_lett'] = 0;
+        $arr['ball'] = 0;
+
+
+        foreach ($matches as $match) {
+            $arr['count'] = count($matches);
+
+            if($team == iconv_substr($match->host, 1 , 80 , 'UTF-8' )) {
+
+                if($match->gett > $match->lett) {
+                    $arr['vic'] += 1;
+                    $arr['sum_gett'] += $match->gett;
+                    $arr['sum_lett'] += $match->lett;
+                    $arr['ball'] += 3;
+                }
+                elseif($match->gett == $match->lett){
+                    $arr['nob'] += 1;
+                    $arr['sum_gett'] += $match->gett;
+                    $arr['sum_lett'] += $match->lett;
+                    $arr['ball'] += 1;
+                }
+                else{
+                    $arr['def'] += 1;
+                    $arr['sum_gett'] += $match->gett;
+                    $arr['sum_lett'] += $match->lett;
+                }
+
+            }
+            else{
+
+                if($match->gett > $match->lett) {
+                    $arr['def'] += 1;
+                    $arr['sum_lett'] += $match->gett;
+                    $arr['sum_gett'] += $match->lett;
+                }
+                elseif($match->gett == $match->lett){
+                    $arr['nob'] += 1;
+                    $arr['sum_lett'] += $match->gett;
+                    $arr['sum_gett'] += $match->lett;
+                    $arr['ball'] += 1;
+
+                }
+                else{
+                    $arr['vic'] += 1;
+                    $arr['sum_lett'] += $match->gett;
+                    $arr['sum_gett'] += $match->lett;
+                    $arr['ball'] += 3;
+                }
+            }
+
+        }
+        return $arr;
 
     }
 
