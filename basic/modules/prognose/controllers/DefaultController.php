@@ -89,12 +89,16 @@ class DefaultController extends FrontEndController
 
                     $all = Totmatch::find()->all();
                         foreach ($all as $one) {
-                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) >= time()) {
+                            /*echo date('Y-m-d H:i:s', Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]))." "
+                                .Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0])." ".time()."<br>";
+                            var_dump(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) >= time());
+                            */
+                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) <= time()) {
                                 $now_id = $one->id;
-                                break;
                             }
                         }
-                    //echo $now_id; exit;
+                    //echo $now_id;
+                 //exit;
 
                     if($users_predicted_matches)
                         $match_list = Totmatch::find()
@@ -188,40 +192,6 @@ class DefaultController extends FrontEndController
         }
 
         return false;
-
-    }
-
-
-    /**
-     * Добавление случайно оцененных действий пользователю
-     * @param array $response_for_core_user
-     * @param int $user_id
-     * @return bool|string
-     */
-    private function addRandActionToSomeUser($response_for_core_user, $user_id){
-        for($i=0; $i < 15; $i++ ){
-            if(isset($response_for_core_user[$i])){
-                $model = new MarkIt();
-                $model->ball = rand(3, 5);
-                $model->action_id = $response_for_core_user[$i]['act'];
-                $model->user_id = $user_id;
-                $model->date = date('Y-m-d', time() - 60 * 60 * 24);
-
-
-                if($model->validate()) {
-                    try {
-                        if(!$model->save()) return "ОШИБКА СОХРАНЕНИЯ ДАННЫХ!";
-
-                    } catch (\ErrorException $e) {
-                        return "Не получилось(((... ";
-
-                    }
-                }
-                else return "Ошибка при заполнении формы - оценки должны быть 1,2,3,4 или 5";
-
-            }
-        }
-        return true;
 
     }
 

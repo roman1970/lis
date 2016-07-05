@@ -377,6 +377,7 @@ class DefaultController extends FrontEndController
      */
     public function actionMatchstrict() {
         $model = new Strategy();
+
         if(Yii::$app->getRequest()->getQueryParam('hoster')) {
 
             if(Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()) {
@@ -385,8 +386,21 @@ class DefaultController extends FrontEndController
 
             }
             elseif(Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()) {
-                $hoster = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->name;
-                $reg_h = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->reg;
+                $hosters = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->all();
+                if(count($hosters) > 1) {
+                    foreach ($hosters as $h) {
+                        $teams_arr['name'][] = $h->name;
+                        $teams_arr['reg'][] = $h->reg;
+                    }
+                    $hoster = '';
+                }
+                else {
+                    $hoster = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->name;
+                    $reg_h = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('hoster')])->one()->reg;
+                }
+
+                //var_dump($teams_arr); exit;
+
             }
             else {
                 $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
@@ -400,11 +414,25 @@ class DefaultController extends FrontEndController
             if(Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()) {
                 $guester = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->name;
                 $reg_g = Team::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->reg;
+                //var_dump($reg_g); exit;
 
                     }
             elseif(Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()) {
-                $guester = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->name;
-                $reg_g = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->reg;
+                $guesters = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->all();
+                if(count($guesters) > 1) {
+                    foreach ($guesters as $h) {
+                        $teams_arr['name'][] = $h->name;
+                        $teams_arr['reg'][] = $h->reg;
+                    }
+                    $guester = '';
+                }
+                else {
+                    $guester = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->name;
+                    $reg_g = Team::find()->where(['adapt_name' => Yii::$app->getRequest()->getQueryParam('guester')])->one()->reg;
+                }
+
+
+
 
             }
 
@@ -418,19 +446,99 @@ class DefaultController extends FrontEndController
         else $guester = '---';
 
         if($hoster === 'null') {
-            $matchs = Matches::find()
-                ->orderBy('id DESC')
-                ->where("guest like('" . $guester . "_')")
-                //->where(['guest' => $guester])
-                ->all();
+            if(!isset($teams_arr)) {
+                if($reg_g == 'МИР' || $reg_g == 'ЕВРОПА') {
+                    //var_dump($reg_g);
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("guest like('".$guester."_')")
+                        ->andWhere("tournament like('МИР%') or tournament like('ЕВРОПА%')")
+                        ->all();
+                }
+                else {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        ->where("guest like('".$guester."_')")
+                        ->andWhere("tournament like('".$reg_g."%')")
+                        ->all();
+                }
+            }
+            elseif(isset($teams_arr['name'][0]) and isset($teams_arr['name'][1])) {
+                if($teams_arr['reg'][0] == 'ЕВРОПА') {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        ->where("guest like('" . $teams_arr['name'][0] . "_') or guest like('" . $teams_arr['name'][1] . "_')")
+                        ->andWhere("tournament like('ЕВРОПА%') or tournament like('МИР%') or tournament like('" . $teams_arr['reg'][1] . "%')")
+                        ->all();
+                }
+                elseif ($teams_arr['reg'][1] == 'ЕВРОПА'){
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        ->where("guest like('" . $teams_arr['name'][0] . "_') or guest like('" . $teams_arr['name'][1] . "_')")
+                        ->andWhere("tournament like('" . $teams_arr['reg'][0] . "%') or tournament like('ЕВРОПА%') or tournament like('МИР%') ")
+                        ->all();
+                }
+                else {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        ->where("guest like('" . $teams_arr['name'][0] . "_') or guest like('" . $teams_arr['name'][1] . "_')")
+                        ->andWhere("tournament like('" . $teams_arr['reg'][0] . "%') or tournament like('" . $teams_arr['reg'][1] . "%')")
+                        ->all();
+                }
+            }
         }
+
+
         elseif($guester === 'null') {
-            $matchs = Matches::find()
-                ->orderBy('id DESC')
-                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_".$hoster."')")
-                ->all();
+            if(!isset($teams_arr)) {
+                if($reg_h == 'МИР' || $reg_h == 'ЕВРОПА') {
+                    //var_dump($reg_h);
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("host like('_".$hoster."')")
+                        ->andWhere("tournament like('МИР%') or tournament like('ЕВРОПА%')")
+                        ->all();
+                }
+                else {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("host like('_".$hoster."')")
+                        ->andWhere("tournament like('".$reg_h."%')")
+                        ->all();
+                }
+            }
+            elseif(isset($teams_arr['name'][0]) and isset($teams_arr['name'][1])) {
+                if($teams_arr['reg'][0] == 'ЕВРОПА') {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("host like('_" . $teams_arr['name'][0] . "') or host like('_" . $teams_arr['name'][1] . "')")
+                        ->andWhere("tournament like('ЕВРОПА%') or tournament like('МИР%') or tournament like('" . $teams_arr['reg'][1] . "%')")
+                        ->all();
+                }
+                elseif ($teams_arr['reg'][1] == 'ЕВРОПА'){
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("host like('_" . $teams_arr['name'][0] . "') or host like('_" . $teams_arr['name'][1] . "')")
+                        ->andWhere("tournament like('" . $teams_arr['reg'][0] . "%') or tournament like('ЕВРОПА%') or tournament like('МИР%') ")
+                        ->all();
+                }
+                else {
+                    $matchs = Matches::find()
+                        ->orderBy('id DESC')
+                        // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                        ->where("host like('_" . $teams_arr['name'][0] . "') or host like('_" . $teams_arr['name'][1] . "')")
+                        ->andWhere("tournament like('" . $teams_arr['reg'][0] . "%') or tournament like('" . $teams_arr['reg'][1] . "%')")
+                        ->all();
+                }
+            }
         }
+
+
         else {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
