@@ -579,4 +579,56 @@ class ParsersController extends Controller
 
         }
     }
+
+    /**
+     * С Яндекса пытаемся спарсить тв программу
+     */
+    public function actionYTvProgramm(){
+
+        $url = "https://tv.yandex.ru/65?grid=sport&period=now";
+
+
+        $content = $this->get_page($url);
+
+        $tag_in = 'class="tv-grid__items"';
+        $tag_out = '-tv-recommended b-tv-';
+
+        $position = strpos($content, $tag_in, strlen($tag_in));
+
+        $content = substr($content, $position);
+        $position = strpos($content, $tag_out);
+        $content = substr($content, 0, $position);
+
+        $allowedTags='<a><br><b><h1><h2><h3><h4><i>' .
+            '<img><li><ol><p><strong><table>' .
+            '<tr><td><th><u><ul>';
+
+        $content = str_replace('</span>', PHP_EOL, $content);
+        $content = str_replace('</div>', PHP_EOL, $content);
+
+        $content = str_replace('<div class="tv-channel-title__icon">', '-------------------------------------------------', $content);
+
+        $content = strip_tags($content);
+
+        echo $this->full_trim($content);
+        
+    }
+
+    function full_trim($str)
+    {
+        return trim(preg_replace('/\s{2,}/', PHP_EOL, $str));
+
+    }
+
+    public function actionXmlTvProgram(){
+
+        $p = gzfile("/home/romanych/Загрузки/xmltv.xml.gz");
+
+        foreach ($p as $pr){
+            if(strstr($pr, 'Спорт')) echo $pr;
+        }
+
+      // var_dump($p);
+
+    }
 }
