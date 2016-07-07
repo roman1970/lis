@@ -756,6 +756,21 @@ class DefaultController extends FrontEndController
         return $arr;
 
     }
+    /**
+     * Преврашает дату таблицы matches в формат, удобный для сравнивания строк
+     * @param $date
+     * @return int
+     */
+    public function formatMatchDateToNewDate($date){
+        $d = explode('.', $date);
+        $day = (int)$d[0];
+        $month = (int)$d[1];
+        $year = (int)$d[2];
+        $time = mktime(0, 0, 0, $month, $day, $year);
+        $newDay = date('Y-m-d', $time);
+        return $newDay;
+
+    }
 
 
 }

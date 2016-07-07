@@ -72,7 +72,7 @@ class Totmatch extends \yii\db\ActiveRecord
     }
 
     /**
-     * Превряшает дату таблицы matches в метку
+     * Преврашает дату таблицы matches в метку
      * @param $date
      * @return int
      */

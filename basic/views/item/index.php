@@ -18,6 +18,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Создать', 'url' => ['/item/create']],
             ['label' => 'Редактировать', 'url' => ['/item/update']],
+            ['label' => 'Без аудио', 'url' => ['/item/list-no-audio']],
 
         ],
     ]);

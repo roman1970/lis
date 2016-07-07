@@ -61,6 +61,22 @@ class Helper
             return $day->format('Y-m-d');
         }
 
+    }
 
+    /**
+     * Обрезает строку после скобки
+     * @param $str
+     * @return string
+     */
+    public static function cutAfterBracket($str){
+        
+        $pos = strpos($str, '(');
+
+        if($pos)
+            return substr($str, 0, $pos);
+        else
+            return $str;
+        
+        
     }
 }

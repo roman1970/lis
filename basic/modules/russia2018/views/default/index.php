@@ -16,6 +16,8 @@ use yii\bootstrap\Nav;
         var country_bet = $("#country_bet");
         var hoster = $("#hoster");
         var guester = $("#guester");
+        var from = $("#w0");
+        var to = $("#w1");
         var choices;
 
 
@@ -31,7 +33,7 @@ use yii\bootstrap\Nav;
         $("#send").click(
             function() {
 
-                sendMess(limit.val(), host.val(), bet.val());
+                sendMess(limit.val(), host.val(), bet.val(), from.val(), to.val());
             });
 
         $("#choose_country").click(
@@ -144,12 +146,8 @@ use yii\bootstrap\Nav;
     });
 
 
-    function sendMess(limit, host,  bet) {
-        //Валидация
-        if (host === "" && guest === "") {
-            alert("Введите хотя бы одну команду");
-            return false;
-        }
+    function sendMess(limit, host, bet, from, to) {
+       
 
         if (host === "") {
             host = "UIU";
@@ -159,7 +157,7 @@ use yii\bootstrap\Nav;
         $.ajax({
             type: "GET",
             url: "russia2018/default/strateg/",
-            data: "host="+host+"&limit="+limit+"&bet="+bet,
+            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&to="+to,
             success: function(html){
                 $("#base").html(html);
             }
@@ -169,7 +167,7 @@ use yii\bootstrap\Nav;
         $.ajax({
             type: "GET",
             url: "russia2018/default/strategu/",
-            data: "host="+host+"&limit="+limit+"&bet="+bet,
+            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&to="+to,
             success: function(html){
                 $("#bets").html(html);
             }
@@ -343,6 +341,22 @@ use yii\bootstrap\Nav;
                         <input type="text" class="form-control" id="host"  placeholder="Название команды">
                         <button type="button" class="btn btn-success" id="send" >Показать</button>
                     </p>
+                    <?= \yii\jui\DatePicker::widget([
+                        'name'  => 'from_date',
+                        'value'  => '2014-07-01',
+                        'dateFormat' => 'dd.MM.yyyy',
+                        //'inline' => true,
+                        //'containerOptions' => ['width' => '100']
+                    ]);
+                    ?>
+                    <?= \yii\jui\DatePicker::widget([
+                        'name'  => 'to_date',
+                        'value'  => date('Y-m-d', time()),
+                        'dateFormat' => 'dd.MM.yyyy',
+                        //'inline' => true,
+                        //'containerOptions' => ['width' => '100']
+                    ]);
+                    ?>
                 </div>
             </form>
             <form class="form-inline" role="form">
@@ -350,6 +364,7 @@ use yii\bootstrap\Nav;
                     <p>
                         <input type="text" class="form-control" id="hoster"  placeholder="Хозяин"> -
                         <input type="text" class="form-control" id="guester"  placeholder="Гость">
+
                        <?php /*<button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p> */ ?>
                         <button type="button" class="btn btn-success" id="two_teams_strict" >Поиск</button>
                         </p>
@@ -485,9 +500,9 @@ use yii\bootstrap\Nav;
 
                         <table id="mems_match" cellpadding="0" >
                             <tr>
-                                <td class="left" title="Состав: <?=$match->getSost_h()?>" style="cursor: pointer"><?php echo $match->host; ?></td>
+                                <td class="left" title="Состав: <?=$match->getSost_h()?>" style="cursor: pointer"><?php echo \app\components\Helper::cutAfterBracket($match->host); ?></td>
                                 <td class="center"><?php echo $match->gett; ?>:<?php echo $match->lett; ?> </td>
-                                <td class="right" title="Состав: <?=$match->getSost_g()?>" style="cursor: pointer"><?php echo $match->guest; ?></td>
+                                <td class="right" title="Состав: <?=$match->getSost_g()?>" style="cursor: pointer"><?php echo \app\components\Helper::cutAfterBracket($match->guest); ?></td>
 
                             </tr>
                         </table>

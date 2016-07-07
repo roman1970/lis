@@ -161,6 +161,20 @@ class ItemController extends BackEndController
 
     }
 
+    /**
+     * Список без аудио
+     * @return string
+     */
+    public function actionListNoAudio(){
+        $items = Items::find()->where(['audio_link' => '']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        return $this->render('index', ['items' => $dataProvider]);
+    }
+
     public function loadModel($id)
     {
 
@@ -170,6 +184,8 @@ class ItemController extends BackEndController
             throw new \yii\web\HttpException(404, 'The requested page does not exist.');
         return $model;
     }
+    
+    
 
 
 }

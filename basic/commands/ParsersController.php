@@ -581,17 +581,17 @@ class ParsersController extends Controller
     }
 
     /**
-     * С Яндекса пытаемся спарсить тв программу
+     * С Мейла парсим тв программу
      */
     public function actionYTvProgramm(){
 
-        $url = "https://tv.yandex.ru/65?grid=sport&period=now";
+        $url = "https://tv.mail.ru/novosibirsk/sport/";
 
 
         $content = $this->get_page($url);
 
-        $tag_in = 'class="tv-grid__items"';
-        $tag_out = '-tv-recommended b-tv-';
+        $tag_in = 'p-channels__items';
+        $tag_out = 'sticky-springs sticky-springs_bottom js-springs__bottom';
 
         $position = strpos($content, $tag_in, strlen($tag_in));
 
@@ -606,7 +606,7 @@ class ParsersController extends Controller
         $content = str_replace('</span>', PHP_EOL, $content);
         $content = str_replace('</div>', PHP_EOL, $content);
 
-        $content = str_replace('<div class="tv-channel-title__icon">', '-------------------------------------------------', $content);
+        $content = str_replace('<div class="p-channels__item__info__logo">', '-------------------------------------------------', $content);
 
         $content = strip_tags($content);
 
