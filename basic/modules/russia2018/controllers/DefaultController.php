@@ -50,24 +50,46 @@ class DefaultController extends FrontEndController
      */
     public function actionStrateg() {
 
-        if(Yii::$app->getRequest()->getQueryParam('host')) $team = Yii::$app->getRequest()->getQueryParam('host');
+        $data_id_from = 1;
+
+        $data_id_to = Matches::find()
+            ->select('MAX(id)')
+            ->scalar();
+
+
+        if(Yii::$app->getRequest()->getQueryParam('from')) {
+
+            $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
+            //var_dump($data_id_from); exit;
+        }
+
+        if(Yii::$app->getRequest()->getQueryParam('toto') && Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()) {
+
+            $data_id_to = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()->id;
+
+        }
+        //var_dump($data_id_to); exit;
+
+        if(Yii::$app->getRequest()->getQueryParam('host')) $team = trim(Yii::$app->getRequest()->getQueryParam('host'));
         else $team = '';
 
-        if(Yii::$app->getRequest()->getQueryParam('limit')) $limit = Yii::$app->getRequest()->getQueryParam('limit');
-        else $limit = 10;
+        $limit = 10;
 
-        if(Yii::$app->getRequest()->getQueryParam('bet')) $bet = (int)Yii::$app->getRequest()->getQueryParam('bet');
-        else $bet = 1;
+        $bet = 1;
 
         $model = new Strategy();
 
         $matchs = Matches::find()
-            ->orderBy('id DESC')
+            //->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('_".$team."') or guest like('".$team."_')")
-            ->limit($limit)
+            ->where("host like('_".$team."') or guest like('".$team."_') or host like('_".$team." (%') or guest like('".$team." (%') ")
+            ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+            //->limit($limit)
             ->all();
-        //$cats = Categories::find()->leaves()->all();
+
+        //var_dump(count($matchs)); exit;
+
+
         $this->betsGenerate($matchs);
 
        
@@ -89,34 +111,53 @@ class DefaultController extends FrontEndController
      */
     public function actionStrategu() {
 
+        $data_id_from = 1;
+
+        $data_id_to = Matches::find()
+            ->select('MAX(id)')
+            ->scalar();
+
+
+        if(Yii::$app->getRequest()->getQueryParam('from')) {
+
+            $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
+            //var_dump($data_id_from); exit;
+        }
+
+        if(Yii::$app->getRequest()->getQueryParam('toto') && Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()) {
+
+            $data_id_to = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()->id;
+
+        }
+
         if(Yii::$app->getRequest()->getQueryParam('host')) $team = Yii::$app->getRequest()->getQueryParam('host');
         else $team = '';
 
-        if(Yii::$app->getRequest()->getQueryParam('limit')) $limit = Yii::$app->getRequest()->getQueryParam('limit');
-        else $limit = 10;
-
-        if(Yii::$app->getRequest()->getQueryParam('bet')) $bet = (int)Yii::$app->getRequest()->getQueryParam('bet');
-        else $bet = 1;
+        $limit = 10;
+        $bet = 1;
 
         $model = new Strategy();
 
         $matchs = Matches::find()
-            ->orderBy('id DESC')
+            //->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("host like('_".$team."') or guest like('".$team."_')")
-            ->limit($limit)
+            ->where("host like('_".$team."') or guest like('".$team."_') or host like('_".$team." (%') or guest like('".$team." (%') ")
+            ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+            //->limit($limit)
             ->all();
-        //$cats = Categories::find()->leaves()->all();
-        $this->betsGenerate($matchs);
+        
+        //var_dump(count($matchs)); exit;
+        
+        //$this->betsGenerate($matchs);
 
-        $summary = $this->summary($matchs);
+        //$summary = $this->summary($matchs);
         //$arrteam = ;
 
 
         return $this->renderPartial('teams', [
-            'bet_h' => $this->bet_h*$bet,
-            'bet_n' => $this->bet_n*$bet,
-            'bet_g' => $this->bet_g*$bet,
+            //'bet_h' => $this->bet_h*$bet,
+            //'bet_n' => $this->bet_n*$bet,
+            //'bet_g' => $this->bet_g*$bet,
             'summary' => $this->teamsSummary($matchs, $team),
             
 
@@ -697,19 +738,22 @@ class DefaultController extends FrontEndController
      * @return mixed
      */
     public function teamsSummary($matches, $team){
+        
         $arr['team'] = $team;
+        $arr['count'] = count($matches);
         $arr['vic'] = 0;
         $arr['nob'] = 0;
         $arr['def'] = 0;
         $arr['sum_gett'] = 0;
         $arr['sum_lett'] = 0;
         $arr['ball'] = 0;
+        $i=0;
 
 
         foreach ($matches as $match) {
-            $arr['count'] = count($matches);
 
-            if($team == iconv_substr($match->host, 1 , 80 , 'UTF-8' )) {
+
+            if(strstr($match->host, $team)) {
 
                 if($match->gett > $match->lett) {
                     $arr['vic'] += 1;
@@ -742,7 +786,6 @@ class DefaultController extends FrontEndController
                     $arr['sum_lett'] += $match->gett;
                     $arr['sum_gett'] += $match->lett;
                     $arr['ball'] += 1;
-
                 }
                 else{
                     $arr['vic'] += 1;
@@ -751,6 +794,7 @@ class DefaultController extends FrontEndController
                     $arr['ball'] += 3;
                 }
             }
+
 
         }
         return $arr;

@@ -157,7 +157,7 @@ use yii\bootstrap\Nav;
         $.ajax({
             type: "GET",
             url: "russia2018/default/strateg/",
-            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&to="+to,
+            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&toto="+to,
             success: function(html){
                 $("#base").html(html);
             }
@@ -167,9 +167,9 @@ use yii\bootstrap\Nav;
         $.ajax({
             type: "GET",
             url: "russia2018/default/strategu/",
-            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&to="+to,
+            data: "host="+host+"&limit="+limit+"&bet="+bet+"&from="+from+"&toto="+to,
             success: function(html){
-                $("#bets").html(html);
+                $("#teams_data").html(html);
             }
 
         });
@@ -301,13 +301,33 @@ use yii\bootstrap\Nav;
 </script>
 <style>
     .jumbotron {
-        background-color: rgb(31, 97, 78);
+        background-color: rgb(7, 63, 50);
+        box-shadow: inset rgba(250,250,250,250) -8px 8px 8px, inset rgba(255,255,255,255) 8px 3px 8px, rgba(0,0,0,0) 3px 3px 8px -3px;
+
     }
     .jumbotron h3{
         color: white;
     }
     .container {
         max-width: 720px;
+    }
+    .hasDatepicker{
+        display: block;
+        width: 50%;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: rgb(85, 85, 85);
+        background-color: rgb(255, 255, 255);
+        background-image: none;
+        border: 1px solid rgb(204, 204, 204);
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
 
     @media (min-width: 1200px)
@@ -322,8 +342,9 @@ use yii\bootstrap\Nav;
 
 
         <div class="jumbotron">
-            <h3>Статистика футбольных матчей</h3>
+            <h3>Матчи футбольной команды</h3>
             <form class="form-inline" role="form">
+                <?php /*
                 <div class="form-group">
 
                     <input type='hidden' class="aer" id="country_bet" size="30"/>
@@ -334,33 +355,42 @@ use yii\bootstrap\Nav;
                         <p id="outputcontent"></p>
                     </div>
                 </div>
+
+                */ ?>
                 <div class="form-group">
+
 
                     <input type='hidden' class="aer" id="bet" size="30"/>
                     <p>
                         <input type="text" class="form-control" id="host"  placeholder="Название команды">
+                         <?= \yii\jui\DatePicker::widget([
+                            'name'  => 'from_date',
+                            'value'  => '2014-07-01',
+                            'dateFormat' => 'dd.MM.yyyy',
+                            'options' => ['title' => 'Начало периода']
+                            //'inline' => true,
+                            //'containerOptions' => ['width' => '100']
+                        ]);
+                        ?>
+                        <?= \yii\jui\DatePicker::widget([
+                            'name'  => 'to_date',
+                            'value'  => date('Y-m-d', time()),
+                            'dateFormat' => 'dd.MM.yyyy',
+                            'options' => ['title' => 'Конец периода']
+                            //'inline' => true,
+                            //'containerOptions' => ['width' => '100']
+                        ]);
+                        ?>
                         <button type="button" class="btn btn-success" id="send" >Показать</button>
                     </p>
-                    <?= \yii\jui\DatePicker::widget([
-                        'name'  => 'from_date',
-                        'value'  => '2014-07-01',
-                        'dateFormat' => 'dd.MM.yyyy',
-                        //'inline' => true,
-                        //'containerOptions' => ['width' => '100']
-                    ]);
-                    ?>
-                    <?= \yii\jui\DatePicker::widget([
-                        'name'  => 'to_date',
-                        'value'  => date('Y-m-d', time()),
-                        'dateFormat' => 'dd.MM.yyyy',
-                        //'inline' => true,
-                        //'containerOptions' => ['width' => '100']
-                    ]);
-                    ?>
                 </div>
             </form>
+            <div id="teams_data">
+
+            </div>
             <form class="form-inline" role="form">
                 <div class="form-group">
+                    <h3>Статистика футбольных матчей</h3>
                     <p>
                         <input type="text" class="form-control" id="hoster"  placeholder="Хозяин"> -
                         <input type="text" class="form-control" id="guester"  placeholder="Гость">
