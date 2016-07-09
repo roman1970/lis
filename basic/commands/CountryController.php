@@ -1060,5 +1060,13 @@ class CountryController extends Controller
             }
         else return 0;
         }
+    
+    public function actionDumpOneDataMatches(){
+        $m = Matches::find()
+            ->where("date like '02.07.2016'")
+            ->all();
+        print_r($m);
+
+    }
 
 }

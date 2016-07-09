@@ -631,4 +631,19 @@ class ParsersController extends Controller
       // var_dump($p);
 
     }
+    
+    public function actionRssParser(){
+
+        //$dom = new \DomDocument();
+        $url = Url::to("http://www.moonconnection.com/moonconnection.rss");
+        //$dom->load($url);
+
+        $xmlstr = @file_get_contents($url);
+        if($xmlstr===false)die('Error connect to RSS: '.$url);
+        $xml = new \SimpleXMLElement($xmlstr);
+        if($xml===false)die('Error parse RSS: '.$url);
+        
+        var_dump($xmlstr);
+        
+    }
 }
