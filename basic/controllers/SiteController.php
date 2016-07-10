@@ -81,9 +81,9 @@ class SiteController extends BackEndController
                 ->all();
 
             foreach ($records as $rec){
-                echo $rec['cnt'] ." - ". $rec['date'] . "<br>";
+                echo $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
             }
-            exit;
+
         }
 
         return $this->render('contact_lend', [

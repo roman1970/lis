@@ -1083,7 +1083,8 @@ class CountryController extends Controller
 
         $url = Url::to("@app/data/bd_test.txt");
 
-        $f = fopen($url, 'a');
+        $f = fopen($url, 'w');
+        fwrite($f, '[Block]');
 
         $records = $class::find()
             ->select(["$column, COUNT($column) as cnt"])
@@ -1094,10 +1095,10 @@ class CountryController extends Controller
         foreach ($records as $rec){
             $date1 .= $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
         }
-
+        fwrite($f, '[Block]');
         fwrite($f, $date1);
 
-        $dates = file_get_contents('http:/qplis.ru/?hhash=9');
+        $dates = file_get_contents('http://qplis.ru/?hhash=9');
 
         fwrite($f, $dates);
         
