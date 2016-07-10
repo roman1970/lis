@@ -97,15 +97,15 @@ class DefaultController extends FrontEndController
                                 $now_id = $one->id;
                             }
                         }
-                    //echo $now_id;
-                 //exit;
+                
+
 
                     if($users_predicted_matches)
                         $match_list = Totmatch::find()
-                            ->where("id NOT IN (".$users_predicted_matches.") AND id >= ".$now_id)
+                            ->where("id NOT IN (".$users_predicted_matches.") AND id > ".$now_id)
                             ->all();
                     else $match_list = Totmatch::find()
-                        ->where("id >= ".$now_id)
+                        ->where("id > ".$now_id)
                         ->all();
 
                     return $this->render('group', ['user' => $this->current_user, 'match_list' => $match_list]);
@@ -125,7 +125,8 @@ class DefaultController extends FrontEndController
             $pred_comp->user_id = 6;
             $pred_comp->host_g = mt_rand(0,3);
             $pred_comp->guest_g = mt_rand(0,3);
-            $pred_comp->save();
+            $pred_comp->save(false);
+
         }
 
         if(Yii::$app->getRequest()->getQueryParam('host_g') !== null && Yii::$app->getRequest()->getQueryParam('guest_g') !== null) {

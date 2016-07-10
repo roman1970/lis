@@ -16,6 +16,7 @@ use app\components\DocxConverter;
 use app\models\Country;
 use app\models\Articles;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 
@@ -1062,11 +1063,34 @@ class CountryController extends Controller
         }
     
     public function actionDumpOneDataMatches(){
-        $m = Matches::find()
+        /*$m = Matches::find()
             ->where("date like '02.07.2016'")
             ->all();
-        print_r($m);
+        */
+       $m =  mt_rand(0,3);
+        echo $m;
 
+    }
+
+    /**
+     * Проверка таблицы базы данных
+     * @param $class
+     * @param $column
+     */
+    public function actionTestUnicValTable($class, $column){
+
+        $records = $class::find()
+            ->select(["$column, COUNT($column) as cnt"])
+            ->where('id > 70000')
+            ->groupBy($column)
+            ->all();
+
+        foreach ($records as $rec){
+            echo $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
+        }
+
+
+        
     }
 
 }
