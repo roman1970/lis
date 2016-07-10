@@ -1095,8 +1095,9 @@ class CountryController extends Controller
         foreach ($records as $rec){
             $date1 .= $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
         }
-        fwrite($f, '[Block]');
+
         fwrite($f, $date1);
+        fwrite($f, '[Block]');
 
         $dates = file_get_contents('http://qplis.ru/?hhash=9');
 

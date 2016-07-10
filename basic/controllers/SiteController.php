@@ -83,6 +83,7 @@ class SiteController extends BackEndController
             foreach ($records as $rec){
                 echo $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
             }
+            exit;
 
         }
 
