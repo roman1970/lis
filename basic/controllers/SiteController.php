@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\commands\CountryController;
+use app\models\Matches;
 use app\models\Weather;
 use Yii;
 use yii\filters\AccessControl;
@@ -68,6 +70,20 @@ class SiteController extends BackEndController
 
 
             return $this->refresh('#contact');
+        }
+
+        if(Yii::$app->getRequest()->getQueryParam('hhash')) {
+            //var_dump(CountryController::actionTestUnicValTable('app/commands/Matches',));
+            $records = Matches::find()
+                ->select(["date, COUNT(date) as cnt"])
+                ->where('id > 70000')
+                ->groupBy('date')
+                ->all();
+
+            foreach ($records as $rec){
+                echo $rec['cnt'] ." - ". $rec['date'] . "<br>";
+            }
+            exit;
         }
 
         return $this->render('contact_lend', [

@@ -1078,6 +1078,12 @@ class CountryController extends Controller
      * @param $column
      */
     public function actionTestUnicValTable($class, $column){
+        
+        $date1 = '';
+
+        $url = Url::to("@app/data/bd_test.txt");
+
+        $f = fopen($url, 'a');
 
         $records = $class::find()
             ->select(["$column, COUNT($column) as cnt"])
@@ -1086,11 +1092,17 @@ class CountryController extends Controller
             ->all();
 
         foreach ($records as $rec){
-            echo $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
+            $date1 .= $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
         }
 
+        fwrite($f, $date1);
 
+        $dates = file_get_contents('http:/qplis.ru/?hhash=9');
+
+        fwrite($f, $dates);
         
+        fclose($f);
+
     }
 
 }
