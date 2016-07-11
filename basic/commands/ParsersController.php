@@ -654,7 +654,10 @@ class ParsersController extends Controller
         var_dump($xmlstr);
         
     }
-    
+
+    /***
+     * Сравнение таблиц локалки и хостинга
+     */
     public function actionBdAnalis(){
         $url1 = Url::to("@app/data/bd_local.txt");
         $url2 = Url::to("@app/data/bd_remote.txt");
