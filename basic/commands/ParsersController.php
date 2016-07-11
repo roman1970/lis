@@ -531,11 +531,19 @@ class ParsersController extends Controller
         $content = str_replace(chr(13), ' ', $content);
         $content = str_replace(chr(10), ' ', $content);
         $content = str_replace('Северная Ирландия', 'Северная_Ирландия', $content);
+        $content = str_replace('Спартак Москва 2', 'Спартак_Москва_2', $content);
+        $content = str_replace('Спартак Нальчик', 'Спартак_Нальчик', $content);
+        $content = str_replace('Зенит 2', 'Зенит_2', $content);
+        $content = str_replace('Динамо Москва', 'Динамо_Москва', $content);
         return $content;
     }
 
     public function backTeamString($content){
         $content = str_replace('Северная_Ирландия', 'Северная Ирландия', $content);
+        $content = str_replace('Спартак_Москва_2', 'Спартак Москва 2', $content);
+        $content = str_replace('Спартак_Нальчик', 'Спартак Нальчик', $content);
+        $content = str_replace('Зенит_2', 'Зенит 2', $content);
+        $content = str_replace('Динамо_Москва', 'Динамо Москва', $content);
         return $content;
     }
 
@@ -645,5 +653,20 @@ class ParsersController extends Controller
         
         var_dump($xmlstr);
         
+    }
+    
+    public function actionBdAnalis(){
+        $url1 = Url::to("@app/data/bd_local.txt");
+        $url2 = Url::to("@app/data/bd_remote.txt");
+        $arr1 = file($url1);
+        $arr2 = file($url2);
+        $arr3 = [];
+        $i=0;
+
+        foreach ($arr1 as $a){
+            if(isset($arr2[$i]))$arr3[$a] = $arr2[$i];
+            $i++;
+        }
+        print_r($arr3);
     }
 }

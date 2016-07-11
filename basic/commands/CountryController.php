@@ -1081,29 +1081,33 @@ class CountryController extends Controller
         
         $date1 = '';
 
-        $url = Url::to("@app/data/bd_test.txt");
+        $local = Url::to("@app/data/bd_local.txt");
+        $remote = Url::to("@app/data/bd_remote.txt");
 
-        $f = fopen($url, 'w');
-        fwrite($f, '[Block]');
+        $f_local = fopen($local, 'w');
+        $f_remote = fopen($remote, 'w');
+        //fwrite($f_local, '[Block]'. PHP_EOL);
 
         $records = $class::find()
             ->select(["$column, COUNT($column) as cnt"])
             ->where('id > 70000')
             ->groupBy($column)
+            ->orderBy('id')
             ->all();
 
         foreach ($records as $rec){
             $date1 .= $rec['cnt'] ." - ". $rec['date'] . PHP_EOL;
         }
 
-        fwrite($f, $date1);
-        fwrite($f, '[Block]');
+        fwrite($f_local, $date1);
+        //fwrite($f, '[Block]'. PHP_EOL);
 
-        $dates = file_get_contents('http://qplis.ru/?hhash=9');
+        //$dates = file_get_contents('http://qplis.ru/?hhash=9');
 
-        fwrite($f, $dates);
+        fwrite($f_remote, file_get_contents('http://qplis.ru/?hhash=9'));
         
-        fclose($f);
+        fclose($f_local);
+        fclose($f_remote);
 
     }
 

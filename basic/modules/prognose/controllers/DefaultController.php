@@ -93,7 +93,7 @@ class DefaultController extends FrontEndController
                                 .Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0])." ".time()."<br>";
                             var_dump(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) >= time());
                             */
-                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) <= time()) {
+                            if(Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0])+36000 <= time()) {
                                 $now_id = $one->id;
                             }
                         }
@@ -156,7 +156,7 @@ class DefaultController extends FrontEndController
         if($this->userIfUserLegal($id)){
 
            $predicted = Totpredict::find()->where(['user_id' => $this->current_user->id])
-               ->limit(10)
+               ->limit(20)
                ->orderBy('id DESC')
                ->all();
             //var_dump($predicted); exit;

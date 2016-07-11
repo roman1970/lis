@@ -78,6 +78,7 @@ class SiteController extends BackEndController
                 ->select(["date, COUNT(date) as cnt"])
                 ->where('id > 70000')
                 ->groupBy('date')
+                ->orderBy('id')
                 ->all();
 
             foreach ($records as $rec){
