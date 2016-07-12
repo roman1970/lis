@@ -43,7 +43,7 @@ class SourceController extends BackEndController
                 'query' => $sources,
             ]);
 
-            return $this->render('index', ['sources' => $dataProvider]);
+            return $this->redirect(Url::toRoute('source/index'));
 
         } else {
 

@@ -535,6 +535,7 @@ class ParsersController extends Controller
         $content = str_replace('Спартак Нальчик', 'Спартак_Нальчик', $content);
         $content = str_replace('Зенит 2', 'Зенит_2', $content);
         $content = str_replace('Динамо Москва', 'Динамо_Москва', $content);
+        $content = str_replace('SKA Khabarovsk', 'SKA_Khabarovsk', $content);
         return $content;
     }
 
@@ -544,6 +545,7 @@ class ParsersController extends Controller
         $content = str_replace('Спартак_Нальчик', 'Спартак Нальчик', $content);
         $content = str_replace('Зенит_2', 'Зенит 2', $content);
         $content = str_replace('Динамо_Москва', 'Динамо Москва', $content);
+        $content = str_replace('SKA_Khabarovsk', 'SKA Khabarovsk', $content);
         return $content;
     }
 
@@ -672,4 +674,29 @@ class ParsersController extends Controller
         }
         print_r($arr3);
     }
+
+    /**
+     * Формирование плейлиста для радио
+     */
+    public function actionMakeRadioPlaylist() {
+        $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+        
+        $audio = Items::find()->where("audio_link <> '' and radio_que <> 0")->orderBy('radio_que')->all();
+
+        foreach ($audio as $item){
+            if(strstr($item->audio_link, '/music')) {
+                $one = str_replace('/music', 'music', $item->audio_link);
+                fwrite($f, "/home/romanych/".$one.PHP_EOL);
+            }
+
+            else fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/".$item->audio_link.PHP_EOL);
+
+        }
+
+        fclose($f);
+        
+        //var_dump($audio);
+        
+    }
+    
 }

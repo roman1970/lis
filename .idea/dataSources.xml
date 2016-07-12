@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="4162935008">
+  <component name="DataSourceManagerImpl" format="xml" hash="181738329">
     <data-source source="LOCAL" name="MySQL - plis@localhost" uuid="4d6ed56c-e134-4b1b-8376-01b0a74f0d7e">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -13,7 +13,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="MySQL - @localhost" uuid="cffa2510-1a04-45ec-8b81-3cbfc9f7ec96">
       <driver-ref>mysql</driver-ref>
@@ -27,7 +26,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="MySQL - gb_x_qplis@mysql92.1gb.ru" uuid="673baab4-b1d2-4606-b59a-4d0168d77db3">
       <driver-ref>mysql</driver-ref>
@@ -41,7 +39,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="MySQL - ffbase@localhost" uuid="eeb1392a-8955-4dee-8c23-2a50a07c58cc">
       <driver-ref>mysql</driver-ref>
@@ -55,7 +52,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="MySQL - yii2_basic_tests@localhost" uuid="8ec1a2e8-6455-49a6-8653-5d068718cf53">
       <driver-ref>mysql</driver-ref>
@@ -69,7 +65,6 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
   </component>
 </project>

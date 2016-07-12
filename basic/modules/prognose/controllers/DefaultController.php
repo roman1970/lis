@@ -99,7 +99,6 @@ class DefaultController extends FrontEndController
                         }
                 
 
-
                     if($users_predicted_matches)
                         $match_list = Totmatch::find()
                             ->where("id NOT IN (".$users_predicted_matches.") AND id > ".$now_id)
