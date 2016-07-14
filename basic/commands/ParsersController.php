@@ -263,9 +263,7 @@ class ParsersController extends Controller
                     $source = Source::findOne(['id' => $item->source_id]);
                     $author = Author::findOne(['id' => $source->author_id]);
                     fwrite($page, "<p class='item_head'>$r $item->title ($author->name - $source->title)</p>
-                    <audio controls>
-                        <source src='../../".$item->audio_link."'>
-                    </audio>
+                    ".$this->renderPlayer($item->audio_link)."
                     ".nl2br("<p>$item->text</p>")."
 
                     ");
@@ -697,6 +695,21 @@ class ParsersController extends Controller
         
         //var_dump($audio);
         
+    }
+
+    /**
+     * Рендеринг проигрывателя
+     * @param $audio_link
+     * @return string
+     */
+    public function renderPlayer($audio_link){
+        if($audio_link !== '') {
+            return "<audio controls>
+                    <source src='../../".$audio_link."'>
+                </audio>";
+        }
+        else return '';
+
     }
     
 }

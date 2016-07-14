@@ -41,29 +41,55 @@ class RandController extends Controller
     /**
      * Выбрать альбом для прослушивания
      */
-    public function actionRandAlbom(){
+    public function actionRandAlbom($unusual = 0){
 
-        /*$first = new Played();
-        $first->source_id = 26;
-        $first->save(false);
-        */
 
-        $played = implode(',',ArrayHelper::map(Played::find()
-            ->all(), 'id', 'source_id'));
-        
-        $alboms = Source::find()
-            ->where("id NOT IN (".$played.")")
-            ->andWhere(['status' => 1])
-            ->all();
-        
-        $rand = rand(0,count($alboms));
+        if($unusual) {
+            $played = implode(',',ArrayHelper::map(Played::find()
+                ->all(), 'id', 'source_id'));
 
-        $new_played = new Played();
-        $new_played->source_id = $alboms[$rand]->id;
-        $new_played->save(false);
-        
-        
-        echo "Ставь ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name.PHP_EOL;
+            $alboms = Source::find()
+                ->where("id NOT IN (".$played.")")
+                ->andWhere(['status' => 3])
+                ->all();
+
+            if($alboms) {
+                $rand = rand(0,count($alboms));
+
+                $new_played = new Played();
+                $new_played->source_id = $alboms[$rand]->id;
+                $new_played->save(false);
+
+                echo "Ставь ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name.PHP_EOL;
+            }
+            else echo "Ничего нет".PHP_EOL;
+
+
+        }
+
+        else {
+            $played = implode(',',ArrayHelper::map(Played::find()
+                ->all(), 'id', 'source_id'));
+
+            $alboms = Source::find()
+                ->where("id NOT IN (".$played.")")
+                ->andWhere(['status' => 1])
+                ->all();
+
+            if($alboms) {
+
+                $rand = rand(0,count($alboms));
+
+                $new_played = new Played();
+                $new_played->source_id = $alboms[$rand]->id;
+                $new_played->save(false);
+
+                echo "Ставь ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name.PHP_EOL;
+            }
+            else echo "Ничего нет".PHP_EOL;
+        }
+
+
     }
 
 }
