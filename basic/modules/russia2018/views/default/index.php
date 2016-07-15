@@ -303,6 +303,7 @@ use yii\bootstrap\Nav;
     .jumbotron {
         background-color: rgb(7, 63, 50);
         box-shadow: inset rgba(250,250,250,250) -8px 8px 8px, inset rgba(255,255,255,255) 8px 3px 8px, rgba(0,0,0,0) 3px 3px 8px -3px;
+        padding: 20px;
 
     }
     .jumbotron h3{
@@ -310,6 +311,7 @@ use yii\bootstrap\Nav;
     }
     .container {
         max-width: 720px;
+        padding-top: 20px;
     }
     .hasDatepicker{
         display: block;
@@ -339,6 +341,8 @@ use yii\bootstrap\Nav;
 
 
     <div class="container">
+        <canvas id="planet" width="285" height="285" >
+        </canvas>
 
 
         <div class="jumbotron">
@@ -392,7 +396,7 @@ use yii\bootstrap\Nav;
                 <div class="form-group">
                     <h3>Статистика футбольных матчей</h3>
                     <p>
-                        <input type="text" class="form-control" id="hoster"  placeholder="Хозяин"> -
+                        <input type="text" class="form-control" id="hoster"  placeholder="Хозяин">
                         <input type="text" class="form-control" id="guester"  placeholder="Гость">
 
                        <?php /*<button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p> */ ?>
