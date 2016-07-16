@@ -390,7 +390,6 @@ use yii\bootstrap\Nav;
                 </div>
             </form>
             <div id="teams_data">
-
             </div>
             <form class="form-inline" role="form">
                 <div class="form-group">

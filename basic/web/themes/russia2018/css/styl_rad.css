@@ -729,6 +729,10 @@ select {
 
 }
 
+#teams_data{
+    width: 100%;
+}
+
 #mems_goal {
     color:#BCE774;
     font-size: 14px;

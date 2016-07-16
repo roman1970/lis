@@ -80,7 +80,7 @@ class DefaultController extends FrontEndController
         $model = new Strategy();
 
         $matchs = Matches::find()
-            //->orderBy('id DESC')
+            ->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
             ->where("host like('_".$team."') or guest like('".$team."_') or host like('_".$team." (%') or guest like('".$team." (%') ")
             ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
@@ -139,7 +139,7 @@ class DefaultController extends FrontEndController
         $model = new Strategy();
 
         $matchs = Matches::find()
-            //->orderBy('id DESC')
+            ->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
             ->where("host like('_".$team."') or guest like('".$team."_') or host like('_".$team." (%') or guest like('".$team." (%') ")
             ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
@@ -584,8 +584,9 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_" . $hoster . "') and guest like('" . $guester . "_')")
+                ->where("host like('_" . $hoster . "%') and guest like('" . $guester . "%')")
                 ->all();
+            //echo  $hoster; echo  $guester; exit;
         }
 
         $this->betsGenerate($matchs);
