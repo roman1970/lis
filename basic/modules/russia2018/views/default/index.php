@@ -32,8 +32,14 @@ use yii\bootstrap\Nav;
         );
         $("#send").click(
             function() {
-
                 sendMess(limit.val(), host.val(), bet.val(), from.val(), to.val());
+                $("#bets").hide();
+                $("#teams_data").show();
+                $('body').animate({
+                    scrollTop: 460
+                }, 400);
+
+
             });
 
         $("#choose_country").click(
@@ -53,6 +59,11 @@ use yii\bootstrap\Nav;
         $("#two_teams_strict").click(
             function() {
                 getMatchesStrict(hoster.val(),guester.val());
+                $("#teams_data").hide();
+                $("#bets").show();
+                $('body').animate({
+                    scrollTop: 460
+                }, 400);
             }
         );
 
@@ -332,6 +343,15 @@ use yii\bootstrap\Nav;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     }
 
+    .table > tbody > tr > td {
+        background-color: rgb(18, 82, 50);
+        color: white;
+        text-align: center;
+    }
+    .table {
+        border-radius: 5px;
+    }
+
     @media (min-width: 1200px)
         .container {
             max-width: 720px;
@@ -389,8 +409,7 @@ use yii\bootstrap\Nav;
                     </p>
                 </div>
             </form>
-            <div id="teams_data">
-            </div>
+
             <form class="form-inline" role="form">
                 <div class="form-group">
                     <h3>Статистика футбольных матчей</h3>
@@ -403,13 +422,14 @@ use yii\bootstrap\Nav;
                         </p>
                 </div>
             </form>
-            <div id="bets">
 
-            </div>
 
         </div>
 
-
+        <div class="view" id="teams_data" style="display: none">
+        </div>
+        <div class="view" id="bets" style="display: none">
+        </div>
 
 
     <?php /*

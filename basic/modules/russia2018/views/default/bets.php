@@ -34,9 +34,9 @@
                 <td>+<?= $summary['vic'] ?> </td>
                 <td>=<?= $summary['nob'] ?></td>
                 <td>-<?= $summary['def'] ?></td>
-                <td><?= $summary['ball_h'] ?></td>
+                <td><?= $summary['sum_gett'] ?></td>
                 <td>:</td>
-                <td><?= $summary['ball_g'] ?></td>
+                <td><?= $summary['sum_lett'] ?></td>
             </tr>
 
         </tbody>

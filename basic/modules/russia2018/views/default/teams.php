@@ -1,11 +1,3 @@
-<style>
-    .table > tbody > tr > td {
-        background-color: rgb(240, 248, 255);
-    }
-    .table {
-        border-radius: 5px;
-    }
-</style>
 
 <table class="table">
     <tbody>
