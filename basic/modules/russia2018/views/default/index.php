@@ -19,6 +19,8 @@ use yii\bootstrap\Nav;
         var from = $("#w0");
         var to = $("#w1");
         var choices;
+        var log = $("#log");
+        var key = $("#key");
 
 
         var k = false;
@@ -66,6 +68,22 @@ use yii\bootstrap\Nav;
                 }, 400);
             }
         );
+
+        $("#progn").click(
+            function () {
+                $("#log-block").show();
+                $("#progn").hide();
+                $("#team").hide();
+                $("#match").hide();
+            }
+        );
+
+        $("#login").click(
+            function () {
+                login(log.val(),key.val());
+            }
+        );
+
 
 
         $("#statusMess").ajaxError(
@@ -157,6 +175,7 @@ use yii\bootstrap\Nav;
     });
 
 
+
     function sendMess(limit, host, bet, from, to) {
        
 
@@ -186,6 +205,19 @@ use yii\bootstrap\Nav;
         });
 
 
+    }
+
+    function login(login,key) {
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/login/",
+            data: "login="+login+"&pseudo="+key,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
     }
 
 
@@ -352,6 +384,10 @@ use yii\bootstrap\Nav;
         border-radius: 5px;
     }
 
+    #log-block{
+        display: none;
+    }
+
     @media (min-width: 1200px)
         .container {
             max-width: 720px;
@@ -365,9 +401,10 @@ use yii\bootstrap\Nav;
         </canvas>
 
 
-        <div class="jumbotron">
-            <h3>Матчи футбольной команды</h3>
-            <form class="form-inline" role="form">
+        <div class="jumbotron" >
+
+            <form class="form-inline" role="form" id="team">
+                <h3>Матчи футбольной команды</h3>
                 <?php /*
                 <div class="form-group">
 
@@ -410,7 +447,7 @@ use yii\bootstrap\Nav;
                 </div>
             </form>
 
-            <form class="form-inline" role="form">
+            <form class="form-inline" role="form" id="match">
                 <div class="form-group">
                     <h3>Статистика футбольных матчей</h3>
                     <p>
@@ -422,6 +459,16 @@ use yii\bootstrap\Nav;
                         </p>
                 </div>
             </form>
+            <p></p>
+            <h3>Сделай прогноз</h3>
+            <button type="button" class="btn btn-success" id="progn" >Вход</button>
+
+            <div id="log-block">
+                <input type="text" class="form-control" id="log"  placeholder="login">
+                <input type="text" class="form-control" id="key"  placeholder="Введи свой ключ">
+                <button type="button" class="btn btn-success" id="login" >Войти как пророк</button>
+                <p id="response"></p>
+            </div>
 
 
         </div>

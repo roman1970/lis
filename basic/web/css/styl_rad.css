@@ -1,0 +1,787 @@
+* {margin: 0; padding: 0;} /* обнуляем отступы - делаем контент по центру страницы */
+body{
+
+    background: #002211;
+
+}
+
+::-webkit-scrollbar{
+    width:3px;
+}
+
+
+#wrapper{
+    background: #002211;
+    margin: 0 auto;
+    width: 900px;
+    height: 1700px;
+}
+
+#head {
+    background: url(../images/tablo.png) 0 0 no-repeat;
+   /* background-repeat: no-repeat;*/
+   /* position: relative;*/
+    height: 600px;
+    width: 900px;
+}
+
+#top{
+    height: 30px;
+    /*background:url(img/images/top_01.jpg) no-repeat;*/
+}
+
+
+#logo {
+    position: absolute;
+    font-family: Times New Roman;
+    font-size: 30px;
+    text-shadow: black 0px 2px 0px;
+    color: white; 
+    left: 320px;
+    top: 0px;
+    letter-spacing: 2px;
+}
+
+#logo span {
+    color: #e0bd69;
+}
+
+#fam {
+    /*position: absolute;*/
+    font-family: Arial;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: black 0px 1px 0px;
+    color: #e0bd69;
+   /* left: 276px;
+    top: 62px;*/
+    letter-spacing: 5px;
+    padding-top: 80px;
+}
+
+#fam p {
+    padding-top: 15px;
+    margin: 0;
+}
+
+#fam span{
+    font-size: 10px;
+}
+
+#fam form{
+    vertical-align: baseline;
+}
+
+.view {
+    width: 97%;
+    max-width:900px;
+    margin: 1em auto;
+    padding: 1em;
+    /*border-radius: 10px;*/
+    /*background: rgb(16, 56, 10) radial-gradient(circle at 0 0, rgba(8, 21, 11, 0.65), rgba(6, 47, 7, 0.35));*/
+    box-shadow:
+    inset rgba(250,250,250,.9) -8px 8px 8px,
+    inset rgba(255,255,255,.9) 8px 3px 8px,
+    rgba(0,0,0,.8) 3px 3px 8px -3px;
+    background:
+    repeating-linear-gradient(
+            transparent,transparent 21px, rgb(100,100,100) 22px
+    ),
+    repeating-linear-gradient(
+            90deg,
+            transparent,transparent 21px, rgb(100,100,100) 22px
+    );
+}
+
+#tel{
+    position: relative;
+    font-family: Arial;
+    font-size: 18px;
+
+
+    left: 970px;
+    top:18px;
+}
+
+#online {
+    background: #07b6ef;
+    position: absolute;
+    font-family: Arial;
+    font-size: 10px;
+    height: 19px;
+    width: 114px;
+    left: 1042px;
+    top: 6px;
+    border-radius:10px;
+    color: white;
+    text-shadow: #048bcb 2px 2px 1px;  
+    /*vertical-align: bottom; вертикальное выравнивание не понадобилось - центр задали paddingом в #online p*/
+
+
+
+}
+
+#online p{
+    padding-top: 2px;
+    text-align: center;
+
+}
+
+#ptic{
+    position: absolute;
+    left: 1035px;
+    top: 4px;
+}
+
+#flag{
+    position: absolute;
+    left: 1187px;
+    top: 8px;
+    color: white;
+    font-size: 8px;
+    font-family: Arial;
+
+}
+
+#stick{
+    position: absolute;
+    left: 1170px;
+    top: 4px;
+    color: #07b6ef;
+}
+
+
+#strel {
+    position: absolute;
+    left: 1258px;
+    top: 10px;
+}
+
+#lang p{
+    position: absolute;
+    left: 1210px;
+    color: white;
+    font-size: 12px;
+    font-family: Arial;
+    top: 7px;
+}
+
+#cont {
+
+    position: relative;
+
+    height: 1128px;
+    width: 1499px;
+}
+
+#menu {
+    /*background:url(img/images/menu.jpg) no-repeat;*/
+    height: 50px;
+    width: 1027px;
+    position: absolute;
+    left: 240px;
+    top: 0px;
+
+}
+
+#menu ul{
+    position: absolute;
+    left: 80px;
+    top: 12px;
+
+}
+
+#menu ul li {
+    display: inline;
+    font-size: 18px;
+  
+    padding-left: 28px;
+
+    margin:0px;
+    color: white;
+    font-family:  Impact;
+
+
+}
+
+#menu ul li a{
+     text-decoration: none;
+      color: white;
+}
+
+#practice{
+    position: absolute;
+   /* background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 250px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 40px;
+    font-size: 13px;
+    color: white;
+
+}
+
+#practice p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#practice ul{
+    padding-left: 28px;
+    padding-top: 36px;
+
+}
+
+
+#practice ul li{
+    font-size: 13px;
+    font-family: Arial;
+    color: #a7ecfc;
+    list-style-type: none;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    width: 230px;
+    margin:0px;
+    text-shadow: #4c7a89 0px 0px 1px;
+
+    border-bottom: 1px dotted #009900;
+
+}
+#practice ul li span{
+    position: absolute;
+    left: 16px;
+}
+
+#ques{
+    position: absolute;
+   /* background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 224px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 270px;
+    font-size: 13px;
+    color: white;
+}
+
+#ques p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#ques form{
+
+    padding-left: 28px;
+    padding-top: 60px;
+    font-family: Arial;
+
+}
+
+#ques form a{
+    color: #aaeaff;
+}
+
+.aer{
+
+    height: 20px;
+    /*width: 245px;*/
+    margin-bottom:  2px;
+    padding-left: 4px;
+    background-color: rgba(131, 131, 131, 0.85);
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 1px;
+
+}
+
+.prim{
+    text-align: center;
+    font-size: 12px;
+    color: #00c077;
+}
+
+#planet{
+    filter: alpha(Opacity=25);
+    opacity: 0.25;
+    position: absolute;
+    left: 55%;
+    top: 10px;
+    border-radius:50%
+}
+
+#ques .mes{
+
+    height: 60px;
+    width: 249px;
+    margin-bottom:  4px;
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: grey 0px 0px 1px;
+
+}
+
+#ques textarea{
+    font-family: Arial;
+    font-size: 13px;
+
+
+    width: 250px;
+}
+
+.button{
+    background: #5d5d5d;
+    border: 2px solid #006600;
+    height: 20px;
+    width: 20px;
+    margin-top: 15px;
+    color: #8fc4d6;
+    border-radius: 5px 5px 5px 5px;
+    cursor: pointer;
+    /*margin-left: 20px;*/
+   /* vertical-align: baseline;*/
+    /*padding-bottom: 2px;*/
+    font-size: 18px;
+}
+
+
+.tele{
+    position: absolute;
+   /* background:url(img/images/sh_03_mir.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 300px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 310px;
+    font-size: 13px;
+    color: white;
+}
+
+.tele p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+.tele form, #proud form{
+
+    padding-left: 20px;
+    padding-top: 60px;
+    font-family: Arial;
+
+}
+
+.tele form a, #proud form a{
+    color: #aaeaff;
+    background-color:  #45616c;
+}
+
+.tele .aer{
+
+
+    height: 20px;
+    width: 200px;
+    margin-bottom:  2px;
+
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 2px;
+    border-radius: 5px 5px 5px 5px;
+
+}
+
+.tele span{
+
+    color: #a7ecfc;
+
+}
+
+
+select {
+    background-color:  #45616c;
+
+}
+
+
+.tele table .left {
+    text-align: right;
+    color: #a7ecfc;
+    text-shadow: gray 0px 0px 2px;
+    padding-right: 3px;
+}
+
+#testimon{
+      position: absolute;
+   /* background:url(img/images/sh_03_mir.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 224px;
+    width: 269px;
+
+    left: 240px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+    top: 728px;
+    font-size: 13px;
+    color: white;
+}
+
+#testimon p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#testimon #con {
+    left: 15px;
+  position: absolute;
+   top: 50px;
+    height: 125px;
+    width: 250px;
+    margin-bottom:  2px;
+    font-family: Arial;
+    background-color:  #45616c;
+    border: none;
+    color: white;
+    text-shadow: gray 0px 0px 2px;
+    padding: 5px;
+}
+
+#testimon .button{
+    margin-left: 200px;
+    margin-top: 195px;
+}
+
+#proud{
+      position: absolute;
+  /*  background:url(img/images/sh_03.jpg) no-repeat;*/
+    background-color: #031d2a;
+    height: 225px;
+    width: 269px;
+    left: 1250px;
+    top: 40px;
+    border: 1px #006600 solid;
+    border-radius: 10px 0 10px 0;
+
+    font-size: 13px;
+    color: white;
+}
+
+#proud p{
+    position: absolute;
+    font-size: 18px;
+    color: white;
+    left: 18px;
+    top:   8px;
+    letter-spacing: 2px;
+}
+
+#proud table{
+     left: 15px;
+  position: absolute;
+   top: 50px;
+    height: 125px;
+     font-family: Arial;
+     vertical-align: text-top;
+}
+
+
+#proud table tr td .left{
+    height: 20px;
+    text-align: left;
+   
+}
+
+#footer{
+     position: absolute;
+  /*   background:url(img/images/sh_03.jpg) no-repeat, url(img/images/sh_03_pic.jpg) repeat-x ;*/
+   
+    background-color: #031d2a;
+     height: 225px;
+    width: 1025px;
+    top: 1230px;
+     left: 240px;
+       border: 1px #164b59 solid;
+    border-radius: 10px 0 10px 0;
+}
+
+
+#stat{
+    position: absolute;
+   
+    background-color: black;
+    height: 210px;
+    width: 720px;
+
+    left: 540px;
+    border: 1px #006600 solid;
+   
+    top: 40px;
+}
+
+#base{
+    /* position: absolute;*/
+   /*top: 40px;*/
+   /* background: url(img/images/pole.jpg) no-repeat;*/
+   /* width: 830px;*/
+    /* left: 530px; */
+    /*border-radius: 10px;*/
+    /* border: 1px #006600 solid; */
+   /* padding-left: 90px;
+   /* height: 1161px;*/
+    /*left: 530px;*/
+    /*border: 1px #006600 solid;*/
+   /* color: #a7ecfc;
+    font-size: 30px;
+    overflow: auto;*/
+    
+}
+
+#base input{
+    width: 50%;
+}
+
+.gr_tur  {
+    float: left;
+    padding-left: 5px;
+}
+
+.gr_tur td{
+    width: 20px;
+    height: 15px;
+    font-size: 10px;
+    font-family: Arial;
+    border: 1px #009900 solid;
+}
+
+
+
+#emb img{
+    padding-top: 10px;
+    margin: 6px;
+}
+
+
+#match_date {
+    color:#009900;
+    font-size: 15px;
+    float: right;
+    padding-top: 3px;
+    margin: 0;
+    padding-right: 10px;
+}
+
+#match_tour{
+    color:#009900;
+    font-size: 18px;
+    margin: 0;
+    padding-left: 10px;
+
+}
+
+#match_tour:hover{
+    cursor: pointer;
+    color: #879971;
+}
+
+#mems_match {
+    color:#e0bd69;
+    font-size: 18px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+#bet {
+    width: 750px;
+    margin-left: 70px;
+}
+
+.left_bet_cyph{
+
+    text-align: right;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+}
+
+.center_bet_cyph{
+    text-align: center;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+
+}
+
+.right_bet_cyph{
+    text-align: left;
+    width: 250px;
+    color: #0088e4;
+    font-size: 30px;
+
+}
+
+.left_bet{
+
+    text-align: right;
+    width: 250px;
+    color: #0088e4;
+
+}
+
+.center_bet{
+    text-align: center;
+    width: 250px;
+    color: #0088e4;
+
+
+}
+
+.right_bet{
+    text-align: left;
+    width: 250px;
+    color: #0088e4;
+
+}
+
+
+#ud{
+    color: #7db0e0;
+    font-size: 15px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+#coach{
+    color: #24e08d;
+    font-size: 15px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+#falls{
+    color: #e05d1d;
+    font-size: 15px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+
+#stavki{
+    color: #e0c400;
+    font-size: 15px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+.left{
+
+    text-align: right;
+    width: 300px;
+    padding-left: 20px;
+}
+
+.center{
+    text-align: center;
+    width: 100px;
+
+
+}
+
+.right{
+    text-align: left;
+    width: 300px;
+    padding-right: 20px;
+
+
+}
+
+#teams_data{
+    width: 100%;
+}
+
+#mems_goal {
+    color:#BCE774;
+    font-size: 14px;
+
+    margin: 0;
+    /*width: 700px;*/
+    table-layout: fixed;
+}
+
+#mems_goal p{
+    text-align: center;
+}
+
+
+
+#strtabl{
+    color:#e0bd69;
+    font-size: 15px;
+
+    margin: 0;
+    width: 700px;
+    table-layout: fixed;
+}
+
+.mes{
+    text-align: right;
+    width: 10px;
+}
+
+.team{
+    text-align: left;
+    width: 200px;
+}
+
+.country{
+    text-align: left;
+    width: 200px;
+}
+
+.plays{
+
+}
+
+.zab{
+    text-align: right;
+    width: 20px;
+}
+
+.prop{
+    text-align: left;
+    width: 20px;
+}

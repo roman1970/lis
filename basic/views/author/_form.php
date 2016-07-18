@@ -27,6 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'status')->dropDownList([0, 1, 2])->label('0 - неопубликованно, 1 - музыка, 2 - книга');  ?>
 
+            <?= $form->field($model, 'country_id')->dropDownList(ArrayHelper::map(\app\models\Country::find()->all(),'id','name'),
+                ['prompt' => 'Выбрать страну'])  ?>
+
             <div class="form-group">
                 <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Обновить', ['class' => 'btn btn-primary', 'name' => 'create-button']) ?>
             </div>

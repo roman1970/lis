@@ -5,6 +5,8 @@ namespace app\modules\russia2018\controllers;
 use app\components\FrontEndController;
 use app\models\Matches;
 use app\models\Team;
+use app\models\Totpredict;
+use app\models\Totuser;
 use app\modules\russia2018\models\Strategy;
 use app\modules\russia2018\models;
 use Yii;
@@ -599,7 +601,6 @@ class DefaultController extends FrontEndController
         ]);
 
 
-
     }
 
     /**
@@ -673,6 +674,41 @@ class DefaultController extends FrontEndController
         }
 
         return  json_encode($res);
+    }
+
+    public function actionLogin(){
+
+        if(Yii::$app->getRequest()->getQueryParam('login') && Yii::$app->getRequest()->getQueryParam('pseudo')) {
+            $name = Yii::$app->getRequest()->getQueryParam('login');
+            $pseudo = Yii::$app->getRequest()->getQueryParam('pseudo');
+
+            $user = Totuser::find()
+                ->where("name like('%" . $name . "') and pseudo like('" . $pseudo . "')")
+                ->one();
+            if($user) {
+
+                //if($this->userIfUserLegal(md5($user->id))){
+                    //echo $user->id; exit;
+
+                    $predicted = Totpredict::find()->where(['user_id' => $user->id])
+                        ->limit(20)
+                        ->orderBy('id DESC')
+                        ->all();
+                    //var_dump($predicted); exit;
+
+
+                    return $this->renderPartial('prognose', ['user' => $user->id, 'predicted' => $predicted]);
+
+                //}
+                //else 'ji';
+            }
+            else echo 'false';
+
+        }
+
+        else echo 'ошибка';
+
+
     }
 
     public function betsGenerate($matches) {
@@ -814,6 +850,27 @@ class DefaultController extends FrontEndController
         $time = mktime(0, 0, 0, $month, $day, $year);
         $newDay = date('Y-m-d', $time);
         return $newDay;
+
+    }
+
+    private function userIfUserLegal($cuser){
+
+        $max_id = Totuser::find()
+            ->select('MAX(id)')
+            ->scalar();
+
+        $i = 0;
+        while ($i <= $max_id) {
+            $i++;
+            if ($user = Totuser::findOne($i)) {
+                if (md5($user->id) == $cuser) {
+                    $this->current_user = $user;
+                    return true;
+                }
+            }
+        }
+
+        return false;
 
     }
 

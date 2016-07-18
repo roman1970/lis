@@ -35,6 +35,7 @@ class AuthorController extends BackEndController
         if ($model->load(Yii::$app->request->post())) {
             $model->name = Yii::$app->request->post('Author')['name'];
             $model->status = Yii::$app->request->post('Author')['status'];
+            $model->country_id = Yii::$app->request->post('Author')['country_id'];
 
             $model->save(false);
 

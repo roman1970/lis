@@ -30,12 +30,11 @@ Russia2018Asset::register($this);
 
     <body>
        
-    
     <?php $this->beginBody() ?>
     <?= $content ?>
 
 
     <?php $this->endBody() ?>
-        </body>
+    </body>
 </html>
 <?php $this->endPage() ?>
