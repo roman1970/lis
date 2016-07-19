@@ -27,7 +27,7 @@
         $arr['ball_g'] = 0;
   */
 ?>
-    <table class="table table-striped">
+    <table class="table">
         <tbody>
             <tr>
                 <td><?= $summary['count'] ?> </td>

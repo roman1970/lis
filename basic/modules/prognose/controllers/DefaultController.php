@@ -2,6 +2,7 @@
 
 namespace app\modules\prognose\controllers;
 
+use app\components\BetChempionWidget;
 use app\components\FrontEndController;
 use app\models\Matches;
 use app\models\Totmatch;
@@ -159,6 +160,7 @@ class DefaultController extends FrontEndController
                ->orderBy('id DESC')
                ->all();
             //var_dump($predicted); exit;
+            //echo BetChempionWidget::widget(1); exit;
 
 
             return $this->render('stat', ['user' => $this->current_user, 'predicted' => $predicted]);

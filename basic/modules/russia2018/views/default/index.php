@@ -57,6 +57,13 @@ use yii\bootstrap\Nav;
                 getMatches(hoster.val(),guester.val());
             }
         );
+        
+        $("#doit").click(
+            function () {
+                //alert(log.val());
+                doPrognose(log.val(),key.val());
+            }
+        );
 
         $("#two_teams_strict").click(
             function() {
@@ -75,12 +82,16 @@ use yii\bootstrap\Nav;
                 $("#progn").hide();
                 $("#team").hide();
                 $("#match").hide();
+                $("#bets").hide();
+
             }
         );
 
         $("#login").click(
             function () {
                 login(log.val(),key.val());
+                $("#log-block").hide();
+                $("#prognose-block").show();
             }
         );
 
@@ -208,6 +219,14 @@ use yii\bootstrap\Nav;
     }
 
     function login(login,key) {
+        if(login === "") {
+            alert("Введите свой логин");
+            return false;
+        }
+        if(key === "") {
+            alert("КЛЮЧ!!!???");
+            return false;
+        }
 
         $.ajax({
             type: "GET",
@@ -285,6 +304,19 @@ use yii\bootstrap\Nav;
 
         });
 
+    }
+    
+    function doPrognose(login, key) {
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/prognose/",
+            data: "login="+login+"&pseudo="+key,
+            success: function(html){
+                $("#base").html(html);
+
+            }
+
+        });
     }
 
 
@@ -376,7 +408,7 @@ use yii\bootstrap\Nav;
     }
 
     .table > tbody > tr > td {
-        background-color: rgb(18, 82, 50);
+        /*background-color: rgb(18, 82, 50);*/
         color: white;
         text-align: center;
     }
@@ -386,6 +418,10 @@ use yii\bootstrap\Nav;
 
     #log-block{
         display: none;
+    }
+
+    p{
+        color: white;
     }
 
     @media (min-width: 1200px)
@@ -460,14 +496,22 @@ use yii\bootstrap\Nav;
                 </div>
             </form>
             <p></p>
-            <h3>Сделай прогноз</h3>
-            <button type="button" class="btn btn-success" id="progn" >Вход</button>
+            
+            <button type="button" class="btn btn-success" id="progn" >Сделай прогноз</button>
 
             <div id="log-block">
+                <h3>Заполните форму</h3>
                 <input type="text" class="form-control" id="log"  placeholder="login">
                 <input type="text" class="form-control" id="key"  placeholder="Введи свой ключ">
-                <button type="button" class="btn btn-success" id="login" >Войти как пророк</button>
+                <button type="button" class="btn btn-success" id="login" >Войти прогнозистом</button>
+                <button type="button" class="btn btn-success" id="registration" >Зарегистрироваться</button>
                 <p id="response"></p>
+            </div>
+            
+            <div id="prognose-block" style="display: none">
+                <h3>Сделай прогноз</h3>
+
+                <button type="button" class="btn btn-success" id="doit" >Прогнозировать</button>
             </div>
 
 

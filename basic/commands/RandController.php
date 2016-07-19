@@ -28,9 +28,12 @@ class RandController extends Controller
                 echo ' - ' . $match[1] . "\r\n";
     }
 
+    /**
+     * Случайная дата Словарных
+     */
     public function actionRandDataAnaPageForDiary(){
 
-        echo date("Y-m-d", mt_rand(mktime(0,0,0,0,0,2009), time()))."\r\n";
+        echo date("Y-m-d", mt_rand(mktime(0,0,0,0,0,1999), time()))."\r\n";
     }
 
     public function actionRandDataAnaPageForDiaryPage($max){

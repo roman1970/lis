@@ -2,14 +2,17 @@
 
 namespace app\modules\russia2018\controllers;
 
+use app\components\BetChempionWidget;
 use app\components\FrontEndController;
 use app\models\Matches;
 use app\models\Team;
+use app\models\Totmatch;
 use app\models\Totpredict;
 use app\models\Totuser;
 use app\modules\russia2018\models\Strategy;
 use app\modules\russia2018\models;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class DefaultController extends FrontEndController
 {
@@ -697,16 +700,65 @@ class DefaultController extends FrontEndController
                     //var_dump($predicted); exit;
 
 
-                    return $this->renderPartial('prognose', ['user' => $user->id, 'predicted' => $predicted]);
+                    return $this->renderPartial('prognose', ['user' => $user, 'predicted' => $predicted]);
 
                 //}
                 //else 'ji';
             }
-            else echo 'false';
+            else echo '<div class="view" style="color: white; text-align: center" ><h3>Нет такого пользователя! Зарегистрируйтесь!</h3>
+                    <button type="button" class="btn btn-success" id="registration" >Зарегистрироваться</button></div> ';
 
         }
 
         else echo 'ошибка';
+
+
+    }
+
+    /**
+     * Прогноз
+     * @return string
+     */
+    public function actionPrognose(){
+
+        if(Yii::$app->getRequest()->getQueryParam('login') && Yii::$app->getRequest()->getQueryParam('pseudo')) {
+            $name = Yii::$app->getRequest()->getQueryParam('login');
+            $pseudo = Yii::$app->getRequest()->getQueryParam('pseudo');
+
+            $user = Totuser::find()
+                ->where("name like('%" . $name . "') and pseudo like('" . $pseudo . "')")
+                ->one();
+
+            if ($user) {
+
+
+                $now_id = 1;
+
+                $users_predicted_matches = implode(',', ArrayHelper::map(Totpredict::find()->where(['user_id' => $user->id])->all(), 'id', 'match_id'));
+
+                $all = Totmatch::find()->all();
+                foreach ($all as $one) {
+
+                    if (Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) + 36000 <= time()) {
+                        $now_id = $one->id;
+                    }
+                }
+
+
+                if ($users_predicted_matches)
+                    $match_list = Totmatch::find()
+                        ->where("id NOT IN (" . $users_predicted_matches . ") AND id > " . $now_id)
+                        ->all();
+                else $match_list = Totmatch::find()
+                    ->where("id > " . $now_id)
+                    ->all();
+
+                return $this->render('group', ['user' => $user, 'match_list' => $match_list]);
+            }
+
+            echo 'no';
+        }
+
 
 
     }
