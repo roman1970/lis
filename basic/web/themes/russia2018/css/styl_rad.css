@@ -562,7 +562,7 @@ select {
 }
 
 #base input{
-    width: 50%;
+    width: 80%;
 }
 
 .gr_tur  {
@@ -763,8 +763,9 @@ select {
 }
 
 .team{
-    text-align: left;
-    width: 200px;
+    text-align: center;
+    height: 60px;
+    overflow: auto;
 }
 
 .country{

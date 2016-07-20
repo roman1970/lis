@@ -740,18 +740,22 @@ class DefaultController extends FrontEndController
                 foreach ($all as $one) {
 
                     if (Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) + 36000 <= time()) {
-                        $now_id = $one->id;
+                        $now_id = Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]);
+
                     }
                 }
+                $tomorrow = date('d.m.Y',time()+(24*3600));
 
 
                 if ($users_predicted_matches)
                     $match_list = Totmatch::find()
-                        ->where("id NOT IN (" . $users_predicted_matches . ") AND id > " . $now_id)
+                        ->where("id NOT IN (" . $users_predicted_matches . ") AND date like '" . $tomorrow . "%'")
                         ->all();
                 else $match_list = Totmatch::find()
-                    ->where("id > " . $now_id)
+                    ->where("date like '" . $tomorrow . "%'")
                     ->all();
+
+                //var_dump($match_list); exit;
 
                 return $this->render('group', ['user' => $user, 'match_list' => $match_list]);
             }
@@ -760,6 +764,38 @@ class DefaultController extends FrontEndController
         }
 
 
+    }
+
+    public function actionMakep(){
+        
+
+        if(!Totpredict::find()->where(['user_id' => 6, 'match_id' => Yii::$app->getRequest()->getQueryParam('match') ])->one() &&
+            Yii::$app->getRequest()->getQueryParam('match') !== null) {
+            $pred_comp = new Totpredict();
+            $pred_comp->match_id = Yii::$app->getRequest()->getQueryParam('match');
+            $pred_comp->user_id = 6;
+            $pred_comp->host_g = mt_rand(0,3);
+            $pred_comp->guest_g = mt_rand(0,3);
+            $pred_comp->save(false);
+
+        }
+
+        if(Yii::$app->getRequest()->getQueryParam('host_g') !== null && Yii::$app->getRequest()->getQueryParam('guest_g') !== null) {
+
+            $predict = new Totpredict();
+
+            $predict->guest_g = Yii::$app->getRequest()->getQueryParam('guest_g');
+            $predict->host_g = Yii::$app->getRequest()->getQueryParam('host_g');
+            $predict->user_id = Yii::$app->getRequest()->getQueryParam('user');
+            $predict->match_id = Yii::$app->getRequest()->getQueryParam('match');
+
+            if($predict->save()) return "<span style='color:green'>Прогноз сохранен</span>";
+            else return "<span style='color:red'>Ошибка сохранения</span>";
+
+        }
+
+
+        return "Ошибка";
 
     }
 

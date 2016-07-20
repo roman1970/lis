@@ -32,6 +32,14 @@ use yii\bootstrap\Nav;
                 }
             }
         );
+
+        $("#reload").click(
+            function () {
+                location.reload();
+            }
+        );
+
+
         $("#send").click(
             function() {
                 sendMess(limit.val(), host.val(), bet.val(), from.val(), to.val());
@@ -62,6 +70,9 @@ use yii\bootstrap\Nav;
             function () {
                 //alert(log.val());
                 doPrognose(log.val(),key.val());
+                $("#prognose-block").hide();
+                $("#statistic").show();
+
             }
         );
 
@@ -83,6 +94,7 @@ use yii\bootstrap\Nav;
                 $("#team").hide();
                 $("#match").hide();
                 $("#bets").hide();
+                $("#button_reload").show();
 
             }
         );
@@ -95,6 +107,14 @@ use yii\bootstrap\Nav;
             }
         );
 
+        $("#show_stat").click(
+            function () {
+                login(log.val(),key.val());
+                $("#log-block").hide();
+                $("#show_stat").hide();
+                $("#prognose-block").show();
+            }
+        );
 
 
         $("#statusMess").ajaxError(
@@ -115,11 +135,11 @@ use yii\bootstrap\Nav;
 
         $("#country").click(
             function() {
-                $("#planet").animate({left: "+=700", top: "+=600"}, 10000);
+                $("#planet").animate({top: "+=600"}, 10000);
             });
         $("#host").click(
             function() {
-                $("#planet").animate({left: "-=700", top: "-=600"}, 10000);
+                $("#planet").animate({top: "-=600"}, 10000);
             });
         $("#hoster").click(
             function() {
@@ -505,6 +525,7 @@ use yii\bootstrap\Nav;
                 <input type="text" class="form-control" id="key"  placeholder="Введи свой ключ">
                 <button type="button" class="btn btn-success" id="login" >Войти прогнозистом</button>
                 <button type="button" class="btn btn-success" id="registration" >Зарегистрироваться</button>
+
                 <p id="response"></p>
             </div>
             
@@ -512,6 +533,14 @@ use yii\bootstrap\Nav;
                 <h3>Сделай прогноз</h3>
 
                 <button type="button" class="btn btn-success" id="doit" >Прогнозировать</button>
+            </div>
+
+            <div id="statistic" style="display: none">
+                <button type="button" class="btn btn-success" id="show_stat" >Статистика</button>
+            </div>
+
+            <div id="button_reload" style="display: none">
+                <button type="button" class="btn btn-success" id="reload">Выйти из прогнозов</button>
             </div>
 
 

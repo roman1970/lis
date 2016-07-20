@@ -487,12 +487,17 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Генерируем матчи для прогнозов
+     */
     public function actionPrognosematch(){
         $content = file_get_contents('/home/romanych/my/Моё/матчи2.txt');
-        $cont = explode('[block]', $content);
-        $con = explode(PHP_EOL, $cont[1]);
-        //var_dump($con);
+        //$cont = explode('[block]', $content);
+        $con = explode(PHP_EOL, $content);
+        //var_dump($con); exit;
         $i = 0;
+        $this->tournament = '';
+        $chempionship = '';
 
         foreach ($con as $match){
 
@@ -500,12 +505,18 @@ class ParsersController extends Controller
             //var_dump($match_arr);
 
             $play = new Totmatch();
+
             if($i == 0) {
-                $this->tournament = $match;
+                $chempionship = $match;
             }
+
+            if(isset($match_arr[0]) && $match_arr[0] == "Тур") {
+                $this->tournament = $chempionship ." ". $match;
+            }
+
             else {
                 try {
-                    $play->date = $match_arr[0] . "2016 " . $match_arr[1];
+                    $play->date = $match_arr[0] . "2017 " . $match_arr[1];
                     $play->host = $this->backTeamString($match_arr[2]);
                     $play->guest = $this->backTeamString($match_arr[3]);
                     $play->tournament = $this->tournament;
@@ -519,8 +530,10 @@ class ParsersController extends Controller
             }
             $i++;
 
+            //echo $this->tournament;
+
         }
-        $this->tournament = '';
+
     }
 
     public function clearMatchString($content){
@@ -534,6 +547,13 @@ class ParsersController extends Controller
         $content = str_replace('Зенит 2', 'Зенит_2', $content);
         $content = str_replace('Динамо Москва', 'Динамо_Москва', $content);
         $content = str_replace('SKA Khabarovsk', 'SKA_Khabarovsk', $content);
+        $content = str_replace('Манчестер Юнайтед', 'Манчестер_Юнайтед', $content);
+        $content = str_replace('Кристал Пэлас', 'Кристал_Пэлас', $content);
+        $content = str_replace('Вест Бромвич', 'Вест_Бромвич', $content);
+        $content = str_replace('Манчестер Сити', 'Манчестер_Сити', $content);
+        $content = str_replace('Сток Сити', 'Сток_Сити', $content);
+        $content = str_replace('Халл Сити', 'Халл_Сити', $content);
+        $content = str_replace('Вест Хэм', 'Вест_Хэм', $content);
         return $content;
     }
 
@@ -544,6 +564,13 @@ class ParsersController extends Controller
         $content = str_replace('Зенит_2', 'Зенит 2', $content);
         $content = str_replace('Динамо_Москва', 'Динамо Москва', $content);
         $content = str_replace('SKA_Khabarovsk', 'SKA Khabarovsk', $content);
+        $content = str_replace('Манчестер_Юнайтед', 'Манчестер Юнайтед', $content);
+        $content = str_replace('Кристал_Пэлас', 'Кристал Пэлас', $content);
+        $content = str_replace('Вест_Бромвич', 'Вест Бромвич', $content);
+        $content = str_replace('Манчестер_Сити', 'Манчестер Сити', $content);
+        $content = str_replace('Сток_Сити', 'Сток Сити', $content);
+        $content = str_replace('Халл_Сити', 'Халл Сити', $content);
+        $content = str_replace('Вест_Хэм', 'Вест Хэм', $content);
         return $content;
     }
 

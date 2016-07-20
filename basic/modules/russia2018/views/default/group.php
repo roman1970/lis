@@ -12,12 +12,15 @@
         }
 
 
+
+
         var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
+       
 
             if(host_g && guest_g){
                 $.ajax({
                     type: "GET",
-                    url: "russia2018/default/match/",
+                    url: "russia2018/default/makep/",
                     data: "host_g="+host_g+"&guest_g="+guest_g+"&user="+user+"&match="+match,
                     success: function(res){
                         $("#prognose_"+i).hide();
@@ -29,7 +32,6 @@
         else alert("Введите счёт прогнозируемого матча!");
 
 
-
         return true;
 
 
@@ -39,18 +41,13 @@
 
 <style>
     .form-control{
-        width: auto;
-        display: inline;
-    }
-    .table > tbody > tr > td{
-        vertical-align: middle;
+        padding: 0;
+        height: 33px;
         text-align: center;
     }
-    .team {
-        font-size: 20px;
-    }
-    .form-group {
-        margin-bottom: 0;
+
+    table > tbody > tr > td{
+        padding: 0;
     }
 </style>
 
@@ -69,21 +66,23 @@
                     <?php foreach ($match_list as $match) :  ?>
 
                         <tr>
-                            <td><p class="team"><?= $match->date  ?></p></td>
-                            <td><p class="team"><?= $match->tournament ?></p></td>
-                            <td><p class="team"><?= $match->host ?></p>
+                            <td><p class="team"><?= $match->tournament ?><br><?= $match->date  ?> </p>
+                                <button class="btn btn-success" id="prognose_<?=$i ?>" onclick="prognos(<?=$match->id?>, <?=$i?>)" >Прогноз!</button>
+                                <p id="res_<?=$i?>"></p>
+
+                            </td>
+
+                            <td><p class="team">
+                                    <?= $match->host ?></p>
                                 <input type='text' class="form-control" id="host_g_<?=$i ?>" size="2" />
+
+
                             </td>
                             <td><p class="team"><?= $match->guest ?></p>
                                 <input type='text' class="form-control" id="guest_g_<?=$i ?>" size="2" />
                             </td>
 
 
-                            <td>
-                                <button class="btn btn-primary" id="prognose_<?=$i ?>" onclick="prognos(<?=$match->id?>, <?=$i?>)" >Прогноз!</button>
-                                <p id="res_<?=$i?>"></p>
-
-                            </td>
                         </tr>
 
                     <?php $i++; endforeach; ?>
