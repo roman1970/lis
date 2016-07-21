@@ -72,14 +72,13 @@
 
                             </td>
 
-                            <td><p class="team">
-                                    <?= $match->host ?></p>
-                                <input type='text' class="form-control" id="host_g_<?=$i ?>" size="2" />
+                            <td><p class="team"><?= substr($match->host, 0, 31) ?></p>
+                                <input type='text' class="form-control" id="host_g_<?=$i ?>"  />
 
 
                             </td>
                             <td><p class="team"><?= $match->guest ?></p>
-                                <input type='text' class="form-control" id="guest_g_<?=$i ?>" size="2" />
+                                <input type='text' class="form-control" id="guest_g_<?=$i ?>" />
                             </td>
 
 

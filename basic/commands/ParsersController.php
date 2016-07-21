@@ -554,6 +554,9 @@ class ParsersController extends Controller
         $content = str_replace('Сток Сити', 'Сток_Сити', $content);
         $content = str_replace('Халл Сити', 'Халл_Сити', $content);
         $content = str_replace('Вест Хэм', 'Вест_Хэм', $content);
+        $content = str_replace('Шахтер Донецк', 'Шахтер_Донецк', $content);
+        $content = str_replace('Сталь Днепродзержинск', 'Сталь_Днепродзержинск', $content);
+        $content = str_replace('Динамо Киев', 'Динамо_Киев', $content);
         return $content;
     }
 
@@ -571,6 +574,9 @@ class ParsersController extends Controller
         $content = str_replace('Сток_Сити', 'Сток Сити', $content);
         $content = str_replace('Халл_Сити', 'Халл Сити', $content);
         $content = str_replace('Вест_Хэм', 'Вест Хэм', $content);
+        $content = str_replace('Шахтер_Донецк', 'Шахтер Донецк', $content);
+        $content = str_replace('Сталь_Днепродзержинск', 'Сталь Днепродзержинск', $content);
+        $content = str_replace('Динамо_Киев', 'Динамо Киев', $content);
         return $content;
     }
 

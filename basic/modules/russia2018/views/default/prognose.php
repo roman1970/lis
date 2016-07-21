@@ -30,8 +30,14 @@
     .view{
         color: white;
     }
+    .hello{
+        font-size: 24px;
+        color: #96daff;
+        text-align: center;
+    }
 </style>
 <div class="view">
+    <p class="hello">Привет, <?=$user->name?> <?=$user->pseudo?>!</p>
     <?= \app\components\BetBalanceWidget::widget(['user_id' => (isset($user->id)) ? $user->id : 1]) ?>
 </div>
 <div class="view">

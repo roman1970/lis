@@ -731,12 +731,11 @@ class DefaultController extends FrontEndController
 
             if ($user) {
 
-
-                $now_id = 1;
+                //$now_id = 1;
 
                 $users_predicted_matches = implode(',', ArrayHelper::map(Totpredict::find()->where(['user_id' => $user->id])->all(), 'id', 'match_id'));
 
-                $all = Totmatch::find()->all();
+                /*$all = Totmatch::find()->all();
                 foreach ($all as $one) {
 
                     if (Totmatch::formatMatchDateToTime(explode(' ', $one->date)[0]) + 36000 <= time()) {
@@ -744,15 +743,16 @@ class DefaultController extends FrontEndController
 
                     }
                 }
+                */
                 $tomorrow = date('d.m.Y',time()+(24*3600));
-
+                $day_after_tomorrow = date('d.m.Y',time()+(2*24*3600));
 
                 if ($users_predicted_matches)
                     $match_list = Totmatch::find()
-                        ->where("id NOT IN (" . $users_predicted_matches . ") AND date like '" . $tomorrow . "%'")
+                        ->where("id NOT IN (" . $users_predicted_matches . ") AND (date like '" . $tomorrow . "%' OR date like '" . $day_after_tomorrow . "%')")
                         ->all();
                 else $match_list = Totmatch::find()
-                    ->where("date like '" . $tomorrow . "%'")
+                    ->where("date like '" . $tomorrow . "%' OR date like '" . $day_after_tomorrow . "%' ")
                     ->all();
 
                 //var_dump($match_list); exit;

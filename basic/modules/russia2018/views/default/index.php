@@ -515,7 +515,8 @@ use yii\bootstrap\Nav;
                         </p>
                 </div>
             </form>
-            <p></p>
+
+            <p><?= (isset($user)) ? "Привет, ".var_dump($user) : ""?></p>
             
             <button type="button" class="btn btn-success" id="progn" >Сделай прогноз</button>
 
