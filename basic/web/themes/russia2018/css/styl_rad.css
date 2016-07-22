@@ -717,7 +717,7 @@ select {
 .center{
     text-align: center;
     width: 100px;
-
+    padding: 5px;
 
 }
 
@@ -733,6 +733,12 @@ select {
     width: 100%;
 }
 
+.info{
+    font-size: 12px;
+    color: #cf4b25;
+    text-align: center;
+}
+
 #mems_goal {
     color:#BCE774;
     font-size: 14px;
@@ -746,7 +752,9 @@ select {
     text-align: center;
 }
 
-
+.substit{
+    color: #9E771D;
+}
 
 #strtabl{
     color:#e0bd69;

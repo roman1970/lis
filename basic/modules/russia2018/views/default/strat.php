@@ -24,14 +24,26 @@
         <?php if($match->prim) : ?>
             <p class="prim"><?=$match->prim ?></p>
         <?php endif; ?>
-        <table id="mems_goal" cellpadding="0" >
-            <tr>
-                <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?><?php echo $match->penMissH_str(); ?></td>
-                <td class="center"></td>
-                <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?><?php echo $match->penMissG_str(); ?></td>
+        <?php if($match->goul_h || $match->goul_g) : ?>
+            <table id="mems_goal" cellpadding="0" >
+                <tr>
+                    <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?><?php echo $match->penMissH_str(); ?></td>
+                    <td class="center"><span class="fa fa-futbol-o fa-2x"></span></td>
+                    <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?><?php echo $match->penMissG_str(); ?></td>
 
-            </tr>
-        </table>
+                </tr>
+            </table>
+        <?php endif; ?>
+        <?php if($match->substit_h || $match->substit_g) : ?>
+            <table class="substit" cellpadding="0" >
+                <tr>
+                    <td class="left"><?php $match->substitH_str(); ?></td>
+                    <td class="center"><span class="glyphicon glyphicon-resize-horizontal"></span></td>
+                    <td class="right"><?php $match->substitG_str(); ?></td>
+
+                </tr>
+            </table>
+        <?php endif; ?>
         <?php if($match->getCoachH() != '' || $match->getCoachG() != '') : ?>
 
             <table id="coach" cellpadding="0" >
@@ -103,6 +115,10 @@
         </table>
 
         <?php endif; ?>
+
+        <p class="info">
+            <?php $match->getInfo(); ?>
+        </p>
 
 
     </div>

@@ -151,6 +151,10 @@ class Matches extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Замены хозяев
+     * @return bool
+     */
     public function substitH_str()
     {
         if ($this->substit_h != '') {
@@ -159,7 +163,8 @@ class Matches extends \yii\db\ActiveRecord
             $exp_substit = explode(",", $this->substit_h, -1);
 
             foreach ( $exp_substit as $value) {
-                echo  $value . "(замена)<br />";
+                $value = str_replace('.', '. ', $value);
+                echo  $value . "<br>--------<br>";
             }
         }
 
@@ -168,6 +173,10 @@ class Matches extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Замены гостей
+     * @return bool
+     */
     public function substitG_str()
     {
         if ($this->substit_g != '') {
@@ -175,7 +184,8 @@ class Matches extends \yii\db\ActiveRecord
             $exp_substit = explode(",", $this->substit_g, -1);
 
             foreach ($exp_substit as $value) {
-                echo  $value . "(замена)<br />";
+                $value = str_replace('.', '. ', $value);
+                echo  $value . "<br>--------<br>";
             }
         }
 
@@ -184,6 +194,10 @@ class Matches extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Нереализованный пенальти хозяев
+     * @return bool
+     */
     public function penMissH_str()
     {
         if ($this->pen_miss_h != '') {
@@ -192,7 +206,7 @@ class Matches extends \yii\db\ActiveRecord
             $exp_penmiss = explode(",", $this->pen_miss_h, -1);
 
             foreach ( $exp_penmiss as $value) {
-                echo $value . "<br />";
+                echo $value . "<br>";
             }
         }
 
@@ -201,6 +215,10 @@ class Matches extends \yii\db\ActiveRecord
 
     }
 
+    /**
+     * Нереализованные пенальти гостей
+     * @return bool
+     */
     public function penMissG_str()
     {
         if ($this->pen_miss_g != '') {
@@ -257,6 +275,20 @@ class Matches extends \yii\db\ActiveRecord
         }
         else echo '?';
 
+    }
+
+    /**
+     * Информация о матче
+     */
+    public function getInfo(){
+        if($this->info != ''){
+            $res = $this->info;
+            $res = str_replace('Стадион:', '<br>Стадион:', $res);
+            $res = str_replace('Судья:', '<br>Судья:', $res);
+            $res = str_replace('Посещаемость:', '<br>Посещаемость:', $res);
+            echo $res;
+        }
+        else echo '';
     }
 
     /**

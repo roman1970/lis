@@ -24,7 +24,8 @@ Russia2018Asset::register($this);
 
 
         <link href="css/flags.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+       
         <?php $this->head() ?>
     </head>
 
