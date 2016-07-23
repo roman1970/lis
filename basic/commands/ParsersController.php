@@ -624,10 +624,14 @@ class ParsersController extends Controller
     /**
      * С Мейла парсим тв программу
      */
-    public function actionYTvProgramm(){
-
-        $url = "https://tv.mail.ru/novosibirsk/sport/";
-
+    public function actionYTvProgramm($general = 0){
+        
+        if($general) {
+            $url = "https://tv.mail.ru/novosibirsk/general/";
+        }
+        else {
+            $url = "https://tv.mail.ru/novosibirsk/sport/";
+        }
 
         $content = $this->get_page($url);
 

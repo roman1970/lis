@@ -691,9 +691,19 @@ use yii\bootstrap\Nav;
                         <?php if($match->goul_h || $match->goul_g) : ?>
                         <table id="mems_goal" cellpadding="0" >
                             <tr>
-                                <td class="left"><?php echo $match->goalH_str(); ?><?php echo $match->redCardH_str(); ?><?php echo $match->penMissH_str(); ?></td>
+                                <td class="left"><?php echo $match->goalH_str(); ?>
+
+                                    <?php echo $match->redCardH_str(); ?>
+
+                                    <?php echo $match->penMissH_str(); ?>
+                                </td>
                                 <td class="center"><span class="fa fa-futbol-o fa-2x"></span></td>
-                                <td class="right"><?php echo $match->goalG_str(); ?><?php echo $match->redCardG_str(); ?><?php echo $match->penMissG_str(); ?></td>
+                                <td class="right"><?php echo $match->goalG_str(); ?>
+
+                                    <?php echo $match->redCardG_str(); ?>
+
+                                    <?php echo $match->penMissG_str(); ?>
+                                </td>
 
                             </tr>
                         </table>

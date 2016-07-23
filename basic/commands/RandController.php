@@ -34,6 +34,7 @@ class RandController extends Controller
     public function actionRandDataAnaPageForDiary(){
 
         echo date("Y-m-d", mt_rand(mktime(0,0,0,0,0,1999), time()))."\r\n";
+        echo date("Y-m-d", mt_rand(mktime(0,0,0,0,0,2013), time()))."\r\n";
     }
 
     public function actionRandDataAnaPageForDiaryPage($max){
