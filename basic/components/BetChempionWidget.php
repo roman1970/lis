@@ -2,6 +2,7 @@
 namespace app\components;
 
 use app\models\Totpredict;
+use app\models\Totuser;
 use yii\base\Widget;
 use yii\helpers\Url;
 
@@ -17,13 +18,14 @@ class BetChempionWidget extends Widget
     {
         parent::init();
         $this->user_sum = Totpredict::getUsersBalls();
-        $this->users_status = Totpredict::getUsersStatus();
+        $this->user_sum = Totuser::find()->orderBy('balance DESC')->all();
+        //$this->users_status = Totpredict::getUsersStatus();
 
     }
 
     public function run()
     {
-        return $this->render('usersum', ['user_sum' => $this->user_sum, 'users_status' => $this->users_status,
+        return $this->render('usersum', ['user_sum' => $this->user_sum,
             'user_id' => $this->user_id
             ]);
     }

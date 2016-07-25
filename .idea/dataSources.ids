@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component name="dataSourceStorage">
   <data-source name="MySQL - plis@localhost" uuid="4d6ed56c-e134-4b1b-8376-01b0a74f0d7e">
-    <database-info product="MySQL" version="5.5.49-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+    <database-info product="MySQL" version="5.5.50-0ubuntu0.14.04.1" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
       <extra-name-characters>#@</extra-name-characters>
       <identifier-quote-string>`</identifier-quote-string>
     </database-info>
@@ -5655,341 +5655,357 @@ type</columns>
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <key id="1495" parent="93" name="PRIMARY">
+      <column id="1495" parent="93" name="balance">
+        <data-type>decimal(10,4)</data-type>
+        <default-expression>&apos;0.0000&apos;</default-expression>
+      </column>
+      <column id="1496" parent="93" name="precise">
+        <data-type>int(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="1497" parent="93" name="result">
+        <data-type>int(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="1498" parent="93" name="no_goal">
+        <data-type>int(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <key id="1499" parent="93" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1496" parent="94" name="id">
+      <column id="1500" parent="94" name="id">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1497" parent="94" name="value">
+      <column id="1501" parent="94" name="value">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1498" parent="95" name="id">
+      <column id="1502" parent="95" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1499" parent="95" name="username">
+      <column id="1503" parent="95" name="username">
         <mandatory>1</mandatory>
         <data-type>varchar(25)</data-type>
       </column>
-      <column id="1500" parent="95" name="email">
+      <column id="1504" parent="95" name="email">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1501" parent="95" name="password_hash">
+      <column id="1505" parent="95" name="password_hash">
         <mandatory>1</mandatory>
         <data-type>varchar(60)</data-type>
       </column>
-      <column id="1502" parent="95" name="auth_key">
+      <column id="1506" parent="95" name="auth_key">
         <mandatory>1</mandatory>
         <data-type>varchar(32)</data-type>
       </column>
-      <column id="1503" parent="95" name="confirmed_at">
+      <column id="1507" parent="95" name="confirmed_at">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1504" parent="95" name="unconfirmed_email">
+      <column id="1508" parent="95" name="unconfirmed_email">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1505" parent="95" name="blocked_at">
+      <column id="1509" parent="95" name="blocked_at">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1506" parent="95" name="registration_ip">
+      <column id="1510" parent="95" name="registration_ip">
         <data-type>varchar(45)</data-type>
       </column>
-      <column id="1507" parent="95" name="created_at">
+      <column id="1511" parent="95" name="created_at">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="1508" parent="95" name="updated_at">
+      <column id="1512" parent="95" name="updated_at">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="1509" parent="95" name="flags">
+      <column id="1513" parent="95" name="flags">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <index id="1510" parent="95" name="user_unique_email">
+      <index id="1514" parent="95" name="user_unique_email">
         <columns>email</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <index id="1511" parent="95" name="user_unique_username">
+      <index id="1515" parent="95" name="user_unique_username">
         <columns>username</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="1512" parent="95" name="PRIMARY">
+      <key id="1516" parent="95" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <key id="1513" parent="95" name="user_unique_email">
+      <key id="1517" parent="95" name="user_unique_email">
         <columns>email</columns>
         <underlying-index>user_unique_email</underlying-index>
       </key>
-      <key id="1514" parent="95" name="user_unique_username">
+      <key id="1518" parent="95" name="user_unique_username">
         <columns>username</columns>
         <underlying-index>user_unique_username</underlying-index>
       </key>
-      <column id="1515" parent="96" name="id">
+      <column id="1519" parent="96" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11) unsigned</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1516" parent="96" name="login">
+      <column id="1520" parent="96" name="login">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1517" parent="96" name="password">
+      <column id="1521" parent="96" name="password">
         <mandatory>1</mandatory>
         <data-type>varchar(32)</data-type>
       </column>
-      <column id="1518" parent="96" name="role">
+      <column id="1522" parent="96" name="role">
         <mandatory>1</mandatory>
         <data-type>enum(&apos;administrator&apos;, &apos;manager&apos;, &apos;moderator_comment&apos;, &apos;advert&apos;)</data-type>
         <default-expression>&apos;manager&apos;</default-expression>
       </column>
-      <index id="1519" parent="96" name="login">
+      <index id="1523" parent="96" name="login">
         <columns>login</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
       </index>
-      <key id="1520" parent="96" name="login">
+      <key id="1524" parent="96" name="login">
         <columns>login</columns>
         <underlying-index>login</underlying-index>
       </key>
-      <key id="1521" parent="96" name="PRIMARY">
+      <key id="1525" parent="96" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1522" parent="97" name="id_user">
+      <column id="1526" parent="97" name="id_user">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1523" parent="97" name="name_user">
+      <column id="1527" parent="97" name="name_user">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="1524" parent="97" name="PRIMARY">
+      <key id="1528" parent="97" name="PRIMARY">
         <columns>id_user</columns>
         <primary>1</primary>
       </key>
-      <column id="1525" parent="98" name="id">
+      <column id="1529" parent="98" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1526" parent="98" name="time">
+      <column id="1530" parent="98" name="time">
         <data-type>datetime</data-type>
       </column>
-      <column id="1527" parent="98" name="ip">
+      <column id="1531" parent="98" name="ip">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1528" parent="98" name="refer">
+      <column id="1532" parent="98" name="refer">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1529" parent="98" name="browser">
+      <column id="1533" parent="98" name="browser">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <key id="1530" parent="98" name="PRIMARY">
+      <key id="1534" parent="98" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1531" parent="99" name="id">
+      <column id="1535" parent="99" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1532" parent="99" name="chas">
+      <column id="1536" parent="99" name="chas">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1533" parent="99" name="date">
+      <column id="1537" parent="99" name="date">
         <data-type>datetime</data-type>
       </column>
-      <column id="1534" parent="99" name="atmdavlnaurst">
+      <column id="1538" parent="99" name="atmdavlnaurst">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1535" parent="99" name="temp">
+      <column id="1539" parent="99" name="temp">
         <mandatory>1</mandatory>
         <data-type>float</data-type>
       </column>
-      <column id="1536" parent="99" name="otnvlaz">
+      <column id="1540" parent="99" name="otnvlaz">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1537" parent="99" name="naprvetra">
+      <column id="1541" parent="99" name="naprvetra">
         <mandatory>1</mandatory>
         <data-type>varchar(8)</data-type>
       </column>
-      <column id="1538" parent="99" name="scorvetra">
+      <column id="1542" parent="99" name="scorvetra">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1539" parent="99" name="balobl">
+      <column id="1543" parent="99" name="balobl">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1540" parent="99" name="gorvid">
+      <column id="1544" parent="99" name="gorvid">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1541" parent="99" name="osad24">
+      <column id="1545" parent="99" name="osad24">
         <mandatory>1</mandatory>
         <data-type>float</data-type>
       </column>
-      <column id="1542" parent="99" name="osad12">
+      <column id="1546" parent="99" name="osad12">
         <mandatory>1</mandatory>
         <data-type>float</data-type>
       </column>
-      <column id="1543" parent="99" name="vyspok">
+      <column id="1547" parent="99" name="vyspok">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1544" parent="99" name="dd">
+      <column id="1548" parent="99" name="dd">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1545" parent="99" name="city_id">
+      <column id="1549" parent="99" name="city_id">
         <data-type>int(11)</data-type>
       </column>
-      <index id="1546" parent="99" name="ux_weather_city_id">
+      <index id="1550" parent="99" name="ux_weather_city_id">
         <columns>city_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1547" parent="99" name="PRIMARY">
+      <key id="1551" parent="99" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1548" parent="99" name="weather_ibfk_1">
+      <foreign-key id="1552" parent="99" name="weather_ibfk_1">
         <columns>city_id</columns>
         <ref-key>~.cities.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1549" parent="100" name="id">
+      <column id="1553" parent="100" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1550" parent="100" name="main">
+      <column id="1554" parent="100" name="main">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1551" parent="100" name="description">
+      <column id="1555" parent="100" name="description">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1552" parent="100" name="icon">
+      <column id="1556" parent="100" name="icon">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1553" parent="100" name="temp">
+      <column id="1557" parent="100" name="temp">
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <column id="1554" parent="100" name="temp_min">
+      <column id="1558" parent="100" name="temp_min">
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <column id="1555" parent="100" name="temp_max">
+      <column id="1559" parent="100" name="temp_max">
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <column id="1556" parent="100" name="pressure">
+      <column id="1560" parent="100" name="pressure">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1557" parent="100" name="humidity">
+      <column id="1561" parent="100" name="humidity">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1558" parent="100" name="visibility">
+      <column id="1562" parent="100" name="visibility">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1559" parent="100" name="wind_speed">
+      <column id="1563" parent="100" name="wind_speed">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1560" parent="100" name="wind_deg">
+      <column id="1564" parent="100" name="wind_deg">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1561" parent="100" name="sea_level">
+      <column id="1565" parent="100" name="sea_level">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1562" parent="100" name="rain_3h">
+      <column id="1566" parent="100" name="rain_3h">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1563" parent="100" name="grnd_level">
+      <column id="1567" parent="100" name="grnd_level">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1564" parent="100" name="clouds">
+      <column id="1568" parent="100" name="clouds">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1565" parent="100" name="time">
+      <column id="1569" parent="100" name="time">
         <mandatory>1</mandatory>
         <data-type>int(12)</data-type>
       </column>
-      <column id="1566" parent="100" name="sunrise">
+      <column id="1570" parent="100" name="sunrise">
         <mandatory>1</mandatory>
         <data-type>int(12)</data-type>
       </column>
-      <column id="1567" parent="100" name="sunset">
+      <column id="1571" parent="100" name="sunset">
         <mandatory>1</mandatory>
         <data-type>int(12)</data-type>
       </column>
-      <column id="1568" parent="100" name="res_code">
+      <column id="1572" parent="100" name="res_code">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1569" parent="100" name="city_id">
+      <column id="1573" parent="100" name="city_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1570" parent="100" name="ux_weathernew_city_id">
+      <index id="1574" parent="100" name="ux_weathernew_city_id">
         <columns>city_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1571" parent="100" name="PRIMARY">
+      <key id="1575" parent="100" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1572" parent="100" name="weathernew_ibfk_1">
+      <foreign-key id="1576" parent="100" name="weathernew_ibfk_1">
         <columns>city_id</columns>
         <ref-key>~.cities.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1573" parent="101" name="id">
+      <column id="1577" parent="101" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1574" parent="101" name="source_id">
+      <column id="1578" parent="101" name="source_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <index id="1575" parent="101" name="ux_played_source_id">
+      <index id="1579" parent="101" name="ux_played_source_id">
         <columns>source_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1576" parent="101" name="PRIMARY">
+      <key id="1580" parent="101" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1577" parent="101" name="played_ibfk_1">
+      <foreign-key id="1581" parent="101" name="played_ibfk_1">
         <columns>source_id</columns>
         <ref-key>~.sources.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>

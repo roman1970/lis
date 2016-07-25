@@ -113,8 +113,16 @@ class Totpredict extends \yii\db\ActiveRecord
         return $user_balls;
     }
 
-
+    /**
+     * Кешим в таблицу данные по каждому юзеру
+     * @return bool
+     * @throws \Exception
+     */
     public static function getUsersStatus(){
+        /*
+        $zero_object = new Totpredict();
+        $zero_object->cnt = 0;
+
         $users_status['bad'] = self::find()
             ->select(['user_id, status, COUNT(status) as cnt'])
             ->where(['status' => 1])
@@ -131,8 +139,45 @@ class Totpredict extends \yii\db\ActiveRecord
             ->where(['status' => 3])
             ->groupBy('user_id')
             ->all();
+        if(!isset($users_status['bad'])) $users_status['bad'] = $zero_object;
+        if(!isset($users_status['middle'])) $users_status['middle'] = $zero_object;
+        if(!isset($users_status['good'])) $users_status['good'] = $zero_object;
+        */
 
-        return $users_status;
+        $users = Totuser::find()->all();
+        
+        if(!$users) return false;
+
+        foreach ($users as $user){
+
+            $user->balance = self::find()
+                ->select(['SUM(bet_balance)'])
+                ->where(['user_id' => $user->id])
+                ->scalar();
+
+            $user->no_goal = self::find()
+                ->select(['COUNT(status) as cnt'])
+                ->where(['user_id' => $user->id, 'status' => 1])
+                ->scalar();
+
+
+            $user->result = self::find()
+                ->select(['COUNT(status) as cnt'])
+                ->where(['user_id' => $user->id, 'status' => 2])
+                ->scalar();
+
+
+            $user->precise = self::find()
+                ->select(['COUNT(status) as cnt'])
+                ->where(['user_id' => $user->id, 'status' => 3])
+                ->scalar();
+            $user->update();
+
+        }
+
+
+
+        return true;
     }
 
 
