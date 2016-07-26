@@ -30,7 +30,7 @@ KrokodileAsset::register($this);
 <div class="container">
     <header>
         <div class="logo">
-            <h1 class="main_title">КРОКОДИЛ ЕВГЕНА</h1>
+            <h1 class="main_title">ИНТЕРНЕТ-РАДИО "БАРДЫ СИБИРИ"</h1>
         </div>
         <p>Выпуск №1</p>
     </header>

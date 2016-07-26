@@ -1,15 +1,4 @@
-<script>
-    $(document).ready(function() {
 
-        var au = document.getElementById('au');
-        au.src = 'http://37.192.182.101:10088/ices';
-
-        au.onerror = function() {
-            window.location = '/krokodile/default/noradio/';
-        };
-
-    });
-</script>
 <div class="container">
 
     <div class="row row-offcanvas row-offcanvas-right">
@@ -19,10 +8,8 @@
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
             <div class="jumbotron">
-                <h1>Hello, world!</h1>
+                <h1>Трансляция скоро начнётся!</h1>
 
-                <audio id="au" autoplay >
-                </audio>
             </div>
             <div class="row">
                 <div class="col-6 col-sm-6 col-lg-4">
@@ -74,6 +61,5 @@
 
 </div>
 
-
 <?php
-echo "ok, Krok";
+echo 'jj';

@@ -13,7 +13,7 @@ class KrokodileAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web/themes/krokodile';
     public $css = [
-        'css/style.css',
+        'css53/style.css', //css css55 тоже ничего
 
     ];
     public $js = [

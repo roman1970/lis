@@ -486,7 +486,7 @@ use yii\bootstrap\Nav;
                         <input type="text" class="form-control" id="host"  placeholder="Название команды">
                          <?= \yii\jui\DatePicker::widget([
                             'name'  => 'from_date',
-                            'value'  => '2014-07-01',
+                            'value'  => '2016-07-01',
                             'dateFormat' => 'dd.MM.yyyy',
                             'options' => ['title' => 'Начало периода']
                             //'inline' => true,

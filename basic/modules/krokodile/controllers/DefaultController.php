@@ -33,6 +33,10 @@ class DefaultController extends FrontEndController
         return $this->render('index');
 
     }
+    
+    public function actionNoradio(){
+        return $this->render('noradio');
+    }
 
 
 }
