@@ -32,7 +32,7 @@ KrokodileAsset::register($this);
         <div class="logo">
             <h1 class="main_title">ИНТЕРНЕТ-РАДИО "БАРДЫ СИБИРИ"</h1>
         </div>
-        <p>Выпуск №1</p>
+        <p>Внимание! Содержимое данного ресурса может заставить задуматься! </p>
     </header>
 
     <?=$content?>

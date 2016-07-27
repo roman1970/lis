@@ -11,43 +11,21 @@ use yii\helpers\Url;
 AppAsset::register($this);
 ?>
 <div class="col-sm-3 col-md-2 sidebar">
-    <?php
-
-    echo Nav::widget([
-        'options' => ['class' => 'nav nav-sidebar'],
-        'items' => [
-            ['label' => 'Создать', 'url' => ['/item/create']],
-            ['label' => 'Редактировать', 'url' => ['/item/update']],
-            ['label' => 'Без аудио', 'url' => ['/item/list-no-audio']],
-            ['label' => 'Сформировать плейлист', 'url' => ['/item/add-playlist']],
-            ['label' => 'Выбрать плейлист', 'url' => ['/item/choose-playlist']],
-
-        ],
-    ]);
-
-    ?>
-    <!-- Информер RedDay.RU (Новосибирск)-->
-    <a href="http://redday.ru/moon/" target="_new">
-        <img src="http://redday.ru/informer/i_moon/245/bl.png" width="150" height="190" border="0" alt="Фазы Луны на RedDay.ru (Новосибирск)" />
-    </a>
-    <!-- / Информер RedDay.RU-->
 
 </div>
 
 <div class="col-sm-9 col-md-10 main">
-    <h1 class="page-header">Items</h1>
+    <h1 class="page-header">Плейлисты</h1>
     <?php  //var_dump($articles); exit; ?>
     <?= GridView::widget([
-        'dataProvider' => $items,
+        'dataProvider' => $playlists,
         //'filterModel' => $searchModel,
         'columns' => [
             'id',
-            'title',
-            'tags',
-
+            'name',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete} {update} ',
+                'template' => '{delete} {update} {choose}',
                 'buttons' =>
                     [
                         'delete' => function ($url, $model) {
@@ -65,8 +43,8 @@ AppAsset::register($this);
                                 'data-pjax' => '0',
                             ]);
                         },
-                        'pages' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', Url::toRoute(['pages','id' => $model->id]), [
+                        'choose' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-ok"></span>', Url::toRoute(['form-playlist','id' => $model->id]), [
                                 'title' => Yii::t('yii', 'Посмотреть страницы'),
                                 'data-method' => 'post',
                                 'data-pjax' => '0',

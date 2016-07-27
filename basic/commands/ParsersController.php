@@ -735,6 +735,55 @@ class ParsersController extends Controller
     }
 
     /**
+     * Формирование рандомного (но с учетом статуса записи) плейлиста для радио
+     */
+    public function actionMakeRadioPlayListRandChess(){
+        $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+        $arr = [];
+        $dibilizmy = Items::find()->where(["source_id" => 17])->all();
+        shuffle($dibilizmy);
+        $limerik = Items::find()->where(["source_id" => 27])->all();
+        shuffle($limerik);
+        $cavers = Items::find()->where(["source_id" => 38])->all();
+        shuffle($cavers);
+        $frazy = Items::find()->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")->all();
+        shuffle($frazy);
+        $peredelki = Items::find()->where(["source_id" => 19])->all();
+        shuffle($peredelki);
+        $pesni = Items::find()->where(["source_id" => 6])->all();
+        shuffle($pesni);
+
+        for($i=0; $i<100; $i++){
+            if(isset($dibilizmy[$i]))
+                array_push($arr, $dibilizmy[$i]);
+            if(isset($limerik[$i]))
+                array_push($arr, $limerik[$i]);
+            if(isset($cavers[$i]))
+                array_push($arr, $cavers[$i]);
+            if(isset($frazy[$i]))
+                array_push($arr, $frazy[$i]);
+            if(isset($peredelki[$i]))
+                array_push($arr, $peredelki[$i]);
+            if(isset($pesni[$i]))
+                array_push($arr, $pesni[$i]);
+            
+
+        }
+        foreach ($arr as $item){
+            if(strstr($item->audio_link, '/music')) {
+                $one = str_replace('/music', 'music', $item->audio_link);
+                fwrite($f, "/home/romanych/".$one.PHP_EOL);
+            }
+
+            else fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/".$item->audio_link.PHP_EOL);
+
+        }
+
+        fclose($f);
+       // print_r($arr);
+    }
+
+    /**
      * Рендеринг проигрывателя
      * @param $audio_link
      * @return string

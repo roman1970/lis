@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\components\BackEndController;
 use app\models\Items;
+use app\models\Playlist;
 use app\models\Tag;
 use app\models\UploadForm;
 use yii\data\ActiveDataProvider;
@@ -18,7 +19,7 @@ class ItemController extends BackEndController
 
     public function actionIndex()
     {
-        $items = Items::find()->orderBy('id DESC');;
+        $items = Items::find()->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
@@ -57,6 +58,7 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
+            $model->play_status = 1;
 
 
             if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
@@ -111,6 +113,7 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
+            $model->play_status = 1;
 
             Tag::addTags($model->tags, $id);
 
@@ -174,6 +177,78 @@ class ItemController extends BackEndController
 
         return $this->render('index', ['items' => $dataProvider]);
     }
+    
+    
+    public function actionAddPlaylist(){
+        $playlist = new Playlist();
+
+        if ($playlist->load(Yii::$app->request->post())) {
+            $playlist->name = Yii::$app->request->post('Playlist')['name'];
+            $playlist->save();
+
+            return $this->redirect(Url::toRoute('item/index'));
+
+        } else {
+
+            return $this->render('new_playlist', ['playlist' => $playlist]);
+        }
+
+        
+    }
+    
+    public function actionChoosePlaylist(){
+        $playlists = Playlist::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $playlists,
+        ]);
+
+
+        return $this->render('playlists', ['playlists' => $dataProvider]);
+    }
+    
+    public function actionFormPlaylist($id){
+        
+        
+        $items = Items::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        $this_items = Items::find()->where(['play_status' => $id]);
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => $this_items,
+        ]);
+
+        //var_dump($id); exit;
+
+
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2, 'pl' => $id]);
+    }
+
+    public function actionPlAdd($id, $pl){
+
+        //var_dump(Yii::$app->getRequest()); exit;
+
+        $model = $this->loadModel($id);
+        $model->play_status = $pl;
+        $model->update();
+
+        //var_dump(Items::$current_playlist); exit;
+
+        $items = Items::find();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        $this_items = Items::find()->where(['play_status' => $pl]);
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => $this_items,
+        ]);
+
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2]);
+
+    }
+    
 
     public function loadModel($id)
     {
