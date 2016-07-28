@@ -16,6 +16,7 @@ class ItemController extends BackEndController
     public $layout = 'admin';
     const STATUS_CREATE = 0;
     const STATUS_UPDATE = 1;
+    public static $curr_playlist;
 
     public function actionIndex()
     {
@@ -205,37 +206,50 @@ class ItemController extends BackEndController
 
         return $this->render('playlists', ['playlists' => $dataProvider]);
     }
-    
+
+    /**
+     * Формирование плейлиста
+     * @param $id
+     * @return string
+     */
     public function actionFormPlaylist($id){
-        
-        
-        $items = Items::find();
+
+
+        $items = Items::find()->where(['play_status' => 1]);
+       // $i = Items::find()->all();
+
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
         ]);
+
 
         $this_items = Items::find()->where(['play_status' => $id]);
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
 
-        //var_dump($id); exit;
+        //print_r($i[0]); exit;
 
 
         return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2, 'pl' => $id]);
     }
 
+    /**
+     * Добавление в плейлист
+     * @param $id
+     * @param $pl
+     * @return string
+     * @throws \yii\web\HttpException
+     */
     public function actionPlAdd($id, $pl){
-
-        //var_dump(Yii::$app->getRequest()); exit;
+        
 
         $model = $this->loadModel($id);
         $model->play_status = $pl;
-        $model->update();
+        $model->update(false);
 
-        //var_dump(Items::$current_playlist); exit;
 
-        $items = Items::find();
+        $items = Items::find()->where(['play_status' => 1]);
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
         ]);
@@ -245,7 +259,37 @@ class ItemController extends BackEndController
             'query' => $this_items,
         ]);
 
-        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2]);
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'pl' => $pl]);
+
+    }
+
+    /**
+     * Удаление из плейлиста
+     * @param $id
+     * @param $pl
+     * @return string
+     * @throws \yii\web\HttpException
+     */
+    public function actionPlRemove($id, $pl){
+        $model = $this->loadModel($id);
+        $model->play_status = 1;
+        $model->update(false);
+
+        $items = Items::find()->where(['play_status' => 1]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        $this_items = Items::find()->where(['play_status' => $pl]);
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => $this_items,
+        ]);
+
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'pl' => $pl]);
+        
+    }
+
+    public function actionPlSort(){
 
     }
     

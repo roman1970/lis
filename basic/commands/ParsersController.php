@@ -713,10 +713,10 @@ class ParsersController extends Controller
     /**
      * Формирование плейлиста для радио
      */
-    public function actionMakeRadioPlaylist() {
+    public function actionMakeRadioPlaylist($playlist=1) {
         $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
         
-        $audio = Items::find()->where("audio_link <> '' and radio_que <> 0")->orderBy('radio_que')->all();
+        $audio = Items::find()->where("audio_link <> '' and play_status =".$playlist."")->orderBy('radio_que')->all();
 
         foreach ($audio as $item){
             if(strstr($item->audio_link, '/music')) {

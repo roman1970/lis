@@ -20,6 +20,7 @@ class DefaultController extends FrontEndController
     public $bet_n = 0;
     public $bet_g = 0;
     public $host;
+    public $tournaments = [];
     
 
     /**
@@ -33,7 +34,8 @@ class DefaultController extends FrontEndController
 
             $matchs = Matches::find()
                 ->orderBy('id DESC')
-                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("tournament like('УКРАИНА: Лига Пари-Матч%') or tournament like('%Международный кубок чемпионов%')")
+                //->where('tournament IN ('.$this->tournaments.')')
                 ->limit(10)
                 //->offset(30)
                 ->all();
