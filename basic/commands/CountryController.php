@@ -955,6 +955,7 @@ class CountryController extends Controller
         } catch (\ErrorException $e) {
             echo $e->getMessage();
         }
+       
         
         $day = date('d.m.Y', time()-24*3600);
         $day_before = date('d.m.Y', time()-(24*3600*2));

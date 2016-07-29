@@ -17,6 +17,8 @@ class KrokodileAsset extends AssetBundle
 
     ];
     public $js = [
+        'js/comments.js',
+        'js/jquery-cookie/jquery.cookie.js'
 
     ];
     public $depends = [

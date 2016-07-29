@@ -223,7 +223,7 @@ class ItemController extends BackEndController
         ]);
 
 
-        $this_items = Items::find()->where(['play_status' => $id]);
+        $this_items = Items::find()->where(['play_status' => $id])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
@@ -254,7 +254,7 @@ class ItemController extends BackEndController
             'query' => $items,
         ]);
 
-        $this_items = Items::find()->where(['play_status' => $pl]);
+        $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
@@ -280,7 +280,7 @@ class ItemController extends BackEndController
             'query' => $items,
         ]);
 
-        $this_items = Items::find()->where(['play_status' => $pl]);
+        $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
@@ -289,8 +289,17 @@ class ItemController extends BackEndController
         
     }
 
-    public function actionPlSort(){
-
+    public function actionChangeq(){
+        $que = 100;
+        if(Yii::$app->getRequest()->getQueryParam('que') !== null && Yii::$app->getRequest()->getQueryParam('id') !== null) {
+            $que = Yii::$app->getRequest()->getQueryParam('que');
+            $id = Yii::$app->getRequest()->getQueryParam('id');
+            $model = $this->loadModel($id);
+            $model->radio_que = $que;
+            $model->update(false);
+        }
+        
+        echo $que;
     }
     
 

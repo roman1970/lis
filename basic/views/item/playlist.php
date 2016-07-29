@@ -1,3 +1,37 @@
+<script>
+    $(document).ready(function() {
+
+    });
+
+    function changeQue(id){
+        var que = $("#que_"+id).val();
+
+       // alert(id);
+
+        $.ajax({
+            type: "GET",
+            url: "changeq",
+            data: "que="+que+"&id="+id,
+            success: function(html){
+
+                $("#change-que_"+id).hide();
+                $("#que_"+id).hide();
+                $("#req_"+id).html(html).show();
+
+            }
+
+        });
+
+    }
+
+</script>
+
+<style>
+    .form-control{
+        color: black;
+    }
+</style>
+
 <?php
 
 use yii\helpers\Html;
@@ -62,6 +96,18 @@ AppAsset::register($this);
             'id',
             'title',
             'tags',
+
+            [
+                'attribute' => 'radio_que',
+                'value' => function ($model, $key, $index, $column) {
+                    //  var_dump($model); var_dump($key); exit;
+                    return Html::input('text', 'radio_que', $model->radio_que, ['id' => 'que'.'_'.$model->id, 'class' => 'form-control']).
+                    Html::button('Изменить', ['id' => 'change-que'.'_'.$model->id, 'onClick' => "changeQue($model->id)", 'class' => 'btn btn-primary']).
+                    Html::tag('p', $model->id, ['style' => 'display: none', 'id' => 'req'.'_'.$model->id]);
+                    },
+                'format' => 'raw',
+              //  'filter' => ArrayHelper::map(Groups::find()->all(), 'id', 'title')
+            ],
 
 
             ['class' => 'yii\grid\ActionColumn',

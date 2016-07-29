@@ -145,6 +145,7 @@ class Totpredict extends \yii\db\ActiveRecord
         */
 
         $users = Totuser::find()->all();
+       // var_dump($users); exit;
         
         if(!$users) return false;
 
@@ -171,7 +172,7 @@ class Totpredict extends \yii\db\ActiveRecord
                 ->select(['COUNT(status) as cnt'])
                 ->where(['user_id' => $user->id, 'status' => 3])
                 ->scalar();
-            $user->update();
+            $user->update(false);
 
         }
 
