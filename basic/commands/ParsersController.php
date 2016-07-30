@@ -8,6 +8,7 @@ use app\models\CurrHistory;
 use app\models\Items;
 use app\models\Source;
 use app\models\Tag;
+use app\models\TeamSum;
 use app\models\Telbase;
 use app\models\Totmatch;
 use yii\console\Controller;
@@ -804,6 +805,35 @@ class ParsersController extends Controller
         }
         else return '';
 
+    }
+
+    /**
+     * Парсим сводные таблицы команд
+     */
+    public function actionFillRusianPlTotal(){
+        $content = file('/home/romanych/my/Моё/матчи3.txt');
+        //print_r($content);
+        for($i=0; $i<703; $i+=2){
+            if(strstr($content[$i],'.')) {
+                $team = new TeamSum();
+                $team->tournament_id = 1;
+                //$team->name = substr($content[$i], 3);
+                $team->name = trim(mb_substr($content[$i],3,20,'UTF-8'));
+                //echo $team->name." name";
+                $team->mem = $content[$i+2];
+                $team->play = $content[$i+4];
+                $team->vic = $content[$i+6];
+                $team->nob = $content[$i+8];
+                $team->def = $content[$i+10];
+                $m = explode('-',$content[$i+12]);
+                $team->goal_g = $m[0];
+                $team->goal_l = $m[1];
+                $team->balls = $content[$i+14];
+                $team->save(false);
+            }
+
+
+        }
     }
     
 }
