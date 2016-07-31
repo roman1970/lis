@@ -38,6 +38,7 @@ class Items extends \yii\db\ActiveRecord
     {
         return [
             [['source_id', 'text', 'tags', 'audio'], 'required'],
+            [['source_id', 'text', 'tags', 'audio'], 'save'],
             [['source_id'], 'integer'],
             [['text'], 'string'],
             [['tags', 'audio'], 'string', 'max' => 255],

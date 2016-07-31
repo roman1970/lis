@@ -63,6 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
             <?= $form->field($model, 'audio_link')->textInput()  ?>
+            <?= $form->field($model, 'in_work_prim')->textInput()  ?>
             <?= $form->field($uploadFile, 'file')->fileInput() ?>
             <?= $form->field($uploadImg, 'img')->fileInput() ?>
 

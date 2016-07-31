@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\components\BackEndController;
 use app\models\Items;
+use app\models\ItemsSearch;
 use app\models\Playlist;
 use app\models\Tag;
 use app\models\UploadForm;
@@ -20,13 +21,18 @@ class ItemController extends BackEndController
 
     public function actionIndex()
     {
-        $items = Items::find()->orderBy('id DESC');
+       // $items = Items::find()->orderBy('id DESC');
+        $searchModel = new ItemsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        /*
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
-        ]);
 
-        return $this->render('index', ['items' => $dataProvider]);
+        ]);
+        */
+
+        return $this->render('index', ['items' => $dataProvider, 'searchModel' => $searchModel]);
     }
 
     public function actionCreate()
@@ -59,6 +65,7 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
+            $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
             $model->play_status = 1;
 
 
@@ -114,7 +121,8 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
-            $model->play_status = 1;
+            $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
+            //$model->play_status = 1;
 
             Tag::addTags($model->tags, $id);
 
@@ -176,10 +184,27 @@ class ItemController extends BackEndController
             'query' => $items,
         ]);
 
-        return $this->render('index', ['items' => $dataProvider]);
+        return $this->render('list', ['items' => $dataProvider]);
     }
-    
-    
+
+    /**
+     * Рабочий список
+     * @return string
+     */
+    public function actionInWork(){
+        $items = Items::find()->where("in_work_prim <> '' ");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        return $this->render('list', ['items' => $dataProvider]);
+    }
+
+    /**
+     * Добавление плейлиста
+     * @return string|\yii\web\Response
+     */
     public function actionAddPlaylist(){
         $playlist = new Playlist();
 

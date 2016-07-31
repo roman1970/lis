@@ -17,10 +17,11 @@ AppAsset::register($this);
         'options' => ['class' => 'nav nav-sidebar'],
         'items' => [
             ['label' => 'Создать', 'url' => ['/item/create']],
-            ['label' => 'Редактировать', 'url' => ['/item/update']],
+            ['label' => 'Items', 'url' => ['/item/index']],
             ['label' => 'Без аудио', 'url' => ['/item/list-no-audio']],
             ['label' => 'Сформировать плейлист', 'url' => ['/item/add-playlist']],
             ['label' => 'Выбрать плейлист', 'url' => ['/item/choose-playlist']],
+            ['label' => 'В работе', 'url' => ['/item/in-work']],
 
         ],
     ]);
@@ -39,11 +40,12 @@ AppAsset::register($this);
     <?php  //var_dump($articles); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $items,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             'id',
             'title',
             'tags',
+            'text',
 
 
             ['class' => 'yii\grid\ActionColumn',
