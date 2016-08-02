@@ -19,7 +19,7 @@ class BetChempionWidget extends Widget
         parent::init();
         $this->user_sum = Totpredict::getUsersBalls();
         $this->user_sum = Totuser::find()->orderBy('balance DESC')->all();
-        //$this->users_status = Totpredict::getUsersStatus();
+        //Totpredict::getUsersStatus();
 
     }
 

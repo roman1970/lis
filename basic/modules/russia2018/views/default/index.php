@@ -9,6 +9,7 @@ use yii\bootstrap\Nav;
     $(document).ready(function() {
         var host = $("#host");
         var guest = $("#guest");
+        var ip = $("#ip");
         var limit = $("#limit");
         var bet = $("#bet");
         var country = $("#country");
@@ -486,7 +487,7 @@ use yii\bootstrap\Nav;
                         <input type="text" class="form-control" id="host"  placeholder="Название команды">
                          <?= \yii\jui\DatePicker::widget([
                             'name'  => 'from_date',
-                            'value'  => '2016-07-01',
+                            'value'  => '2016-07-12',
                             'dateFormat' => 'dd.MM.yyyy',
                             'options' => ['title' => 'Начало периода']
                             //'inline' => true,
@@ -513,6 +514,7 @@ use yii\bootstrap\Nav;
                     <p>
                         <input type="text" class="form-control" id="hoster"  placeholder="Хозяин">
                         <input type="text" class="form-control" id="guester"  placeholder="Гость">
+                        <input type="hidden" name="ip" id="ip" value="<?php echo $_SERVER['REMOTE_ADDR']; ?>" />
 
                        <?php /*<button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p> */ ?>
                         <button type="button" class="btn btn-success" id="two_teams_strict" >Поиск</button>

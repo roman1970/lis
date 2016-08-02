@@ -950,12 +950,6 @@ class CountryController extends Controller
      */
     public function actionMarkPredictedMatches(){
 
-        try {
-            Totpredict::getUsersStatus();
-        } catch (\ErrorException $e) {
-            echo $e->getMessage();
-        }
-       
         
         $day = date('d.m.Y', time()-24*3600);
         $day_before = date('d.m.Y', time()-(24*3600*2));
@@ -964,7 +958,7 @@ class CountryController extends Controller
             ->andWhere("date like ('".$day."%') or date like ('".$day_before."%')")
             ->all();
 
-        //var_dump($predicted); exit;
+       // var_dump($predicted); exit;
 
         foreach ($predicted as $match){
             $date = explode(" ", $match->date);
@@ -977,12 +971,14 @@ class CountryController extends Controller
             $m = Matches::find()
                 ->where("host like('_".$match->host."') and guest like('".$match->guest."_') and date like('".$d."')")
                 ->one();
+            //var_dump($match->guest); exit;
             if($m) {
-                echo $m->id.PHP_EOL;
+                echo $m->id.PHP_EOL; 
+                //exit;
                 $match->foo_match_id = $m->id;
                 $match->update();
             }
-            else break;
+            else continue;
 
             $tested = Totpredict::find()->where(['match_id' => $match->id])->all();
             foreach ($tested as $play){
@@ -1032,6 +1028,12 @@ class CountryController extends Controller
                     $play->update();
                 }
 
+            }
+
+            try {
+                Totpredict::getUsersStatus();
+            } catch (\ErrorException $e) {
+                echo $e->getMessage();
             }
 
         }

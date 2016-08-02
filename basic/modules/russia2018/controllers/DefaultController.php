@@ -6,9 +6,11 @@ use app\components\BetChempionWidget;
 use app\components\FrontEndController;
 use app\models\Matches;
 use app\models\Team;
+use app\models\TeamSum;
 use app\models\Totmatch;
 use app\models\Totpredict;
 use app\models\Totuser;
+use app\models\Visit;
 use app\modules\russia2018\models\Strategy;
 use app\modules\russia2018\models;
 use Yii;
@@ -22,19 +24,35 @@ class DefaultController extends FrontEndController
     public $host;
     public $tournaments = [];
     
-
     /**
      * @return string
      */
     public function actionIndex()
     {
+        //$visit = new Visit();
+        /*$userHost = Yii::$app->request->userHost;
+        $userIP = Yii::$app->request->userIP;
+        if($userIP) $visit->ip = $userIP;
+        if(isset($_SERVER['HTTP_REFERER'])) $visit->refer = $_SERVER['HTTP_REFERER'];
+        else $visit->refer = self::get_all_ip();
+        $visit->browser = implode(';',$_SERVER);
+
+        foreach (getallheaders() as $name => $value) {
+            $visit->refer = "$name: $value\n";
+        }
+        */
+      
+
+        //$visit->save(false);
 
         $model = new Strategy();
 
 
             $matchs = Matches::find()
                 ->orderBy('id DESC')
-                ->where("tournament like('УКРАИНА: Лига Пари-Матч%') or tournament like('%Международный кубок чемпионов%')")
+                ->where("tournament like('УКРАИНА: Лига Пари-Матч%') 
+                or tournament like('%Международный кубок чемпионов%') 
+                or tournament like('%РОССИЯ: Премьер-лига%')")
                 //->where('tournament IN ('.$this->tournaments.')')
                 ->limit(10)
                 //->offset(30)
@@ -99,7 +117,6 @@ class DefaultController extends FrontEndController
 
         $this->betsGenerate($matchs);
 
-       
 
         return $this->renderPartial('strat', [
             'matchs' => $matchs,
@@ -140,10 +157,6 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('host')) $team = Yii::$app->getRequest()->getQueryParam('host');
         else $team = '';
 
-        $limit = 10;
-        $bet = 1;
-
-        $model = new Strategy();
 
         $matchs = Matches::find()
             ->orderBy('id DESC')
@@ -152,20 +165,18 @@ class DefaultController extends FrontEndController
             ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
             //->limit($limit)
             ->all();
-        
-        //var_dump(count($matchs)); exit;
-        
-        //$this->betsGenerate($matchs);
 
-        //$summary = $this->summary($matchs);
-        //$arrteam = ;
 
+        $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
+
+        $tour_table = TeamSum::find()->where("is_tour_visual = 1 or name like'".$team."'")->orderBy("cash_balls DESC")->all();
 
         return $this->renderPartial('teams', [
             //'bet_h' => $this->bet_h*$bet,
             //'bet_n' => $this->bet_n*$bet,
             //'bet_g' => $this->bet_g*$bet,
-            'summary' => $this->teamsSummary($matchs, $team),
+            'summary' => $tour_table,
+            'this_team' => $team
             
 
         ]);
@@ -696,7 +707,7 @@ class DefaultController extends FrontEndController
                     //echo $user->id; exit;
 
                     $predicted = Totpredict::find()->where(['user_id' => $user->id])
-                        ->limit(20)
+                        ->limit(50)
                         ->orderBy('id DESC')
                         ->all();
                     //var_dump($predicted); exit;
@@ -825,6 +836,11 @@ class DefaultController extends FrontEndController
 
 
     public function summary($matches){
+
+        //$new = array_merge($matches, $grands);
+       // var_dump($new); exit;
+
+
         $arr['count'] = count($matches);
         $arr['vic'] = 0;
         $arr['nob'] = 0;
@@ -859,74 +875,100 @@ class DefaultController extends FrontEndController
     }
 
     /**
-     * Статистика команды
+     * Статистика команд
      * @param $matches
      * @param $team
      * @return mixed
      */
-    public function teamsSummary($matches, $team){
-        
-        $arr['team'] = $team;
-        $arr['count'] = count($matches);
-        $arr['vic'] = 0;
-        $arr['nob'] = 0;
-        $arr['def'] = 0;
-        $arr['sum_gett'] = 0;
-        $arr['sum_lett'] = 0;
-        $arr['ball'] = 0;
-        $i=0;
+    public function teamsSummary($matches, $team, $from, $to){
+
+        $matchs = [];
+
+        $arr = [];
+
+        $grands = TeamSum::find()->where(['is_tour_visual' => 1])->all();
+
+        foreach ($grands as $grand){
+
+            $matchs[$grand->name] = Matches::find()
+                ->orderBy('id DESC')
+                ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
+                ->andWhere("id > ".$from." and id < ".$to." ")
+                ->all();
+        }
+
+        $matchs[$team] = $matches;
+
+        //var_dump($matchs[$grand->name]); var_dump($to); exit;
+
+        foreach ($matchs as $key => $mtch) {
+
+            $team = TeamSum::find()->where("name like '".$key."'")->one();
+            if($team) {
+
+            $team->cash_cout  = count($mtch);
+            $team->cash_vic = 0;
+            $team->cash_nob  = 0;
+            $team->cash_def = 0;
+            $team->cash_g_get = 0;
+            $team->cash_g_let = 0;
+            $team->cash_balls = 0;
+
+                foreach ($mtch as $match) {
+                    
+                    if (strstr($match->host, $key)) {
+
+                       // $team->cash_cout = count($mtch);
+                        //var_dump(strstr($match->host, $key)); exit;
+
+                        if ($match->gett > $match->lett) {
+                            $team->cash_vic += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                            $team->cash_balls += 3;
+                            //$team->update(false);
+                        } elseif ($match->gett == $match->lett) {
+                            $team->cash_nob += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                            $team->cash_balls += 1;
+                        } else {
+                            $team->cash_def += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                        }
 
 
-        foreach ($matches as $match) {
+                    } else {
 
-
-            if(strstr($match->host, $team)) {
-
-                if($match->gett > $match->lett) {
-                    $arr['vic'] += 1;
-                    $arr['sum_gett'] += $match->gett;
-                    $arr['sum_lett'] += $match->lett;
-                    $arr['ball'] += 3;
+                        if ($match->gett > $match->lett) {
+                            $team->cash_def += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                        } elseif ($match->gett == $match->lett) {
+                            $team->cash_nob += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                            $team->cash_balls += 1;
+                        } else {
+                            $team->cash_vic += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                            $team->cash_balls += 3;
+                        }
+                    }
+                    $team->update(false);
                 }
-                elseif($match->gett == $match->lett){
-                    $arr['nob'] += 1;
-                    $arr['sum_gett'] += $match->gett;
-                    $arr['sum_lett'] += $match->lett;
-                    $arr['ball'] += 1;
-                }
-                else{
-                    $arr['def'] += 1;
-                    $arr['sum_gett'] += $match->gett;
-                    $arr['sum_lett'] += $match->lett;
-                }
 
+                
             }
-            else{
-
-                if($match->gett > $match->lett) {
-                    $arr['def'] += 1;
-                    $arr['sum_lett'] += $match->gett;
-                    $arr['sum_gett'] += $match->lett;
-                }
-                elseif($match->gett == $match->lett){
-                    $arr['nob'] += 1;
-                    $arr['sum_lett'] += $match->gett;
-                    $arr['sum_gett'] += $match->lett;
-                    $arr['ball'] += 1;
-                }
-                else{
-                    $arr['vic'] += 1;
-                    $arr['sum_lett'] += $match->gett;
-                    $arr['sum_gett'] += $match->lett;
-                    $arr['ball'] += 3;
-                }
-            }
-
 
         }
-        return $arr;
+
+       return true;
 
     }
+    
     /**
      * Преврашает дату таблицы matches в формат, удобный для сравнивания строк
      * @param $date
@@ -962,6 +1004,19 @@ class DefaultController extends FrontEndController
 
         return false;
 
+    }
+
+    /**
+     * Получаем все ip из $_SERVER
+     * @return string
+     */
+    function get_all_ip() {
+        $ip_pattern="#(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)#";
+        $ret="";
+        foreach ($_SERVER as $k => $v) {
+            if (substr($k,0,5)=="HTTP_" AND preg_match($ip_pattern,$v)) $ret.=$k.": ".$v."\n";
+        }
+        return $ret;
     }
 
 

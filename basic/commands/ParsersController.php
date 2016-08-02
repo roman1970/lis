@@ -297,6 +297,16 @@ class ParsersController extends Controller
         return ($httpCode == 200) ? $data : false;
     }
 
+    function cut_content($content, $tag_in, $tag_out){
+
+        $position = strpos($content, $tag_in, strlen($tag_in));
+        $content = substr($content, $position);
+        $position = strpos($content, $tag_out);
+
+        return substr($content, 0, $position);
+
+    }
+
     public function actionCurrencyTest()
     {
         for($i=0; $i<45; $i++) {
@@ -834,6 +844,62 @@ class ParsersController extends Controller
 
 
         }
+    }
+
+    public function actionFillByEuropeClubTeams(){
+        $top_europe_club_teams = [
+            'Спартак Москва',
+            'ЦСКА',
+            'Зенит'
+
+
+        ];
+    }
+
+    /**
+     * Коэффициенты УЕФА
+     */
+    public function actionParsRatingUefaTeams(){
+        $url = "http://www.profootball.ua/ranking/uefa_teams.html";
+        $content = $this->cut_content($this->get_page($url), 'class="t1"', 'UEFA Ranking By Bert Kassies');
+        $dom = new \DomDocument();
+        libxml_use_internal_errors(true);
+        $head = file_get_contents(Url::to("@app/commands/header.html"));
+        $teams = $head . $content; //добавляем хэдер
+        $dom->loadHTML($teams);
+
+
+        $tr = $dom->getElementsByTagName("tr");
+        foreach ($tr as $node) {
+            $dom_in = new \DomDocument();
+            $html = $node->ownerDocument->saveHTML($node);
+            libxml_use_internal_errors(true);
+            $newhtml = $head . $html;
+            $dom_in->loadHTML($newhtml);
+
+
+            $td = $dom_in->getElementsByTagName("td");
+            foreach ($td as $node) {
+                echo $node->nodeValue.PHP_EOL;
+               if($td[2]->nodeValue == 'Rus') break;
+                $team = new TeamSum();
+                $team->tournament_id = 2;
+                $team->alias = $td[1]->nodeValue;
+                $team->country = $td[2]->nodeValue;
+                $team->rank1old = $td[3]->nodeValue;
+                $team->rank2old = $td[4]->nodeValue;
+                $team->rank3old = $td[5]->nodeValue;
+                $team->rank4old = $td[6]->nodeValue;
+                $team->rank5old = $td[7]->nodeValue;
+                $team->rank = $td[8]->nodeValue;
+                $team->save(false);
+                break;
+            }
+            echo "--------------------".PHP_EOL;
+
+        }
+
+
     }
     
 }
