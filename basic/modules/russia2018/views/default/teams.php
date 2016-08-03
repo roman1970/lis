@@ -1,3 +1,9 @@
+<style>
+    .table > tbody > tr > td{
+        padding: 0;
+    }
+</style>
+
 <h4 style="text-align: center; color: sandybrown">На фоне грандов</h4>
 <table class="table">
     <tbody>

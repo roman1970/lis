@@ -95,6 +95,8 @@ use yii\bootstrap\Nav;
                 $("#team").hide();
                 $("#match").hide();
                 $("#bets").hide();
+                $("#base").hide();
+                $("#teams_data").hide();
                 $("#button_reload").show();
 
             }
@@ -105,6 +107,7 @@ use yii\bootstrap\Nav;
                 login(log.val(),key.val());
                 $("#log-block").hide();
                 $("#prognose-block").show();
+                $("#base").show();
             }
         );
 
@@ -448,6 +451,11 @@ use yii\bootstrap\Nav;
     .fa-2x{
         font-size: 1em;
     }
+
+    #prognose-block, #statistic, #log-block{
+        height: 220px;
+    }
+
 
     @media (min-width: 1200px)
         .container {

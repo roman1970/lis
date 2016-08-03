@@ -69,6 +69,9 @@ class Helper
      * @return string
      */
     public static function cutAfterBracket($str){
+
+        if(strstr($str,'Спортинг (Исп)'))  $str = str_replace('Спортинг (Исп)', 'Спортинг Хихон', $str);
+        if(strstr($str,'Спортинг (Пор)'))  $str = str_replace('Спортинг (Пор)', 'Спортинг Лиссабон', $str);
         
         $pos = strpos($str, '(');
 

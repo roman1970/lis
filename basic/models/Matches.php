@@ -164,7 +164,7 @@ class Matches extends \yii\db\ActiveRecord
 
             foreach ( $exp_substit as $value) {
                 $value = str_replace('.', '. ', $value);
-                echo  $value . "<br>--------<br>";
+                echo  $value . "<br>";
             }
         }
 
@@ -185,7 +185,7 @@ class Matches extends \yii\db\ActiveRecord
 
             foreach ($exp_substit as $value) {
                 $value = str_replace('.', '. ', $value);
-                echo  $value . "<br>--------<br>";
+                echo  $value . "<br>";
             }
         }
 

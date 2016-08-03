@@ -822,23 +822,26 @@ class ParsersController extends Controller
      */
     public function actionFillRusianPlTotal(){
         $content = file('/home/romanych/my/Моё/матчи3.txt');
-        //print_r($content);
-        for($i=0; $i<703; $i+=2){
-            if(strstr($content[$i],'.')) {
+        //print_r($content); exit;
+        for($i=0; $i<1087; $i+=2){
+            if(preg_match("/[А-Я]+/", $content[$i])) { //echo $content[$i];
                 $team = new TeamSum();
-                $team->tournament_id = 1;
+                $team->tournament_id = 3;
                 //$team->name = substr($content[$i], 3);
-                $team->name = trim(mb_substr($content[$i],3,20,'UTF-8'));
+                $team->name = ucfirst(mb_convert_case(lcfirst(trim($content[$i])), MB_CASE_TITLE, "UTF-8" ));
+                //mb_convert_case($name, MB_CASE_TITLE, "UTF-8")
                 //echo $team->name." name";
-                $team->mem = $content[$i+2];
-                $team->play = $content[$i+4];
-                $team->vic = $content[$i+6];
-                $team->nob = $content[$i+8];
-                $team->def = $content[$i+10];
-                $m = explode('-',$content[$i+12]);
-                $team->goal_g = $m[0];
-                $team->goal_l = $m[1];
-                $team->balls = $content[$i+14];
+                $team->mem = (int)$content[$i+18];
+                $team->play = (int)$content[$i+20];
+
+                $team->vic = (int)$content[$i+22];
+                $team->nob = (int)$content[$i+24];
+                $team->def = (int)$content[$i+26];
+                //$m = explode('-',$content[$i+12]);
+                //$team->goal_g = $m[0];
+                //$team->goal_l = $m[1];
+                $team->balls = (int)$content[$i+28];
+               // var_dump($team);
                 $team->save(false);
             }
 

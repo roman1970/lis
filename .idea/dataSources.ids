@@ -6210,15 +6210,19 @@ type</columns>
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <index id="1633" parent="105" name="ux_foo_team_tournament_id">
+      <column id="1633" parent="105" name="is_club">
+        <data-type>int(1)</data-type>
+        <default-expression>&apos;1&apos;</default-expression>
+      </column>
+      <index id="1634" parent="105" name="ux_foo_team_tournament_id">
         <columns>tournament_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1634" parent="105" name="PRIMARY">
+      <key id="1635" parent="105" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1635" parent="105" name="foo_team_ibfk_1">
+      <foreign-key id="1636" parent="105" name="foo_team_ibfk_1">
         <columns>tournament_id</columns>
         <ref-key>~.foo_tournament.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
