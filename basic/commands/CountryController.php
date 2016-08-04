@@ -9,6 +9,7 @@ namespace app\commands;
 
 use app\models\Matches;
 use app\models\Team;
+use app\models\TeamSum;
 use app\models\Totmatch;
 use app\models\Totpredict;
 use yii\console\Controller;
@@ -39,7 +40,20 @@ class CountryController extends Controller
         $countries = Country::find()->all();
 
         foreach ($countries as $country) {
-            if($country->id == 11) { $country->iso_code = 'ad'; $country->soccer_code = 19; $country->update(); }
+            try {
+                if (TeamSum::find()->where("name like '" . addslashes($country->name) . "'")->one()) continue;
+                else {
+                    $team = new TeamSum();
+                    $team->name = $country->name;
+                    $team->tournament_id = 4;
+                    $team->is_club = 0;
+                    $team->save(false);
+                    //var_dump($team);
+                }
+            } catch (\ErrorException $e) {
+                echo $e->getMessage();
+            }
+          //  if($country->id == 11) { $country->iso_code = 'ad'; $country->soccer_code = 19; $country->update(); }
         }
 
     }

@@ -120,7 +120,14 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
-
+        elseif ($team == 'СКА-Хабаровск') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('_СКА-Хабаровск') or guest like('СКА-Хабаровск_') and host like('_СКА-Энергия') or guest like('СКА-Энергия_')")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         else {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -193,7 +200,14 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
-        
+        elseif ($team == 'СКА-Хабаровск') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("host like('_СКА-Хабаровск') or guest like('СКА-Хабаровск_') and host like('_СКА-Энергия') or guest like('СКА-Энергия_')")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         else {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -922,45 +936,49 @@ class DefaultController extends FrontEndController
     public function teamsSummary($matches, $team, $from, $to){
 
         $matchs = [];
-
         $is_club = 1;
 
         //echo TeamSum::find()->where("name like '".$team."'")->one()->is_club;
 
+        try {
+            if (TeamSum::find()->where("name like '" . $team . "'")->one()) {
+                $is_club = TeamSum::find()->where("name like '" . $team . "'")->one()->is_club;
+                if ($is_club) {
+                    $grands = TeamSum::find()->where('is_tour_visual = 1 and is_club = 1')->all();
+                    foreach ($grands as $grand) {
 
-        if($is_club = TeamSum::find()->where("name like '".$team."'")->one()->is_club) {
-            $grands = TeamSum::find()->where('is_tour_visual = 1 and is_club = 1')->all();
-            foreach ($grands as $grand){
+                        $matchs[$grand->name] = Matches::find()
+                            ->orderBy('id DESC')
+                            // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
+                            ->where("host like('_" . $grand->name . "') or guest like('" . $grand->name . "_') or (host like('_" . $grand->name . " (%') and host not like('_" . $grand->name . " (Б)%') ) or (guest like('" . $grand->name . " (%') and guest not like('" . $grand->name . " (Б)%'))")
+                            ->andWhere("id > " . $from . " and id < " . $to . " ")
+                            ->all();
+                    }
 
-                $matchs[$grand->name] = Matches::find()
-                    ->orderBy('id DESC')
-                    // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
-                    ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or (host like('_".$grand->name." (%') and host not like('_".$grand->name." (Б)%') ) or (guest like('".$grand->name." (%') and guest not like('".$grand->name." (Б)%'))")
-                    ->andWhere("id > ".$from." and id < ".$to." ")
-                    ->all();
+                } else {
+                    $grands = TeamSum::find()->where('is_tour_visual = 1 and is_club = 0')->all();
+                    foreach ($grands as $grand) {
+
+                        $matchs[$grand->name] = Matches::find()
+                            ->orderBy('id DESC')
+                            // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
+                            ->where("host like('_" . $grand->name . "') or guest like('" . $grand->name . "_') ")
+                            ->andWhere("id > " . $from . " and id < " . $to . " ")
+                            ->all();
+                    }
+
+                }
+
             }
+        } catch (\ErrorException $e) {
+            echo "mistake".$e->getMessage();
         }
-        else{
-            $grands = TeamSum::find()->where('is_tour_visual = 1 and is_club = 0')->all();
-            foreach ($grands as $grand){
-
-                $matchs[$grand->name] = Matches::find()
-                    ->orderBy('id DESC')
-                    // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
-                    ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') ")
-                    ->andWhere("id > ".$from." and id < ".$to." ")
-                    ->all();
-            }
-        }
-
-        //var_dump($grands); exit;
-
 
         $matchs[$team] = $matches;
 
-       // var_dump($matchs);
+      // var_dump($matchs);
         //var_dump($to);
-       // exit;
+     // exit;
 
         foreach ($matchs as $key => $mtch) {
 

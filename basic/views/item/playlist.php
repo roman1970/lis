@@ -49,7 +49,7 @@ AppAsset::register($this);
     <?php  //var_dump($pl); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $items,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
 
         'columns' => [
             'id',

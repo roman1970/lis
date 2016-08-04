@@ -144,6 +144,7 @@ use yii\bootstrap\Nav;
         $("#host").click(
             function() {
                 $("#planet").animate({top: "-=600"}, 10000);
+                $("#blinkingText1").hide();
             });
         $("#hoster").click(
             function() {
@@ -206,8 +207,29 @@ use yii\bootstrap\Nav;
             }
         });
 
+        //пульсирующий текст
+        /*
+        $(function(){
+            $("#blinkingText1").hide();
+            setTimeout(function(){$("#blinkingText1").show();setInterval(function(){$("#blinkingText1").toggle();},500)},3000);
+        });
+        */
+
+        pulsate();
+
+
+
 
     });
+
+    /**
+     * Пульсирующий блок
+     */
+    function pulsate() {
+        $("#blinkingText1").
+        animate({opacity: 0.2}, 1000, 'linear').
+        animate({opacity: 1}, 1000, 'linear', pulsate);
+    }
 
 
 
@@ -502,6 +524,8 @@ use yii\bootstrap\Nav;
                             //'containerOptions' => ['width' => '100']
                         ]);
                         ?>
+
+                     <span id="blinkingText1">Начните вводить команду</span>
                         <?= \yii\jui\DatePicker::widget([
                             'name'  => 'to_date',
                             'value'  => date('Y-m-d', time()),

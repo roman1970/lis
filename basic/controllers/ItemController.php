@@ -4,6 +4,7 @@ namespace app\controllers;
 use app\components\BackEndController;
 use app\models\Items;
 use app\models\ItemsSearch;
+use app\models\ItemsQueSearch;
 use app\models\Playlist;
 use app\models\Tag;
 use app\models\UploadForm;
@@ -178,7 +179,7 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionListNoAudio(){
-        $items = Items::find()->where(['audio_link' => '']);
+        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_d <> 43");
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
@@ -238,15 +239,9 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionFormPlaylist($id){
-
-
-        $items = Items::find()->where(['play_status' => 1]);
-       // $i = Items::find()->all();
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $items,
-        ]);
-
+        $searchModel = new ItemsQueSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
 
         $this_items = Items::find()->where(['play_status' => $id])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
@@ -256,7 +251,7 @@ class ItemController extends BackEndController
         //print_r($i[0]); exit;
 
 
-        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2, 'pl' => $id]);
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2, 'pl' => $id, 'searchModel' => $searchModel]);
     }
 
     /**
@@ -273,18 +268,15 @@ class ItemController extends BackEndController
         $model->play_status = $pl;
         $model->update(false);
 
-
-        $items = Items::find()->where(['play_status' => 1]);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $items,
-        ]);
+        $searchModel = new ItemsQueSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
 
-        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'pl' => $pl]);
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'searchModel' => $searchModel, 'pl' => $pl]);
 
     }
 
@@ -300,17 +292,15 @@ class ItemController extends BackEndController
         $model->play_status = 1;
         $model->update(false);
 
-        $items = Items::find()->where(['play_status' => 1]);
-        $dataProvider = new ActiveDataProvider([
-            'query' => $items,
-        ]);
+        $searchModel = new ItemsQueSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
         $dataProvider2 = new ActiveDataProvider([
             'query' => $this_items,
         ]);
 
-        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'pl' => $pl]);
+        return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'searchModel' => $searchModel,  'pl' => $pl]);
         
     }
 
