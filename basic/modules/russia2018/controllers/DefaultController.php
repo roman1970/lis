@@ -128,6 +128,22 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
+        elseif ($team == 'Черноморец Одесса') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Черноморец') or guest like('Черноморец_')) and tournament like('%УКРАИНА%') or (host like('_Черноморец (Укр)') or guest like('Черноморец (Укр)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
+        elseif ($team == 'Черноморец Новороссийск') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Черноморец') or guest like('Черноморец_')) and tournament like('%РОССИЯ%') or (host like('_Черноморец (Рос)') or guest like('Черноморец (Рос)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         else {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -208,6 +224,22 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
+        elseif ($team == 'Черноморец Одесса') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Черноморец') or guest like('Черноморец_')) and tournament like('%УКРАИНА%') or (host like('_Черноморец (Укр)') or guest like('Черноморец (Укр)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
+        elseif ($team == 'Черноморец Новороссийск') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Черноморец') or guest like('Черноморец_')) and tournament like('%РОССИЯ%') or (host like('_Черноморец (Рос)') or guest like('Черноморец (Рос)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         else {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -223,16 +255,18 @@ class DefaultController extends FrontEndController
 
         $is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
 
-        $tour_table = TeamSum::find()->where("is_club = ".$is_club. " and is_tour_visual = 1 or name like'".$team."'")->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])->all();
+        if($matchs) {
+            $tour_table = TeamSum::find()->where("is_club = ".$is_club. " and is_tour_visual = 1 or name like'".$team."'")->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])->all();
+            return $this->renderPartial('teams', [
+                'summary' => $tour_table,
+                'this_team' => $team
+            ]);
+        }
+        else {
+            return $this->renderPartial('nothing');
+        }
 
-        return $this->renderPartial('teams', [
-            //'bet_h' => $this->bet_h*$bet,
-            //'bet_n' => $this->bet_n*$bet,
-            //'bet_g' => $this->bet_g*$bet,
-            'summary' => $tour_table,
-            'this_team' => $team
-            
-        ]);
+
     }
 
 

@@ -1,8 +1,9 @@
 <?php
 $params = require(__DIR__ . '/params.php');
 
+
 if (isset($_GET['mode'])) {
-    $mode = $_GET['mode'];
+  $mode = $_GET['mode']; 
 }
 else $mode = 'user';
 
@@ -47,6 +48,9 @@ $config = [
         ],
         'magazin' => [
             'class' => 'app\modules\magazin\Magazin',
+        ],
+        'rockncontroll' => [
+            'class' => 'app\modules\rockncontroll\Module',
         ],
 
     ],
@@ -155,5 +159,5 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';
 }
-
+//print_r($config); exit;
 return $config;

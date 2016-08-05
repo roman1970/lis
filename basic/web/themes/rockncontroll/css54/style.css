@@ -1,0 +1,201 @@
+/* GlOBAL
+------------------------------------------------------------------------------*/
+body{background: #d8e5f8 url(../img/bg.jpg) no-repeat 0 0; background-size: cover;color:#333333; font-size: 13px; line-height: 24px; font-family: 'Ubuntu Condensed', sans-serif;}
+*{box-sizing: border-box!important; -webkit-box-sizing: border-box!important; -moz-box-sizing: border-box!important;}
+a{color: #333333; text-decoration: none;}
+a:hover,
+a:focus{color: #62eddf; text-decoration: none; outline:none; outline-color: transparent!important;}
+
+.block{display: block;}
+.tbl{display: table;}
+.rel{position: relative;}
+.abs{position: absolute;}
+
+.p0{padding: 0px !important;}
+
+.mt0{margin-top: 0px;}
+.mt10{margin-top: 10px;}
+.mt15{margin-top: 15px;}
+.mt20{margin-top: 20px;}
+.mt25{margin-top: 25px;}
+.mt30{margin-top: 30px;}
+
+.mb0{margin-bottom: 0px;}
+.mb10{margin-bottom: 10px;}
+.mb15{margin-bottom: 15px;}
+.mb20{margin-bottom: 20px;}
+.mb25{margin-bottom: 25px;}
+.mb30{margin-bottom: 30px;}
+
+.upper{text-transform: uppercase; letter-spacing: .6px;}
+.italic{font-style: italic;}
+.snormal{font-style: normal;}
+
+.thin{font-weight: 100;}
+.light{font-weight: 300;}
+.fnormal{font-weight: 400!important;}
+.semi500{font-weight: 500;}
+.semi600{font-weight: 600;}
+.bold{font-weight: 700;}
+.extra{font-weight: 800;}
+
+.rel{position: relative;}
+.abs{position: absolute;}
+
+.white{color:#ffffff;}
+.black{color:#000000;}
+
+.mh{min-height: 1px;}
+.br5{border-radius:5px;}
+
+.container{position: relative; width: 1081px; background: white; margin-right: auto;  margin-left: auto; padding: 0;}
+
+
+.clearfix{clear: both;}
+.container:before,
+.container:after,
+.clearfix:after, 
+.clearfix:before,
+header:before,
+header:after,
+section:before,
+section:after,
+footer:before,
+footer:after{display: table;content: " ";}
+
+header{background: url(../img/hb.png) no-repeat top center;  display: table; width: 100%;margin-bottom: 30px;text-align: left; }
+header .logo{float: left;padding: 23px 25px 23px 25px;position: relative;width: 100%;}
+
+/*.posts{padding: 0 9px;}*/
+.post{width: 247px; display: inline-block; vertical-align: top; margin-bottom: 5px;position: relative;margin-left: 8px;margin-right: 8px;}
+.post a{display: block;}
+.post a img{display: block; max-width: 100%; height: auto;}
+.post a > span {overflow: hidden; height:150px; display: block;}
+.post a h2{font-weight: 700; font-size: 14px; line-height: 18px; color: #333333; margin: 0;padding: 9px 15px 12px;min-height: 43px;text-align: center;position: relative;;text-transform: uppercase;}
+.post a:hover h2{color: #ff634d;}
+
+.content{ display: inline-block;  padding: 0 10px 30px; }
+
+.single{width: 717px; margin-right: 30px; float: left; margin-left: 20px; }
+.single__title{ padding-left: 40px;  color: #752655; font-size: 24px;line-height: 30px; margin-bottom: 0;padding-bottom: 15px; font-weight: 400; position: relative; text-align: center;}
+.single__title span{background: white; padding: 5px 20px;position: relative;z-index: 2;}
+.single__title:before,
+.single__title:after{content:''; position: absolute; width: 100%; left: 0; height: 1px; background: #752655;}
+.single__title:before{top:10px}
+.single__title:after{top:15px}
+
+.date{font-size: 16px; color:#aaaaaa;}
+.single__subtitle{position: relative; color: #752655; text-align: center; font-size: 24px;font-weight: 400;}
+.single p{color: #727272; font-size: 17px; line-height: 20px;margin-top: 0; margin-bottom: 20px;font-family: 'Tahoma';}
+.single__img{max-width: 100%;display: block;width: 100%;}
+
+.social{text-align: center;}
+
+aside{width: 274px;float: right;padding: 0;}
+
+footer{ padding: 20px 0; display: table; width: 100%; margin-top: 0px; min-height: 50px;}
+
+.block300{margin-left: auto; margin-right: auto; display: block;}
+.block165{float: left;margin: 0;}
+.block165 + .block165{margin-left: 19px;}
+
+.presingle{display: inline-block;width: 100%;text-align: center;position: relative;}
+.block274{display: inline-block;}
+.block274 + .block274{}
+.single__social{display: block; width: 100%;float: left;}
+
+.single__ul__pager{text-align: center;}
+.single__ul__pager ul{padding: 0;margin-bottom: 30px;}
+.single__ul__pager ul li{display: inline-block; list-style: none; border-left:1px solid #000000;margin-left: -3px;}
+.single__ul__pager ul li:first-child{border-left:none;margin-left: 0px;}
+.single__ul__pager ul > li > a{font-size: 24px; font-weight: 300; color:#000000; padding: 3px; width: 38px; line-height: 32px; display: inline-block;}
+.single__ul__pager ul > li > a:hover,
+.single__ul__pager ul > li > a.active{background: #000000; color: white;}
+
+.next{width: 100%; display: inline-block; height: 70px; color:#ffffff; text-align: center;  background: #752655;padding: 20px;font-size: 22px;line-height: 28px;margin-bottom: 30px;}
+
+a.next.upper.rel {}
+.next:after{position: absolute; content:''; border-left: 12px solid white; border-top: 10px solid transparent;border-bottom: 10px solid transparent;margin-left: 10px;margin-top: 4px;}
+.next:hover{color: #cccccc;}
+.next:hover:after{border-left-color: #cccccc;}
+
+.pager .post{margin: 0; width: 356px;}
+.pager .post a > span {height: 240px}
+.pager .pnext span.abs,
+.pager .pprev span.abs{color:#ffffff; text-align: center;padding: 0 30px;top: 10px;text-transform: uppercase;font-size: 16px;}
+.pager .pprev span.abs{left:5px;}
+.pager .pnext span.abs{right: 5px;}
+.pager .pnext:hover span.abs,
+.pager .pprev:hover span.abs{color:#ff634d}
+.pager .pnext span.abs:after{position: absolute; content:''; border-left: 12px solid white; border-top: 10px solid transparent;border-bottom: 10px solid transparent;right: 5px;top: 2px;}
+.pager .pnext:hover span.abs:after{border-left-color: #333333;}
+.pager .pprev span.abs:before{position: absolute; content:''; border-right: 12px solid white; border-top: 10px solid transparent;border-bottom: 10px solid transparent;left: 10px;top: 2px;}
+.pager .pprev:hover span.abs:before{border-right-color: #333333;}
+
+
+/* RESPONSIVE
+------------------------------------------------------------------------------*/
+
+@media(min-width:992px) and (max-width:1199px){
+    .container{width: 950px;}
+    .single{width: 595px;margin-right: 20px;}
+    aside{width: 274px;}
+    aside div{float: left;}
+    .posts .post{width: 288px;margin-left: 10px;margin-right: 10px;}
+    .pager .post{width: 295px;}
+    .block274{margin-bottom: 20px;}
+    .block274:nth-child(4n+1){margin-left: 0;}
+    .block165{float: none; display: inline-block; margin-left: 10px;}
+    .block165 + .block165{margin-left: 10px}
+}
+
+@media(max-width: 991px) and (min-width: 768px){
+    .container{width: 750px;}
+    .single{width: 100%; margin-right:0; border: none;padding-right: 0; margin-left: 0;}
+    .single img{ display: inline-block;  margin-left: auto; margin-right: auto;  width: 100%;}
+    aside{width: 100%;float: left;margin-top: 30px;text-align: center;}
+    aside div{float: left;}
+    .posts .post{margin-left: 20px; margin-right: 20px;}
+    .post a h2{/* font-size: 18px; *//* line-height: 24px; */}
+    .posts .post + .post{}
+    .logo{ width: 300px;}
+    .logo img{ max-width: 100%;}
+    .block274{margin-bottom: 20px;float: none;}
+    .block274:nth-child(3n+1){margin-left: 0;}
+    .block165 + .block165{margin-left: 10px;}
+    .pager .post{ width: 362px;}
+
+
+
+}
+
+@media(min-width:320px) and (max-width:767px){
+    .container{}
+    header{ padding: 15px 5px;}
+    header .logo{padding:10px;}
+    header .logo img{max-width: 100%;}
+    .container{width: 100%; padding: 0 10px;}
+
+    .single{width: 100%; border: none;padding-right: 0; margin-left: 0;}
+    aside{width: 100%;text-align: center;}
+
+    .logo{ width: 100%; background-image: none!important;}
+    .logo img{ max-width: 100%;}
+
+    .posts .post{ margin: 0 auto 20px!important; width: 290px;}
+    .posts .post img{ width: 100%; height: auto}
+
+    .posts .post{width:100%;}
+    .single__title.index-tit{line-height: 24px;font-size: 18px;}
+
+    .block165{float: none; display: inline-block; margin-left: 0;}
+    .block165 + .block165 {margin-left: 0px;}
+    .block274{margin-bottom: 20px;}
+    .block274 + .block274{margin-left: 0;}
+
+    .pager .post{ width: 100%; margin-bottom: 30px;}
+    .next{font-size: 14px;}
+
+}
+
+
