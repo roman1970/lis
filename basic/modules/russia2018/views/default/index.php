@@ -1,9 +1,3 @@
-<?php
-use yii\helpers\Html;
-use yii\helpers\ArrayHelper;
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Nav;
-?>
 <script>
 
     $(document).ready(function() {

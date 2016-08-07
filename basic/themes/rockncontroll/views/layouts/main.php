@@ -18,7 +18,8 @@ KrokodileAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
 
     <?= Html::csrfMetaTags() ?>
   
@@ -30,7 +31,7 @@ KrokodileAsset::register($this);
 <div class="container">
     <header>
         <div class="logo">
-            <h1 class="main_title">ДНЕВНИК</h1>
+            <h1 class="main_title">Today <?=date('d M Y', time()) ?></h1>
         </div>
      
 

@@ -21,7 +21,7 @@
         <?php if ($this_team == $team->name ) : echo 'i'; ?>
             <tr >
                 <td style="color: #2cb7d5"><?= $i ?></td>
-                <td style="color: #2cb7d5"><?= $team->name ?></td>
+                <td style="color: #2cb7d5;text-align: left"> <?= $team->name ?></td>
                 <td style="color: #2cb7d5"><?= $team->cash_cout ?></td>
                 <td style="color: #2cb7d5">+<?= $team->cash_vic ?> </td>
                 <td style="color: #2cb7d5">=<?= $team->cash_nob ?></td>
@@ -33,7 +33,7 @@
         <?php else : ?>
             <tr>
                 <td style="color: wheat"><?= $i ?></td>
-                <td style="color: wheat"><?= $team->name ?></td>
+                <td style="color: wheat;text-align: left"> <?= $team->name ?></td>
                 <td style="color: wheat"><?= $team->cash_cout ?></td>
                 <td style="color: wheat">+<?= $team->cash_vic ?> </td>
                 <td style="color: wheat">=<?= $team->cash_nob ?></td>

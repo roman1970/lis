@@ -14,11 +14,13 @@ class KrokodileAsset extends AssetBundle
     public $baseUrl = '@web/themes/krokodile';
     public $css = [
         'css53/style.css', //css css55 тоже ничего
+        'js/jQuery-autoComplete-master/jquery.auto-complete.css'
 
     ];
     public $js = [
         'js/comments.js',
-        'js/jquery-cookie/jquery.cookie.js'
+        'js/jquery-cookie/jquery.cookie.js',
+        'js/jQuery-autoComplete-master/jquery.auto-complete.min.js'
 
     ];
     public $depends = [
