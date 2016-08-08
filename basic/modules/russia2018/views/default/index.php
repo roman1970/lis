@@ -461,8 +461,13 @@
     }
 
     p{
-        color: white;
+        color: rgba(255, 252, 249, 0.6);
     }
+
+    h3 {
+
+           text-align: center;
+       }
 
     .fa-2x{
         font-size: 1em;

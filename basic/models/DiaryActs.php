@@ -61,6 +61,23 @@ class DiaryActs extends \yii\db\ActiveRecord
      */
     public function getModel()
     {
-        return $this->hasOne(ActModel::className(), ['id' => 'model_id']);
+        return $this->hasOne(DiaryActModel::className(), ['id' => 'model_id']);
+    }
+
+    
+    
+    public  function beforeSave($options = [])
+    {
+
+        if (parent::beforeSave(1)) {
+            if ($this->isNewRecord) {
+                $this->time = time();
+
+                return true;
+            } else
+
+                return true;
+        } else
+            return false;
     }
 }

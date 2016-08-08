@@ -18,7 +18,34 @@
             }
         });
 
+        $("#ate").click(
+            function() {
+                var dish = $("#dish").val();
+                var measure = $("#measure").val();
+                
+                if (dish == '') alert('Введите название блюда!');
+                if (measure == '') alert('Введите название блюда!');
+                
+                ate(dish, measure);
+               
+            });
+
     });
+    
+    
+   function ate(dish, measure) {
+
+       $.ajax({
+           type: "GET",
+           url: "eat",
+           data: "dish="+dish+"&measure="+measure,
+           success: function(html){
+               $("#summary").html(html);
+           }
+
+       });
+
+   } 
     
     
 </script>
@@ -37,9 +64,37 @@
                 <input type="text" class="form-control" id="dish"  placeholder="Выбрать блюдо">
                 <input type="text" class="form-control" id="measure"  placeholder="Съеденное в граммах">
                
-                <?php /*<button type="button" class="btn btn-success" id="two_teams" >Поиск</button></p> */ ?>
-                <button type="button" class="btn btn-success" id="ate" >Записать</button>
+                <button type="button" class="btn btn-success" id="ate" >Съел!</button>
             </p>
+        </div>
+        <div id="summary">
+
+            <?php if($sum_kkal > 2000 ) :  ?>
+                <h3 style="color: red">Сегодня съел <?= $sum_kkal ?> kkal</h3>
+            <?php elseif($sum_kkal) : ?>
+                <h3>Сегодня съел <?= $sum_kkal ?> kkal</h3>
+                    <table class="table">
+                        <tbody>
+                        <tr >
+                            <td>м</td>
+                            <td>блюдо</td>
+                            <td>количество</td>
+                            <td>калорийность</td>
+                        </tr>
+
+                <?php $i=0; foreach ($ate_today as $item) : $i++;  ?>
+                    <tr >
+                        <td><?= $i ?></td>
+                        <td> <?= $item->dish->name ?></td>
+                        <td> <?= $item->measure ?></td>
+                        <td> <?= $item->kkal ?></td>
+                    </tr>
+
+                <?php endforeach; ?>
+
+                </tbody>
+            </table>
+            <?php endif; ?>
         </div>
     </form>
 </div> 
