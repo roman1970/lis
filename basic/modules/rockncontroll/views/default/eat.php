@@ -23,8 +23,8 @@
                 var dish = $("#dish").val();
                 var measure = $("#measure").val();
                 
-                if (dish == '') alert('Введите название блюда!');
-                if (measure == '') alert('Введите название блюда!');
+                if (dish == '') {alert('Введите название блюда!'); return;}
+                if (measure == '') {alert('Введите название блюда!'); return;}
                 
                 ate(dish, measure);
                

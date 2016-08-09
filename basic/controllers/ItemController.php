@@ -179,7 +179,7 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionListNoAudio(){
-        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_d <> 43");
+        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_id <> 43");
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,

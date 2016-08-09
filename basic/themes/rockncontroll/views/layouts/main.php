@@ -27,28 +27,18 @@ KrokodileAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<style type="text/css">
+    body{
+        background: rgb(119, 165, 179);
+    }
+    header{
+        background-color: rgb(109, 188, 65);;
+        border-radius: 5%;
+    }
+</style>
 
 <div class="container">
-    <header>
-        <div class="logo">
-            <h1 class="main_title">Today <?=date('d M Y', time()) ?></h1>
-        </div>
-     
-
-    </header>
-
-    <?= Nav::widget([
-        'options' => ['class' => 'nav nav-pills nav-stacked nav-justified'],
-        'items' => [
-            ['label' => 'СЪЕЛ', 'url' => ['eat'], 'class' => 'panel panel-primary'],
-            ['label' => 'КУПИЛ', 'url' => ['bye']],
-            ['label' => 'СДЕЛАЛ', 'url' => ['done']],
-            ['label' => 'ЗАМЕР', 'url' => ['measure']],
-            ['label' => 'ЗНАНИЯ', 'url' => ['knowledge']],
-
-        ],
-    ]);
-    ?>
+    
 
     <?=$content?>
 </div>
