@@ -6366,75 +6366,119 @@ type</columns>
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1675" parent="108" name="ux_ate_act_id">
+      <column id="1675" parent="108" name="user_id">
+        <data-type>int(2)</data-type>
+        <default-expression>&apos;8&apos;</default-expression>
+      </column>
+      <column id="1676" parent="108" name="mark">
+        <data-type>int(8)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="1677" parent="108" name="mark_status">
+        <data-type>int(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <index id="1678" parent="108" name="ux_ate_act_id">
         <columns>act_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="1676" parent="108" name="ux_ate_dish_id">
+      <index id="1679" parent="108" name="ux_ate_dish_id">
         <columns>dish_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1677" parent="108" name="PRIMARY">
+      <index id="1680" parent="108" name="ux_ate_user_id">
+        <columns>user_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="1681" parent="108" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1678" parent="108" name="ate_ibfk_1">
+      <foreign-key id="1682" parent="108" name="ate_ibfk_1">
         <columns>dish_id</columns>
         <ref-key>~.dish.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="1679" parent="108" name="ate_ibfk_2">
+      <foreign-key id="1683" parent="108" name="ate_ibfk_2">
         <columns>act_id</columns>
         <ref-key>~.controll_acts.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1680" parent="109" name="id">
+      <foreign-key id="1684" parent="108" name="ate_ibfk_3">
+        <columns>user_id</columns>
+        <ref-key>~.mark_user.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="1685" parent="109" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1681" parent="109" name="time">
+      <column id="1686" parent="109" name="time">
         <mandatory>1</mandatory>
         <data-type>int(12)</data-type>
       </column>
-      <column id="1682" parent="109" name="model_id">
+      <column id="1687" parent="109" name="model_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1683" parent="109" name="ux_controll_acts_model_id">
+      <column id="1688" parent="109" name="user_id">
+        <data-type>int(2)</data-type>
+        <default-expression>&apos;8&apos;</default-expression>
+      </column>
+      <column id="1689" parent="109" name="mark">
+        <data-type>int(8)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="1690" parent="109" name="mark_status">
+        <data-type>int(4)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <index id="1691" parent="109" name="ux_controll_acts_model_id">
         <columns>model_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1684" parent="109" name="PRIMARY">
+      <index id="1692" parent="109" name="ux_controll_acts_user_id">
+        <columns>user_id</columns>
+        <desc-columns></desc-columns>
+      </index>
+      <key id="1693" parent="109" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1685" parent="109" name="controll_acts_ibfk_1">
+      <foreign-key id="1694" parent="109" name="controll_acts_ibfk_1">
         <columns>model_id</columns>
         <ref-key>~.act_model.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1686" parent="110" name="id">
+      <foreign-key id="1695" parent="109" name="controll_acts_ibfk_2">
+        <columns>user_id</columns>
+        <ref-key>~.mark_user.PRIMARY</ref-key>
+        <cascade-update-rule>restrict</cascade-update-rule>
+        <cascade-delete-rule>restrict</cascade-delete-rule>
+      </foreign-key>
+      <column id="1696" parent="110" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1687" parent="110" name="name">
+      <column id="1697" parent="110" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1688" parent="110" name="description">
+      <column id="1698" parent="110" name="description">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1689" parent="110" name="kkal">
+      <column id="1699" parent="110" name="kkal">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <key id="1690" parent="110" name="PRIMARY">
+      <key id="1700" parent="110" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

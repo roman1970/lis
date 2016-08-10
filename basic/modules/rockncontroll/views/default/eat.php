@@ -5,8 +5,9 @@
             minChars: 3,
             source: function (term, suggest) {
                 term = term.toLowerCase();
-                $.getJSON("dishes", function (data) {
-                    console.log(data);
+                console.log(term);
+                $.getJSON("rockncontroll/default/dishes", function (data) {
+
                     choices = data;
                     var suggestions = [];
                     for (i = 0; i < choices.length; i++)
@@ -20,27 +21,41 @@
 
         $("#ate").click(
             function() {
+
+                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
                 var dish = $("#dish").val();
                 var measure = $("#measure").val();
                 
                 if (dish == '') {alert('Введите название блюда!'); return;}
                 if (measure == '') {alert('Введите название блюда!'); return;}
                 
-                ate(dish, measure);
+                ate(dish, measure, user);
+
                
             });
+
+        $('#dish').focus(
+            function () {
+                $(this).select();
+            })
+        $('#measure').focus(
+            function () {
+                $(this).select();
+            })
+
 
     });
     
     
-   function ate(dish, measure) {
+   function ate(dish, measure, user) {
 
        $.ajax({
            type: "GET",
-           url: "eat",
-           data: "dish="+dish+"&measure="+measure,
+           url: "rockncontroll/default/eat",
+           data: "dish="+dish+"&measure="+measure+"&user="+user,
            success: function(html){
-               $("#summary").html(html);
+               $("#sum_ate").html(html);
+
            }
 
        });
@@ -67,7 +82,7 @@
                 <button type="button" class="btn btn-success" id="ate" >Съел!</button>
             </p>
         </div>
-        <div id="summary">
+        <div id="sum_ate">
 
             <?php if($sum_kkal > 2000 ) :  ?>
                 <h3 style="color: red">Сегодня съел <?= $sum_kkal ?> kkal</h3>

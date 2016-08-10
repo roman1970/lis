@@ -27,7 +27,7 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex(){
 
-       return $this->render('in');
+       return $this->render('index');
 
     }
 
@@ -39,64 +39,114 @@ class DefaultController extends FrontEndController
 
         $start_day = strtotime('now 00:00:00');
 
-        if(Yii::$app->getRequest()->getQueryParam('dish') && Yii::$app->getRequest()->getQueryParam('measure')) {
+        
+        if(Yii::$app->getRequest()->getQueryParam('user'))  {
 
-            $act = new DiaryActs();
-            $act->model_id = 1;
-            if($act->save(false)) {
-                $ate = new DiaryAte();
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+
+            if(Yii::$app->getRequest()->getQueryParam('dish') &&
+                Yii::$app->getRequest()->getQueryParam('measure')) {
+
+
+                $round_ate = 0;
+
                 $dish = DiaryDish::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('dish')])->one();
-                try {
-                    $ate->dish_id = $dish->id;
-                } catch (\ErrorException $e) {
-                    return 'Такого блюда в базе нет!';
-                }
-                $ate->act_id = $act->id;
-                $ate->measure = Yii::$app->getRequest()->getQueryParam('measure');
-                $ate->kkal = round($ate->measure * $dish->kkal / 100);
+                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
 
-                if(!$ate->validate()) {
-                    return 'Данные введены некорректно';
-                }
-                else {
-                    $ate->save();
-                    /*метка начала текущих суток*/
-                    
-                    $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > ".$start_day."")->all(), 'id', 'id'));
-
-                    $ate_today = DiaryAte::find()
-                        ->where("act_id  IN (" . $today_acts . ")")
-                        ->all();
-                    $sum_kkal = DiaryAte::find()
+                if($today_acts_before) {
+                    $sum_kkal_before = DiaryAte::find()
                         ->select('SUM(kkal)')
-                        ->where("act_id  IN (" . $today_acts . ")")
+                        ->where("act_id  IN (" . $today_acts_before . ")")
                         ->scalar();
-                    return $this->renderPartial('ate_today', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal]);
-                   
+                }
+                else $sum_kkal_before = 0;
+
+                $act = new DiaryActs();
+                $act->model_id = 1;
+                $act->user_id = Yii::$app->getRequest()->getQueryParam('user');
+                $round_ate = round(Yii::$app->getRequest()->getQueryParam('measure') * $dish->kkal / 100);
+
+
+
+                if($act->save(false)) {
+                    $ate = new DiaryAte();
+
+                    try {
+                        $ate->dish_id = $dish->id;
+                    } catch (\ErrorException $e) {
+                        return 'Такого блюда в базе нет!';
+                    }
+
+                    $ate->act_id = $act->id;
+                    $ate->user_id = $act->user_id;
+                    $ate->measure = Yii::$app->getRequest()->getQueryParam('measure');
+                    $ate->kkal = $round_ate;
+                    //$ate->mark = $act->mark;
+
+                    if(!$ate->validate()) {
+                        return 'Данные введены некорректно';
+                    }
+                    else {
+                        $ate->save();
+                        /*метка начала текущих суток*/
+
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
+
+                        $ate_today = DiaryAte::find()
+                            ->where("act_id  IN (" . $today_acts . ")")
+                            ->all();
+                        $sum_kkal = DiaryAte::find()
+                            ->select('SUM(kkal)')
+                            ->where("act_id  IN (" . $today_acts . ")")
+                            ->scalar();
+
+                        if($sum_kkal > 2000) {
+                            if($sum_kkal - $round_ate < 2000) {
+                                $act->mark = round(($sum_kkal-2000)/100, 0, PHP_ROUND_HALF_UP)*(-1);
+                            }
+                            else{
+                                $act->mark = round($round_ate/100, 0, PHP_ROUND_HALF_UP)*(-1);
+                            }
+                            $act->update();
+                            $ate->mark = $act->mark;
+                            $ate->update();
+                        }
+
+
+                        return $this->renderPartial('ate_today', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal]);
+
+                    }
+
                 }
 
             }
-
-        }
-        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > ".$start_day."")->all(), 'id', 'id'));
-
-
-        $ate_today = [];
-        $sum_kkal = 0;
-
-        if ($today_acts) {
-            $ate_today = DiaryAte::find()
-                ->where("act_id  IN (" . $today_acts . ")")
-                ->all();
-            $sum_kkal = DiaryAte::find()
-                ->select('SUM(kkal)')
-                ->where("act_id  IN (" . $today_acts . ")")
-                ->scalar();
-        }
-
+            
         
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
+    
+    
+            $ate_today = [];
+            $sum_kkal = 0;
+    
+            if ($today_acts) {
+                $ate_today = DiaryAte::find()
+                    ->where("act_id  IN (" . $today_acts . ")")
+                    ->all();
+                $sum_kkal = DiaryAte::find()
+                    ->select('SUM(kkal)')
+                    ->where("act_id  IN (" . $today_acts . ")")
+                    ->scalar();
+            }
+    
+            return $this->renderPartial('eat', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal, 'user' => $user]);
+        }
+        
+        else {
+            return $this->renderPartial('error');
+        }
 
-        return $this->render('eat', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal]);
+
     }
 
 
@@ -118,6 +168,10 @@ class DefaultController extends FrontEndController
         return  json_encode($res);
     }
 
+    /**
+     * Вход
+     * @return bool|string
+     */
     public function actionLogin(){
 
 
@@ -128,16 +182,17 @@ class DefaultController extends FrontEndController
             $user = MarkUser::find()
                 ->where("name like('%" . $name . "') and pseudo like('" . $pseudo . "')")
                 ->one();
-            if($user) {
+            //return var_dump($user);
 
-                return md5($user->id);
+            if($user) {
+               return $this->renderPartial('menu', ['user' => $user]);
             }
             else return false;
 
         }
 
         else {
-            return $this->render('login');
+            return $this->render('index');
         }
 
     }
