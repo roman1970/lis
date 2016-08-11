@@ -32,8 +32,9 @@ KrokodileAsset::register($this);
         background: rgb(119, 165, 179);
     }
     header{
-        background-color: rgb(109, 188, 65);;
+        background-color: rgb(92, 184, 92);
         border-radius: 5%;
+        color: white;
     }
 </style>
 

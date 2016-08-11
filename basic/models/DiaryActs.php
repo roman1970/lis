@@ -59,7 +59,7 @@ class DiaryActs extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getModel()
+    public function getActModel()
     {
         return $this->hasOne(DiaryActModel::className(), ['id' => 'model_id']);
     }

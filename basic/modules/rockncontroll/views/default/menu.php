@@ -7,6 +7,11 @@
                 eat(user);
             });
 
+        $("#task").click(
+            function() {
+                task(user);
+            });
+
     });
 
 
@@ -15,6 +20,20 @@
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/eat/",
+            data: "user="+user,
+            success: function(html){
+                $("#summary").html(html);
+            }
+
+        });
+
+    }
+
+    function task(user) {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/show-task/",
             data: "user="+user,
             success: function(html){
                 $("#summary").html(html);

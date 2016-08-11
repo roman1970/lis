@@ -9,6 +9,7 @@ use app\models\DiaryAte;
 use app\models\DiaryDish;
 use app\models\MarkGroup;
 use app\models\MarkUser;
+use app\models\Task;
 use Yii;
 use app\models\Categories;
 use yii\data\Pagination;
@@ -147,6 +148,77 @@ class DefaultController extends FrontEndController
         }
 
 
+    }
+
+    /**
+     * Показать список задач
+     * @return string
+     */
+    public function actionShowTask(){
+
+        //$start_day = strtotime('now 00:00:00');
+
+        if(Yii::$app->getRequest()->getQueryParam('user'))  {
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+            $tasks = Task::find()
+                ->where('status = 1 or status = 2')
+                ->all();
+
+            return $this->renderPartial('tasks', ['tasks_list' => $tasks, 'user' => $user]);
+        }
+
+        return $this->renderPartial('error');
+
+    }
+    
+    public function actionAddTask(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('description')) {
+                
+                $new_task = new Task();
+                $new_task->name = Yii::$app->getRequest()->getQueryParam('name');
+                $new_task->description = Yii::$app->getRequest()->getQueryParam('description');
+                $new_task->status = 1;
+                $new_task->hour = 0;
+                $new_task->dead_line = 0;
+                
+                if($new_task->validate()) {
+                    if($new_task->save()) {
+                        $tasks = Task::find()
+                            ->where('status = 1 or status = 2')
+                            ->all();
+                        return $this->renderPartial('new_tasks', ['tasks_list' => $tasks, 'user' => $user]);
+                      
+                    }
+                    else  return $this->renderPartial('error');
+                    
+                }
+                else  return 'Текст большой!';
+
+            }
+        }
+        
+    }
+    
+    public function actionTasked(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+
+            if (Yii::$app->getRequest()->getQueryParam('task_id') &&
+                Yii::$app->getRequest()->getQueryParam('mark')) {
+                    
+            }
+        }
+        
     }
 
 

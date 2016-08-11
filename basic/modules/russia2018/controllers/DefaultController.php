@@ -84,8 +84,11 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
-            $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
-            //var_dump($data_id_from); exit;
+            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 53915;
+
+            else {
+                $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
+            }
         }
 
         if(Yii::$app->getRequest()->getQueryParam('toto') && Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()) {
@@ -186,7 +189,13 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
-            $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
+            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 53915;
+
+            else {
+                $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
+                if($data_id_from < 53915) $data_id_from = 53915;
+            }
+
             //var_dump($data_id_from); exit;
         }
 

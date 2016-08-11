@@ -66,7 +66,7 @@
 </script>
 
 <style>
-    .center{
+    .center, h3{
         text-align: center;
     }
 </style>
@@ -82,21 +82,23 @@
                 <button type="button" class="btn btn-success" id="ate" >Съел!</button>
             </p>
         </div>
+    </form>
         <div id="sum_ate">
 
-            <?php if($sum_kkal > 2000 ) :  ?>
+            <?php if($sum_kkal >= 2000 ) :  ?>
                 <h3 style="color: red">Сегодня съел <?= $sum_kkal ?> kkal</h3>
-            <?php elseif($sum_kkal) : ?>
+            <?php elseif($sum_kkal < 2000) : ?>
                 <h3>Сегодня съел <?= $sum_kkal ?> kkal</h3>
                     <table class="table">
                         <tbody>
-                        <tr >
+                        <tr>
                             <td>м</td>
                             <td>блюдо</td>
                             <td>количество</td>
                             <td>калорийность</td>
                         </tr>
 
+            <?php endif; ?>
                 <?php $i=0; foreach ($ate_today as $item) : $i++;  ?>
                     <tr >
                         <td><?= $i ?></td>
@@ -109,7 +111,7 @@
 
                 </tbody>
             </table>
-            <?php endif; ?>
+
         </div>
-    </form>
+
 </div> 
