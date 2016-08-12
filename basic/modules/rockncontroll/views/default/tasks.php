@@ -43,7 +43,7 @@
 
     }
 
-    function doneTask(task_id,i){
+    function doneTask(task_id,i, user){
 
         var mark = $("#mark_"+i).val();
 
@@ -52,9 +52,6 @@
             alert("Введите оценку");
             return false;
         }
-
-
-        var user = <?= (isset($user->id)) ? $user->id : 1 ?>;
 
 
         if(mark){
@@ -146,7 +143,7 @@
                         </td>
                         <td>
                             <input type='text' class="form-control" id="mark_<?=$i ?>" placeholder="Оценка" width="20"/>
-                            <button class="btn btn-success" id="tasked_<?=$i ?>" onclick="doneTask(<?=$task->id?>, <?=$i?>)" >Сделал!</button>
+                            <button class="btn btn-success" id="tasked_<?=$i ?>" onclick="doneTask(<?=$task->id?>, <?=$i?>, <?=$user?>)" >Сделал!</button>
                             <p id="res_<?=$i?>"></p>
 
                         </td>

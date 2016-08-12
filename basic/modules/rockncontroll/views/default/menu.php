@@ -12,6 +12,11 @@
                 task(user);
             });
 
+        $("#bought").click(
+            function() {
+                bought(user);
+            });
+
     });
 
 
@@ -42,6 +47,20 @@
         });
 
     }
+
+    function bought(user) {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/bought/",
+            data: "user=" + user,
+            success: function (html) {
+                $("#summary").html(html);
+            }
+
+        });
+    }
+
 
 </script>
 

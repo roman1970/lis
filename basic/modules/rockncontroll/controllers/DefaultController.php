@@ -4,12 +4,16 @@ namespace app\modules\rockncontroll\controllers;
 
 
 use app\components\FrontEndController;
+use app\models\Bought;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
 use app\models\DiaryDish;
 use app\models\MarkGroup;
 use app\models\MarkUser;
+use app\models\Products;
+use app\models\Shop;
 use app\models\Task;
+use app\models\Tasked;
 use Yii;
 use app\models\Categories;
 use yii\data\Pagination;
@@ -53,7 +57,7 @@ class DefaultController extends FrontEndController
                 $round_ate = 0;
 
                 $dish = DiaryDish::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('dish')])->one();
-                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
+                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 1")->all(), 'id', 'id'));
 
                 if($today_acts_before) {
                     $sum_kkal_before = DiaryAte::find()
@@ -161,7 +165,7 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
             $user = Yii::$app->getRequest()->getQueryParam('user');
             $tasks = Task::find()
-                ->where('status = 1 or status = 2')
+                ->where('status = 0 or status = 1')
                 ->all();
 
             return $this->renderPartial('tasks', ['tasks_list' => $tasks, 'user' => $user]);
@@ -191,7 +195,7 @@ class DefaultController extends FrontEndController
                 if($new_task->validate()) {
                     if($new_task->save()) {
                         $tasks = Task::find()
-                            ->where('status = 1 or status = 2')
+                            ->where('status = 0 or status = 1')
                             ->all();
                         return $this->renderPartial('new_tasks', ['tasks_list' => $tasks, 'user' => $user]);
                       
@@ -205,21 +209,157 @@ class DefaultController extends FrontEndController
         }
         
     }
-    
+
+    /**
+     * Сохранение задачи
+     * @return string
+     * @throws \Exception
+     */
     public function actionTasked(){
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
             $user = Yii::$app->getRequest()->getQueryParam('user');
 
+                if(Yii::$app->getRequest()->getQueryParam('task_id') !== null && Yii::$app->getRequest()->getQueryParam('mark') !== null) {
 
-            if (Yii::$app->getRequest()->getQueryParam('task_id') &&
-                Yii::$app->getRequest()->getQueryParam('mark')) {
-                    
+                    //return var_dump($user);
+                    $task = Task::findOne(Yii::$app->getRequest()->getQueryParam('task_id'));
+                    $task->status = 2;
+                    $task->update();
+
+                    $act = new DiaryActs();
+                    $act->model_id = 2;
+                    $act->user_id = (int)$user;
+                    $act->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
+                    $act->mark_status = 0;
+
+                    if($act->save(false)) {
+
+                        $tasked = new Tasked();
+                        $tasked->task_id = $task->id;
+                        $tasked->user_id = (int)$user;
+                        $tasked->act_id = $act->id;
+                        $tasked->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
+                        $tasked->mark_status = 0;
+
+                   //return var_dump($tasked);
+
+                        if ($tasked->save()) {
+
+                                return "<span style='color:green'>Задача выполнена!</span>";
+                            }
+                            else "<span style='color:red'>Ошибка сохранения tasked</span>";
+                       
+                        }
+                        else return "<span style='color:red'>Ошибка валидации</span>";
+
             }
         }
         
     }
+
+    /**
+     * Расскажи мне про покупку
+     * @return string
+     */
+    public function actionBought(){
+
+        $start_day = strtotime('now 00:00:00');
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+            if(Yii::$app->getRequest()->getQueryParam('product') &&
+                Yii::$app->getRequest()->getQueryParam('measure') &&
+                Yii::$app->getRequest()->getQueryParam('shop') &&
+                Yii::$app->getRequest()->getQueryParam('item')) {
+
+
+                $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('product')])->one();
+                $shop = Shop::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('shop')])->one();
+                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
+
+                if($today_acts_before) {
+                    $sum_spent_before = Bought::find()
+                        ->select('SUM(spent)')
+                        ->where("act_id  IN (" . $today_acts_before . ")")
+                        ->scalar();
+                }
+                else $sum_spent_before = 0;
+
+                $act = new DiaryActs();
+                $act->model_id = 2;
+                $act->user_id = (int)Yii::$app->getRequest()->getQueryParam('user');
+                
+                //$round_ate = round(Yii::$app->getRequest()->getQueryParam('measure') * $dish->kkal / 100);
+
+                if($act->save(false)) {
+                    $bought = new Bought();
+
+                    try {
+                        $bought->product_id = $product->id;
+                    } catch (\ErrorException $e) {
+                        return 'Такого продукта в базе нет!';
+                    }
+
+                    $bought->act_id = $act->id;
+                    $bought->user_id = $act->user_id;
+                    $bought->spent = (float)Yii::$app->getRequest()->getQueryParam('measure');
+                    $bought->item_price = (float)Yii::$app->getRequest()->getQueryParam('item');
+                    $bought->shop_id = $shop->id;
+                    //$ate->mark = $act->mark;
+
+                    //return var_dump($bought);
+
+                    if(!$bought->validate()) {
+                        return 'Данные введены некорректно';
+                    }
+                    else {
+                        $bought->save();
+                        /*метка начала текущих суток*/
+
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
+
+                        $bought_today = Bought::find()
+                            ->where("act_id  IN (" . $today_acts . ")")
+                            ->all();
+                        $sum_spent = Bought::find()
+                            ->select('SUM(spent)')
+                            ->where("act_id  IN (" . $today_acts . ")")
+                            ->scalar();
+
+                        }
+
+
+                        return $this->renderPartial('bought_today', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent]);
+
+                    }
+
+                }
+
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
+
+            $bought_today = Bought::find()
+                ->where("act_id  IN (" . $today_acts . ")")
+                ->all();
+            $sum_spent = Bought::find()
+                ->select('SUM(spent)')
+                ->where("act_id  IN (" . $today_acts . ")")
+                ->scalar();
+
+            return $this->renderPartial('bought', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent, 'user' => $user]);
+
+
+        }
+
+        else {
+            return $this->renderPartial('error');
+        }
+
+
+        }
 
 
     /**
@@ -229,12 +369,45 @@ class DefaultController extends FrontEndController
     public function actionDishes(){
         $res = [];
       
-        $m = DiaryDish::find()
-            ->all();
+        $m = DiaryDish::find()->all();
+        
         foreach ($m as $h){
-           
           $res[] = $h->name;
            
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
+     * Товары для автокомплита
+     * @return string
+     */
+    public function actionProducts(){
+        $res = [];
+
+        $m = Products::find()->all();
+        
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
+     * Магазины для автокомплита
+     * @return string
+     */
+    public function actionShops(){
+        $res = [];
+
+        $m = Shop::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
         }
 
         return  json_encode($res);

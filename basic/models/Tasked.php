@@ -78,6 +78,6 @@ class Tasked extends \yii\db\ActiveRecord
      */
     public function getAct()
     {
-        return $this->hasOne(DiaryActs::className(), ['id' => 'act_id']);
+        return $this->hasOne(Diar::className(), ['id' => 'act_id']);
     }
 }
