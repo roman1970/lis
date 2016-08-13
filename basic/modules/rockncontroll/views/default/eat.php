@@ -66,7 +66,7 @@
 </script>
 
 <style>
-    .center, h3{
+    .center, h3, table > tbody > tr > td{
         text-align: center;
     }
 </style>

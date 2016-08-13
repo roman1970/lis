@@ -174,7 +174,11 @@ class DefaultController extends FrontEndController
         return $this->renderPartial('error');
 
     }
-    
+
+    /**
+     * Добавление задачи
+     * @return string
+     */
     public function actionAddTask(){
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -208,6 +212,50 @@ class DefaultController extends FrontEndController
             }
         }
         
+    }
+
+    /**
+     * Добавление товара
+     * @return string
+     */
+    public function actionAddProduct(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('cat')) {
+                
+                $product = new Products();
+                if(Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()){
+                  //  return var_dump(Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id);
+                    $product->cat_id = Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id;
+                }
+
+                else $product->cat_id = 63;
+                
+                $product->name = Yii::$app->getRequest()->getQueryParam('name');
+                $product->currency = 35;
+                $product->currency_out = 35;
+                $product->photo = '';
+                $product->description = '';
+                $product->formatted_val = '';
+                $product->price = 0.0;
+                //return var_dump($product);
+                try {
+                      if ($product->save(false)) return "<span style='color:green; font-size: 15px;'>Товар сохранен!</span>";
+                        // else return var_dump($product);
+
+                } catch (\ErrorException $e) {
+                   return $e->getMessage();
+                }
+
+            }
+            
+            return $this->renderPartial('add_product');
+        }
     }
 
     /**
@@ -279,7 +327,7 @@ class DefaultController extends FrontEndController
 
                 $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('product')])->one();
                 $shop = Shop::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('shop')])->one();
-                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
+                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 3")->all(), 'id', 'id'));
 
                 if($today_acts_before) {
                     $sum_spent_before = Bought::find()
@@ -290,10 +338,10 @@ class DefaultController extends FrontEndController
                 else $sum_spent_before = 0;
 
                 $act = new DiaryActs();
-                $act->model_id = 2;
+                $act->model_id = 3;
                 $act->user_id = (int)Yii::$app->getRequest()->getQueryParam('user');
                 
-                //$round_ate = round(Yii::$app->getRequest()->getQueryParam('measure') * $dish->kkal / 100);
+
 
                 if($act->save(false)) {
                     $bought = new Bought();
@@ -318,36 +366,56 @@ class DefaultController extends FrontEndController
                     }
                     else {
                         $bought->save();
+                        //return var_dump($bought);
                         /*метка начала текущих суток*/
 
-                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 3")->all(), 'id', 'id'));
 
-                        $bought_today = Bought::find()
-                            ->where("act_id  IN (" . $today_acts . ")")
-                            ->all();
-                        $sum_spent = Bought::find()
-                            ->select('SUM(spent)')
-                            ->where("act_id  IN (" . $today_acts . ")")
-                            ->scalar();
+                        $bought_today = [];
+                        $sum_spent = 0;
+
+                        if ($today_acts) {
+                            try {
+                                //return var_dump($bought_today);
+                                $bought_today = Bought::find()->where("act_id  IN (" . $today_acts . ")")->all();
+                            } catch (\ErrorException $e) {
+                                return $e->getMessage();
+                            }
+
+
+                            $sum_spent = Bought::find()->select('SUM(spent)')->where("act_id  IN (" . $today_acts . ")")->scalar();
+                           // return var_dump($sum_spent );
+                        }
+
+                        //return var_dump($sum_spent);
+
+
+                            return $this->renderPartial('bought_today', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent]);
 
                         }
 
 
-                        return $this->renderPartial('bought_today', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent]);
-
                     }
 
-                }
 
-            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 2")->all(), 'id', 'id'));
 
-            $bought_today = Bought::find()
-                ->where("act_id  IN (" . $today_acts . ")")
-                ->all();
-            $sum_spent = Bought::find()
-                ->select('SUM(spent)')
-                ->where("act_id  IN (" . $today_acts . ")")
-                ->scalar();
+            }
+
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 3")->all(), 'id', 'id'));
+
+
+            $bought_today = [];
+            $sum_spent = 0;
+
+            if ($today_acts) {
+                $bought_today = Bought::find()
+                    ->where("act_id  IN (" . $today_acts . ")")
+                    ->all();
+                $sum_spent = Bought::find()
+                    ->select('SUM(spent)')
+                    ->where("act_id  IN (" . $today_acts . ")")
+                    ->scalar();
+            }
 
             return $this->renderPartial('bought', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent, 'user' => $user]);
 
@@ -407,6 +475,43 @@ class DefaultController extends FrontEndController
 
         foreach ($m as $h){
             $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
+     * Категории для автокомплита
+     * @return string
+     */
+    public function actionCats(){
+        $res = [];
+
+        $m = Categories::find()->where(['site_id' => 11])->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+    
+    public function actionDataForCharts(){
+        $res = [];
+
+        $m = Products::find()->all();
+
+        $res[0][] = '';
+        $res[1][] = '';
+
+        foreach ($m as $h){
+            $res[0][] = $h->name;
+
+        }
+        foreach ($m as $h){
+            $res[1][] = $h->id;
 
         }
 

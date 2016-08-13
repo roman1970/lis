@@ -1,0 +1,27 @@
+1469173331
+plis
+close
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+<address>Apache/2.4.7 (Ubuntu) Server at plis Port 80</address>
+
+Apache/2.4.7 (Ubuntu)
+plis
+127.0.0.1
+80
+127.0.0.1
+/home/romanych/public_html/plis/basic/web
+http
+
+/home/romanych/public_html/plis/basic/web
+[no address given]
+/home/romanych/public_html/plis/basic/web/index.php
+49560
+CGI/1.1
+HTTP/1.0
+GET
+siteParamIdForTheme=russia2018&mode=russia2018&siteParamIdForTheme=russia2018&mode=russia2018
+/?siteParamIdForTheme=russia2018&mode=russia2018&siteParamIdForTheme=russia2018&mode=russia2018
+/index.php
+/index.php
+1469173331.142
+1469173331

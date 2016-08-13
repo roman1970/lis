@@ -63,7 +63,7 @@
                     return;
                 }
 
-                bought(product, measure, user, item, shop);
+                make_bye(product, measure, user, item, shop);
 
 
             });
@@ -90,7 +90,7 @@
     });
 
 
-    function bought(product, measure, user, item, shop) {
+    function make_bye(product, measure, user, item, shop) {
 
 
         $.ajax({
@@ -118,12 +118,12 @@
 <div class="container">
     <form class="form-inline center" role="form" id="form-ate">
         <div class="form-group">
-            <h3>Что съел?</h3>
+            <h3>Что купил?</h3>
             <p>
-                <input type="text" class="form-control" id="product"  placeholder="Выбрать товар">
-                <input type="text" class="form-control" id="measure"  placeholder="Потраченные деньги">
-                <input type="text" class="form-control" id="item"  placeholder="Цена за шт или кг">
-                <input type="text" class="form-control" id="shop"  placeholder="Магазин">
+                <input type="text" class="form-control" id="product"  placeholder="Выбрать товар"><br>
+                <input type="text" class="form-control" id="measure"  placeholder="Потраченные деньги"><br>
+                <input type="text" class="form-control" id="item"  placeholder="Цена за шт или кг"><br>
+                <input type="text" class="form-control" id="shop"  placeholder="Магазин"><br>
 
                 <button type="button" class="btn btn-success" id="bye" >Купил!</button>
             </p>
@@ -131,7 +131,7 @@
     </form>
     <div id="sum_bought">
 
-        <h3>Сегодня съел  <?= $sum_spent ?> руб</h3>
+        <h3>Сегодня купил на <?= $sum_spent ?> руб</h3>
 
         <table class="table">
             <tbody>
