@@ -1,7 +1,8 @@
+<div class="alert alert-success"><p>Привет, <?= $user->name ?></p></div>
 <script>
-    var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+    var user = <?= $user->id ?>;
     $(document).ready(function() {
-
+       
         $("#show_menu").hide();
 
         $("#show_menu").click(

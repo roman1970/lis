@@ -2,6 +2,7 @@
     var arr = [];
     $(document).ready(function() {
 
+
         if($.cookie('the_cookie') == 'the_value') {
             $.ajax({
                 type: "GET",
@@ -14,6 +15,8 @@
             });
         }
 
+
+        /*
         $.getJSON("/rockncontroll/default/data-for-charts/", function (data) {
 
             google.charts.load('current', {'packages':['corechart']});
@@ -34,6 +37,7 @@
             }
 
         }, "json");
+        */
 
     });
 
@@ -85,8 +89,8 @@ use yii\widgets\ActiveForm;
 <header>
     <div class="logo">
        <h1 class="main_title">Today <?=date('d M Y', time()) ?></h1>
-        <!--Div that will hold the pie chart-->
-        <div id="vis_div" style="width: 100%; height: 200px;"></div>
+        <!--Div that will hold the pie chart
+        <div id="vis_div" style="width: 100%; height: 200px;"></div>-->
     </div>
 </header>
 <div class="row">

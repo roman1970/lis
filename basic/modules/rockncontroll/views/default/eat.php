@@ -1,4 +1,5 @@
 <script>
+    var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
     $(document).ready(function() {
 
         $('#dish').autoComplete({
@@ -22,7 +23,7 @@
         $("#ate").click(
             function() {
 
-                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+              
                 var dish = $("#dish").val();
                 var measure = $("#measure").val();
                 

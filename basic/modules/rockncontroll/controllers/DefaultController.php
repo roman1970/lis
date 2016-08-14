@@ -47,7 +47,12 @@ class DefaultController extends FrontEndController
         
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
 
-            $user = Yii::$app->getRequest()->getQueryParam('user');
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+           // return var_dump($user);
+
+
+            //$user = Yii::$app->getRequest()->getQueryParam('user');
+            //return var_dump($user);
 
 
             if(Yii::$app->getRequest()->getQueryParam('dish') &&
@@ -56,8 +61,9 @@ class DefaultController extends FrontEndController
 
                 $round_ate = 0;
 
+
                 $dish = DiaryDish::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('dish')])->one();
-                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user and model_id = 1")->all(), 'id', 'id'));
+                $today_acts_before = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = $user->id and model_id = 1")->all(), 'id', 'id'));
 
                 if($today_acts_before) {
                     $sum_kkal_before = DiaryAte::find()
@@ -96,7 +102,7 @@ class DefaultController extends FrontEndController
                         $ate->save();
                         /*метка начала текущих суток*/
 
-                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
 
                         $ate_today = DiaryAte::find()
                             ->where("act_id  IN (" . $today_acts . ")")
@@ -119,7 +125,7 @@ class DefaultController extends FrontEndController
                         }
 
 
-                        return $this->renderPartial('ate_today', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal]);
+                        return $this->renderPartial('ate_today', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal, 'user' => $user]);
 
                     }
 
@@ -128,7 +134,7 @@ class DefaultController extends FrontEndController
             }
             
         
-            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user)->all(), 'id', 'id'));
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
     
     
             $ate_today = [];
@@ -183,7 +189,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $user = Yii::$app->getRequest()->getQueryParam('user');
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
 
             if (Yii::$app->getRequest()->getQueryParam('name') &&

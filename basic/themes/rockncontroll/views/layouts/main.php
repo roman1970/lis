@@ -37,6 +37,10 @@ KrokodileAsset::register($this);
         border-radius: 5%;
         color: white;
     }
+    .alert > p {
+
+        text-align: center;
+    }
 </style>
 
 <div class="container">
