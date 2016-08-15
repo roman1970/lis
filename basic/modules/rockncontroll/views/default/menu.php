@@ -1,7 +1,20 @@
-<div class="alert alert-success"><p>Привет, <?= $user->name ?></p></div>
+<div class="alert alert-success">
+    <p>Привет, <?= $user->name ?></p>
+    <p id="current_task"></p>
+</div>
 <script>
     var user = <?= $user->id ?>;
     $(document).ready(function() {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/show-current-task/",
+            data: "user="+user,
+            success: function(html){
+                $("#current_task").html(html);
+            }
+
+        });
        
         $("#show_menu").hide();
 
@@ -10,6 +23,14 @@
                 $("#menu").show();
                 $("#show_menu").hide();
                 $("#summary").hide();
+            });
+
+        $("#today_params").click(
+            function() {
+                todayParam(user);
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
             });
 
         $("#eat").click(
@@ -30,7 +51,6 @@
 
         $("#bought").click(
             function() {
-               
                 bought(user);
                 $("#summary").show();
                 $("#menu").hide();
@@ -100,12 +120,27 @@
             }
 
         });
+
+    }
+
+    function todayParam(user) {
+  
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/day-params/",
+            data: "user=" + user,
+            success: function (html) {
+                $("#summary").html(html);
+            }
+
+        });
     }
 
 
 </script>
 
 <div id="menu">
+    <button type="button" class="btn btn-success btn-lg btn-block" id="today_params">Сегодня</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="eat">Съел</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="bought">Купил</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="add_product">Добавить товар</button>

@@ -41,6 +41,12 @@ KrokodileAsset::register($this);
 
         text-align: center;
     }
+    @media(min-width:1199px) {
+        .container {
+            width: 1100px;
+
+        }
+    }
 </style>
 
 <div class="container">

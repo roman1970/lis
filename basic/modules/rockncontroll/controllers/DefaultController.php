@@ -7,6 +7,7 @@ use app\components\FrontEndController;
 use app\models\Bought;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
+use app\models\DiaryDayParams;
 use app\models\DiaryDish;
 use app\models\MarkGroup;
 use app\models\MarkUser;
@@ -102,15 +103,22 @@ class DefaultController extends FrontEndController
                         $ate->save();
                         /*метка начала текущих суток*/
 
-                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 1")->all(), 'id', 'id'));
 
-                        $ate_today = DiaryAte::find()
-                            ->where("act_id  IN (" . $today_acts . ")")
-                            ->all();
-                        $sum_kkal = DiaryAte::find()
-                            ->select('SUM(kkal)')
-                            ->where("act_id  IN (" . $today_acts . ")")
-                            ->scalar();
+                        $ate_today = [];
+                        $sum_kkal = 0;
+
+                        //return var_dump($today_acts);
+
+                        if ($today_acts) {
+                            $ate_today = DiaryAte::find()
+                                ->where("act_id  IN (" . $today_acts . ")")
+                                ->all();
+                            $sum_kkal = DiaryAte::find()
+                                ->select('SUM(kkal)')
+                                ->where("act_id  IN (" . $today_acts . ")")
+                                ->scalar();
+                        }
 
                         if($sum_kkal > 2000) {
                             if($sum_kkal - $round_ate < 2000) {
@@ -134,8 +142,9 @@ class DefaultController extends FrontEndController
             }
             
         
-            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
-    
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 1")->all(), 'id', 'id'));
+
+            //return var_dump($today_acts);
     
             $ate_today = [];
             $sum_kkal = 0;
@@ -149,15 +158,33 @@ class DefaultController extends FrontEndController
                     ->where("act_id  IN (" . $today_acts . ")")
                     ->scalar();
             }
+
+            //return var_dump($ate_today);
     
             return $this->renderPartial('eat', ['ate_today' => $ate_today, 'sum_kkal' => $sum_kkal, 'user' => $user]);
         }
         
-        else {
-            return $this->renderPartial('error');
+      
+        return $this->renderPartial('error');
+       
+
+    }
+
+    /**
+     * Удаление съеденного
+     * @return string
+     * @throws \Exception
+     */
+    public function actionDeleteAte(){
+        if(Yii::$app->getRequest()->getQueryParam('user') && Yii::$app->getRequest()->getQueryParam('ate_id'))  {
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+            $ate = DiaryAte::findOne(Yii::$app->getRequest()->getQueryParam('ate_id'));
+            $act = DiaryActs::findOne($ate->act_id);
+            if($ate->delete() && $act->delete())
+                return "<span style='color:green; font-size: 15px;'>Запись удалена!</span>";
+            else return "<span style='color:darkred; font-size: 15px;'>Ошибка удаления!</span>";
+
         }
-
-
     }
 
     /**
@@ -171,13 +198,41 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
             $user = Yii::$app->getRequest()->getQueryParam('user');
             $tasks = Task::find()
-                ->where('status = 0 or status = 1')
+                ->where("status = 0 or status = 1 and user_id = $user")
                 ->all();
 
             return $this->renderPartial('tasks', ['tasks_list' => $tasks, 'user' => $user]);
         }
 
         return $this->renderPartial('error');
+
+    }
+
+    /**
+     * Показать текущую задачу
+     * @return string
+     */
+    public function actionShowCurrentTask(){
+
+        $current_hour = date('G', time())+7;
+        $task_str = '';
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+            $tasks = Task::find()
+                ->where("status = 3 and hour = $current_hour and user_id = $user")
+                ->all();
+
+            if ($tasks) {
+                foreach ($tasks as $task) {
+                    $task_str .= $current_hour . ": " . $task->description . "<br>";
+                }
+
+                return $task_str;
+            }
+
+            return $current_hour . ": " . 'Текущих задач нет!';
+        }
 
     }
 
@@ -216,6 +271,50 @@ class DefaultController extends FrontEndController
                 else  return 'Текст большой!';
 
             }
+        }
+        
+    }
+
+    /**
+     * Параметры сегодня
+     * @return string
+     */
+    public function actionDayParams(){
+
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $start_day = strtotime('now 00:00:00');
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+
+            if (Yii::$app->getRequest()->getQueryParam('param') && Yii::$app->getRequest()->getQueryParam('value')) {
+
+            }
+
+            /*
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 4")->all(), 'id', 'id'));
+
+            //return var_dump($today_acts);
+
+            $today_params = [];
+           
+            if ($today_acts) {
+                $today_params = DiaryAte::find()
+                    ->where("act_id  IN (" . $today_acts . ")")
+                    ->all();
+            }
+            */
+
+            $params = DiaryDayParams::find()->all();
+            //return var_dump($params);
+
+
+            return $this->renderPartial('today_params', ['params' => $params, 'user' => $user->id]);
+            
+            
         }
         
     }

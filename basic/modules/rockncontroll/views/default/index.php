@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
         <div id="vis_div" style="width: 100%; height: 200px;"></div>-->
     </div>
 </header>
-<div class="row">
+<div class="container">
     <div id="rechange">
         <div class="col-md-4 col-md-offset-4">
 

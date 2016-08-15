@@ -61,7 +61,26 @@
 
        });
 
-   } 
+   }
+
+    function delAte(ate_id, i, user){
+        
+        confirm("Вы действительно хотите удалить запись?");
+
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/default/delete-ate",
+                data: "user="+user+"&ate_id="+ate_id,
+                success: function(res){
+                    $("#del_"+i).hide();
+                    $("#res_"+i).html(res);
+                }
+
+            });
+
+        return true;
+
+    }
     
     
 </script>
@@ -70,6 +89,19 @@
     .center, h3, table > tbody > tr > td{
         text-align: center;
     }
+    .table > tbody > tr > td{
+        vertical-align: middle;
+        font-size: 15px;
+        color: rgb(255, 215, 0);
+    }
+    h3{
+        color: rgb(255, 215, 0);
+    }
+    .glyphicon {
+        color: gold !important;
+    }
+
+
 </style>
 
 <div class="container">
@@ -95,8 +127,9 @@
                         <tr>
                             <td>м</td>
                             <td>блюдо</td>
-                            <td>количество</td>
-                            <td>калорийность</td>
+                            <td>кол-во</td>
+                            <td>ккал</td>
+                            <td>не съел</td>
                         </tr>
 
             <?php endif; ?>
@@ -106,6 +139,11 @@
                         <td> <?= $item->dish->name ?></td>
                         <td> <?= $item->measure ?></td>
                         <td> <?= $item->kkal ?></td>
+                        <td>
+                            <button class="btn btn-success" id="del_<?=$i ?>" onclick="delAte(<?=$item->id?>, <?=$i?>, <?=$user->id?>)" ><span class="glyphicon glyphicon-fire" id="del_<?=$i ?>"></span></button>
+                            <p id="res_<?=$i?>"></p>
+
+                        </td>
                     </tr>
 
                 <?php endforeach; ?>
