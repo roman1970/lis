@@ -33,6 +33,14 @@
                 $("#menu").hide();
             });
 
+        $("#done").click(
+            function() {
+                doDeal(user);
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
+            });
+
         $("#eat").click(
             function() {
                 eat(user);
@@ -128,6 +136,19 @@
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/day-params/",
+            data: "user=" + user,
+            success: function (html) {
+                $("#summary").html(html);
+            }
+
+        });
+    }
+
+    function doDeal(user) {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/deals/",
             data: "user=" + user,
             success: function (html) {
                 $("#summary").html(html);

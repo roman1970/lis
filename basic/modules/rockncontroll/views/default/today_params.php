@@ -1,73 +1,30 @@
 <script>
 
-    $(document).ready(function() {
+       
+    function recParam(param_id, i, user){
 
-        $("#add_task").click(
-            function() {
-
-                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
-                var task_name = $("#task_name").val();
-                var task_description = $("#task_description").val();
-
-                if (task_name == '') {alert('Введите название задачи!'); return;}
-                if (task_description == '') {alert('Введите описание задачи!'); return;}
-
-                addTask(task_name, task_description, user);
-
-
-            });
-
-        $('#task_name').focus(
-            function () {
-                $(this).select();
-            });
-        $('#task_description').focus(
-            function () {
-                $(this).select();
-            });
-
-    });
-
-    function addTask(name, description, user) {
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/add-task",
-            data: "name="+name+"&description="+description+"&user="+user,
-            success: function(html){
-                $("#sum_tasks").html(html);
-
-            }
-
-        });
-
-    }
-
-    function recParam(task_id,i, user){
-
-        var mark = $("#mark_"+i).val();
+        var val = $("#val_"+i).val();
 
         //Валидация
-        if (mark  === "") {
-            alert("Введите оценку");
+        if (val  === "") {
+            alert("Введите значение");
             return false;
         }
 
+        if(confirm('Проверьте введёное значение. Возможности изменить не будет!')) {
 
-        if(mark){
-            $.ajax({
-                type: "GET",
-                url: "rockncontroll/default/tasked",
-                data: "mark="+mark+"&user="+user+"&task_id="+task_id,
-                success: function(res){
-                    $("#tasked_"+i).hide();
-                    $("#mark_"+i).hide();
-                    $("#res_"+i).html(res);
-                }
+                $.ajax({
+                    type: "GET",
+                    url: "rockncontroll/default/day-params",
+                    data: "val="+val+"&user="+user+"&param_id="+param_id,
+                    success: function(res){
+                        $("#param_"+i).hide();
+                        $("#val_"+i).hide();
+                        $("#res_"+i).html(res);
+                    }
 
-            });
-        }
-        else alert("Введите оценку!");
+                });
+            }
 
 
         return true;
@@ -81,7 +38,7 @@
         padding: 0;
         height: 33px;
         text-align: center;
-        width: 80px;
+        width: 100%;
     }
 
     #task_name, #task_description{
@@ -116,6 +73,25 @@
             <table class="table">
                 <tbody>
 
+                <?php foreach ($recorded_params as $value => $name) :  ?>
+
+                    <tr>
+                        <td>
+                            <?= $name ?>
+
+                        </td>
+
+                        <td width="80">
+                            <?= $value ?>
+                           <p id="res_<?=$i?>"></p>
+
+                        </td>
+
+
+                    </tr>
+
+                    <?php $i++; endforeach; ?>
+
 
                 <?php foreach ($params as $param) :  ?>
 
@@ -125,9 +101,9 @@
 
                         </td>
 
-                        <td>
-                            <input type='text' class="form-control" id="mark_<?=$i ?>" placeholder="Оценка" width="20"/>
-                            <button class="btn btn-success" id="tasked_<?=$i ?>" onclick="recParam(<?=$param->id?>, <?=$i?>, <?=$user?>)" >Сделал!</button>
+                        <td width="80">
+                            <input type='text' class="form-control" id="val_<?=$i ?>" placeholder="Значение" />
+                            <button class="btn btn-success" id="param_<?=$i ?>" onclick="recParam(<?=$param->id?>, <?=$i?>, <?=$user?>)" >Записать!</button>
                             <p id="res_<?=$i?>"></p>
 
                         </td>

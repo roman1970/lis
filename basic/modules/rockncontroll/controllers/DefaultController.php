@@ -8,7 +8,10 @@ use app\models\Bought;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
 use app\models\DiaryDayParams;
+use app\models\DiaryDeals;
 use app\models\DiaryDish;
+use app\models\DiaryDoneDeal;
+use app\models\DiaryRecDayParams;
 use app\models\MarkGroup;
 use app\models\MarkUser;
 use app\models\Products;
@@ -290,29 +293,78 @@ class DefaultController extends FrontEndController
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
 
-            if (Yii::$app->getRequest()->getQueryParam('param') && Yii::$app->getRequest()->getQueryParam('value')) {
+            if (Yii::$app->getRequest()->getQueryParam('param_id') && Yii::$app->getRequest()->getQueryParam('val')) {
+                
+                $act = new DiaryActs();
+                $act->model_id = 4;
+                $act->user_id = $user->id;
+                $act->mark = 0;
+                $act->mark_status = 0;
 
+                //return var_dump($act);
+
+                if($act->save(false)) {
+
+                    $rec_day_param = new DiaryRecDayParams();
+                    $rec_day_param->day_param_id = (int)Yii::$app->getRequest()->getQueryParam('param_id');
+                    $rec_day_param->user_id = $user->id;
+                    $rec_day_param->act_id = $act->id;
+                    $rec_day_param->value = (float)Yii::$app->getRequest()->getQueryParam('val');
+                    //return var_dump($rec_day_param);
+
+                    if ($rec_day_param->save()) {
+
+                        return "<span style='color:green'>Записано!</span>";
+                    }
+                    else "<span style='color:red'>Ошибка сохранения записи</span>";
+
+                }
+                else return "<span style='color:red'>Ошибка валидации</span>";
+                
+                
+                return var_dump(Yii::$app->getRequest()->getQueryParam('val'));
             }
 
-            /*
+
             $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 4")->all(), 'id', 'id'));
 
             //return var_dump($today_acts);
 
-            $today_params = [];
-           
+            $params = [];
+            $recorded_params_in = [];
+            $recorded_params = [];
+
+
             if ($today_acts) {
-                $today_params = DiaryAte::find()
+                $recorded = DiaryRecDayParams::find()
                     ->where("act_id  IN (" . $today_acts . ")")
                     ->all();
-            }
-            */
+                $param_array = implode(',', ArrayHelper::map($recorded, 'id', 'day_param_id'));
 
-            $params = DiaryDayParams::find()->all();
+
+                if($param_array) {
+                    $recorded_params_in = DiaryDayParams::find()
+                        ->where("id  IN (" . $param_array . ")")
+                        ->all();
+                    $params = DiaryDayParams::find()
+                        ->where("id NOT IN (" . $param_array . ")")
+                        ->all();
+                }
+
+                foreach ($recorded_params_in as $param) {
+                    $recorded_params[DiaryRecDayParams::findOne($param->id)->value] = $param->name;
+                }
+
+
+                //return var_dump($recorded_params);
+            }
+
+
+            //$params = DiaryDayParams::find()->all();
             //return var_dump($params);
 
 
-            return $this->renderPartial('today_params', ['params' => $params, 'user' => $user->id]);
+            return $this->renderPartial('today_params', ['params' => $params, 'recorded_params' => $recorded_params , 'user' => $user->id]);
             
             
         }
@@ -411,7 +463,128 @@ class DefaultController extends FrontEndController
         }
         
     }
+    
+    public function actionDeals(){
 
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $start_day = strtotime('now 00:00:00');
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name') && Yii::$app->getRequest()->getQueryParam('mark')) {
+
+                $deal = new DiaryDeals();
+                $deal->name = Yii::$app->getRequest()->getQueryParam('name');
+                $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
+                $deal->status = 0;
+                if($deal->save()) {
+                    return "<span style='color:green'>Действие сохранено!</span>";
+                }
+
+                return var_dump($deal);
+            }
+
+           
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 5")->all(), 'id', 'id'));
+
+            //return var_dump($today_acts);
+
+            $today_deals = [];
+            $deals = [];
+            
+            if ($today_acts) {
+                $today_deals = DiaryDoneDeal::find()
+                    ->where("act_id IN (" . $today_acts . ")")
+                    ->all();
+                }
+
+            foreach ($today_deals as $done_deal) {
+                $deal = DiaryDeals::findOne($done_deal->deal_id);
+                
+                $deals[$deal->name] = $deal->mark;
+            }
+            
+            
+            $all_deals = DiaryDeals::find()->all();
+            
+
+            return var_dump($all_deals);
+
+            return $this->renderPartial('deals', ['deals' => $deals, 'all_deals' => $all_deals, 'user' => $user->id]);
+            }
+
+        return $this->renderPartial('error');
+
+        }
+
+    public function actionDoneDeal(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $start_day = strtotime('now 00:00:00');
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+
+            if (Yii::$app->getRequest()->getQueryParam('deal_id')) {
+
+                $act = new DiaryActs();
+                $act->model_id = 5;
+                $act->user_id = $user->id;
+                $act->mark = DiaryDeals::findOne((int)Yii::$app->getRequest()->getQueryParam('deal_id'))->mark;
+                $act->mark_status = 0;
+
+                //return var_dump($act);
+                if($act->save(false)){
+                    $done_deal = new DiaryDoneDeal();
+                    $done_deal->deal_id = (int)Yii::$app->getRequest()->getQueryParam('deal_id');
+                    $done_deal->act_id = $act->id;
+                    $done_deal->user_id = $user->id;
+
+                    //return var_dump($done_deal);
+
+                    if($done_deal->save()){
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 5")->all(), 'id', 'id'));
+
+                        //return var_dump($today_acts);
+
+                        $today_deals = [];
+                        $deals = [];
+
+                        if ($today_acts) {
+                            $today_deals = DiaryDoneDeal::find()
+                                ->where("act_id IN (" . $today_acts . ")")
+                                ->all();
+                        }
+
+                        foreach ($today_deals as $done_deal) {
+                            $deal = DiaryDeals::findOne($done_deal->deal_id);
+
+                            $deals[$deal->name] = $deal->mark;
+                        }
+
+
+                        $all_deals = DiaryDeals::find()->all();
+
+
+                        return var_dump($all_deals);
+
+                        return $this->renderPartial('deals', ['deals' => $deals, 'all_deals' => $all_deals, 'user' => $user->id]);
+                    }
+
+                    return $this->renderPartial('error');
+                }
+
+            }
+        }
+
+    }
+        
+    
     /**
      * Расскажи мне про покупку
      * @return string
