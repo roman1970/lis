@@ -67,7 +67,7 @@ class DiaryRecDayParams extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getDayParam()
+    public function getDayparam()
     {
         return $this->hasOne(DiaryDayParams::className(), ['id' => 'day_param_id']);
     }

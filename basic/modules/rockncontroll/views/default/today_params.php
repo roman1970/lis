@@ -10,9 +10,7 @@
             alert("Введите значение");
             return false;
         }
-
-        if(confirm('Проверьте введёное значение. Возможности изменить не будет!')) {
-
+        
                 $.ajax({
                     type: "GET",
                     url: "rockncontroll/default/day-params",
@@ -24,12 +22,37 @@
                     }
 
                 });
-            }
+       
+        return true;
 
+    }
+
+    function changeParam(param_id, i, user){
+
+        var val = $("#rec_val_"+i).val();
+
+        //Валидация
+        if (val  === "") {
+            alert("Введите значение");
+            return false;
+        }
+        
+
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/default/change-param",
+                data: "val="+val+"&user="+user+"&param_id="+param_id,
+                success: function(res){
+                    $("#summary").html(res);
+                }
+
+            });
+       
 
         return true;
 
     }
+
 
 </script>
 
@@ -73,16 +96,18 @@
             <table class="table">
                 <tbody>
 
-                <?php foreach ($recorded_params as $value => $name) :  ?>
+                <?php foreach ($recorded_params as $param) :  ?>
 
                     <tr>
                         <td>
-                            <?= $name ?>
+                            <?= $param->dayparam->name ?>
 
                         </td>
 
                         <td width="80">
-                            <?= $value ?>
+
+                            <input type='text' class="form-control" id="rec_val_<?=$i ?>" value="<?= $param->value ?>" />
+                            <button class="btn btn-success" id="rec_param_<?=$i ?>" onclick="changeParam(<?=$param->id?>, <?=$i?>, <?=$user?>)" >Изменить!</button>
                            <p id="res_<?=$i?>"></p>
 
                         </td>

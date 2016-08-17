@@ -33,9 +33,17 @@
                 $("#menu").hide();
             });
 
-        $("#done").click(
+        $("#do_done").click(
             function() {
                 doDeal(user);
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
+            });
+
+        $("#mishich_do_done").click(
+            function() {
+                doMishich(user);
                 $("#show_menu").show();
                 $("#summary").show();
                 $("#menu").hide();
@@ -156,6 +164,19 @@
 
         });
     }
+    
+    function doMishich() {
+        
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/mishich-deals/",
+            data: "user=" + user,
+            success: function (html) {
+                $("#summary").html(html);
+            }
+
+        });
+    }
 
 
 </script>
@@ -165,7 +186,8 @@
     <button type="button" class="btn btn-success btn-lg btn-block" id="eat">Съел</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="bought">Купил</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="add_product">Добавить товар</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="done">Сделал</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="mishich_do_done">Оценить Мишича</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="do_done">Сделал</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="task">Задачи</button>
     
 </div>
