@@ -189,6 +189,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" id="mishich_do_done">Оценить Мишича</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="do_done">Сделал</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="task">Задачи</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="task">Записать</button>
     
 </div>
 <div id="show_menu">

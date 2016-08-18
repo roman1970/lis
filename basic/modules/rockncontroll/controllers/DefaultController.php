@@ -340,6 +340,7 @@ class DefaultController extends FrontEndController
                 $recorded = DiaryRecDayParams::find()
                     ->where("act_id  IN (" . $today_acts . ")")
                     ->all();
+
                 $param_array = implode(',', ArrayHelper::map($recorded, 'id', 'day_param_id'));
 
 
@@ -352,12 +353,6 @@ class DefaultController extends FrontEndController
                         ->all();
                 }
 
-                foreach ($recorded_params_in as $param) {
-                    $recorded_params[DiaryRecDayParams::findOne($param->id)->value] = $param->name;
-                }
-
-
-                //return var_dump($recorded_params);
             }
 
             else {
@@ -365,9 +360,11 @@ class DefaultController extends FrontEndController
                     ->all();
             }
 
+            //return var_dump($params);
+
 
             //$params = DiaryDayParams::find()->all();
-            //return var_dump($params);
+
 
 
             return $this->renderPartial('today_params', ['params' => $params, 'recorded_params' => $recorded , 'user' => $user->id]);
@@ -440,6 +437,8 @@ class DefaultController extends FrontEndController
                     return $this->renderPartial('today_params', ['params' => $params, 'recorded_params' => $recorded , 'user' => $user->id]);
 
                 }
+
+                return 'НЕ получилось';
 
             }
 
@@ -556,9 +555,19 @@ class DefaultController extends FrontEndController
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
 
-            if (Yii::$app->getRequest()->getQueryParam('name') && Yii::$app->getRequest()->getQueryParam('mark')) {
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('mark') !== null && Yii::$app->getRequest()->getQueryParam('cat')) {
 
                 $deal = new DiaryDeals();
+
+               // return   var_dump()
+
+                if(Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()){
+                    //  return var_dump(Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id);
+                    $deal->cat_id = Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()->id;
+                }
+                else $deal->cat_id = 57;
+
                 $deal->name = Yii::$app->getRequest()->getQueryParam('name');
                 $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
                 $deal->status = 0;
@@ -574,9 +583,11 @@ class DefaultController extends FrontEndController
 
             //return var_dump($today_acts);
 
-            $today_deals = [];
+
             $deals = [];
             $sum_mark = 0;
+            $deal_cats = [];
+            $cat_deal = [];
             
             if ($today_acts) {
                 $today_deals = DiaryDoneDeal::find()
@@ -586,21 +597,33 @@ class DefaultController extends FrontEndController
                     ->select('SUM(mark)')
                     ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
                     ->scalar();
-                }
-            
+
 
             foreach ($today_deals as $done_deal) {
                 $deals[] = DiaryDeals::findOne($done_deal->deal_id);
+                $deal_cats[Categories::findOne($done_deal->deal->cat_id)->name][] = DiaryDeals::findOne($done_deal->deal_id)->mark;
+                //return var_dump($done_deal->deal->cat_id);
 
             }
-            
-            
+
+
+            foreach ($deal_cats as $cat => $marks){
+                $mark = 0;
+                foreach ($marks as $mrk) {
+                    $mark += $mrk;
+                }
+                $cat_deal[$cat][] = $mark;
+                }
+
+
+            }
+
             $all_deals = DiaryDeals::find()->all();
             
 
             //return var_dump($deals);
 
-            return $this->renderPartial('deals', ['deals' => $deals, 'all_deals' => $all_deals, 'sum_mark' => $sum_mark ,'user' => $user]);
+            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
             }
 
         return $this->renderPartial('error');
@@ -622,10 +645,19 @@ class DefaultController extends FrontEndController
 
             //return var_dump($user);
 
-
-            if (Yii::$app->getRequest()->getQueryParam('name') && Yii::$app->getRequest()->getQueryParam('mark')) {
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('mark') !== null &&  Yii::$app->getRequest()->getQueryParam('cat')) {
 
                 $deal = new DiaryDeals();
+
+                // return   var_dump()
+
+                if(Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()){
+                    //  return var_dump(Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id);
+                    $deal->cat_id = Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()->id;
+                }
+                else $deal->cat_id = 57;
+
                 $deal->name = Yii::$app->getRequest()->getQueryParam('name');
                 $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
                 $deal->status = 0;
@@ -641,9 +673,10 @@ class DefaultController extends FrontEndController
 
             //return var_dump($today_acts);
 
-            $today_deals = [];
             $deals = [];
             $sum_mark = 0;
+            $deal_cats = [];
+            $cat_deal = [];
 
             if ($today_acts) {
                 $today_deals = DiaryDoneDeal::find()
@@ -653,21 +686,33 @@ class DefaultController extends FrontEndController
                     ->select('SUM(mark)')
                     ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
                     ->scalar();
+
+
+                foreach ($today_deals as $done_deal) {
+                    $deals[] = DiaryDeals::findOne($done_deal->deal_id);
+                    $deal_cats[Categories::findOne($done_deal->deal->cat_id)->name][] = DiaryDeals::findOne($done_deal->deal_id)->mark;
+                    //return var_dump($done_deal->deal->cat_id);
+
+                }
+
+
+                foreach ($deal_cats as $cat => $marks){
+                    $mark = 0;
+                    foreach ($marks as $mrk) {
+                        $mark += $mrk;
+                    }
+                    $cat_deal[$cat][] = $mark;
+                }
+
+
             }
-
-
-            foreach ($today_deals as $done_deal) {
-                $deals[] = DiaryDeals::findOne($done_deal->deal_id);
-
-            }
-
 
             $all_deals = DiaryDeals::find()->all();
 
 
             //return var_dump($deals);
 
-            return $this->renderPartial('deals', ['deals' => $deals, 'all_deals' => $all_deals, 'sum_mark' => $sum_mark ,'user' => $user]);
+            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
         }
 
         return $this->renderPartial('error');
@@ -692,9 +737,9 @@ class DefaultController extends FrontEndController
             if (Yii::$app->getRequest()->getQueryParam('deal')) {
 
                 try {
-                    $deal = DiaryDeals::find()->where("name like '" . Yii::$app->getRequest()->getQueryParam('deal') . "'")->one();
+                    $deal = DiaryDeals::find()->where("name like '" . trim(Yii::$app->getRequest()->getQueryParam('deal')) . "'")->one();
                 } catch (\ErrorException $e) {
-                    return $this->renderPartial('error');
+                    $deal = [];
                 }
                 //return var_dump($deal);
 
@@ -960,7 +1005,25 @@ class DefaultController extends FrontEndController
 
         return  json_encode($res);
     }
-    
+
+    /**
+     * Категории дел для автокомплита
+     * @return string
+     */
+    public function actionDealCats(){
+        $res = [];
+
+        $m = Categories::find()->where(['site_id' => 13])->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+
     public function actionDataForCharts(){
         $res = [];
 

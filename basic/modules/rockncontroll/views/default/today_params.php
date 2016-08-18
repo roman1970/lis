@@ -1,5 +1,29 @@
 <script>
 
+    $(document).ready(function() {
+        $('#calculate').focus(
+            function () {
+                $(this).select();
+            });
+        
+        $("#do_calc").click(
+            function() {
+
+                var calculate = $("#calculate").val();
+                if (calculate == '') {alert('Нечего считать!'); return;}
+                var calc = new Calculator;
+
+                document.getElementById('calculate').value = calc.calculate(calculate);
+                $('#calculate').focus(
+                    function () {
+                        $(this).select();
+                    });
+
+
+                //alert(result);
+
+            });
+    });
        
     function recParam(param_id, i, user){
 
@@ -54,6 +78,51 @@
     }
 
 
+    function Calculator() {
+
+        var methods = {
+            "-": function(a, b) {
+                return a - b;
+            },
+            "+": function(a, b) {
+                return a + b;
+            },
+            "*": function(a, b) {
+                return a * b;
+            },
+            "/": function(a, b) {
+                return a / b;
+            },
+            "**": function(a, b) {
+                return Math.pow(a, b);
+            }
+        };
+
+        this.calculate = function(str) {
+
+            var split = str.split(' '),
+                a = +split[0],
+                op = split[1],
+                b = +split[2];
+
+            if (!methods[op] || isNaN(a) || isNaN(b)) {
+                return 'Делайте пробел между цифрами и действием';
+            }
+
+            return methods[op](+a, +b);
+        };
+
+        this.addMethod = function(name, func) {
+            methods[name] = func;
+        };
+    }
+
+
+    //alert( result ); // 8
+
+
+
+
 </script>
 
 <style>
@@ -73,7 +142,7 @@
         font-size: 20px;
     }
 
-    h3, p, #form-task{
+    h3, p, #do_calc{
         text-align: center;
     }
 
@@ -88,10 +157,14 @@
 </style>
 
 <div id="sum_tasks">
-    <?php  $i = 0;
-    if(count($params) > 1) : ?>
+    <?php  $i = 0; ?>
+
 
         <div class="view">
+
+            <input type='text' class="form-control" id="calculate" value="Введите расчётную строку (например 2 + 2)"/>
+            <button class="btn btn-success form-control" id="do_calc" >Считаем!</button>
+
 
             <table class="table">
                 <tbody>
@@ -137,7 +210,6 @@
                     </tr>
 
                     <?php $i++; endforeach; ?>
-                <?php endif; ?>
 
 
                 </tbody>

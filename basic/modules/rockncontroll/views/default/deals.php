@@ -22,16 +22,36 @@
             }
         });
 
+        $('#deal_cat').autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+
+                $.getJSON("rockncontroll/default/deal-cats", function (data) {
+                    console.log(data);
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
         $("#add_deal").click(
             function() {
 
                 var deal_name = $("#deal_name").val();
                 var deal_mark = $("#deal_mark").val();
+                var deal_cat = $("#deal_cat").val();
 
                 if (deal_name == '') {alert('Введите название действия!'); return;}
                 if (deal_mark == '') {alert('Введите оценку!'); return;}
+                if (deal_cat == '') {alert('Введите категорию!'); return;}
 
-                addDeal(deal_name, deal_mark, user);
+                addDeal(deal_name, deal_mark, deal_cat, user);
 
 
             });
@@ -67,12 +87,12 @@
 
     });
 
-    function addDeal(name, mark, user) {
+    function addDeal(name, mark, cat, user) {
 
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/deals",
-            data: "name="+name+"&mark="+mark+"&user="+user,
+            data: "name="+name+"&mark="+mark+"&cat="+cat+"&user="+user,
             success: function(html){
                 $("#sum_deals").html(html);
 
@@ -137,6 +157,7 @@
 
             <input type="text" class="form-control" id="deal_name"  placeholder="Назвать действие">
             <input type="text" class="form-control" id="deal_mark"  placeholder="Оценка">
+            <input class="form-control" id="deal_cat"  placeholder="Категория">
 
             <button type="button" class="btn btn-success" id="add_deal" >Создать!</button>
 
@@ -167,21 +188,22 @@
             <table class="table">
                 <tbody>
 
-                <?php  foreach ($deals as $deal) :  ?>
+                <?php  foreach ($deal_cats as $cat => $sum_mark) :  ?>
 
                     <tr>
                         <td>
-                            <?= $deal->name ?>
+                            <?= $cat ?>
                         </td>
 
                         <td>
-                            <?= $deal->mark ?>
+                            ---------
                         </td>
 
                         <td>
-
+                            <?= $sum_mark[0] ?> puso
                         </td>
                     </tr>
+
                 <?php $i++; endforeach; ?>
 
 
