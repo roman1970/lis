@@ -65,6 +65,7 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
+            $model->cat_id = Yii::$app->request->post('Items')['cat_id'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
             $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
             $model->play_status = 1;
@@ -121,6 +122,7 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
+            $model->cat_id = Yii::$app->request->post('Items')['cat_id'];
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
             $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
             //$model->play_status = 1;

@@ -27,7 +27,7 @@
 
         $("#today_params").click(
             function() {
-                todayParam(user);
+                send(user, 'day-params');
                 $("#show_menu").show();
                 $("#summary").show();
                 $("#menu").hide();
@@ -35,7 +35,7 @@
 
         $("#do_done").click(
             function() {
-                doDeal(user);
+                send(user, 'deals');
                 $("#show_menu").show();
                 $("#summary").show();
                 $("#menu").hide();
@@ -43,7 +43,7 @@
 
         $("#mishich_do_done").click(
             function() {
-                doMishich(user);
+                send(user, 'mishich-deals');
                 $("#show_menu").show();
                 $("#summary").show();
                 $("#menu").hide();
@@ -51,7 +51,7 @@
 
         $("#eat").click(
             function() {
-                eat(user);
+                send(user,'eat');
                 $("#summary").show();
                 $("#menu").hide();
                 $("#show_menu").show();
@@ -59,7 +59,7 @@
 
         $("#task").click(
             function() {
-                task(user);
+                send(user, 'show-task');
                 $("#summary").show();
                 $("#menu").hide();
                 $("#show_menu").show();
@@ -67,7 +67,7 @@
 
         $("#bought").click(
             function() {
-                bought(user);
+                send(user, 'bought');
                 $("#summary").show();
                 $("#menu").hide();
                 $("#show_menu").show();
@@ -75,20 +75,36 @@
 
         $("#add_product").click(
             function() {
-                add_product(user);
+                send(user, 'add-product');
                 $("#summary").show();
                 $("#menu").hide();
                 $("#show_menu").show();
             });
 
+        $("#repertoire").click(
+            function() {
+                send(user, 'repertoire');
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
+            });
+
+        $("#rec_item").click(
+            function() {
+                send(user, 'record-item');
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
+            });
+
     });
 
 
-    function eat(user) {
+    function send(user, controller_str) {
 
         $.ajax({
             type: "GET",
-            url: "rockncontroll/default/eat/",
+            url: "rockncontroll/default/"+controller_str+"/",
             data: "user="+user,
             success: function(html){
                 $("#summary").html(html);
@@ -98,85 +114,6 @@
 
     }
 
-    function task(user) {
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/show-task/",
-            data: "user="+user,
-            success: function(html){
-                $("#summary").html(html);
-            }
-
-        });
-
-    }
-
-    function bought(user) {
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/bought/",
-            data: "user=" + user,
-            success: function (html) {
-                $("#summary").html(html);
-            }
-
-        });
-    }
-
-    function add_product(user) {
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/add-product/",
-            data: "user=" + user,
-            success: function (html) {
-                $("#summary").html(html);
-            }
-
-        });
-
-    }
-
-    function todayParam(user) {
-  
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/day-params/",
-            data: "user=" + user,
-            success: function (html) {
-                $("#summary").html(html);
-            }
-
-        });
-    }
-
-    function doDeal(user) {
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/deals/",
-            data: "user=" + user,
-            success: function (html) {
-                $("#summary").html(html);
-            }
-
-        });
-    }
-    
-    function doMishich() {
-        
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/mishich-deals/",
-            data: "user=" + user,
-            success: function (html) {
-                $("#summary").html(html);
-            }
-
-        });
-    }
 
 
 </script>
@@ -189,7 +126,8 @@
     <button type="button" class="btn btn-success btn-lg btn-block" id="mishich_do_done">Оценить Мишича</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="do_done">Сделал</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="task">Задачи</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" id="task">Записать</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="rec_item">Записать</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="repertoire">Репертуар</button>
     
 </div>
 <div id="show_menu">

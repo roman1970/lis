@@ -48,6 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
                 ['prompt' => 'Выбрать источник'])  ?>
 
+            <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
+                ['prompt' => 'Выбрать категорию'])  ?>
+
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?php  $form->field($model, 'tags')->textInput()  ?>
             <?php echo $form->field($model, 'tags')->widget(

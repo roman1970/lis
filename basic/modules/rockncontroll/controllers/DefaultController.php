@@ -12,6 +12,7 @@ use app\models\DiaryDeals;
 use app\models\DiaryDish;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
+use app\models\Items;
 use app\models\MarkGroup;
 use app\models\MarkUser;
 use app\models\Products;
@@ -761,10 +762,10 @@ class DefaultController extends FrontEndController
                     if($done_deal->save()){
                         $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 5")->all(), 'id', 'id'));
 
-                        //return var_dump($today_acts);
-
-                        $today_deals = [];
                         $deals = [];
+                        $sum_mark = 0;
+                        $deal_cats = [];
+                        $cat_deal = [];
 
                         if ($today_acts) {
                             $today_deals = DiaryDoneDeal::find()
@@ -774,19 +775,33 @@ class DefaultController extends FrontEndController
                                 ->select('SUM(mark)')
                                 ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
                                 ->scalar();
-                        }
 
-                        foreach ($today_deals as $done_deal) {
-                            $deals[] = DiaryDeals::findOne($done_deal->deal_id);
-                        }
 
+                            foreach ($today_deals as $done_deal) {
+                                $deals[] = DiaryDeals::findOne($done_deal->deal_id);
+                                $deal_cats[Categories::findOne($done_deal->deal->cat_id)->name][] = DiaryDeals::findOne($done_deal->deal_id)->mark;
+                                //return var_dump($done_deal->deal->cat_id);
+
+                            }
+
+
+                            foreach ($deal_cats as $cat => $marks){
+                                $mark = 0;
+                                foreach ($marks as $mrk) {
+                                    $mark += $mrk;
+                                }
+                                $cat_deal[$cat][] = $mark;
+                            }
+
+
+                        }
 
                         $all_deals = DiaryDeals::find()->all();
 
 
                         //return var_dump($deals);
 
-                        return $this->renderPartial('deals', ['deals' => $deals, 'all_deals' => $all_deals, 'sum_mark' => $sum_mark, 'user' => $user]);
+                        return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
                     }
 
                     return $this->renderPartial('error');
@@ -919,6 +934,93 @@ class DefaultController extends FrontEndController
 
 
         }
+
+    /**
+     * Список песен репертуара
+     * @return string
+     * @throws \Exception
+     */
+    public function actionRepertoire(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+           // $user = Yii::$app->getRequest()->getQueryParam('user');
+
+            if(Items::find()->where(['is_next' => 1])->one()){
+                $item = Items::find()->where(['is_next' => 1])->one();
+                $song_id = $item->id;
+            }
+
+            else $song_id = 1;
+
+            //return $song_id;
+
+            $songs = Items::find()->where("(cat_id = 90 or cat_id = 89) and id >= $song_id")
+                ->orderBy('id ASC')
+                ->all();
+
+            if(count($songs) == 1) {
+                $songs[0]->is_next = 0;
+                $songs[0]->update(false);
+            }
+            
+            return $this->renderPartial('repertoire', ['songs' =>  $songs]);
+
+        }
+
+
+    }
+
+    /**
+     * Метка "следующая песня"
+     * @return string
+     * @throws \Exception
+     */
+    public function actionSaveNextSong(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = Yii::$app->getRequest()->getQueryParam('user');
+
+            if(Yii::$app->getRequest()->getQueryParam('id')) {
+
+                if(Items::find()->where(['is_next' => 1])->one()){
+                    $item = Items::find()->where(['is_next' => 1])->one();
+                    $item->is_next = 0;
+                    $item->update(false);
+                }
+
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $item->is_next = 1;
+                $item->update(false);
+
+                return "<p>Следующий $item->title, сказал заведующий! </p>";
+
+            }
+        }
+    }
+
+    public function actionRecordItem(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+            
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if(Yii::$app->getRequest()->getQueryParam('source') &&
+                Yii::$app->getRequest()->getQueryParam('tags') &&
+                Yii::$app->getRequest()->getQueryParam('cat') &&
+                Yii::$app->getRequest()->getQueryParam('txt') &&
+                Yii::$app->getRequest()->getQueryParam('title')) {
+
+                $item = new Items();
+
+                
+                return var_dump($item);
+
+            }
+
+            return $this->renderPartial('add_item');
+        }
+
+    }
 
 
     /**
