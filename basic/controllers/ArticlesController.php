@@ -5,6 +5,7 @@ use app\components\BackEndController;
 use app\components\TranslateHelper;
 use app\models\Articles;
 use app\models\ArticlesContent;
+use app\models\DiaryActs;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
@@ -48,7 +49,7 @@ class ArticlesController extends BackEndController
 
     public function actionIndex()
     {
-        $articles = Articles::find();
+        $articles = Articles::find()->orderBy('id DESC');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $articles,
@@ -101,9 +102,17 @@ class ArticlesController extends BackEndController
 
             if(isset($uploadImg->img))
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
+            if($model->site_id == 13) {
+                $act = new DiaryActs();
+                $act->model_id = 6;
+                $act->user_id = 8;
+                $act->save(false);
+                $model->act_id = $act->id;
+            }
+
             $model->save(false);
 
-
+                
             return $this->redirect(Url::toRoute('articles/index'));
 
         } else {
@@ -223,6 +232,14 @@ class ArticlesController extends BackEndController
             $artContent->articles_id = $id;
             if(isset($upload->file))$artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
             else $artContent->audio = '';
+
+            if($this->loadModel($id)->site_id == 13) {
+                $act = new DiaryActs();
+                $act->model_id = 6;
+                $act->mark = 1;
+                $act->user_id = 8;
+                $act->save(false);
+            }
 
             $artContent->save();
 

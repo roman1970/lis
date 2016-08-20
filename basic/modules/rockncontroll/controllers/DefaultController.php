@@ -202,7 +202,7 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
             $user = Yii::$app->getRequest()->getQueryParam('user');
             $tasks = Task::find()
-                ->where("status = 0 or status = 1 and user_id = $user")
+                ->where("status = 1 and user_id = $user")
                 ->all();
 
             return $this->renderPartial('tasks', ['tasks_list' => $tasks, 'user' => $user]);
@@ -258,6 +258,7 @@ class DefaultController extends FrontEndController
                 $new_task->name = Yii::$app->getRequest()->getQueryParam('name');
                 $new_task->description = Yii::$app->getRequest()->getQueryParam('description');
                 $new_task->status = 1;
+                $new_task->source_id = 327;
                 $new_task->hour = 0;
                 $new_task->dead_line = 0;
                 
@@ -659,7 +660,7 @@ class DefaultController extends FrontEndController
                 }
                 else $deal->cat_id = 57;
 
-                $deal->name = Yii::$app->getRequest()->getQueryParam('name');
+                $deal->name = trim(Yii::$app->getRequest()->getQueryParam('name'));
                 $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
                 $deal->status = 0;
                 if($deal->save()) {
@@ -738,10 +739,11 @@ class DefaultController extends FrontEndController
             if (Yii::$app->getRequest()->getQueryParam('deal')) {
 
                 try {
-                    $deal = DiaryDeals::find()->where("name like '" . trim(Yii::$app->getRequest()->getQueryParam('deal')) . "'")->one();
+                    $deal = DiaryDeals::find()->where("name like '". trim(Yii::$app->getRequest()->getQueryParam('deal')) ."'")->one();
                 } catch (\ErrorException $e) {
                     $deal = [];
                 }
+                if(!$deal) return 'Ошибка!';
                 //return var_dump($deal);
 
                 $act = new DiaryActs();
