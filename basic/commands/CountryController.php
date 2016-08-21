@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use app\models\DiaryActs;
 use app\models\Matches;
 use app\models\Team;
 use app\models\TeamSum;
@@ -722,6 +723,13 @@ class CountryController extends Controller
 
 */
         }
+
+        $act = new DiaryActs();
+        $act->model_id = 8;
+        $act->user_id = 8;
+        $act->mark = 1;
+        $act->save(false);
+
     }
 
     /**

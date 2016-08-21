@@ -7,7 +7,25 @@
             source: function (term, suggest) {
                 term = term.toLowerCase();
                 console.log(term);
-                $.getJSON("rockncontroll/default/cats", function (data) {
+                $.getJSON("rockncontroll/default/deal-cats", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+        $('#source').autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/sources", function (data) {
 
                     choices = data;
                     var suggestions = [];

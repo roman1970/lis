@@ -17,6 +17,8 @@ use app\models\MarkGroup;
 use app\models\MarkUser;
 use app\models\Products;
 use app\models\Shop;
+use app\models\Source;
+use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
 use Yii;
@@ -581,7 +583,7 @@ class DefaultController extends FrontEndController
             }
 
            
-            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 5")->all(), 'id', 'id'));
+            $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
 
             //return var_dump($today_acts);
 
@@ -597,7 +599,7 @@ class DefaultController extends FrontEndController
                     ->all();
                 $sum_mark = DiaryActs::find()
                     ->select('SUM(mark)')
-                    ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
+                    ->where("time > $start_day and user_id = ".$user->id)
                     ->scalar();
 
 
@@ -762,7 +764,7 @@ class DefaultController extends FrontEndController
                     //return var_dump($done_deal);
 
                     if($done_deal->save()){
-                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 5")->all(), 'id', 'id'));
+                        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id)->all(), 'id', 'id'));
 
                         $deals = [];
                         $sum_mark = 0;
@@ -775,7 +777,7 @@ class DefaultController extends FrontEndController
                                 ->all();
                             $sum_mark = DiaryActs::find()
                                 ->select('SUM(mark)')
-                                ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
+                                ->where("time > $start_day and user_id = ".$user->id)
                                 ->scalar();
 
 
@@ -1001,6 +1003,10 @@ class DefaultController extends FrontEndController
         }
     }
 
+    /**
+     * Запись айтема
+     * @return string|void
+     */
     public function actionRecordItem(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
             
@@ -1012,10 +1018,54 @@ class DefaultController extends FrontEndController
                 Yii::$app->getRequest()->getQueryParam('txt') &&
                 Yii::$app->getRequest()->getQueryParam('title')) {
 
-                $item = new Items();
+                //return var_dump(Yii::$app->getRequest()->getQueryParam('txt'));
 
-                
-                return var_dump($item);
+
+
+                $act = new DiaryActs();
+                $act->model_id = 7;
+                $act->user_id = $user->id;
+                $act->mark = 1;
+
+
+
+                if($act->save(false)) {
+                    $item = new Items();
+
+                    $item->text = Yii::$app->getRequest()->getQueryParam('txt');
+                    $item->tags = Yii::$app->getRequest()->getQueryParam('tags');
+                    $item->title = Yii::$app->getRequest()->getQueryParam('title');
+
+                   // return var_dump($item);
+
+
+
+                    if(Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()){
+                        //  return var_dump(Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id);
+                        $item->cat_id = Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()->id;
+                    }
+                    else return "Категория!";
+
+
+                    $item->in_work_prim = '';
+                    $item->play_status = 1;
+
+
+                    if(Source::find()->where("title like '".Yii::$app->getRequest()->getQueryParam('source')."'")->one()){
+                       // return var_dump(Source::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('source')])->one()->id);
+                        $item->source_id = Source::find()->where("title like '".trim(Yii::$app->getRequest()->getQueryParam('source')."'"))->one()->id;
+                    }
+                    else return var_dump($item);
+                    $item->act_id = $act->id;
+                    //return var_dump($item);
+
+                    if($item->save(false)) {
+                        Tag::addTags($item->tags, $item->id);
+                    }
+                }
+
+                return "<p>Сохранено!</p>";
+
 
             }
 
@@ -1121,6 +1171,23 @@ class DefaultController extends FrontEndController
 
         foreach ($m as $h){
             $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
+     * Категории дел для автокомплита
+     * @return string
+     */
+    public function actionSources(){
+        $res = [];
+
+        $m = Source::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->title;
 
         }
 

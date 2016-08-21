@@ -33,7 +33,7 @@ class DefaultController extends FrontEndController
     {
 
         $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
-        $articles = Articles::find()->where('site_id ='.$this->site->id)->all();
+        $articles = Articles::find()->where('site_id ='.$this->site->id.' or site_id = 13')->all();
 
         //$cats = Categories::find()->leaves()->all();
 
