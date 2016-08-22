@@ -104,6 +104,12 @@ $article_content_id = 1;
 
 
 </script>
+
+<style>
+    .syntaxhighlighter div{
+        font-size: 15px !important;
+    }
+</style>
 <div class="single">
 
 		<div class="mb20">

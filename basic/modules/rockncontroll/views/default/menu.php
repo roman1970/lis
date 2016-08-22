@@ -128,6 +128,8 @@
     <button type="button" class="btn btn-success btn-lg btn-block" id="task">Задачи</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="rec_item">Записать</button>
     <button type="button" class="btn btn-success btn-lg btn-block" id="repertoire">Репертуар</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="incomes">Incomes</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" id="events">События</button>
     
 </div>
 <div id="show_menu">

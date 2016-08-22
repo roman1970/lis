@@ -831,8 +831,7 @@ class DefaultController extends FrontEndController
 
             if(Yii::$app->getRequest()->getQueryParam('product') &&
                 Yii::$app->getRequest()->getQueryParam('measure') &&
-                Yii::$app->getRequest()->getQueryParam('shop') &&
-                Yii::$app->getRequest()->getQueryParam('item')) {
+                Yii::$app->getRequest()->getQueryParam('shop')) {
 
 
                 $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('product')])->one();
@@ -864,8 +863,13 @@ class DefaultController extends FrontEndController
 
                     $bought->act_id = $act->id;
                     $bought->user_id = $act->user_id;
-                    $bought->spent = (float)Yii::$app->getRequest()->getQueryParam('measure');
-                    $bought->item_price = (float)Yii::$app->getRequest()->getQueryParam('item');
+                    if(Yii::$app->getRequest()->getQueryParam('measure'))
+                        $bought->spent = (float)Yii::$app->getRequest()->getQueryParam('measure');
+                    else $bought->spent = 0;
+                    if(Yii::$app->getRequest()->getQueryParam('item'))
+                        $bought->item_price = (float)Yii::$app->getRequest()->getQueryParam('item');
+                    else $bought->item_price = 0;
+
                     $bought->shop_id = $shop->id;
                     //$ate->mark = $act->mark;
 
@@ -903,11 +907,7 @@ class DefaultController extends FrontEndController
                             return $this->renderPartial('bought_today', ['bought_today' => $bought_today, 'sum_spent' => $sum_spent]);
 
                         }
-
-
                     }
-
-
 
             }
 
