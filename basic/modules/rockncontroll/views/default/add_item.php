@@ -47,6 +47,7 @@
                 var tags = $("#tags").val();
                 var txt = $("#text").val();
 
+
                 if (title == '') {alert('Введите название!'); return;}
                 if (source == '') {alert('Введите источник!'); return;}
                 if (cat == '') {alert('Введите категорию!'); return;}
@@ -66,7 +67,26 @@
                 $(this).select();
             })
 
+    });
 
+    $('.fileinput').change(function(){
+        var fd = new FormData();
+
+        console.log(this.files);
+
+        fd.append("userpic", this.files[0]);
+
+        $.ajax({
+            url: "rockncontroll/default/upload",
+            type: "POST",
+            data: fd,
+            processData: false,
+            contentType: false,
+            success: function(html){
+                $("#res").html(html);
+
+            }
+        });
     });
 
 
@@ -126,4 +146,5 @@
             <div id="res"></div>
         </div>
     </form>
+    <<input class="fileinput" name="userpic" type="file" />
 </div>

@@ -544,6 +544,11 @@ class DefaultController extends FrontEndController
         }
         
     }
+    
+    public function actionUpload(){
+       
+        return var_dump($_FILES);
+    }
 
     /**
      * Дела
@@ -572,7 +577,7 @@ class DefaultController extends FrontEndController
                 }
                 else $deal->cat_id = 57;
 
-                $deal->name = Yii::$app->getRequest()->getQueryParam('name');
+                $deal->name = trm(Yii::$app->getRequest()->getQueryParam('name'));
                 $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
                 $deal->status = 0;
                 if($deal->save()) {
@@ -741,7 +746,7 @@ class DefaultController extends FrontEndController
             if (Yii::$app->getRequest()->getQueryParam('deal')) {
 
                 try {
-                    $deal = DiaryDeals::find()->where("name like '". trim(Yii::$app->getRequest()->getQueryParam('deal')) ."'")->one();
+                    $deal = DiaryDeals::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('deal'))."'")->one();
                 } catch (\ErrorException $e) {
                     $deal = [];
                 }

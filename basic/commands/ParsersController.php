@@ -239,8 +239,10 @@ class ParsersController extends Controller
         foreach ($tags as $tag){
 
             $first_letter = mb_substr($tag->name,0,1,'UTF-8');
+            //var_dump($first_letter); exit;
 
             $big_first_letter = mb_strtoupper($first_letter, 'UTF-8');
+
 
             $alfa_tags = fopen("/home/romanych/www/vrs/pages/".$big_first_letter."/tags.html", "a");
 
