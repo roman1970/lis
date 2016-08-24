@@ -76,12 +76,19 @@
 
         fd.append("userpic", this.files[0]);
 
+        console.log(this.files);
+
         $.ajax({
             url: "rockncontroll/default/upload",
             type: "POST",
             data: fd,
-            processData: false,
+            dataType: 'json',
+            //maxFileSize: 256 * 1014,
+            allowedTypes: 'image/*',
+            cache: false,
             contentType: false,
+            processData: false,
+            forceSync: false,
             success: function(html){
                 $("#res").html(html);
 
@@ -146,5 +153,5 @@
             <div id="res"></div>
         </div>
     </form>
-    <<input class="fileinput" name="userpic" type="file" />
+    <input class="fileinput" name="userpic" type="file" />
 </div>

@@ -19,6 +19,8 @@ use Yii;
  */
 class Incomes extends \yii\db\ActiveRecord
 {
+    public $cnt;
+    public $sum;
     /**
      * @inheritdoc
      */

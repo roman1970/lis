@@ -12,6 +12,8 @@ use app\models\DiaryDeals;
 use app\models\DiaryDish;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
+use app\models\Income;
+use app\models\Incomes;
 use app\models\Items;
 use app\models\MarkGroup;
 use app\models\MarkUser;
@@ -546,8 +548,8 @@ class DefaultController extends FrontEndController
     }
     
     public function actionUpload(){
-       
-        return var_dump($_FILES);
+
+        return 'kkk';
     }
 
     /**
@@ -577,7 +579,7 @@ class DefaultController extends FrontEndController
                 }
                 else $deal->cat_id = 57;
 
-                $deal->name = trm(Yii::$app->getRequest()->getQueryParam('name'));
+                $deal->name = trim(Yii::$app->getRequest()->getQueryParam('name'));
                 $deal->mark = (int)Yii::$app->getRequest()->getQueryParam('mark');
                 $deal->status = 0;
                 if($deal->save()) {
@@ -624,10 +626,9 @@ class DefaultController extends FrontEndController
                 $cat_deal[$cat][] = $mark;
                 }
 
-
             }
 
-            $all_deals = DiaryDeals::find()->all();
+            //$all_deals = DiaryDeals::find()->all();
             
 
             //return var_dump($deals);
@@ -1149,6 +1150,23 @@ class DefaultController extends FrontEndController
     }
 
     /**
+     * Приходы для автокомплита
+     * @return string
+     */
+    public function actionIncome(){
+        $res = [];
+
+        $m = Income::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
      * Категории для автокомплита
      * @return string
      */
@@ -1247,6 +1265,79 @@ class DefaultController extends FrontEndController
             return $this->render('index');
         }
 
+    }
+
+    /**
+     * Приходы
+     * @return string
+     */
+    public function actionIncomes(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $start_day = strtotime('now 00:00:00');
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+            
+            if(!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('value') !== null ) {
+                
+                if(Income::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('name')]))
+                    $income = Income::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('name')])->one();
+                else return 'Ошибка при наборе';
+
+                $act = new DiaryActs();
+                $act->model_id = 9;
+                $act->user_id = $user->id;
+
+                //return var_dump($act);
+                
+                if($act->save(false)){
+                    $incomes = new Incomes();
+
+                    try {
+                        $incomes->income_id = $income->id;
+                    } catch (\ErrorException $e) {
+                        return 'Такой статьи в базе нет!';
+                    }
+
+                    $incomes->act_id = $act->id;
+                    $incomes->user_id = $act->user_id;
+                    $incomes->money = (float)Yii::$app->getRequest()->getQueryParam('value');
+                   
+
+                    if(!$incomes->validate()) {
+                        return 'Данные введены некорректно';
+                    }
+                    else{
+                        if($incomes->save()) {
+                            $all_incomes_grouped = Incomes::find()
+                                ->select(['income_id, COUNT(*) as cnt, SUM(money) as sum '])
+                                ->groupBy('income_id')
+                                ->all();
+                            //var_dump($all_incomes_grouped);
+
+                            return $this->renderPartial('all_incomes', ['user' => $user, 'incomes' => $all_incomes_grouped]);
+                        }
+                        else return 'Ошибка сохранения';
+                        }
+                    }
+                }
+
+            $all_incomes_grouped = Incomes::find()
+                ->select(['income_id, COUNT(*) as cnt, SUM(money) as sum '])
+                ->groupBy('income_id')
+                ->all();
+            //var_dump($all_incomes_grouped);
+
+            return $this->renderPartial('income', ['user' => $user, 'incomes' => $all_incomes_grouped]);
+                
+            }
+
+        else return 'Ошибка';
     }
 
     /**

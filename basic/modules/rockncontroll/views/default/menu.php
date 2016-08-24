@@ -97,6 +97,14 @@
                 $("#menu").hide();
             });
 
+        $("#incomes").click(
+            function() {
+                send(user, 'incomes');
+                $("#show_menu").show();
+                $("#summary").show();
+                $("#menu").hide();
+            });
+
     });
 
 
