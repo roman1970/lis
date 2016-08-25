@@ -12,6 +12,7 @@ use app\models\DiaryDeals;
 use app\models\DiaryDish;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
+use app\models\Event;
 use app\models\Income;
 use app\models\Incomes;
 use app\models\Items;
@@ -207,6 +208,7 @@ class DefaultController extends FrontEndController
             $user = Yii::$app->getRequest()->getQueryParam('user');
             $tasks = Task::find()
                 ->where("status = 1 and user_id = $user")
+                ->orderBy('id DESC')
                 ->all();
 
             return $this->renderPartial('tasks', ['tasks_list' => $tasks, 'user' => $user]);
@@ -270,6 +272,7 @@ class DefaultController extends FrontEndController
                     if($new_task->save()) {
                         $tasks = Task::find()
                             ->where('status = 0 or status = 1')
+                            ->orderBy('id DESC')
                             ->all();
                         return $this->renderPartial('new_tasks', ['tasks_list' => $tasks, 'user' => $user]);
                       
@@ -1274,7 +1277,7 @@ class DefaultController extends FrontEndController
     public function actionIncomes(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+           // $start_day = strtotime('now 00:00:00');
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -1340,6 +1343,108 @@ class DefaultController extends FrontEndController
         else return 'Ошибка';
     }
 
+    /**
+     * Добавление события
+     * @return string
+     */
+    public function actionEvents(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+           // $start_day = strtotime('now 00:00:00');
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('text') &&
+                Yii::$app->getRequest()->getQueryParam('cat')) {
+
+
+                if(Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()){
+                    $cat_id = Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('cat')])->one()->id;
+                    //$item->cat_id = Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()->id;
+                }
+                else return "Категория!";
+
+                $act = new DiaryActs();
+                $act->model_id = 10;
+                $act->user_id = $user->id;
+
+                //return var_dump($act);
+
+                if($act->save(false)){
+                    $event = new Event();
+                    $event->act_id = $act->id;
+                    $event->cat_id = $cat_id;
+                    $event->user_id = $act->user_id;
+                    $event->text = Yii::$app->getRequest()->getQueryParam('text');
+
+                    if(!$event->validate()) {
+                        return 'Данные введены некорректно';
+                    }
+                    else{
+                        if($event->save()) {
+
+                            return "<p>Событие сохранено!</p>";
+                        }
+                        else return 'Ошибка сохранения';
+                    }
+                }
+
+            }
+
+            return $this->renderPartial('add_event', ['user' => $user]);
+        }
+    }
+    
+    public function actionMarkers(){
+        $cat = 57;
+        $cat_plus = 57;
+        $current_hour = date('G', time())+7;
+        if($current_hour > 10 && $current_hour < 18) {
+            $cat = 116;
+            $cat_plus = 53;
+        }
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+            
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+            if (!$user) return 'Доступ запрещен!';
+            
+            if (Yii::$app->getRequest()->getQueryParam('id') && Yii::$app->getRequest()->getQueryParam('mark')) {
+               
+                $update_source = Source::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $update_source->mark = Yii::$app->getRequest()->getQueryParam('mark');
+                $update_source->is_next = 0;
+                $update_source->update();
+                
+                $next_source = Source::find()
+                    ->where("id > $update_source->id and (cat_id = $cat or cat_id = $cat_plus)")
+                    ->one();
+                if(!$next_source) {
+                    $next_source = Source::find()
+                        ->where("cat_id = $cat or cat_id = $cat_plus")
+                        ->one();
+                    if($next_source) {
+                        return "Категория!";
+                    }
+                }
+                
+               return var_dump($next_source);
+            }
+            
+            $source = Source::find()
+                ->where("cat_id = $cat and is_next = 1")
+                ->one();
+
+                return $this->renderPartial('source', ['source' => $source, 'user' => $user]);
+            }
+
+            return 'нет!';
+        }
+   
     /**
      * Выбор группы
      * @param $id
