@@ -16,6 +16,7 @@ use Yii;
  */
 class DiaryActs extends \yii\db\ActiveRecord
 {
+    public $cnt;
     /**
      * @inheritdoc
      */

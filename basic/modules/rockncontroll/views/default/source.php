@@ -26,10 +26,10 @@
 
         $.ajax({
             type: "GET",
-            url: "rockncontroll/default/events",
+            url: "rockncontroll/default/markers",
             data: "mark="+mark+"&id="+id+"&user="+user,
             success: function(html){
-                $("#res").html(html);
+                $("#summary").html(html);
 
             }
 
@@ -45,15 +45,21 @@
     .center, h3, table > tbody > tr > td{
         text-align: center;
     }
+
     .table > tbody > tr > td{
         vertical-align: middle;
         font-size: 15px;
         color: rgb(255, 215, 0);
     }
-    h3{
+
+    h3, h4{
         color: rgb(255, 215, 0);
     }
 
+    .marker{
+        color: rgb(255, 215, 0);
+        font-size: 15px;
+    }
 
     .form-control {
         width: 100%;
@@ -65,9 +71,14 @@
 <div class="container">
     <form class="form-inline center" role="form" id="form-event">
         <div class="form-group">
-            <h3>Добавить событие?</h3>
+            <h3>Читаем:</h3>
+            <h4><?= $source->author->name ?></h4>
+            <h4><?= $source->title ?></h4>
+            <p class="marker"><?= $source->marker ?></p>
+
+            <h3>Закладка:</h3>
             <p>
-                <input type="text" class="form-control" id="mark"  placeholder="Строка закладки">
+                <input type="text" class="form-control" id="mark" value="<?= $source->marker ?>" >
                 <br>
                 <button type="button" class="btn btn-success" id="new_marker" >Новая закладка!</button>
             </p>

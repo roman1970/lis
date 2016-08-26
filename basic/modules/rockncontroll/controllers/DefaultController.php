@@ -1398,15 +1398,51 @@ class DefaultController extends FrontEndController
             return $this->renderPartial('add_event', ['user' => $user]);
         }
     }
-    
+
+    /**
+     * Закладки
+     * @return string
+     * @throws \Exception
+     */
     public function actionMarkers(){
-        $cat = 57;
-        $cat_plus = 57;
+
         $current_hour = date('G', time())+7;
-        if($current_hour > 10 && $current_hour < 18) {
-            $cat = 116;
-            $cat_plus = 53;
+
+
+        switch ($current_hour) {
+            case 6:
+                $cat = 114;
+                break;
+            case 7:
+                $cat = 113;
+                break;
+            case 8:
+                $cat = 115;
+                break;
+            case 11:
+                $cat = 116;
+                break;
+            case 12:
+                $cat = 53;
+                break;
+            case 15:
+                $cat = 116;
+                break;
+            case 18:
+                $cat = 114;
+                break;
+            case 19:
+                $cat = 113;
+                break;
+            case 20:
+                $cat = 115;
+                break;
+            default:
+                $cat = 53;
         }
+
+       // return $cat;
+
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
             
@@ -1414,25 +1450,32 @@ class DefaultController extends FrontEndController
             if (!$user) return 'Доступ запрещен!';
             
             if (Yii::$app->getRequest()->getQueryParam('id') && Yii::$app->getRequest()->getQueryParam('mark')) {
+
+                //return var_dump((int)Yii::$app->getRequest()->getQueryParam('id'));
                
                 $update_source = Source::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
-                $update_source->mark = Yii::$app->getRequest()->getQueryParam('mark');
+                $update_source->marker = Yii::$app->getRequest()->getQueryParam('mark');
                 $update_source->is_next = 0;
-                $update_source->update();
+                $update_source->update(false);
+
+                //return var_dump($update_source);
                 
                 $next_source = Source::find()
-                    ->where("id > $update_source->id and (cat_id = $cat or cat_id = $cat_plus)")
+                    ->where("id > $update_source->id and cat_id = $cat ")
                     ->one();
                 if(!$next_source) {
                     $next_source = Source::find()
-                        ->where("cat_id = $cat or cat_id = $cat_plus")
+                        ->where("cat_id = $cat")
                         ->one();
-                    if($next_source) {
+                    if(!$next_source) {
                         return "Категория!";
                     }
                 }
-                
-               return var_dump($next_source);
+                $next_source->is_next = 1;
+                //return var_dump($next_source);
+                $next_source->update(false);
+
+                return $this->renderPartial('source', ['source' => $next_source, 'user' => $user]);
             }
             
             $source = Source::find()
@@ -1444,23 +1487,6 @@ class DefaultController extends FrontEndController
 
             return 'нет!';
         }
-   
-    /**
-     * Выбор группы
-     * @param $id
-     * @return string
-     */
-    public function actionChoosegroup($id){
-        
-
-        if($this->userIfUserLegal($id)){
-
-            return $this->render('index', ['user' => $this->current_user]);
-        }
-
-        return $this->render('index');
-
-    }
 
 
     /**

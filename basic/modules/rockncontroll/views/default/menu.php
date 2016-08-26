@@ -53,18 +53,18 @@
 
 <div id="menu">
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'day-params')">Сегодня</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'show-task')">Задачи</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'mishich-deals')">Оценить Мишича</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'deals')">Сделал</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'events')">События</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'markers')">Закладки</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'eat')">Съел</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'bought')">Купил</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'add-product')">Добавить товар</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'mishich-deals')">Оценить Мишича</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'deals')">Сделал</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'show-task')">Задачи</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'record-item')">Записать</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'repertoire')">Репертуар</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'incomes')">Incomes</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'events')">События</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'markers')">Закладки</button>
-    
+
 </div>
 <div id="show_menu">
     <button type="button" class="btn btn-success btn-lg btn-block" >Меню</button>

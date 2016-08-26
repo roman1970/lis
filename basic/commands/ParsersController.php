@@ -2,12 +2,22 @@
 namespace app\commands;
 
 
+use app\models\Articles;
 use app\models\Author;
+use app\models\Bought;
 use app\models\Currencies;
 use app\models\CurrHistory;
+use app\models\DiaryActs;
+use app\models\DiaryAte;
+use app\models\DiaryDeals;
+use app\models\DiaryDoneDeal;
+use app\models\DiaryRecDayParams;
+use app\models\Event;
+use app\models\Incomes;
 use app\models\Items;
 use app\models\Source;
 use app\models\Tag;
+use app\models\Tasked;
 use app\models\TeamSum;
 use app\models\Telbase;
 use app\models\Totmatch;
@@ -283,6 +293,91 @@ class ParsersController extends Controller
         }
         //fwrite($file, self::$footer);
         //fclose($file);
+    }
+
+    /**
+     * Генератор дневника знаний
+     */
+    public function actionDiaryGenerator(){
+        $arr = [];
+        $arr['ate_sum_kkal'] = 0;
+        $start_day = strtotime('now 00:00:00');
+        $today = date('Ymd', $start_day);
+        
+        $today_acts = DiaryActs::find()
+            ->where("time > $start_day and user_id = 8")
+            ->all();
+
+        foreach  ($today_acts as $act ){
+            switch ($act->model_id) {
+                case 1:
+                    $arr['ate'][$act->time] = DiaryAte::find()->where(['act_id' => $act->id])->one();
+                    $arr['ate_sum_kkal'] += DiaryAte::find()->where(['act_id' => $act->id])->one()->kkal;
+                    break;
+                case 2:
+                    $arr['tasked'][$act->time] = Tasked::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 3:
+                    $arr['bought'][$act->time] = Bought::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 4:
+                    $arr['day_params'][$act->time] = DiaryRecDayParams::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 5:
+                    $arr['deals'][$act->time] = DiaryDoneDeal::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 6:
+                    $arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 7:
+                    $arr['items'][$act->time] = Items::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 9:
+                    $arr['incomes'][$act->time] = Incomes::find()->where(['act_id' => $act->id])->one();
+                    break;
+                case 10:
+                    $arr['events'][$act->time] = Event::find()->where(['act_id' => $act->id])->one();
+                    break;
+            }
+        }
+        $ate_sum_kkal = $arr['ate_sum_kkal'];
+
+        $file = fopen("/home/romanych/www/vrs/diary/2016/$today.html", "w");
+        fwrite($file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                            <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
+
+        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
+                <table class='table'>
+                <tbody>
+                    <tr >
+                        <td>м</td>
+                        <td>блюдо</td>
+                        <td>кол-во</td>
+                        <td>ккал</td>
+                      
+                    </tr>");
+            foreach ($arr['ate'] as $key => $ate){
+                $dish = $ate->dish->name;
+                $time = date('H:i',$key+7*3600);
+                fwrite($file, "
+                    <tr >
+                        <td> $time </td>
+                        <td> $dish </td>
+                        <td> $ate->measure </td>
+                        <td> $ate->kkal </td>
+                    </tr>
+               
+                ");
+            }
+            fwrite($file, "</tbody></table>");
+
+        }
+        fwrite($file, self::$footer);
+        fclose($file);
+
+
     }
 
     function get_page($url) {
