@@ -43,7 +43,7 @@
 
    
     function login(){
-        //$.cookie('the_cookie', 'the_value', { expires: 7 });
+        //$.cookie('the_cookie', 'the_value', { expires: 30 });
 
         var name = $("#logg").val();
         var pseudo = $("#pswd").val();

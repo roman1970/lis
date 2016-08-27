@@ -3,6 +3,7 @@ namespace app\commands;
 
 
 use app\models\Articles;
+use app\models\ArticlesContent;
 use app\models\Author;
 use app\models\Bought;
 use app\models\Currencies;
@@ -301,6 +302,7 @@ class ParsersController extends Controller
     public function actionDiaryGenerator(){
         $arr = [];
         $arr['ate_sum_kkal'] = 0;
+        $article_time = '00:00';
         $start_day = strtotime('now 00:00:00');
         $today = date('Ymd', $start_day);
         
@@ -311,7 +313,8 @@ class ParsersController extends Controller
         foreach  ($today_acts as $act ){
             switch ($act->model_id) {
                 case 1:
-                    $arr['ate'][$act->time] = DiaryAte::find()->where(['act_id' => $act->id])->one();
+                    if(DiaryAte::find()->where(['act_id' => $act->id])->one())
+                        $arr['ate'][$act->time] = DiaryAte::find()->where(['act_id' => $act->id])->one();
                     $arr['ate_sum_kkal'] += DiaryAte::find()->where(['act_id' => $act->id])->one()->kkal;
                     break;
                 case 2:
@@ -327,53 +330,117 @@ class ParsersController extends Controller
                     $arr['deals'][$act->time] = DiaryDoneDeal::find()->where(['act_id' => $act->id])->one();
                     break;
                 case 6:
-                    $arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                    if(Articles::find()->where(['act_id' => $act->id])->one()) {
+                        $articles = ArticlesContent::find()->where(['articles_id' => Articles::find()->where(['act_id' => $act->id])->one()->id])->all();
+                        //var_dump($articles); exit;
+                        $article_time = $act->time;
+                        //$arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                    }
+
                     break;
                 case 7:
-                    $arr['items'][$act->time] = Items::find()->where(['act_id' => $act->id])->one();
+                    if(Items::find()->where(['act_id' => $act->id])->one()) {
+                        $arr['items'][$act->time] = Items::find()->where(['act_id' => $act->id])->one();
+                    }
                     break;
                 case 9:
-                    $arr['incomes'][$act->time] = Incomes::find()->where(['act_id' => $act->id])->one();
+                    if(Incomes::find()->where(['act_id' => $act->id])->one()){
+                        $arr['incomes'][$act->time] = Incomes::find()->where(['act_id' => $act->id])->one();
+                    }
                     break;
                 case 10:
-                    $arr['events'][$act->time] = Event::find()->where(['act_id' => $act->id])->one();
+                    if(Event::find()->where(['act_id' => $act->id])->one()){
+                        $arr['events'][$act->time] = Event::find()->where(['act_id' => $act->id])->one();
+                    }
                     break;
             }
         }
         $ate_sum_kkal = $arr['ate_sum_kkal'];
 
+        //print_r($arr['articles']); exit;
+
         $file = fopen("/home/romanych/www/vrs/diary/2016/$today.html", "w");
+        
+        //хэдер
         fwrite($file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <style>.item_head{font-weight: bold;} body{padding-left: 20px; padding-top: 20px;} </style>');
+                            <style>.item_head{font-weight: bold;} 
+                                    body{padding-left: 20px; padding-top: 20px;}
+                                    img {width: 100%;}
+                                    h3,h4,h5 {color: lightslategray; text-align: center; margin-top: 1px; margin-bottom: 5px;}
+                                    .mini{font-size: 10px; margin: 0; }
+                            </style>');
+        fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)."</h3><div class=\"btn-group\">
+        <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">3</button>
+        <button type=\"button\" class=\"btn btn-default\">1</button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">3</button>
+        <button type=\"button\" class=\"btn btn-default\">1</button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">2</button>
+        <button type=\"button\" class=\"btn btn-default\">3</button>
+      </div>");
+        /*блок еды
+       if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
+               <table class='table'>
+               <tbody>
+                   <tr >
+                       <td>м</td>
+                       <td>блюдо</td>
+                       <td>кол-во</td>
+                       <td>ккал</td>
+                     
+                   </tr>");
+           foreach ($arr['ate'] as $key => $ate){
+               $dish = $ate->dish->name;
+               $time = date('H:i',$key+7*3600);
+               fwrite($file, "
+                   <tr >
+                       <td> $time </td>
+                       <td> $dish </td>
+                       <td> $ate->measure </td>
+                       <td> $ate->kkal </td>
+                   </tr>
+              
+               ");
+           }
+           fwrite($file, "</tbody></table>");
 
-        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
-                <table class='table'>
-                <tbody>
-                    <tr >
-                        <td>м</td>
-                        <td>блюдо</td>
-                        <td>кол-во</td>
-                        <td>ккал</td>
-                      
-                    </tr>");
-            foreach ($arr['ate'] as $key => $ate){
-                $dish = $ate->dish->name;
-                $time = date('H:i',$key+7*3600);
-                fwrite($file, "
-                    <tr >
-                        <td> $time </td>
-                        <td> $dish </td>
-                        <td> $ate->measure </td>
-                        <td> $ate->kkal </td>
-                    </tr>
-               
-                ");
-            }
-            fwrite($file, "</tbody></table>");
-
+       }
+       */
+        // блок статей
+        if(isset($articles)){
+             fwrite($file, "<hr><h3>**Статьи**</h3>");
+             foreach ($articles as $article) {
+                  fwrite($file, "<hr><h5>".$article->source->author->name." - - ".$article->source->title."</h5><hr>");
+                  fwrite($file, "<h5>".$article->minititle."</h5>");
+                  fwrite($file, $article->body);
+              }
         }
+        //блок айтемов
+        if(isset($arr['items'])){
+            fwrite($file, "<hr><h3>**Краткости талантов**</h3><hr>");
+            foreach ($arr['items'] as $time => $item){
+                fwrite($file, "<p class='mini'>".date('H:i',$time+7*3600)." ");
+                fwrite($file, $item->title."</p>");
+                fwrite($file, "<p>".$item->text."</p>");
+            }
+        }
+        //блок событий
+        if(isset($arr['events'])){
+            fwrite($file, "<hr><h3>**События**</h3><hr>");
+            foreach ($arr['events'] as $time => $event){
+                fwrite($file, "<p>".date('H:i',$time+7*3600)." -");
+                fwrite($file, $event->cat->name."- ");
+                fwrite($file, $event->text."</p>");
+            }
+        }
+
         fwrite($file, self::$footer);
         fclose($file);
 
