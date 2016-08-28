@@ -2,7 +2,7 @@
     $(document).ready(function() {
         $(".accord h3:first").addClass("active");
 
-        $(".accord span:not(:first)").hide();
+        $(".accord span").hide();
 
         $(".accord h3").click(function() {
 
@@ -36,10 +36,12 @@
         font-size: 18px;
         color: rgb(255, 250, 240);
         cursor: pointer;
+        text-align: center;
     }
     .song-text{
-        font-size: 12px;
+        font-size: 16px;
         color: rgb(255, 253, 150);
+        text-align: center;
     }
 </style>
 
@@ -48,10 +50,11 @@
 
 
     <?php foreach ($songs as $song): ?>
+
         <h3 class="song-name"> <input type="radio" name="reper" onclick="saveNextSong(user, <?= $song->id ?>)" value="<?= $song->id ?>"> <?= $song->title ?> </h3>
 
         <span class="song-text" ><?= nl2br($song->text) ?></span>
-
+        <hr>
     <?php endforeach; ?>
 
 </div>

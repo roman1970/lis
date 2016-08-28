@@ -29,17 +29,32 @@
     });
 
 
-    function send(user, controller_str) {
+    function send(user, controller_str, test = 0) {
 
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/"+controller_str+"/",
-            data: "user="+user,
-            success: function(html){
-                $("#summary").html(html);
-            }
+        if(test) {
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/test/"+controller_str+"/",
+                data: "user="+user,
+                success: function(html){
+                    $("#summary").html(html);
+                }
 
-        });
+            });
+        }
+
+        else {
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/default/"+controller_str+"/",
+                data: "user="+user,
+                success: function(html){
+                    $("#summary").html(html);
+                }
+
+            });
+        }
+
 
         $("#show_menu").show();
         $("#summary").show();
@@ -64,6 +79,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'record-item')">Записать</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'repertoire')">Репертуар</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'incomes')">Incomes</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'testes', 1)">Тесты</button>
 
 </div>
 <div id="show_menu">

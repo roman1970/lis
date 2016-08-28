@@ -29,6 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'author_id')->dropDownList(ArrayHelper::map(\app\models\Author::find()->all(),'id','name'),
                 ['prompt' => 'Выбрать автора'])  ?>
+            <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
+                ['prompt' => 'Выбрать категорию'])  ?>
 
 
             <div class="form-group">

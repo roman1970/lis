@@ -5,6 +5,7 @@ use app\components\BackEndController;
 use app\components\TranslateHelper;
 use app\models\Author;
 use app\models\ArticlesContent;
+use app\models\AuthorSearch;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -15,12 +16,20 @@ class AuthorController extends BackEndController
 
     public function actionIndex()
     {
+        /*
         $authors = Author::find();
         $dataProvider = new ActiveDataProvider([
             'query' => $authors,
         ]);
 
         return $this->render('index', ['authors' => $dataProvider]);
+        */
+
+        $searchModel = new AuthorSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->render('index', ['authors' => $dataProvider, 'searchModel' => $searchModel]);
     }
 
     /**
@@ -44,7 +53,7 @@ class AuthorController extends BackEndController
                 'query' => $authors,
             ]);
 
-            return $this->render('index', ['authors' => $dataProvider]);
+            return $this->redirect(Url::toRoute('author/index'));
 
         } else {
 

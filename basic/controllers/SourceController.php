@@ -5,6 +5,7 @@ use app\components\BackEndController;
 use app\components\TranslateHelper;
 use app\models\Source;
 use app\models\ArticlesContent;
+use app\models\SourceSearch;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -15,12 +16,19 @@ class SourceController extends BackEndController
 
     public function actionIndex()
     {
-        $sources = Source::find()->orderBy('id DESC');
+       /* $sources = Source::find()->orderBy('id DESC');
         $dataProvider = new ActiveDataProvider([
             'query' => $sources,
         ]);
 
         return $this->render('index', ['sources' => $dataProvider]);
+       */
+
+        $searchModel = new SourceSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+        return $this->render('index', ['sources' => $dataProvider, 'searchModel' => $searchModel]);
     }
 
     /**
@@ -36,7 +44,8 @@ class SourceController extends BackEndController
             $model->title = Yii::$app->request->post('Source')['title'];
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
             $model->status = Yii::$app->request->post('Source')['status'];
-          $model->save(false);
+            $model->cat_id = Yii::$app->request->post('Source')['cat_id'];
+            $model->save(false);
 
             $sources = Source::find();
             $dataProvider = new ActiveDataProvider([
@@ -65,6 +74,7 @@ class SourceController extends BackEndController
             $model->title = Yii::$app->request->post('Source')['title'];
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
             $model->status = Yii::$app->request->post('Source')['status'];
+            $model->cat_id = Yii::$app->request->post('Source')['cat_id'];
             $model->save(false);
 
             return $this->redirect(Url::toRoute('source/index'));

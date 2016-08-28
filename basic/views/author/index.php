@@ -29,7 +29,7 @@ AppAsset::register($this);
     <?php  //var_dump($articles); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $authors,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             'id',
             'name',

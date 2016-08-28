@@ -26,10 +26,10 @@ AppAsset::register($this);
 
 <div class="col-sm-9 col-md-10 main">
     <h1 class="page-header">Источники</h1>
-    <?php  //var_dump($articles); exit; ?>
+    <?php  //var_dump($sources); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $sources,
-        //'filterModel' => $sources->search(),
+        'filterModel' => $searchModel,
         'columns' => [
             'id',
             'title',

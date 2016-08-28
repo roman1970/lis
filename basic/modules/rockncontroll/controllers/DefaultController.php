@@ -16,7 +16,7 @@ use app\models\Event;
 use app\models\Income;
 use app\models\Incomes;
 use app\models\Items;
-use app\models\MarkGroup;
+//use app\models\MarkGroup;
 use app\models\MarkUser;
 use app\models\Products;
 use app\models\Shop;
@@ -26,7 +26,7 @@ use app\models\Task;
 use app\models\Tasked;
 use Yii;
 use app\models\Categories;
-use yii\data\Pagination;
+//use yii\data\Pagination;
 
 use app\models\Articles;
 use yii\helpers\ArrayHelper;
@@ -1426,6 +1426,12 @@ class DefaultController extends FrontEndController
                 $cat = 53;
                 break;
             case 15:
+                $cat = 116;
+                break;
+            case 16:
+                $cat = 116;
+                break;
+            case 17:
                 $cat = 116;
                 break;
             case 18:
