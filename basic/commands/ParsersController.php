@@ -437,7 +437,7 @@ class ParsersController extends Controller
             foreach ($arr['events'] as $time => $event){
                 fwrite($file, "<p>".date('H:i',$time+7*3600)." -");
                 fwrite($file, $event->cat->name."- ");
-                fwrite($file, $event->text."</p>");
+                fwrite($file, nl2br($event->text)."</p>");
             }
         }
 
@@ -1067,6 +1067,11 @@ class ParsersController extends Controller
         }
 
 
+    }
+    
+    public function actionParsNgnxLog(){
+        $content = file('/var/log/nginx/access.log');
+        var_dump($content);
     }
     
 }

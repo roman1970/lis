@@ -5,6 +5,7 @@ namespace app\modules\rockncontroll\controllers;
 
 use app\components\FrontEndController;
 
+use app\models\Estest;
 use Yii;
 
 class TestController extends FrontEndController
@@ -22,8 +23,10 @@ class TestController extends FrontEndController
 
     public function actionTestes()
     {
+        $tests = Estest::find()->all();
 
-        return $this->renderPartial('index');
+        return $this->renderPartial('index', ['tests' => $tests]);
+
 
     }
 }
