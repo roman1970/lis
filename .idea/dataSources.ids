@@ -7009,77 +7009,80 @@ type</columns>
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1828" parent="121" name="ux_events_act_id">
+      <column id="1828" parent="121" name="img">
+        <data-type>varchar(255)</data-type>
+      </column>
+      <index id="1829" parent="121" name="ux_events_act_id">
         <columns>act_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="1829" parent="121" name="ux_events_cat_id">
+      <index id="1830" parent="121" name="ux_events_cat_id">
         <columns>cat_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="1830" parent="121" name="ux_events_user_id">
+      <index id="1831" parent="121" name="ux_events_user_id">
         <columns>user_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1831" parent="121" name="PRIMARY">
+      <key id="1832" parent="121" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1832" parent="121" name="events_ibfk_1">
+      <foreign-key id="1833" parent="121" name="events_ibfk_1">
         <columns>cat_id</columns>
         <ref-key>~.qpcategory.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="1833" parent="121" name="events_ibfk_2">
+      <foreign-key id="1834" parent="121" name="events_ibfk_2">
         <columns>act_id</columns>
         <ref-key>~.controll_acts.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="1834" parent="121" name="events_ibfk_3">
+      <foreign-key id="1835" parent="121" name="events_ibfk_3">
         <columns>user_id</columns>
         <ref-key>~.mark_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1835" parent="122" name="id">
+      <column id="1836" parent="122" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1836" parent="122" name="name">
+      <column id="1837" parent="122" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1837" parent="122" name="ideal">
+      <column id="1838" parent="122" name="ideal">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1838" parent="122" name="real">
+      <column id="1839" parent="122" name="real">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1839" parent="122" name="description">
+      <column id="1840" parent="122" name="description">
         <data-type>text</data-type>
       </column>
-      <column id="1840" parent="122" name="lim_val">
+      <column id="1841" parent="122" name="lim_val">
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <column id="1841" parent="122" name="cat_id">
+      <column id="1842" parent="122" name="cat_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1842" parent="122" name="ux_estest_cat_id">
+      <index id="1843" parent="122" name="ux_estest_cat_id">
         <columns>cat_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1843" parent="122" name="PRIMARY">
+      <key id="1844" parent="122" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1844" parent="122" name="estest_ibfk_1">
+      <foreign-key id="1845" parent="122" name="estest_ibfk_1">
         <columns>cat_id</columns>
         <ref-key>~.qpcategory.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>

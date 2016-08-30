@@ -79,9 +79,9 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'record-item')">Записать</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'repertoire')">Репертуар</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'incomes')">Incomes</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'testes', 1)">Тесты</button>
-
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'klavaro', 1)">Klavaro</button>
 </div>
+
 <div id="show_menu">
     <button type="button" class="btn btn-success btn-lg btn-block" >Меню</button>
 </div>

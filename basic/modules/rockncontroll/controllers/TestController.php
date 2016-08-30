@@ -6,6 +6,7 @@ namespace app\modules\rockncontroll\controllers;
 use app\components\FrontEndController;
 
 use app\models\Estest;
+use app\models\MarkUser;
 use Yii;
 
 class TestController extends FrontEndController
@@ -21,12 +22,24 @@ class TestController extends FrontEndController
 
     }
 
-    public function actionTestes()
+    public function actionKlavaro()
     {
-        $tests = Estest::find()->all();
 
-        return $this->renderPartial('index', ['tests' => $tests]);
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+          // return var_dump($user);
+
+        //$tests = Estest::find()->all();
+
+        return $this->renderPartial('klavaro', ['user' => $user]);
+        }
+
+        return 'Ошибка';
 
 
     }
+
+
 }

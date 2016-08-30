@@ -67,13 +67,14 @@ AppAsset::register($this);
             ['label' => 'Репертуар', 'url' => ['/repertuar/default/index']],
             ['label' => 'КХЛ', 'url' => ['/khl/default/index']],
             ['label' => 'Item', 'url' => ['/item/index']],
+            ['label' => 'Картинку событию', 'url' => ['/event/index']],
             ],
         ]);
         ?>
         <?= $content ?>
     </div>
 </div>
-
+<?php /*
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; qpLIS <?= date('Y') ?></p>
@@ -81,6 +82,7 @@ AppAsset::register($this);
         <p class="pull-right">Все права защищены</p>
     </div>
 </footer>
+ */?>
 
 <?php $this->endBody() ?>
 </body>
