@@ -428,7 +428,7 @@ class ParsersController extends Controller
             foreach ($arr['items'] as $time => $item){
                 fwrite($file, "<p class='mini'>".date('H:i',$time+7*3600)." ");
                 fwrite($file, $item->title."</p>");
-                fwrite($file, "<p>".$item->text."</p>");
+                fwrite($file, "<p>".nl2br($item->text)."</p>");
             }
         }
         //блок событий
@@ -437,6 +437,7 @@ class ParsersController extends Controller
             foreach ($arr['events'] as $time => $event){
                 fwrite($file, "<p>".date('H:i',$time+7*3600)." -");
                 fwrite($file, $event->cat->name."- ");
+                if($event->img){ fwrite($file, "<img src=/".$event->img.">");}
                 fwrite($file, nl2br($event->text)."</p>");
             }
         }

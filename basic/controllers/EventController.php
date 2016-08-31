@@ -46,23 +46,21 @@ class EventController extends BackEndController
             else { print_r($uploadImg->getErrors()); }
 
             //var_dump($uploadImg); exit;
-            if(isset($uploadImg->img))
+            if(isset($uploadImg->img)) {
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
-            $model->update(false);
+                $model->update(false);
 
-            return $this->redirect(Url::toRoute('event/index'));
-        
+                return $this->redirect(Url::toRoute('event/index'));
+            }
+            
         
         }
 
 
-      else {
-
-            return $this->render('_form', [
-                'model' => $model,
-                'uploadImg' => $uploadImg,
-            ]);
-        }
+        return $this->render('_form', [
+            'model' => $model,
+            'uploadImg' => $uploadImg,
+        ]);
 
     }
 
