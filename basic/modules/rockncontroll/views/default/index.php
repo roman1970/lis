@@ -77,13 +77,6 @@
 
 </script>
 
-<?php
-
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
-
-
-?>
 
 <header>
     <div class="logo">

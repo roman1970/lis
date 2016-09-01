@@ -24,6 +24,7 @@ use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
+use app\modules\diary\models\Maner;
 use Yii;
 use app\models\Categories;
 //use yii\data\Pagination;
@@ -219,12 +220,13 @@ class DefaultController extends FrontEndController
     }
 
     /**
-     * Показать текущую задачу
+     * Показать текущие актуальные данные
      * @return string
      */
     public function actionShowCurrentTask(){
 
         $current_hour = date('G', time())+7;
+        $current_day_of_year = date('z', time())+7;
         $task_str = '';
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -232,6 +234,39 @@ class DefaultController extends FrontEndController
             $tasks = Task::find()
                 ->where("status = 3 and hour = $current_hour and user_id = $user")
                 ->all();
+
+            $sum_kt = Maner::find()
+                ->select('SUM(kt)')
+                ->where(['year' => 2016])
+                ->scalar();
+            $sum_tochka = DiaryDoneDeal::find()
+                ->select('COUNT(id)')
+                ->where(['deal_id' => 30])
+                ->andWhere('id > 200')
+                ->scalar();
+
+            /*средний вес из старой базы
+            $sum_weight = Maner::find()
+                ->select('SUM(weigth)')
+                ->where(['year' => 2016])
+                ->scalar();
+            $day_count_of_year = Maner::find()
+                ->select('COUNT(id)')
+                ->where(['year' => 2016])
+                ->scalar();
+            */
+
+            $weight = DiaryRecDayParams::find()
+                ->select('AVG(value)')
+                ->where(['day_param_id' => 1])
+                ->scalar();
+
+
+            return "Коэффициент T ".round($current_day_of_year/($sum_kt + $sum_tochka), 1)."
+            <br> Средний вес конца года ". round($weight, 2);
+
+            /*
+            Текущие задачи не выводим
 
             if ($tasks) {
                 foreach ($tasks as $task) {
@@ -242,6 +277,7 @@ class DefaultController extends FrontEndController
             }
 
             return $current_hour . ": " . 'Текущих задач нет!';
+            */
         }
 
     }
