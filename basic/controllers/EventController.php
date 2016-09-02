@@ -43,9 +43,9 @@ class EventController extends BackEndController
                 $uploadImg->img->saveAs('uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
 
             }
-            else { print_r($uploadImg->getErrors()); }
+            else {print_r($uploadImg->getErrors()); } 
 
-            //var_dump($uploadImg); exit;
+            if($uploadImg->errors) return var_dump($uploadImg->getErrors());
             if(isset($uploadImg->img)) {
                 $model->img = Url::base().'uploads/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
                 $model->update(false);

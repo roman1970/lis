@@ -46,7 +46,7 @@
                 var cat = $("#cat").val();
                 var tags = $("#tags").val();
                 var txt = $("#text").val();
-
+                
 
                 if (title == '') {alert('Введите название!'); return;}
                 if (source == '') {alert('Введите источник!'); return;}
@@ -153,5 +153,5 @@
             <div id="res"></div>
         </div>
     </form>
-    <input class="fileinput" name="userpic" type="file" />
+   <?php // <input class="fileinput" name="userpic" type="file" /> ?>
 </div>

@@ -18,7 +18,7 @@ class UploadForm extends Model
     public $file;
     public $img;
 
-    const MAX_SIZE_FILE = 2048000000;
+    const MAX_SIZE_FILE = 5048000000;
 
     /**
      * @return array the validation rules.

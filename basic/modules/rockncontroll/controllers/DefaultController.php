@@ -53,7 +53,7 @@ class DefaultController extends FrontEndController
      */
     public function actionEat(){
 
-        $start_day = strtotime('now 00:00:00');
+        $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
         
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
@@ -332,7 +332,8 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            //return date('D G:i', $start_day);
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -427,7 +428,7 @@ class DefaultController extends FrontEndController
     public function actionChangeParam(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
@@ -599,7 +600,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -687,7 +688,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
 
             $user = MarkUser::findOne(11);
@@ -777,7 +778,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -868,7 +869,7 @@ class DefaultController extends FrontEndController
      */
     public function actionBought(){
 
-        $start_day = strtotime('now 00:00:00');
+        $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -1063,7 +1064,9 @@ class DefaultController extends FrontEndController
                 Yii::$app->getRequest()->getQueryParam('txt') &&
                 Yii::$app->getRequest()->getQueryParam('title')) {
 
-                //return var_dump(Yii::$app->getRequest()->getQueryParam('txt'));
+               // return nl2br(Yii::$app->getRequest()->getQueryParam('txt'));
+
+
 
 
 
@@ -1071,6 +1074,7 @@ class DefaultController extends FrontEndController
                 $act->model_id = 7;
                 $act->user_id = $user->id;
                 $act->mark = 1;
+
 
 
 
