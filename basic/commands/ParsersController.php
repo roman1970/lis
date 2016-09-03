@@ -305,10 +305,15 @@ class ParsersController extends Controller
         $article_time = '00:00';
         $start_day = strtotime('now 00:00:00');
         $today = date('Ymd', $start_day);
+        //echo $today.PHP_EOL; exit;
         
         $today_acts = DiaryActs::find()
             ->where("time > $start_day and user_id = 8")
             ->all();
+
+        //var_dump($today_acts); exit;
+
+        $f = 0;
 
         foreach  ($today_acts as $act ){
             switch ($act->model_id) {
@@ -331,10 +336,14 @@ class ParsersController extends Controller
                     break;
                 case 6:
                     if(Articles::find()->where(['act_id' => $act->id])->one()) {
-                        $articles = ArticlesContent::find()->where(['articles_id' => Articles::find()->where(['act_id' => $act->id])->one()->id])->all();
-                        //var_dump($articles); exit;
-                        $article_time = $act->time;
-                        //$arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                        if($f == 0) { echo $f." ".$today.PHP_EOL;
+                            $articles = ArticlesContent::find()->where(['articles_id' => Articles::find()->where(['act_id' => $act->id])->one()->id])->all();
+                            //var_dump($articles); exit;
+                            $article_time = $act->time;
+                            $arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                            $f = 1;
+                        }
+
                     }
 
                     break;
@@ -357,7 +366,7 @@ class ParsersController extends Controller
         }
         $ate_sum_kkal = $arr['ate_sum_kkal'];
 
-        //print_r($arr['articles']); exit;
+        //print_r($arr['articles']); var_dump($articles); exit;
 
         $file = fopen("/home/romanych/www/vrs/diary/2016/$today.html", "w");
         
@@ -769,38 +778,49 @@ class ParsersController extends Controller
      */
     public function actionMtsDetalization()
     {
-        $dom = new \DomDocument();
-        $url = Url::to("@app/commands/teldoc.xml");
-        $dom->load($url);
-        $titles = $dom->getElementsByTagName("i");
+        $users_arr = [
+            8 => 'rom_teldoc.xml',
+            11 => 'mishach_teldoc.xml',
+            1 => 'sv_teldoc.xml',
+        ];
 
-        foreach ($titles as $node) {
+        foreach ($users_arr as $user => $user_file) {
 
-            $rec = new Telbase();
+            $dom = new \DomDocument();
+            $url = Url::to("@app/commands/$user_file");
+            $dom->load($url);
+            $titles = $dom->getElementsByTagName("i");
 
-            $datime_nach = $node->getAttribute('d');
-            $ch = explode(" ", $datime_nach);
-            $rec->date_nach = $ch[0];
-            $rec->time_nach = $ch[1];
-            $rec->nom_tel = $node->getAttribute('n');
-            $rec->zak_gr = $node->getAttribute('zp');
-            $rec->zv = $node->getAttribute('zv');
-            $rec->source = $node->getAttribute('s');
-            $rec->a = $node->getAttribute('a');
-            $rec->dlitelnost = $node->getAttribute('du');
-            $rec->c = $node->getAttribute('s');
-            $rec->dut = $node->getAttribute('dup');
-            $f = $node->getAttribute('f');
-            $rec->f = str_replace(",", ".", $f);
-            //echo floatval($f) . "<br />";
-            $datime_okon = $node->getAttribute('bd');
-            $ch = explode(" ", $datime_okon);
-            $rec->date_okon = $ch[0];
-            $rec->time_okon = $ch[1];
-            $rec->cur = $node->getAttribute('cur');
-            $rec->gmt = $node->getAttribute('gmt');
-            $rec->save();
+            foreach ($titles as $node) {
 
+                $rec = new Telbase();
+
+                $datime_nach = $node->getAttribute('d');
+                $ch = explode(" ", $datime_nach);
+                $rec->date_nach = $ch[0];
+                $rec->time_nach = $ch[1];
+                $rec->nom_tel = $node->getAttribute('n');
+                $rec->zak_gr = $node->getAttribute('zp');
+                $rec->zv = $node->getAttribute('zv');
+                $rec->source = $node->getAttribute('s');
+                $rec->a = $node->getAttribute('a');
+                $rec->dlitelnost = $node->getAttribute('du');
+                $rec->c = $node->getAttribute('s');
+                $rec->dut = $node->getAttribute('dup');
+                $f = $node->getAttribute('f');
+                $rec->f = str_replace(",", ".", $f);
+                //echo floatval($f) . "<br />";
+                $datime_okon = $node->getAttribute('bd');
+                $ch = explode(" ", $datime_okon);
+                $rec->date_okon = $ch[0];
+                $rec->time_okon = $ch[1];
+                $rec->cur = $node->getAttribute('cur');
+                $rec->gmt = $node->getAttribute('gmt');
+                $rec->user_id = $user;
+                $rec->save();
+
+
+            }
 
         }
     }

@@ -32,6 +32,18 @@ KrokodileAsset::register($this);
     body{
         background: rgb(119, 165, 179);
     }
+
+    table{
+        width: 100%;
+    }
+
+     .table_data > tbody > tr > td{
+         padding: 0;
+         width: 33%;
+         color: currentColor;
+         font-size: 15px;
+     }
+
     header{
         background-color: rgb(92, 184, 92);
         border-radius: 5%;

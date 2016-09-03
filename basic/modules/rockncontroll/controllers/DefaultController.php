@@ -261,9 +261,25 @@ class DefaultController extends FrontEndController
                 ->where(['day_param_id' => 1])
                 ->scalar();
 
+            $sum_mark = DiaryActs::find()
+                ->select('SUM(mark)')
+                ->where("user_id = 8 and time > ".mktime(0,0,0,9,1,2016))
+                ->scalar();
+            //return $sum_mark;
 
-            return "Коэффициент T ".round($current_day_of_year/($sum_kt + $sum_tochka), 1)."
-            <br> Средний вес конца года ". round($weight, 2);
+            //$first_day = DiaryActs::findOne(1);
+            
+            $avg_oz = $sum_mark/$this->daysFromTwoTimes(mktime(0,0,0,9,1,2016), strtotime('today'));
+            //return date('D',$first_day->time);
+            
+            $kt = round($current_day_of_year/($sum_kt + $sum_tochka), 1);
+            $we = round($weight, 2);
+
+
+            //return "Коэффициент T ".round($current_day_of_year/($sum_kt + $sum_tochka), 1)."
+            //<br> Средний вес конца года ". round($weight, 2);
+            
+            return $this->renderPartial('actual_datas', ['kt' => $kt, 'we' => $we, 'avg_oz' => $avg_oz]);
 
             /*
             Текущие задачи не выводим
@@ -1447,6 +1463,7 @@ class DefaultController extends FrontEndController
     public function actionMarkers(){
 
         $current_hour = date('G', time())+7;
+        //return $current_hour;
 
 
         switch ($current_hour) {
@@ -1454,10 +1471,13 @@ class DefaultController extends FrontEndController
                 $cat = 114;
                 break;
             case 7:
-                $cat = 113;
+                $cat = 114;
                 break;
             case 8:
                 $cat = 115;
+                break;
+            case 9:
+                $cat = 116;
                 break;
             case 11:
                 $cat = 116;
@@ -1562,6 +1582,10 @@ class DefaultController extends FrontEndController
 
         return false;
 
+    }
+    
+    private function daysFromTwoTimes($begin, $end){
+        return round((($end-$begin)/(24*60*60)),0,PHP_ROUND_HALF_UP);
     }
 
 }
