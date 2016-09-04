@@ -75,7 +75,7 @@
         font-size: 15px;
         color: rgb(255, 215, 0);
     }
-    h3{
+    h3,h4{
         color: rgb(255, 215, 0);
     }
 
@@ -99,6 +99,7 @@
         </div>
     </form>
     <div id="res">
+        <h4 class="center">Полезный баланс <?= round($bal_sum,2)?> Р</h4>
 
             <table class="table">
                 <tbody>
@@ -110,12 +111,9 @@
                             <?= $i ?> <?= $income->income->name ?>
                         </td>
 
-                        <td>
-                            ---------
-                        </td>
 
                         <td>
-                            <?= $income->sum ?>
+                            <?= round($income->sum, 2) ?>
                         </td>
                     </tr>
 

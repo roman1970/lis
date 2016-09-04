@@ -4,6 +4,7 @@ namespace app\modules\rockncontroll\controllers;
 
 
 use app\components\FrontEndController;
+use app\components\Helper;
 use app\models\Bought;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
@@ -24,6 +25,7 @@ use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
+use app\modules\currency\models\CurrHistory;
 use app\modules\diary\models\Maner;
 use Yii;
 use app\models\Categories;
@@ -269,7 +271,7 @@ class DefaultController extends FrontEndController
 
             //$first_day = DiaryActs::findOne(1);
             
-            $avg_oz = $sum_mark/$this->daysFromTwoTimes(mktime(0,0,0,9,1,2016), strtotime('today'));
+            $avg_oz = round($sum_mark/$this->daysFromTwoTimes(mktime(0,0,0,9,1,2016), strtotime('today')),2);
             //return date('D',$first_day->time);
             
             $kt = round($current_day_of_year/($sum_kt + $sum_tochka), 1);
@@ -1379,7 +1381,22 @@ class DefaultController extends FrontEndController
                                 ->all();
                             //var_dump($all_incomes_grouped);
 
-                            return $this->renderPartial('all_incomes', ['user' => $user, 'incomes' => $all_incomes_grouped]);
+                            $not_curr_sum = Incomes::find()
+                                ->select('SUM(money)')
+                                ->where("income_id  IN (1,2,7,10)")
+                                ->scalar();
+                            $dollar = Incomes::find()
+                                ->select('SUM(money)')
+                                ->where("income_id  = 8")
+                                ->scalar();
+                            $euro = Incomes::find()
+                                ->select('SUM(money)')
+                                ->where("income_id  = 9")
+                                ->scalar();
+                            $bal_sum = $not_curr_sum + Helper::currencyAdapter($dollar, 11) + Helper::currencyAdapter($euro, 12);
+
+                            return $this->renderPartial('all_incomes', ['user' => $user, 'incomes' => $all_incomes_grouped, 'bal_sum' => $bal_sum]);
+
                         }
                         else return 'Ошибка сохранения';
                         }
@@ -1391,10 +1408,25 @@ class DefaultController extends FrontEndController
                 ->groupBy('income_id')
                 ->all();
             //var_dump($all_incomes_grouped);
+            
+            $not_curr_sum = Incomes::find()
+                ->select('SUM(money)')
+                ->where("income_id  IN (1,2,7,10)")
+                ->scalar();
+            $dollar = Incomes::find()
+                ->select('SUM(money)')
+                ->where("income_id  = 8")
+                ->scalar();
+            $euro = Incomes::find()
+                ->select('SUM(money)')
+                ->where("income_id  = 9")
+                ->scalar();
+            $bal_sum = $not_curr_sum + Helper::currencyAdapter($dollar,11) + Helper::currencyAdapter($euro,12);
 
-            return $this->renderPartial('income', ['user' => $user, 'incomes' => $all_incomes_grouped]);
-                
-            }
+            return $this->renderPartial('income', ['user' => $user, 'incomes' => $all_incomes_grouped, 'bal_sum' => $bal_sum]);
+
+
+        }
 
         else return 'Ошибка';
     }
@@ -1585,7 +1617,7 @@ class DefaultController extends FrontEndController
     }
     
     private function daysFromTwoTimes($begin, $end){
-        return round((($end-$begin)/(24*60*60)),0,PHP_ROUND_HALF_UP);
+        return round((($end-$begin)/(24*60*60)),0,PHP_ROUND_HALF_UP)+1;
     }
 
 }

@@ -435,7 +435,7 @@ class ParsersController extends Controller
         if(isset($arr['items'])){
             fwrite($file, "<hr><h3>**Краткости талантов**</h3><hr>");
             foreach ($arr['items'] as $time => $item){
-                fwrite($file, "<p class='mini'>".date('H:i',$time+7*3600)." ");
+                fwrite($file, "<p class='mini'>".date('H:i',$time)." ");
                 fwrite($file, $item->title."</p>");
                 fwrite($file, "<p>".nl2br($item->text)."</p>");
             }
@@ -444,7 +444,7 @@ class ParsersController extends Controller
         if(isset($arr['events'])){
             fwrite($file, "<hr><h3>**События**</h3><hr>");
             foreach ($arr['events'] as $time => $event){
-                fwrite($file, "<p>".date('H:i',$time+7*3600)." -");
+                fwrite($file, "<p>".date('H:i',$time)." -");
                 fwrite($file, $event->cat->name."- ");
                 if($event->img){ fwrite($file, "<img src=/".$event->img.">");}
                 fwrite($file, nl2br($event->text)."</p>");
@@ -483,8 +483,8 @@ class ParsersController extends Controller
 
     public function actionCurrencyTest()
     {
-        for($i=0; $i<45; $i++) {
-                echo $i;
+        //for($i=0; $i<45; $i++) {
+                echo $i=0;
 
             $data_slash = Helper::getDateIntervalYesterdayInDashOrSlashFormat(new \DateTime(), $i, 'slash');
             $data_dash = Helper::getDateIntervalYesterdayInDashOrSlashFormat(new \DateTime(), $i, 'dash');
@@ -527,7 +527,7 @@ class ParsersController extends Controller
             }
 
 
-        }
+       // }
 
 
     }
@@ -779,9 +779,9 @@ class ParsersController extends Controller
     public function actionMtsDetalization()
     {
         $users_arr = [
-            8 => 'rom_teldoc.xml',
+            //1 => 'sv_teldoc.xml',
+            //8 => 'rom_teldoc.xml',
             11 => 'mishach_teldoc.xml',
-            1 => 'sv_teldoc.xml',
         ];
 
         foreach ($users_arr as $user => $user_file) {

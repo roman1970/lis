@@ -72,7 +72,7 @@ class DiaryActs extends \yii\db\ActiveRecord
 
         if (parent::beforeSave(1)) {
             if ($this->isNewRecord) {
-                $this->time = time();
+                $this->time = time()+7*60*60;
 
                 return true;
             } else

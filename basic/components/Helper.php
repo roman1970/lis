@@ -1,6 +1,7 @@
 <?php
 namespace app\components;
 
+use app\models\CurrHistory;
 use Yii;
 class Helper
 {
@@ -80,6 +81,26 @@ class Helper
         else
             return $str;
         
+        
+    }
+
+    /**
+     * Каркулятор актуальных значений валют
+     * @param $value
+     * @param int $currency_id
+     * @return mixed|string
+     */
+    public static function currencyAdapter($value, $currency_id = 11){
+
+            $curr = CurrHistory::find()
+                ->where(['currency_id' => $currency_id])
+                ->andWhere(['date' => date('Y-m-d', time())])
+                ->one();
+            if($curr) {
+                return $curr->nominal*$curr->value*(float)$value;
+            }
+            else return 'валюта не найдена';
+
         
     }
 }
