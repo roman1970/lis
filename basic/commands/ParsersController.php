@@ -1094,5 +1094,75 @@ class ParsersController extends Controller
         $content = file('/var/log/nginx/access.log');
         var_dump($content);
     }
+
+    public function actionOrmon(){
+        $cont = file_get_contents("/home/romanych/public_html/plis/basic/web/uploads/walking/ormon.txt");
+        $tag_in = 'Event Hour 23';
+
+        $position = strpos($cont, $tag_in);
+        $cont = substr($cont, $position);
+        $cont = str_replace('  ', ' ', $cont);
+        $cont = str_replace(chr(9), ' ', $cont);
+        $cont = str_replace(chr(11), ' ', $cont);
+
+        $cht = explode(" ", $cont);
+        print_r($cht); exit;
+        $totalstep = $cht[1];
+        $aerostep = $cht[2];
+        $aerowalktime = $cht[3];
+        $calories = $cht[4];
+        $distance = $cht[5];
+        $fatburned = $cht[6];
+        $steph1 = $cht[7];
+        $steph2 = $cht[8];
+        $steph3 = $cht[9];
+        $steph4 = $cht[10];
+        $steph5 = $cht[11];
+        $steph6 = $cht[12];
+        $steph7 = $cht[13];
+        $steph8 = $cht[14];
+        $steph9 = $cht[15];
+        $steph10 = $cht[16];
+        $steph11 = $cht[17];
+        $steph12 = $cht[18];
+        $steph13 = $cht[19];
+        $steph14 = $cht[20];
+        $steph15 = $cht[21];
+        $steph16 = $cht[22];
+        $steph17 = $cht[23];
+        $steph18 = $cht[24];
+        $steph19 = $cht[25];
+        $steph20 = $cht[26];
+        $steph21 = $cht[28];
+        $steph22 = $cht[29];
+        $steph23 = $cht[30];
+        $steph24 = $cht[31];
+        $aerosteph1 = $cht[32];
+        $aerosteph2 = $cht[33];
+        $aerosteph3 = $cht[34];
+        $aerosteph4 = $cht[35];
+        $aerosteph5 = $cht[36];
+        $aerosteph6 = $cht[37];
+        $aerosteph7 = $cht[38];
+        $aerosteph8 = $cht[39];
+        $aerosteph9 = $cht[40];
+        $aerosteph10 = $cht[41];
+        $aerosteph11 = $cht[42];
+        $aerosteph12 = $cht[43];
+        $aerosteph13 = $cht[44];
+        $aerosteph14 = $cht[45];
+        $aerosteph15 = $cht[46];
+        $aerosteph16 = $cht[47];
+        $aerosteph17 = $cht[48];
+        $aerosteph18 = $cht[49];
+        $aerosteph19 = $cht[50];
+        $aerosteph20 = $cht[51];
+        $aerosteph21 = $cht[52];
+        $aerosteph22 = $cht[53];
+        $aerosteph23 = $cht[54];
+        $aerosteph24 = $cht[55];
+
+        $nesport = round(($ch[107] / 1000), 0);
+    }
     
 }

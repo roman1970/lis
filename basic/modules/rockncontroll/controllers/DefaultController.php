@@ -1536,7 +1536,7 @@ class DefaultController extends FrontEndController
                 $cat = 136;
                 break;
             case 20:
-                $cat = 115;
+                $cat = 50;
                 break;
             default:
                 $cat = 53;

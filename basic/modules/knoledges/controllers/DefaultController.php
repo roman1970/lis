@@ -9,11 +9,14 @@ use app\models\Author;
 use app\models\Comments;
 use app\models\ContactForm;
 use app\models\Source;
+use app\models\UploadForm;
 use Yii;
 use app\models\Categories;
 use yii\data\Pagination;
 
 use app\models\Articles;
+use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 
 class DefaultController extends FrontEndController
@@ -31,13 +34,31 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex()
     {
+        $uploadFile = new UploadForm();
+        //var_dump($_POST);
 
-        $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
-        $articles = Articles::find()->where('site_id ='.$this->site->id.' or site_id = 13')->all();
+        if (Yii::$app->request->isPost) {
+            $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
+           // var_dump($uploadFile->file); exit;
+
+            if ($uploadFile->file && $uploadFile->validate()) {
+                $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
+
+            }
+            
+            else  {
+                print_r($uploadFile->getErrors()) ;
+                exit;
+            }
+        }
+
+
+            $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
+            $articles = Articles::find()->where('site_id ='.$this->site->id.' or site_id = 13')->all();
 
         //$cats = Categories::find()->leaves()->all();
 
-        return $this->render('index', ['cats' => $cats, 'articles' => $articles]);
+        return $this->render('index', ['cats' => $cats, 'articles' => $articles,  'uploadFile' => $uploadFile]);
 
     }
 
@@ -47,6 +68,7 @@ class DefaultController extends FrontEndController
      * @return string
      */
     public function actionShow($id){
+
         $article = Articles::findOne($id);
         $comment = new Comments();
         $this->title = $article->title;

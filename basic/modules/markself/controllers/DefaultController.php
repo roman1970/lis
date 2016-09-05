@@ -7,7 +7,9 @@ use app\models\MarkActions;
 use app\models\MarkGroup;
 use app\models\MarkIt;
 use app\models\MarkUser;
+use app\models\UploadForm;
 use Yii;
+use yii\web\UploadedFile;
 
 //use yii\web\Controller;
 //use app\modules\bardzilla\models\Songs;
@@ -19,8 +21,27 @@ class DefaultController extends FrontEndController
 
     public function actionIndex()
     {
+        //var_dump($_POST);
+        $uploadFile = new UploadForm();
+        //if($_FILES) {var_dump($_FILES); exit;}
 
-        return $this->render('index');
+        if (Yii::$app->request->isPost) {
+            $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
+            //var_dump($uploadFile); exit;
+
+
+            if ($uploadFile->file && $uploadFile->validate()) {
+                $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
+
+            }
+
+            else  {
+                print_r($uploadFile->getErrors()) ;
+                exit;
+            }
+        }
+
+        return $this->render('index', ['uploadFile' => $uploadFile]);
     }
 
     public function actionLogin(){

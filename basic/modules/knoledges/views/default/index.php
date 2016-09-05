@@ -1,4 +1,7 @@
-<?php use yii\helpers\Url; ?>
+<?php 
+use yii\helpers\Url;
+use yii\widgets\ActiveForm;
+?>
 
     <div class="content">
             <div class="uli">
@@ -6,6 +9,13 @@
                 <div class="theme_title">
                     <h1>Великие противостояния</h1>
                 </div>
+              
+                <?php
+
+                $form = ActiveForm::begin(); ?>
+                <?= $form->field($uploadFile, 'file')->fileInput() ?>
+                <?= \yii\helpers\Html::button('Отправить', ['class' => 'btn btn-primary', 'id' => 'send']);?>
+                <?php ActiveForm::end();?>
 
                 <?php if (!empty($articles)): ?>
                 <div class="row">
