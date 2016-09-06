@@ -112,7 +112,7 @@
                         </td>
 
 
-                        <td>
+                        <td style="text-align: right">
                             <?= round($income->sum, 2) ?>
                         </td>
                     </tr>

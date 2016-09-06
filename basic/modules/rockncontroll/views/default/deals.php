@@ -184,7 +184,7 @@
         </form>
 
 
-            <h3><?= $user->name ?>, У тебя <?= $sum_mark ?> пузо!</h3>
+            <h3><?= $user->name ?>, У тебя <?= $sum_mark ?> пузо! И <?= $money ?> руб денег</h3>
             <table class="table">
                 <tbody>
 

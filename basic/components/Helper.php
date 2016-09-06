@@ -99,7 +99,7 @@ class Helper
             if($curr) {
                 return $curr->nominal*$curr->value*(float)$value;
             }
-            else return 'валюта не найдена';
+            else return 0;
 
         
     }

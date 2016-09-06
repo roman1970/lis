@@ -16,13 +16,16 @@ use app\models\DiaryRecDayParams;
 use app\models\Event;
 use app\models\Incomes;
 use app\models\Items;
+use app\models\Snapshot;
 use app\models\Source;
 use app\models\Tag;
 use app\models\Tasked;
 use app\models\TeamSum;
 use app\models\Telbase;
 use app\models\Totmatch;
+use app\modules\diary\models\Ormon;
 use yii\console\Controller;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use Yii;
 use app\components\Helper;
@@ -1095,9 +1098,12 @@ class ParsersController extends Controller
         var_dump($content);
     }
 
+    /**
+     * Парсим в базу данные шагомера
+     */
     public function actionOrmon(){
         $cont = file_get_contents("/home/romanych/public_html/plis/basic/web/uploads/walking/ormon.txt");
-        $tag_in = 'Event Hour 23';
+        $tag_in = '.'.date('Y', time());
 
         $position = strpos($cont, $tag_in);
         $cont = substr($cont, $position);
@@ -1106,63 +1112,130 @@ class ParsersController extends Controller
         $cont = str_replace(chr(11), ' ', $cont);
 
         $cht = explode(" ", $cont);
-        print_r($cht); exit;
-        $totalstep = $cht[1];
-        $aerostep = $cht[2];
-        $aerowalktime = $cht[3];
-        $calories = $cht[4];
-        $distance = $cht[5];
-        $fatburned = $cht[6];
-        $steph1 = $cht[7];
-        $steph2 = $cht[8];
-        $steph3 = $cht[9];
-        $steph4 = $cht[10];
-        $steph5 = $cht[11];
-        $steph6 = $cht[12];
-        $steph7 = $cht[13];
-        $steph8 = $cht[14];
-        $steph9 = $cht[15];
-        $steph10 = $cht[16];
-        $steph11 = $cht[17];
-        $steph12 = $cht[18];
-        $steph13 = $cht[19];
-        $steph14 = $cht[20];
-        $steph15 = $cht[21];
-        $steph16 = $cht[22];
-        $steph17 = $cht[23];
-        $steph18 = $cht[24];
-        $steph19 = $cht[25];
-        $steph20 = $cht[26];
-        $steph21 = $cht[28];
-        $steph22 = $cht[29];
-        $steph23 = $cht[30];
-        $steph24 = $cht[31];
-        $aerosteph1 = $cht[32];
-        $aerosteph2 = $cht[33];
-        $aerosteph3 = $cht[34];
-        $aerosteph4 = $cht[35];
-        $aerosteph5 = $cht[36];
-        $aerosteph6 = $cht[37];
-        $aerosteph7 = $cht[38];
-        $aerosteph8 = $cht[39];
-        $aerosteph9 = $cht[40];
-        $aerosteph10 = $cht[41];
-        $aerosteph11 = $cht[42];
-        $aerosteph12 = $cht[43];
-        $aerosteph13 = $cht[44];
-        $aerosteph14 = $cht[45];
-        $aerosteph15 = $cht[46];
-        $aerosteph16 = $cht[47];
-        $aerosteph17 = $cht[48];
-        $aerosteph18 = $cht[49];
-        $aerosteph19 = $cht[50];
-        $aerosteph20 = $cht[51];
-        $aerosteph21 = $cht[52];
-        $aerosteph22 = $cht[53];
-        $aerosteph23 = $cht[54];
-        $aerosteph24 = $cht[55];
 
-        $nesport = round(($ch[107] / 1000), 0);
+        $ormon = new Ormon();
+        $ormon->year = date('Y', time());
+        $ormon->day = date('d', time());
+        $ormon->month = date('m', time());
+        $ormon->dd = date('D', time());
+        $ormon->totalstep = (int)$cht[1];
+        $ormon->aerostep = (int)$cht[2];
+        $ormon->aerowalktime = (int)$cht[3];
+        $ormon->calories = (int)$cht[4];
+        $ormon->distance = (float)$cht[5];
+        $ormon->fatburned = (float)$cht[6];
+        $ormon->steph1 = (int)$cht[7];
+        $ormon->steph2 = (int)$cht[8];
+        $ormon->steph3 = (int)$cht[9];
+        $ormon->steph4 = (int)$cht[10];
+        $ormon->steph5 = (int)$cht[11];
+        $ormon->steph6 = (int)$cht[12];
+        $ormon->steph7 = (int)$cht[13];
+        $ormon->steph8 = (int)$cht[14];
+        $ormon->steph9 = (int)$cht[15];
+        $ormon->steph10 = (int)$cht[16];
+        $ormon->steph11 = (int)$cht[17];
+        $ormon->steph12 = (int)$cht[18];
+        $ormon->steph13 = (int)$cht[19];
+        $ormon->steph14 = (int)$cht[20];
+        $ormon->steph15 = (int)$cht[21];
+        $ormon->steph16 = (int)$cht[22];
+        $ormon->steph17 = (int)$cht[23];
+        $ormon->steph18 = (int)$cht[24];
+        $ormon->steph19 = (int)$cht[25];
+        $ormon->steph20 = (int)$cht[26];
+        $ormon->steph21 = (int)$cht[28];
+        $ormon->steph22 = (int)$cht[29];
+        $ormon->steph23 = (int)$cht[30];
+        $ormon->steph24 = (int)$cht[31];
+        $ormon->aerosteph1 = (int)$cht[32];
+        $ormon->aerosteph2 = (int)$cht[33];
+        $ormon->aerosteph3 = (int)$cht[34];
+        $ormon->aerosteph4 = (int)$cht[35];
+        $ormon->aerosteph5 = (int)$cht[36];
+        $ormon->aerosteph6 = (int)$cht[37];
+        $ormon->aerosteph7 = (int)$cht[38];
+        $ormon->aerosteph8 = (int)$cht[39];
+        $ormon->aerosteph9 = (int)$cht[40];
+        $ormon->aerosteph10 = (int)$cht[41];
+        $ormon->aerosteph11 = (int)$cht[42];
+        $ormon->aerosteph12 = (int)$cht[43];
+        $ormon->aerosteph13 = (int)$cht[44];
+        $ormon->aerosteph14 = (int)$cht[45];
+        $ormon->aerosteph15 = (int)$cht[46];
+        $ormon->aerosteph16 = (int)$cht[47];
+        $ormon->aerosteph17 = (int)$cht[48];
+        $ormon->aerosteph18 = (int)$cht[49];
+        $ormon->aerosteph19 = (int)$cht[50];
+        $ormon->aerosteph20 = (int)$cht[51];
+        $ormon->aerosteph21 = (int)$cht[52];
+        $ormon->aerosteph22 = (int)$cht[53];
+        $ormon->aerosteph23 = (int)$cht[54];
+        $ormon->aerosteph24 = (int)$cht[55];
+        if($ormon->save()) {
+
+            $act = new DiaryActs();
+            $act->model_id = 11;
+            $act->user_id = 8;
+            $act->mark = round($ormon->totalstep/1000);
+            if($act->save(false)) echo 'ok';
+
+        }
+    }
+    
+    public function actionSnapshot(){
+
+        $start_time = strtotime('now 00:00:00', time()+7*60*60);
+        
+        $snapshot = new Snapshot();
+        $today_mark = DiaryActs::find()
+            ->select('SUM(mark)')
+            ->where("user_id = 8 and time > ".$start_time)
+            ->scalar();
+
+        if($today_mark) $snapshot->oz = $today_mark;
+        else $snapshot->weight = 0;
+        
+        $snapshot->doll = Helper::currencyAdapter(1, 11);
+        $snapshot->euro = Helper::currencyAdapter(1, 12);
+        
+        if(DiaryRecDayParams::find()->where(['day_param_id' => 1])->orderBy('id DESC')->one())
+            $snapshot->weight = (float)DiaryRecDayParams::find()->where(['day_param_id' => 1])->orderBy('id DESC')->one()->value;
+        else $snapshot->weight = 0;
+
+        $mish_mark = DiaryActs::find()
+            ->select('SUM(mark)')
+            ->where("time > $start_time and user_id = 11")
+            ->scalar();
+        if($mish_mark) $snapshot->mish_oz = $mish_mark;
+        else $snapshot->mish_oz = 0;
+
+        $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_time and user_id = 8 and model_id = 1")->all(), 'id', 'id'));
+        $snapshot->kkal = DiaryAte::find()
+            ->select('SUM(kkal)')
+            ->where("act_id  IN (" . $today_acts . ")")
+            ->scalar();
+
+        $not_curr_sum = Incomes::find()
+            ->select('SUM(money)')
+            ->where("income_id  IN (1,2,7,10)")
+            ->scalar();
+        $dollar = Incomes::find()
+            ->select('SUM(money)')
+            ->where("income_id  = 8")
+            ->scalar();
+        $euro = Incomes::find()
+            ->select('SUM(money)')
+            ->where("income_id  = 9")
+            ->scalar();
+        $snapshot->useful_bal = (int)($not_curr_sum + Helper::currencyAdapter($dollar, 11) + Helper::currencyAdapter($euro, 12));
+
+        $snapshot->sun_rise = date_sunrise(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
+        $snapshot->sun_set = date_sunset(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
+
+        var_dump($snapshot);
+
+
     }
     
 }

@@ -657,6 +657,7 @@ class DefaultController extends FrontEndController
             $sum_mark = 0;
             $deal_cats = [];
             $cat_deal = [];
+            $money = 0;
             
             if ($today_acts) {
                 $today_deals = DiaryDoneDeal::find()
@@ -666,6 +667,12 @@ class DefaultController extends FrontEndController
                     ->select('SUM(mark)')
                     ->where("time > $start_day and user_id = ".$user->id)
                     ->scalar();
+                $mark_accumul = DiaryActs::find()
+                    ->select('SUM(mark)')
+                    ->where("time > ".mktime(0,0,0,9,1,2016)." and user_id = ".$user->id)
+                    ->scalar();
+                $users_money = MarkUser::findOne(11)->money;
+                $money = $mark_accumul + $users_money;
 
 
             foreach ($today_deals as $done_deal) {
@@ -691,7 +698,7 @@ class DefaultController extends FrontEndController
 
             //return var_dump($deals);
 
-            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
+            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user, 'money' => $money]);
             }
 
         return $this->renderPartial('error');
@@ -745,6 +752,7 @@ class DefaultController extends FrontEndController
             $sum_mark = 0;
             $deal_cats = [];
             $cat_deal = [];
+            $money = 0;
 
             if ($today_acts) {
                 $today_deals = DiaryDoneDeal::find()
@@ -754,6 +762,12 @@ class DefaultController extends FrontEndController
                     ->select('SUM(mark)')
                     ->where("time > $start_day and user_id = ".$user->id." and model_id = 5")
                     ->scalar();
+                $mark_accumul = DiaryActs::find()
+                    ->select('SUM(mark)')
+                    ->where("time > ".mktime(0,0,0,9,1,2016)." and user_id = ".$user->id)
+                    ->scalar();
+                $users_money = MarkUser::findOne(11)->money;
+                $money = $mark_accumul + $users_money;
 
 
                 foreach ($today_deals as $done_deal) {
@@ -780,7 +794,7 @@ class DefaultController extends FrontEndController
 
             //return var_dump($deals);
 
-            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
+            return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user, 'money' => $money]);
         }
 
         return $this->renderPartial('error');
@@ -843,6 +857,12 @@ class DefaultController extends FrontEndController
                                 ->select('SUM(mark)')
                                 ->where("time > $start_day and user_id = ".$user->id)
                                 ->scalar();
+                            $mark_accumul = DiaryActs::find()
+                                ->select('SUM(mark)')
+                                ->where("time > ".mktime(0,0,0,9,1,2016)." and user_id = ".$user->id)
+                                ->scalar();
+                            $users_money = MarkUser::findOne(11)->money;
+                            $money = $mark_accumul + $users_money;
 
 
                             foreach ($today_deals as $done_deal) {
@@ -869,7 +889,7 @@ class DefaultController extends FrontEndController
 
                         //return var_dump($deals);
 
-                        return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user]);
+                        return $this->renderPartial('deals', ['deal_cats' => $cat_deal, 'sum_mark' => $sum_mark ,'user' => $user, 'money' => $money]);
                     }
 
                     return $this->renderPartial('error');
@@ -1378,6 +1398,7 @@ class DefaultController extends FrontEndController
                             $all_incomes_grouped = Incomes::find()
                                 ->select(['income_id, COUNT(*) as cnt, SUM(money) as sum '])
                                 ->groupBy('income_id')
+                                ->orderBy('sum DESC')
                                 ->all();
                             //var_dump($all_incomes_grouped);
 
@@ -1406,6 +1427,7 @@ class DefaultController extends FrontEndController
             $all_incomes_grouped = Incomes::find()
                 ->select(['income_id, COUNT(*) as cnt, SUM(money) as sum '])
                 ->groupBy('income_id')
+                ->orderBy('sum DESC')
                 ->all();
             //var_dump($all_incomes_grouped);
             
