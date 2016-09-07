@@ -385,17 +385,7 @@ class ParsersController extends Controller
                             </style>');
         fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)."</h3><div class=\"btn-group\">
         <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">3</button>
-        <button type=\"button\" class=\"btn btn-default\">1</button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">3</button>
-        <button type=\"button\" class=\"btn btn-default\">1</button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">2</button>
-        <button type=\"button\" class=\"btn btn-default\">3</button>
+        
       </div>");
         /*блок еды
        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
@@ -429,7 +419,7 @@ class ParsersController extends Controller
         if(isset($articles)){
              fwrite($file, "<hr><h3>**Статьи**</h3>");
              foreach ($articles as $article) {
-                  fwrite($file, "<hr><h5>".$article->source->author->name." - - ".$article->source->title."</h5><hr>");
+                  fwrite($file, "<h5>".$article->source->author->name." - - ".$article->source->title."</h5>");
                   fwrite($file, "<h5>".$article->minititle."</h5>");
                   fwrite($file, $article->body);
               }
@@ -1182,8 +1172,17 @@ class ParsersController extends Controller
 
         }
     }
-    
+
+    /**
+     * Снимок дня
+     * @throws \Exception
+     */
     public function actionSnapshot(){
+
+        //$data = $this->cut_content($this->get_page("http://redday.ru/moon/"),'maintext', '/sun/sunrise.asp');
+        //var_dump($data); exit;
+
+
 
         $start_time = strtotime('now 00:00:00', time()+7*60*60);
         
@@ -1233,7 +1232,29 @@ class ParsersController extends Controller
         $snapshot->sun_rise = date_sunrise(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
         $snapshot->sun_set = date_sunset(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
 
-        var_dump($snapshot);
+       if($snapshot->save()) {
+
+            $act = new DiaryActs();
+            $act->model_id = 12;
+            $act->user_id = 8;
+    
+            if(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one())    {
+                $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one()->value/2000);
+            }
+    
+            else $act->mark = 0;
+    
+            $snapshot->oz += $act->mark;
+            $snapshot->update();
+    
+           // var_dump($act);
+    
+    
+            if($act->save(false)) echo 'ok';
+
+        }
+
+        //var_dump($snapshot);
 
 
     }

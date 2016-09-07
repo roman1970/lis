@@ -45,7 +45,10 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex(){
 
-       return $this->render('index');
+        $denzh = time() - mktime(0, 0, 0, 5, 3, 70);
+        $denzhisni = round(($denzh / 3600 / 24), 0);
+
+       return $this->render('index', ['denzhisni' => $denzhisni]);
 
     }
 
