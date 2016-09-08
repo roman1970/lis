@@ -380,7 +380,7 @@ class ParsersController extends Controller
                             <style>.item_head{font-weight: bold;} 
                                     body{padding-left: 20px; padding-top: 20px;}
                                     img {width: 100%;}
-                                    h3,h4,h5 {color: lightslategray; text-align: center; margin-top: 1px; margin-bottom: 5px;}
+                                    h3,h4,h5 {color: #994b43; text-align: left; margin-top: 1px; margin-bottom: 5px;}
                                     .mini{font-size: 10px; margin: 0; }
                             </style>');
         fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)."</h3><div class=\"btn-group\">
@@ -417,25 +417,26 @@ class ParsersController extends Controller
        */
         // блок статей
         if(isset($articles)){
-             fwrite($file, "<hr><h3>**Статьи**</h3>");
+             fwrite($file, "<hr><h4>**Статьи**</h4>");
              foreach ($articles as $article) {
-                  fwrite($file, "<h5>".$article->source->author->name." - - ".$article->source->title."</h5>");
-                  fwrite($file, "<h5>".$article->minititle."</h5>");
+                  fwrite($file, "<hr><h4>".$article->source->author->name." - - ".$article->source->title."</h4>");
+                  fwrite($file, "<h4>".$article->minititle."</h4>");
                   fwrite($file, $article->body);
               }
         }
         //блок айтемов
         if(isset($arr['items'])){
-            fwrite($file, "<hr><h3>**Краткости талантов**</h3><hr>");
+            fwrite($file, "<hr><h4>**Краткости талантов**</h4>");
             foreach ($arr['items'] as $time => $item){
                 fwrite($file, "<p class='mini'>".date('H:i',$time)." ");
-                fwrite($file, $item->title."</p>");
+                fwrite($file, $item->title."<br>");
+                fwrite($file, " ".$item->source->title." - ".$item->source->author->name."</p>");
                 fwrite($file, "<p>".nl2br($item->text)."</p>");
             }
         }
         //блок событий
         if(isset($arr['events'])){
-            fwrite($file, "<hr><h3>**События**</h3><hr>");
+            fwrite($file, "<hr><h4>**События**</h4>");
             foreach ($arr['events'] as $time => $event){
                 fwrite($file, "<p>".date('H:i',$time)." -");
                 fwrite($file, $event->cat->name."- ");
