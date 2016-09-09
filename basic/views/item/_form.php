@@ -33,8 +33,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?php
             //фомируем список автокомплита
-            $listdata = Tag::find()
+            $tags = Tag::find()
                 ->select(['name as label'])
+                ->asArray()
+                ->all();
+            $sources = \app\models\Source::find()
+                ->select(['title as label'])
+                ->asArray()
+                ->all();
+            $caters = \app\models\Categories::find()
+                ->select(['title as label'])
                 ->asArray()
                 ->all();
             ?>
@@ -45,18 +53,36 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'title')->textInput()  ?>
 
-            <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
-                ['prompt' => 'Выбрать источник'])  ?>
-
-            <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
-                ['prompt' => 'Выбрать категорию'])  ?>
-
+            <?php echo $form->field($model, 'source_title')->widget(
+                AutoComplete::className(), [
+                'clientOptions' => [
+                    'source' => $sources,
+                    'minLength'=>'3',
+                    'autoFill'=>true
+                ],
+                'options'=>[
+                    'class'=>'form-control'
+                ]
+            ]);
+            ?>
+            <?php echo $form->field($model, 'cat_title')->widget(
+                AutoComplete::className(), [
+                'clientOptions' => [
+                    'source' => $caters,
+                    'minLength'=>'3',
+                    'autoFill'=>true
+                ],
+                'options'=>[
+                    'class'=>'form-control'
+                ]
+            ]);
+            ?>
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?php  $form->field($model, 'tags')->textInput()  ?>
             <?php echo $form->field($model, 'tags')->widget(
                 AutoComplete::className(), [
                 'clientOptions' => [
-                    'source' => $listdata,
+                    'source' => $tags,
                     'minLength'=>'3',
                     'autoFill'=>true
                 ],

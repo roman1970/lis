@@ -15,6 +15,7 @@ use app\components\CategoriesQuery;
 class Categories extends \yii\db\ActiveRecord
 {
     public $rootCat;
+   
     /**
      * @inheritdoc
      */

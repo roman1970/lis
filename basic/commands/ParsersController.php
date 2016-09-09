@@ -378,7 +378,7 @@ class ParsersController extends Controller
                             <link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                             <style>.item_head{font-weight: bold;} 
-                                    body{padding-left: 20px; padding-top: 20px;}
+                                    body{padding-left: 20px; padding-top: 20px; background-color: rgba(78, 82, 65, 0.11);}
                                     img {width: 100%;}
                                     h3,h4,h5 {color: #994b43; text-align: left; margin-top: 1px; margin-bottom: 5px;}
                                     .mini{font-size: 10px; margin: 0; }
@@ -1238,9 +1238,26 @@ class ParsersController extends Controller
             $act = new DiaryActs();
             $act->model_id = 12;
             $act->user_id = 8;
-    
+            $klavaro_balls = 0;
+
+            $today_acts_of_day_params = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_time and user_id = 8 and model_id = 4")->all(), 'id', 'id'));
+            if( $today_acts_of_day_params) {
+                $klavaro_eng_today = DiaryRecDayParams::find()
+                    ->where("act_id  IN (" . $today_acts_of_day_params . ") and day_param_id = 22")
+                    ->one();
+                $klavaro_ru_today = DiaryRecDayParams::find()
+                    ->where("act_id  IN (" . $today_acts_of_day_params . ") and day_param_id = 23")
+                    ->one();
+            }
+
+            if(isset($klavaro_eng_today) && $klavaro_eng_today->value > 95 )  $klavaro_balls = 1;
+            if(isset($klavaro_ru_today) && $klavaro_ru_today->value  > 95 )  $klavaro_balls += 1;
+
+            //$klavaro_balls = ( isset($klavaro_eng_today) ? $klavaro_eng_today->value : 0 ) + ( isset($klavaro_ru_today) ? $klavaro_eng_today->value : 0 );
+            //echo $klavaro_balls;
+            
             if(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one())    {
-                $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one()->value/2000);
+                $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one()->value/2000) + $klavaro_balls;
             }
     
             else $act->mark = 0;

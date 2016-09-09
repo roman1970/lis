@@ -24,6 +24,7 @@ class ArticlesContent extends \yii\db\ActiveRecord
     public static $templateFormJs = '=i=';
     public $image;
     public $origMinititle;
+    public $source_title;
 
     /**
      * @return string the associated database table name

@@ -2,10 +2,12 @@
 namespace app\controllers;
 
 use app\components\BackEndController;
+use app\models\Categories;
 use app\models\Items;
 use app\models\ItemsSearch;
 use app\models\ItemsQueSearch;
 use app\models\Playlist;
+use app\models\Source;
 use app\models\Tag;
 use app\models\UploadForm;
 use yii\data\ActiveDataProvider;
@@ -65,14 +67,27 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
-            $model->cat_id = Yii::$app->request->post('Items')['cat_id'];
+            //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
+
+            if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
+
+                $model->cat_id = Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()->id;
+            }
+            
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
             $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
             $model->play_status = 1;
 
 
-            if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
+            //if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
+            //else $model->source_id = 2;
+
+            if(Source::find()->where(['title' => Yii::$app->request->post('Items')['source_title']])->one()){
+
+                $model->source_id = Source::find()->where(['title' => Yii::$app->request->post('Items')['source_title']])->one()->id;
+            }
             else $model->source_id = 2;
+
             if(isset($uploadFile->file))
                 $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
 
@@ -122,7 +137,13 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
-            $model->cat_id = Yii::$app->request->post('Items')['cat_id'];
+            //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
+            
+            if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
+
+                $model->cat_id = Source::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()->id;
+            }
+            
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];
             $model->in_work_prim = Yii::$app->request->post('Items')['in_work_prim'];
             //$model->play_status = 1;
@@ -130,8 +151,15 @@ class ItemController extends BackEndController
             Tag::addTags($model->tags, $id);
 
 
-            if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
+            //if(isset(Yii::$app->request->post('Items')['source_id']))$model->source_id = Yii::$app->request->post('Items')['source_id'];
+            //else $model->source_id = 2;
+
+            if(Source::find()->where(['title' => Yii::$app->request->post('Items')['source_title']])->one()){
+
+                $model->source_id = Source::find()->where(['title' => Yii::$app->request->post('Items')['source_title']])->one()->id;
+            }
             else $model->source_id = 2;
+
             if(isset($uploadFile->file))
                 $model->audio = Url::base().'uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension;
 

@@ -6,6 +6,7 @@ use app\components\TranslateHelper;
 use app\models\Articles;
 use app\models\ArticlesContent;
 use app\models\DiaryActs;
+use app\models\Source;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
@@ -228,7 +229,15 @@ class ArticlesController extends BackEndController
         if ($artContent->load(Yii::$app->request->post())) {
             $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
             $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
-            $artContent->source_id = Yii::$app->request->post('ArticlesContent')['source_id'];
+
+            //var_dump(Yii::$app->request->post('ArticlesContent')['source_title']); exit;
+
+             if(Source::find()->where(['title' => Yii::$app->request->post('ArticlesContent')['source_title']])->one()){
+
+                 $artContent->source_id = Source::find()->where(['title' => Yii::$app->request->post('ArticlesContent')['source_title']])->one()->id;
+             }
+            else return 'mistake';
+
             $artContent->articles_id = $id;
             if(isset($upload->file))$artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;
             else $artContent->audio = '';
@@ -297,7 +306,15 @@ class ArticlesController extends BackEndController
         if ($artContent->load(Yii::$app->request->post())) {
             $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
             $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
-            $artContent->source_id = Yii::$app->request->post('ArticlesContent')['source_id'];
+            //$artContent->source_id = Yii::$app->request->post('ArticlesContent')['source_id'];
+
+            if(Source::find()->where(['title' => Yii::$app->request->post('ArticlesContent')['source_title']])->one()){
+
+                $artContent->source_id = Source::find()->where(['title' => Yii::$app->request->post('ArticlesContent')['source_title']])->one()->id;
+            }
+            else return 'mistake';
+
+
             $artContent->articles_id = $artId;
             if(isset($upload->file))
             $artContent->audio = Url::base().'uploads/' . Yii::$app->translater->translit($upload->file->baseName) . '.' .$upload->file->extension;

@@ -30,6 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
 
             ?>
+            <?php
+            //фомируем список автокомплита
+            $data = \app\models\Source::find()
+                ->select(['title as label'])
+                ->asArray()
+                ->all();
+            //var_dump($data); exit;
+            ?>
 
         </div>
         <div class="col-lg-10">
@@ -38,8 +46,19 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'minititle')->textInput()  ?>
 
             <?= $form->field($upload, 'file')->fileInput() ?>
-            <?= $form->field($model, 'source_id')->dropDownList(ArrayHelper::map(\app\models\Source::find()->all(),'id','title'),
-                ['prompt' => 'Выбрать источник'])  ?>
+
+            <?php echo $form->field($model, 'source_title')->widget(
+                \yii\jui\AutoComplete::className(), [
+                'clientOptions' => [
+                    'source' => $data,
+                    'minLength'=>'3',
+                    'autoFill'=>true
+                ],
+                'options'=>[
+                    'class'=>'form-control'
+                ]
+            ]);
+            ?>
             <?php if(!$redactor) :   ?>
                 <?= $form->field($model, 'body')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?php else : ?>
