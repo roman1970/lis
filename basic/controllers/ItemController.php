@@ -141,7 +141,7 @@ class ItemController extends BackEndController
             
             if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
 
-                $model->cat_id = Source::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()->id;
+                $model->cat_id = Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()->id;
             }
             
             $model->audio_link = Yii::$app->request->post('Items')['audio_link'];

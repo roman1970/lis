@@ -7637,7 +7637,15 @@ type</columns>
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <key id="1994" parent="124" name="PRIMARY">
+      <column id="1994" parent="124" name="oil_brend">
+        <data-type>decimal(10,2)</data-type>
+        <default-expression>&apos;0.00&apos;</default-expression>
+      </column>
+      <column id="1995" parent="124" name="spent">
+        <data-type>decimal(10,2)</data-type>
+        <default-expression>&apos;0.00&apos;</default-expression>
+      </column>
+      <key id="1996" parent="124" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

@@ -1463,7 +1463,7 @@ class DefaultController extends FrontEndController
     public function actionEvents(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-           // $start_day = strtotime('now 00:00:00');
+            $start_day = strtotime('now 00:00:00', time()+7*60*60);
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -1508,7 +1508,22 @@ class DefaultController extends FrontEndController
 
             }
 
-            return $this->renderPartial('add_event', ['user' => $user]);
+            $today_event_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_day and user_id = ".$user->id." and model_id = 10")->all(), 'id', 'id'));
+
+            $today_event = [];
+           
+            //return var_dump($today_event_acts);
+
+            if ($today_event_acts) {
+                $today_event = Event::find()
+                    ->where("act_id  IN (" . $today_event_acts . ")")
+                    ->all();
+            }
+
+            //return var_dump($today_event);
+            
+
+            return $this->renderPartial('add_event', ['user' => $user, 'today_event' => $today_event]);
         }
     }
 
@@ -1528,10 +1543,10 @@ class DefaultController extends FrontEndController
                 $cat = 114;
                 break;
             case 7:
-                $cat = 116;
+                $cat = 114;
                 break;
             case 8:
-                $cat = 115;
+                $cat = 116;
                 break;
             case 9:
                 $cat = 116;
@@ -1559,9 +1574,6 @@ class DefaultController extends FrontEndController
                 break;
             case 19:
                 $cat = 136;
-                break;
-            case 20:
-                $cat = 50;
                 break;
             default:
                 $cat = 53;

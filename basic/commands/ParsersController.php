@@ -342,8 +342,8 @@ class ParsersController extends Controller
                         if($f == 0) { echo $f." ".$today.PHP_EOL;
                             $articles = ArticlesContent::find()->where(['articles_id' => Articles::find()->where(['act_id' => $act->id])->one()->id])->all();
                             //var_dump($articles); exit;
-                            $article_time = $act->time;
-                            $arr['articles'][$act->time] = Articles::find()->where(['act_id' => $act->id])->one();
+                            //$article_time = $act->time;
+                            $arr['article_title'] = Articles::find()->where(['act_id' => $act->id])->one()->title;
                             $f = 1;
                         }
 
@@ -383,10 +383,11 @@ class ParsersController extends Controller
                                     h3,h4,h5 {color: #994b43; text-align: left; margin-top: 1px; margin-bottom: 5px;}
                                     .mini{font-size: 10px; margin: 0; }
                             </style>');
-        fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)."</h3><div class=\"btn-group\">
+        fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)." ".$arr['article_title']."</h3><div class=\"btn-group\">
         <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
         
       </div>");
+
         /*блок еды
        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
                <table class='table'>
@@ -416,7 +417,7 @@ class ParsersController extends Controller
        }
        */
         // блок статей
-        if(isset($articles)){
+        if(isset($articles) && $arr['article_title']){
              fwrite($file, "<hr><h4>**Статьи**</h4>");
              foreach ($articles as $article) {
                   fwrite($file, "<hr><h4>".$article->source->author->name." - - ".$article->source->title."</h4>");
@@ -1184,7 +1185,6 @@ class ParsersController extends Controller
         //var_dump($data); exit;
 
 
-
         $start_time = strtotime('now 00:00:00', time()+7*60*60);
         
         $snapshot = new Snapshot();
@@ -1233,7 +1233,26 @@ class ParsersController extends Controller
         $snapshot->sun_rise = date_sunrise(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
         $snapshot->sun_set = date_sunset(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
 
+        $today_acts_bought = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_time and user_id = 8 and model_id = 3")->all(), 'id', 'id'));
+
+        $bought_today = [];
+        $sum_spent = 0;
+
+        if ($today_acts_bought) {
+            try {
+                //return var_dump($bought_today);
+                $snapshot->spent = Bought::find()->select('SUM(spent)')->where("act_id  IN (" .  $today_acts_bought . ")")->scalar();
+            } catch (\ErrorException $e) {
+                return $e->getMessage();
+            }
+
+
+            
+            // return var_dump($sum_spent );
+        }
+
        if($snapshot->save()) {
+
 
             $act = new DiaryActs();
             $act->model_id = 12;

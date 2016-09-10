@@ -1,4 +1,4 @@
-<script>
+<script xmlns="http://www.w3.org/1999/html">
     var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
     $(document).ready(function() {
 
@@ -92,6 +92,19 @@
                 <button type="button" class="btn btn-success" id="rec_event" >Записать!</button>
             </p>
             <div id="res"></div>
+
+            <h3>Сегодня</h3>
+            <ul>
+            <?php
+            //var_dump($today_event);
+            if($today_event) :
+                foreach ($today_event as $event) :
+                ?>
+                    <li style="color: rgb(255, 215, 0);; text-align: left"><?=$event->cat->name?> - <?=$event->text?></li>
+
+                <?php endforeach; ?>
+            <?php endif; ?>
+            </ul>
         </div>
     </form>
     
