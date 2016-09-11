@@ -1108,15 +1108,10 @@ class DefaultController extends FrontEndController
                // return nl2br(Yii::$app->getRequest()->getQueryParam('txt'));
 
 
-
-
-
                 $act = new DiaryActs();
                 $act->model_id = 7;
                 $act->user_id = $user->id;
                 $act->mark = 1;
-
-
 
 
                 if($act->save(false)) {
@@ -1127,7 +1122,8 @@ class DefaultController extends FrontEndController
                     $item->title = Yii::$app->getRequest()->getQueryParam('title');
 
                    // return var_dump($item);
-
+                    if(Yii::$app->getRequest()->getQueryParam('old_data'))
+                        $item->old_data = Yii::$app->getRequest()->getQueryParam('old_data');
 
 
                     if(Categories::find()->where("name like '".trim(Yii::$app->getRequest()->getQueryParam('cat')."'"))->one()){
