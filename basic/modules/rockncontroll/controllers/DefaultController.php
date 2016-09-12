@@ -1530,13 +1530,13 @@ class DefaultController extends FrontEndController
      */
     public function actionMarkers(){
 
-        $current_hour = date('G', time())+7;
+        $current_hour = date('G', time()+7*60*60);
         //return $current_hour;
 
 
         switch ($current_hour) {
             case 6:
-                $cat = 114;
+                $cat = 136;
                 break;
             case 7:
                 $cat = 114;
@@ -1566,10 +1566,10 @@ class DefaultController extends FrontEndController
                 $cat = 116;
                 break;
             case 18:
-                $cat = 114;
+                $cat = 136;
                 break;
             case 19:
-                $cat = 136;
+                $cat = 114;
                 break;
             default:
                 $cat = 53;

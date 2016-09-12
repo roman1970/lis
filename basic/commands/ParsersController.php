@@ -307,7 +307,7 @@ class ParsersController extends Controller
         $arr['ate_sum_kkal'] = 0;
         $article_time = '00:00';
         $start_day = strtotime('now 00:00:00');
-        $today = date('Ymd', $start_day);
+        $today = date('Ymd H', $start_day);
         //echo $today.PHP_EOL; exit;
         
         $today_acts = DiaryActs::find()
@@ -1296,4 +1296,116 @@ class ParsersController extends Controller
 
     }
     
+    public function actionHabrParser($url){
+        header('Content-Type: text/html; charset=utf-8');
+        $head = file_get_contents(Url::to("@app/commands/header.html"));
+       
+        $content = $this->get_page($url);
+
+        $content = $this->cut_content($content, 'post_show', 'column-wrapper');
+
+        $allowedTags='<a><br><b><h1><h2><h3><h4><i>' .
+            '<img><li><ol><p><strong><table><pre>' .
+            '<tr><td><th><u><ul>';
+        $content = strip_tags($content, $allowedTags);
+
+        //$dom = new \DomDocument();
+
+        //$dom->loadHTML($content);
+
+        // create new DOMDocument
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+
+         // set error level
+        $internalErrors = libxml_use_internal_errors(true);
+
+         // load HTML
+        $dom->loadHTML($content);
+
+         // Restore error level
+        libxml_use_internal_errors($internalErrors);
+
+        $img = $dom->getElementsByTagName("img");
+        foreach ($img as $node) {
+
+                foreach ($node->attributes as $attr) {
+                    if($attr->localName === 'src') {
+                        $imageFile = 'ggg.png';
+                       // var_dump($attr->nodeValue); exit;
+                        //if()
+                        if(!$this->get_picture($attr->nodeValue, '/home/romanych/public_html/plis/basic/web/uploads/'.$imageFile)) return 'not downloaded';
+                        $node->setAttribute("src", '/home/romanych/public_html/plis/basic/web/uploads/'.$imageFile);
+                    }
+                }
+        }
+
+        $artContent = new ArticlesContent;
+        $artContent->articles_id = (int)Articles::find()
+            ->select('MAX(id)')
+            ->scalar();
+        $artContent->source_id = 329;
+        $artContent->body = $content;
+        $artContent->minititle = $url;
+        $artContent->save(false);
+        //var_dump($artContent);
+
+        
+        //var_dump($content);
+    }
+    
+
+    function get_picture($url, $target){
+/*
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+            $out = curl_exec($ch);
+            $image_sv = $target.'.jpg';
+            $img_sc = file_put_contents($image_sv, $out);
+            curl_close($ch);
+*/
+
+        $ch = curl_init($url);
+
+        //curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');
+
+        $content = curl_exec($ch);
+        curl_close($ch);
+
+        if (file_exists($target)) :
+            unlink($target);
+        endif;
+            
+        $fp = fopen($target , 'x');
+        fwrite($fp, $content);
+        fclose($fp);
+
+        /*
+        if(!$hfile = fopen($target, "w")) return false;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_FILE, $hfile);
+        if(!curl_exec($ch)){
+            var_dump($url);
+            curl_close($ch);
+            fclose($hfile);
+            unlink($target);
+            return false;
+        }
+        fflush($hfile);
+        fclose($hfile);
+        curl_close($ch);
+        return true;
+        */
+    }
+
+
 }
