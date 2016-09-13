@@ -6,6 +6,7 @@ use app\components\TranslateHelper;
 use app\models\Articles;
 use app\models\ArticlesContent;
 use app\models\DiaryActs;
+use app\models\ImageStorage;
 use app\models\Source;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
@@ -434,6 +435,87 @@ class ArticlesController extends BackEndController
             throw new \yii\web\HttpException(404, 'The requested page does not exist.');
         return $model;
     }
+
+    /**
+     * Загрузка картинок статьи 
+     * @param $id
+     * @return \yii\web\Response
+     */
+    public function actionLoadArticlePictures($id){
+        $model = ArticlesContent::findOne($id);
+
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+
+        // set error level
+        $internalErrors = libxml_use_internal_errors(true);
+
+        // load HTML
+        $dom->loadHTML($model->body);
+
+        // Restore error level
+        libxml_use_internal_errors($internalErrors);
+
+        $img = $dom->getElementsByTagName("img");
+        foreach ($img as $node) {
+
+                foreach ($node->attributes as $attr) {
+                    if($attr->localName === 'src') {
+                        $extension = '.png';
+                        if(strstr($attr->localName, 'jpg')) $extension = '.jpg';
+                        $imageFile = md5($attr->nodeValue).$extension;
+                       // var_dump($attr->nodeValue); exit;
+                        //if()
+                        copy($attr->nodeValue, '/home/romanych/public_html/plis/basic/web/uploads/article_img/'.$imageFile);
+
+                        $image = new ImageStorage();
+                        $image->img = '/home/romanych/public_html/plis/basic/web/uploads/article_img/'.$imageFile;
+                        $image->orig_tag = $attr->nodeValue;
+                        $image->cont_art_id = $id;
+                        $image->save();
+
+                      
+                    }
+                }
+        }
+
+        return $this->redirect(Url::toRoute('articles/index'));
+        
+
+
+    }
+
+    /*
+    function get_picture($url, $target){
+
+        copy($url,$target);
+        return;
+
+
+
+        $ch = curl_init($url);
+
+        //curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');
+
+        $content = curl_exec($ch);
+        curl_close($ch);
+
+        if (file_exists($target)) :
+            unlink($target);
+        endif;
+
+        $fp = fopen($target , 'x');
+        fwrite($fp, $content);
+        fclose($fp);
+
+       
+    }
+    */
+
+
 
 
 

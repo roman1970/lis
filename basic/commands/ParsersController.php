@@ -307,7 +307,7 @@ class ParsersController extends Controller
         $arr['ate_sum_kkal'] = 0;
         $article_time = '00:00';
         $start_day = strtotime('now 00:00:00');
-        $today = date('Ymd H', $start_day);
+        $today = date('Ymd', $start_day);
         //echo $today.PHP_EOL; exit;
         
         $today_acts = DiaryActs::find()
@@ -379,7 +379,7 @@ class ParsersController extends Controller
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                             <style>.item_head{font-weight: bold;} 
                                     body{padding-left: 20px; padding-top: 20px; background-color: rgba(78, 82, 65, 0.11);}
-                                    img {width: 100%;}
+                                    img {width: 100%;min-height: 100px;}
                                     h3,h4,h5 {color: #994b43; text-align: left; margin-top: 1px; margin-bottom: 5px;}
                                     .mini{font-size: 10px; margin: 0; }
                             </style>');
@@ -1295,50 +1295,36 @@ class ParsersController extends Controller
 
 
     }
-    
+
+    /**
+     * Парсерхабрахабра
+     * @param $url
+     */
     public function actionHabrParser($url){
+        $tag_in = '';
+        $tag_out = '';
+
+        if(strstr($url, 'habrahabr') || strstr($url,'geektimes')) {
+            $tag_in = 'post_show';
+            $tag_out = 'post__tags';
+
+        }
+
+        //echo 'jj'; exit;
+
         header('Content-Type: text/html; charset=utf-8');
         $head = file_get_contents(Url::to("@app/commands/header.html"));
        
         $content = $this->get_page($url);
 
-        $content = $this->cut_content($content, 'post_show', 'column-wrapper');
+        $content = $this->cut_content($content, $tag_in, $tag_out);
 
         $allowedTags='<a><br><b><h1><h2><h3><h4><i>' .
             '<img><li><ol><p><strong><table><pre>' .
             '<tr><td><th><u><ul>';
         $content = strip_tags($content, $allowedTags);
 
-        //$dom = new \DomDocument();
-
-        //$dom->loadHTML($content);
-
-        // create new DOMDocument
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-
-         // set error level
-        $internalErrors = libxml_use_internal_errors(true);
-
-         // load HTML
-        $dom->loadHTML($content);
-
-         // Restore error level
-        libxml_use_internal_errors($internalErrors);
-
-        $img = $dom->getElementsByTagName("img");
-        foreach ($img as $node) {
-
-                foreach ($node->attributes as $attr) {
-                    if($attr->localName === 'src') {
-                        $imageFile = 'ggg.png';
-                       // var_dump($attr->nodeValue); exit;
-                        //if()
-                        if(!$this->get_picture($attr->nodeValue, '/home/romanych/public_html/plis/basic/web/uploads/'.$imageFile)) return 'not downloaded';
-                        $node->setAttribute("src", '/home/romanych/public_html/plis/basic/web/uploads/'.$imageFile);
-                    }
-                }
-        }
-
+       
         $artContent = new ArticlesContent;
         $artContent->articles_id = (int)Articles::find()
             ->select('MAX(id)')
@@ -1408,4 +1394,5 @@ class ParsersController extends Controller
     }
 
 
+   
 }

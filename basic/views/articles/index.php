@@ -39,7 +39,7 @@ AppAsset::register($this);
 
 
         ['class' => 'yii\grid\ActionColumn',
-            'template' => '{delete} {update} {pages}',
+            'template' => '{delete} {update} {pages} ',
             'buttons' =>
                 [
                     'delete' => function ($url, $model) {
@@ -63,7 +63,8 @@ AppAsset::register($this);
                             'data-method' => 'post',
                             'data-pjax' => '0',
                         ]);
-                    }
+                    },
+                   
 
                 ]
             ]

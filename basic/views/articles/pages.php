@@ -39,7 +39,7 @@ AppAsset::register($this);
             'minititle',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete} {update}',
+                'template' => '{delete} {update} {load-article-pictures}',
                 'buttons' =>
                     [
                         'delete' => function ($url, $model) {
@@ -53,6 +53,13 @@ AppAsset::register($this);
                         'update' => function ($url, $model) {
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['updatepage','id' => $model->id]), [
                                 'title' => Yii::t('yii', 'Update'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                            ]);
+                        },
+                        'load-article-pictures' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-camera"></span>', Url::toRoute(['load-article-pictures','id' => $model->id]), [
+                                'title' => Yii::t('yii', 'Загрузить фото страницы'),
                                 'data-method' => 'post',
                                 'data-pjax' => '0',
                             ]);
