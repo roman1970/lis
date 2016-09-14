@@ -1,4 +1,5 @@
 
+<div id="sum_ate">
 
 
     <?php if($sum_kkal > 2000) : ?>

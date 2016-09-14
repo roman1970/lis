@@ -122,6 +122,7 @@
                 <h3 style="color: red">Сегодня съел <?= $sum_kkal ?> kkal</h3>
             <?php elseif($sum_kkal < 2000) : ?>
                 <h3>Сегодня съел <?= $sum_kkal ?> kkal</h3>
+            <?php endif; ?>
                     <table class="table">
                         <tbody>
                         <tr>
@@ -132,7 +133,7 @@
                             <td>не съел</td>
                         </tr>
 
-            <?php endif; ?>
+
                 <?php $i=0; foreach ($ate_today as $item) : $i++;  ?>
                     <tr >
                         <td><?= $i ?></td>

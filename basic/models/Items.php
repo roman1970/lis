@@ -72,4 +72,9 @@ class Items extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Source::className(), ['id' => 'source_id']);
     }
+
+    public function getCat()
+    {
+        return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
+    }
 }

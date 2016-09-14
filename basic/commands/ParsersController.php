@@ -431,7 +431,8 @@ class ParsersController extends Controller
             foreach ($arr['items'] as $time => $item){
                 fwrite($file, "<p class='mini'>".date('H:i',$time)." ");
                 fwrite($file, $item->title."<br>");
-                fwrite($file, " ".$item->source->title." - ".$item->source->author->name."</p>");
+                fwrite($file, " ".$item->source->title." - ".$item->source->author->name." - ".$item->cat->name."</p>");
+                if($item->old_data) fwrite($file, "<p class='mini'>".$item->old_data."</p>");
                 fwrite($file, "<p>".nl2br($item->text)."</p>");
             }
         }
@@ -439,10 +440,12 @@ class ParsersController extends Controller
         if(isset($arr['events'])){
             fwrite($file, "<hr><h4>**События**</h4>");
             foreach ($arr['events'] as $time => $event){
-                fwrite($file, "<p>".date('H:i',$time)." -");
-                fwrite($file, $event->cat->name."- ");
+                fwrite($file, "<p class='mini'>".date('H:i',$time)." -");
+                fwrite($file, $event->cat->name." - ");
+                if($event->old_data) fwrite($file, " ".$event->old_data."</p>");
+                else fwrite($file, "</p>");
                 if($event->img){ fwrite($file, "<img src=/".$event->img.">");}
-                fwrite($file, nl2br($event->text)."</p>");
+                fwrite($file, "<p>".nl2br($event->text)."</p>");
             }
         }
 
@@ -1297,23 +1300,29 @@ class ParsersController extends Controller
     }
 
     /**
-     * Парсерхабрахабра
+     * Парсер хабрахабра
      * @param $url
      */
     public function actionHabrParser($url){
         $tag_in = '';
         $tag_out = '';
 
-        if(strstr($url, 'habrahabr') || strstr($url,'geektimes')) {
-            $tag_in = 'post_show';
-            $tag_out = 'post__tags';
+        if(strstr($url, 'habrahabr.ru/company')){
+            $tag_in = 'class="company_post"';
+            $tag_out = 'class="post__tags"';
+        }
+
+        elseif(strstr($url, 'habrahabr') || strstr($url,'geektimes')) {
+            $tag_in = 'class="post_show"';
+            $tag_out = 'class="post__tags"';
 
         }
 
-        //echo 'jj'; exit;
+        //echo $tag_in;
+        //echo $tag_out;  exit;
 
         header('Content-Type: text/html; charset=utf-8');
-        $head = file_get_contents(Url::to("@app/commands/header.html"));
+        //$head = file_get_contents(Url::to("@app/commands/header.html"));
        
         $content = $this->get_page($url);
 
@@ -1335,8 +1344,7 @@ class ParsersController extends Controller
         $artContent->save(false);
         //var_dump($artContent);
 
-        
-        //var_dump($content);
+
     }
     
 

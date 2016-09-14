@@ -1487,6 +1487,10 @@ class DefaultController extends FrontEndController
                     $event = new Event();
                     $event->act_id = $act->id;
                     $event->cat_id = $cat_id;
+
+                    if(Yii::$app->getRequest()->getQueryParam('old_data_ev'))
+                        $event->old_data = Yii::$app->getRequest()->getQueryParam('old_data_ev');
+
                     $event->user_id = $act->user_id;
                     $event->text = Yii::$app->getRequest()->getQueryParam('text');
 
@@ -1513,6 +1517,8 @@ class DefaultController extends FrontEndController
             if ($today_event_acts) {
                 $today_event = Event::find()
                     ->where("act_id  IN (" . $today_event_acts . ")")
+                    ->orderBy('id DESC')
+                    ->andWhere(["old_data" => 0])
                     ->all();
             }
 

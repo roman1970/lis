@@ -6547,1139 +6547,1143 @@ type</columns>
       <column id="1705" parent="120" name="img">
         <data-type>varchar(255)</data-type>
       </column>
-      <index id="1706" parent="120" name="ux_events_act_id">
+      <column id="1706" parent="120" name="old_data">
+        <data-type>varchar(24)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <index id="1707" parent="120" name="ux_events_act_id">
         <columns>act_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="1707" parent="120" name="ux_events_cat_id">
+      <index id="1708" parent="120" name="ux_events_cat_id">
         <columns>cat_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="1708" parent="120" name="ux_events_user_id">
+      <index id="1709" parent="120" name="ux_events_user_id">
         <columns>user_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1709" parent="120" name="PRIMARY">
+      <key id="1710" parent="120" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1710" parent="120" name="events_ibfk_1">
+      <foreign-key id="1711" parent="120" name="events_ibfk_1">
         <columns>cat_id</columns>
         <ref-key>~.qpcategory.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="1711" parent="120" name="events_ibfk_2">
+      <foreign-key id="1712" parent="120" name="events_ibfk_2">
         <columns>act_id</columns>
         <ref-key>~.controll_acts.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="1712" parent="120" name="events_ibfk_3">
+      <foreign-key id="1713" parent="120" name="events_ibfk_3">
         <columns>user_id</columns>
         <ref-key>~.mark_user.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1713" parent="121" name="id">
+      <column id="1714" parent="121" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1714" parent="121" name="name">
+      <column id="1715" parent="121" name="name">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1715" parent="121" name="ideal">
+      <column id="1716" parent="121" name="ideal">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1716" parent="121" name="real">
+      <column id="1717" parent="121" name="real">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1717" parent="121" name="description">
+      <column id="1718" parent="121" name="description">
         <data-type>text</data-type>
       </column>
-      <column id="1718" parent="121" name="lim_val">
+      <column id="1719" parent="121" name="lim_val">
         <data-type>decimal(10,4)</data-type>
         <default-expression>&apos;0.0000&apos;</default-expression>
       </column>
-      <column id="1719" parent="121" name="cat_id">
+      <column id="1720" parent="121" name="cat_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="1720" parent="121" name="ux_estest_cat_id">
+      <index id="1721" parent="121" name="ux_estest_cat_id">
         <columns>cat_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="1721" parent="121" name="PRIMARY">
+      <key id="1722" parent="121" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="1722" parent="121" name="estest_ibfk_1">
+      <foreign-key id="1723" parent="121" name="estest_ibfk_1">
         <columns>cat_id</columns>
         <ref-key>~.qpcategory.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="1723" parent="122" name="id">
+      <column id="1724" parent="122" name="id">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1724" parent="122" name="year">
+      <column id="1725" parent="122" name="year">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1725" parent="122" name="day">
+      <column id="1726" parent="122" name="day">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1726" parent="122" name="month">
+      <column id="1727" parent="122" name="month">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1727" parent="122" name="dd">
+      <column id="1728" parent="122" name="dd">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1728" parent="122" name="salatmastot">
+      <column id="1729" parent="122" name="salatmastot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1729" parent="122" name="banantot">
+      <column id="1730" parent="122" name="banantot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1730" parent="122" name="bulkatot">
+      <column id="1731" parent="122" name="bulkatot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1731" parent="122" name="garkruptot">
+      <column id="1732" parent="122" name="garkruptot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1732" parent="122" name="karmastot">
+      <column id="1733" parent="122" name="karmastot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1733" parent="122" name="kashatot">
+      <column id="1734" parent="122" name="kashatot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1734" parent="122" name="konftot">
+      <column id="1735" parent="122" name="konftot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1735" parent="122" name="kurtot">
+      <column id="1736" parent="122" name="kurtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1736" parent="122" name="makartot">
+      <column id="1737" parent="122" name="makartot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1737" parent="122" name="maslotot">
+      <column id="1738" parent="122" name="maslotot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1738" parent="122" name="ogurtot">
+      <column id="1739" parent="122" name="ogurtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1739" parent="122" name="peltot">
+      <column id="1740" parent="122" name="peltot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1740" parent="122" name="pechtot">
+      <column id="1741" parent="122" name="pechtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1741" parent="122" name="pechenietot">
+      <column id="1742" parent="122" name="pechenietot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1742" parent="122" name="pirogtot">
+      <column id="1743" parent="122" name="pirogtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1743" parent="122" name="pybtot">
+      <column id="1744" parent="122" name="pybtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1744" parent="122" name="salatovtot">
+      <column id="1745" parent="122" name="salatovtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1745" parent="122" name="sahartot">
+      <column id="1746" parent="122" name="sahartot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1746" parent="122" name="sladtot">
+      <column id="1747" parent="122" name="sladtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1747" parent="122" name="supzhirtot">
+      <column id="1748" parent="122" name="supzhirtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1748" parent="122" name="suppostot">
+      <column id="1749" parent="122" name="suppostot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1749" parent="122" name="syrkolbtot">
+      <column id="1750" parent="122" name="syrkolbtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1750" parent="122" name="fruttot">
+      <column id="1751" parent="122" name="fruttot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1751" parent="122" name="hlebtot">
+      <column id="1752" parent="122" name="hlebtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1752" parent="122" name="morozhtot">
+      <column id="1753" parent="122" name="morozhtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1753" parent="122" name="shoktot">
+      <column id="1754" parent="122" name="shoktot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1754" parent="122" name="totkk">
+      <column id="1755" parent="122" name="totkk">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1755" parent="122" name="totgr">
+      <column id="1756" parent="122" name="totgr">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1756" parent="122" name="tottot">
+      <column id="1757" parent="122" name="tottot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1757" parent="122" name="alk">
+      <column id="1758" parent="122" name="alk">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1758" parent="122" name="bat">
+      <column id="1759" parent="122" name="bat">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1759" parent="122" name="bil">
+      <column id="1760" parent="122" name="bil">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1760" parent="122" name="bol">
+      <column id="1761" parent="122" name="bol">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1761" parent="122" name="dor">
+      <column id="1762" parent="122" name="dor">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1762" parent="122" name="doshirab">
+      <column id="1763" parent="122" name="doshirab">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1763" parent="122" name="zhvach">
+      <column id="1764" parent="122" name="zhvach">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1764" parent="122" name="internet">
+      <column id="1765" parent="122" name="internet">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1765" parent="122" name="canc">
+      <column id="1766" parent="122" name="canc">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1766" parent="122" name="kvar">
+      <column id="1767" parent="122" name="kvar">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1767" parent="122" name="kolbas">
+      <column id="1768" parent="122" name="kolbas">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1768" parent="122" name="koncer">
+      <column id="1769" parent="122" name="koncer">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1769" parent="122" name="kofe">
+      <column id="1770" parent="122" name="kofe">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1770" parent="122" name="krup">
+      <column id="1771" parent="122" name="krup">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1771" parent="122" name="makar">
+      <column id="1772" parent="122" name="makar">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1772" parent="122" name="maslorast">
+      <column id="1773" parent="122" name="maslorast">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1773" parent="122" name="mebel">
+      <column id="1774" parent="122" name="mebel">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1774" parent="122" name="meloch">
+      <column id="1775" parent="122" name="meloch">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1775" parent="122" name="misha">
+      <column id="1776" parent="122" name="misha">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1776" parent="122" name="moloco">
+      <column id="1777" parent="122" name="moloco">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1777" parent="122" name="mus">
+      <column id="1778" parent="122" name="mus">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1778" parent="122" name="mjas">
+      <column id="1779" parent="122" name="mjas">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1779" parent="122" name="obuv">
+      <column id="1780" parent="122" name="obuv">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1780" parent="122" name="ovos">
+      <column id="1781" parent="122" name="ovos">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1781" parent="122" name="odezhd">
+      <column id="1782" parent="122" name="odezhd">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1782" parent="122" name="paric">
+      <column id="1783" parent="122" name="paric">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1783" parent="122" name="pelmen">
+      <column id="1784" parent="122" name="pelmen">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1784" parent="122" name="prih_r">
+      <column id="1785" parent="122" name="prih_r">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1785" parent="122" name="prih_s">
+      <column id="1786" parent="122" name="prih_s">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1786" parent="122" name="ptic">
+      <column id="1787" parent="122" name="ptic">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1787" parent="122" name="puresh">
+      <column id="1788" parent="122" name="puresh">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1788" parent="122" name="rem">
+      <column id="1789" parent="122" name="rem">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1789" parent="122" name="ryb">
+      <column id="1790" parent="122" name="ryb">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1790" parent="122" name="slad">
+      <column id="1791" parent="122" name="slad">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1791" parent="122" name="sok">
+      <column id="1792" parent="122" name="sok">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1792" parent="122" name="sot_r">
+      <column id="1793" parent="122" name="sot_r">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1793" parent="122" name="sot_s">
+      <column id="1794" parent="122" name="sot_s">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1794" parent="122" name="suhfr">
+      <column id="1795" parent="122" name="suhfr">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1795" parent="122" name="tech">
+      <column id="1796" parent="122" name="tech">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1796" parent="122" name="uch">
+      <column id="1797" parent="122" name="uch">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1797" parent="122" name="fruct">
+      <column id="1798" parent="122" name="fruct">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1798" parent="122" name="hleb">
+      <column id="1799" parent="122" name="hleb">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1799" parent="122" name="hoz">
+      <column id="1800" parent="122" name="hoz">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1800" parent="122" name="hosting">
+      <column id="1801" parent="122" name="hosting">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1801" parent="122" name="much">
+      <column id="1802" parent="122" name="much">
         <data-type>int(4)</data-type>
       </column>
-      <column id="1802" parent="122" name="totminus">
+      <column id="1803" parent="122" name="totminus">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1803" parent="122" name="totplus">
-        <mandatory>1</mandatory>
-        <data-type>int(8)</data-type>
-      </column>
-      <column id="1804" parent="122" name="rybday">
+      <column id="1804" parent="122" name="totplus">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1805" parent="122" name="ashan">
+      <column id="1805" parent="122" name="rybday">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1806" parent="122" name="ikea">
+      <column id="1806" parent="122" name="ashan">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1807" parent="122" name="holiday">
+      <column id="1807" parent="122" name="ikea">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1808" parent="122" name="gotti">
+      <column id="1808" parent="122" name="holiday">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1809" parent="122" name="mariara">
+      <column id="1809" parent="122" name="gotti">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1810" parent="122" name="leroy">
+      <column id="1810" parent="122" name="mariara">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1811" parent="122" name="ramos">
+      <column id="1811" parent="122" name="leroy">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1812" parent="122" name="chistmir">
+      <column id="1812" parent="122" name="ramos">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1813" parent="122" name="miaso">
+      <column id="1813" parent="122" name="chistmir">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1814" parent="122" name="family">
+      <column id="1814" parent="122" name="miaso">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1815" parent="122" name="gloria_djins">
-        <data-type>int(8)</data-type>
-      </column>
-      <column id="1816" parent="122" name="det_mir">
+      <column id="1815" parent="122" name="family">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1817" parent="122" name="sib_gig">
+      <column id="1816" parent="122" name="gloria_djins">
+        <data-type>int(8)</data-type>
+      </column>
+      <column id="1817" parent="122" name="det_mir">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1818" parent="122" name="ostin">
+      <column id="1818" parent="122" name="sib_gig">
+        <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1819" parent="122" name="m_video">
+      <column id="1819" parent="122" name="ostin">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1820" parent="122" name="romika">
+      <column id="1820" parent="122" name="m_video">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1821" parent="122" name="avalone">
+      <column id="1821" parent="122" name="romika">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1822" parent="122" name="lumen">
+      <column id="1822" parent="122" name="avalone">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1823" parent="122" name="mothercare">
+      <column id="1823" parent="122" name="lumen">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1824" parent="122" name="dochki_synochki">
+      <column id="1824" parent="122" name="mothercare">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1825" parent="122" name="bystronom">
+      <column id="1825" parent="122" name="dochki_synochki">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1826" parent="122" name="e96">
+      <column id="1826" parent="122" name="bystronom">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1827" parent="122" name="dudnik">
+      <column id="1827" parent="122" name="e96">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1828" parent="122" name="letual">
+      <column id="1828" parent="122" name="dudnik">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1829" parent="122" name="mus_ars">
+      <column id="1829" parent="122" name="letual">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1830" parent="122" name="master_best">
+      <column id="1830" parent="122" name="mus_ars">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1831" parent="122" name="pris">
+      <column id="1831" parent="122" name="master_best">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1832" parent="122" name="music_land">
+      <column id="1832" parent="122" name="pris">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1833" parent="122" name="mango">
+      <column id="1833" parent="122" name="music_land">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1834" parent="122" name="sinar">
+      <column id="1834" parent="122" name="mango">
+        <data-type>int(8)</data-type>
+      </column>
+      <column id="1835" parent="122" name="sinar">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1835" parent="122" name="limpopo">
+      <column id="1836" parent="122" name="limpopo">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1836" parent="122" name="sportmaster">
+      <column id="1837" parent="122" name="sportmaster">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1837" parent="122" name="salamander">
+      <column id="1838" parent="122" name="salamander">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1838" parent="122" name="zolla">
+      <column id="1839" parent="122" name="zolla">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1839" parent="122" name="florange">
+      <column id="1840" parent="122" name="florange">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1840" parent="122" name="marks_spenser">
+      <column id="1841" parent="122" name="marks_spenser">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1841" parent="122" name="malonfashn">
+      <column id="1842" parent="122" name="malonfashn">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1842" parent="122" name="natti">
+      <column id="1843" parent="122" name="natti">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1843" parent="122" name="dns">
+      <column id="1844" parent="122" name="dns">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1844" parent="122" name="piaterochka">
+      <column id="1845" parent="122" name="piaterochka">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1845" parent="122" name="radiotehnika">
+      <column id="1846" parent="122" name="radiotehnika">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1846" parent="122" name="levis">
+      <column id="1847" parent="122" name="levis">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1847" parent="122" name="zavhoz">
+      <column id="1848" parent="122" name="zavhoz">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1848" parent="122" name="neposedy">
+      <column id="1849" parent="122" name="neposedy">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1849" parent="122" name="tomas_munc">
+      <column id="1850" parent="122" name="tomas_munc">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1850" parent="122" name="marka_rus">
+      <column id="1851" parent="122" name="marka_rus">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1851" parent="122" name="colormon">
+      <column id="1852" parent="122" name="colormon">
         <data-type>int(11)</data-type>
       </column>
-      <key id="1852" parent="122" name="PRIMARY">
+      <key id="1853" parent="122" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1853" parent="123" name="id">
+      <column id="1854" parent="123" name="id">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1854" parent="123" name="year">
+      <column id="1855" parent="123" name="year">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1855" parent="123" name="day">
+      <column id="1856" parent="123" name="day">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1856" parent="123" name="month">
+      <column id="1857" parent="123" name="month">
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1857" parent="123" name="dd">
+      <column id="1858" parent="123" name="dd">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="1858" parent="123" name="salatmastot">
+      <column id="1859" parent="123" name="salatmastot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1859" parent="123" name="banantot">
+      <column id="1860" parent="123" name="banantot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1860" parent="123" name="bulkatot">
+      <column id="1861" parent="123" name="bulkatot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1861" parent="123" name="garkruptot">
+      <column id="1862" parent="123" name="garkruptot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1862" parent="123" name="karmastot">
+      <column id="1863" parent="123" name="karmastot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1863" parent="123" name="kashatot">
+      <column id="1864" parent="123" name="kashatot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1864" parent="123" name="konftot">
+      <column id="1865" parent="123" name="konftot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1865" parent="123" name="kurtot">
+      <column id="1866" parent="123" name="kurtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1866" parent="123" name="makartot">
+      <column id="1867" parent="123" name="makartot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1867" parent="123" name="maslotot">
+      <column id="1868" parent="123" name="maslotot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1868" parent="123" name="ogurtot">
+      <column id="1869" parent="123" name="ogurtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1869" parent="123" name="peltot">
+      <column id="1870" parent="123" name="peltot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1870" parent="123" name="pechtot">
+      <column id="1871" parent="123" name="pechtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1871" parent="123" name="pechenietot">
+      <column id="1872" parent="123" name="pechenietot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1872" parent="123" name="pirogtot">
+      <column id="1873" parent="123" name="pirogtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1873" parent="123" name="pybtot">
+      <column id="1874" parent="123" name="pybtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1874" parent="123" name="salatovtot">
+      <column id="1875" parent="123" name="salatovtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1875" parent="123" name="sahartot">
+      <column id="1876" parent="123" name="sahartot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1876" parent="123" name="sladtot">
+      <column id="1877" parent="123" name="sladtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1877" parent="123" name="supzhirtot">
+      <column id="1878" parent="123" name="supzhirtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1878" parent="123" name="suppostot">
+      <column id="1879" parent="123" name="suppostot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1879" parent="123" name="syrkolbtot">
+      <column id="1880" parent="123" name="syrkolbtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1880" parent="123" name="fruttot">
+      <column id="1881" parent="123" name="fruttot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1881" parent="123" name="hlebtot">
+      <column id="1882" parent="123" name="hlebtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1882" parent="123" name="morozhtot">
+      <column id="1883" parent="123" name="morozhtot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1883" parent="123" name="shoktot">
+      <column id="1884" parent="123" name="shoktot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1884" parent="123" name="totkk">
+      <column id="1885" parent="123" name="totkk">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1885" parent="123" name="totgr">
+      <column id="1886" parent="123" name="totgr">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1886" parent="123" name="tottot">
+      <column id="1887" parent="123" name="tottot">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1887" parent="123" name="alk">
+      <column id="1888" parent="123" name="alk">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1888" parent="123" name="bat">
+      <column id="1889" parent="123" name="bat">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1889" parent="123" name="bil">
+      <column id="1890" parent="123" name="bil">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1890" parent="123" name="bol">
+      <column id="1891" parent="123" name="bol">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1891" parent="123" name="dor">
+      <column id="1892" parent="123" name="dor">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1892" parent="123" name="doshirab">
+      <column id="1893" parent="123" name="doshirab">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1893" parent="123" name="zhvach">
+      <column id="1894" parent="123" name="zhvach">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1894" parent="123" name="internet">
+      <column id="1895" parent="123" name="internet">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1895" parent="123" name="canc">
+      <column id="1896" parent="123" name="canc">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1896" parent="123" name="kvar">
+      <column id="1897" parent="123" name="kvar">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1897" parent="123" name="kolbas">
+      <column id="1898" parent="123" name="kolbas">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1898" parent="123" name="koncer">
+      <column id="1899" parent="123" name="koncer">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1899" parent="123" name="kofe">
+      <column id="1900" parent="123" name="kofe">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1900" parent="123" name="krup">
+      <column id="1901" parent="123" name="krup">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1901" parent="123" name="makar">
+      <column id="1902" parent="123" name="makar">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1902" parent="123" name="maslorast">
+      <column id="1903" parent="123" name="maslorast">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1903" parent="123" name="mebel">
+      <column id="1904" parent="123" name="mebel">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1904" parent="123" name="meloch">
+      <column id="1905" parent="123" name="meloch">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1905" parent="123" name="misha">
+      <column id="1906" parent="123" name="misha">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1906" parent="123" name="moloco">
+      <column id="1907" parent="123" name="moloco">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1907" parent="123" name="mus">
+      <column id="1908" parent="123" name="mus">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1908" parent="123" name="mjas">
+      <column id="1909" parent="123" name="mjas">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1909" parent="123" name="obuv">
+      <column id="1910" parent="123" name="obuv">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1910" parent="123" name="ovos">
+      <column id="1911" parent="123" name="ovos">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1911" parent="123" name="odezhd">
+      <column id="1912" parent="123" name="odezhd">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1912" parent="123" name="paric">
+      <column id="1913" parent="123" name="paric">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1913" parent="123" name="pelmen">
+      <column id="1914" parent="123" name="pelmen">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1914" parent="123" name="prih_r">
+      <column id="1915" parent="123" name="prih_r">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1915" parent="123" name="prih_s">
+      <column id="1916" parent="123" name="prih_s">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1916" parent="123" name="ptic">
+      <column id="1917" parent="123" name="ptic">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1917" parent="123" name="puresh">
+      <column id="1918" parent="123" name="puresh">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1918" parent="123" name="rem">
+      <column id="1919" parent="123" name="rem">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1919" parent="123" name="ryb">
+      <column id="1920" parent="123" name="ryb">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1920" parent="123" name="slad">
+      <column id="1921" parent="123" name="slad">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1921" parent="123" name="sok">
+      <column id="1922" parent="123" name="sok">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1922" parent="123" name="sot_r">
+      <column id="1923" parent="123" name="sot_r">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1923" parent="123" name="sot_s">
+      <column id="1924" parent="123" name="sot_s">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1924" parent="123" name="suhfr">
+      <column id="1925" parent="123" name="suhfr">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1925" parent="123" name="tech">
+      <column id="1926" parent="123" name="tech">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1926" parent="123" name="uch">
+      <column id="1927" parent="123" name="uch">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1927" parent="123" name="fruct">
+      <column id="1928" parent="123" name="fruct">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1928" parent="123" name="hleb">
+      <column id="1929" parent="123" name="hleb">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1929" parent="123" name="hoz">
+      <column id="1930" parent="123" name="hoz">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1930" parent="123" name="hosting">
+      <column id="1931" parent="123" name="hosting">
         <mandatory>1</mandatory>
         <data-type>int(4)</data-type>
       </column>
-      <column id="1931" parent="123" name="much">
+      <column id="1932" parent="123" name="much">
         <data-type>int(4)</data-type>
       </column>
-      <column id="1932" parent="123" name="totminus">
+      <column id="1933" parent="123" name="totminus">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1933" parent="123" name="totplus">
-        <mandatory>1</mandatory>
-        <data-type>int(8)</data-type>
-      </column>
-      <column id="1934" parent="123" name="rybday">
+      <column id="1934" parent="123" name="totplus">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1935" parent="123" name="ashan">
+      <column id="1935" parent="123" name="rybday">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1936" parent="123" name="ikea">
+      <column id="1936" parent="123" name="ashan">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1937" parent="123" name="holiday">
+      <column id="1937" parent="123" name="ikea">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1938" parent="123" name="gotti">
+      <column id="1938" parent="123" name="holiday">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1939" parent="123" name="mariara">
+      <column id="1939" parent="123" name="gotti">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1940" parent="123" name="leroy">
+      <column id="1940" parent="123" name="mariara">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1941" parent="123" name="ramos">
+      <column id="1941" parent="123" name="leroy">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1942" parent="123" name="chistmir">
+      <column id="1942" parent="123" name="ramos">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1943" parent="123" name="miaso">
+      <column id="1943" parent="123" name="chistmir">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1944" parent="123" name="family">
+      <column id="1944" parent="123" name="miaso">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1945" parent="123" name="gloria_djins">
-        <data-type>int(8)</data-type>
-      </column>
-      <column id="1946" parent="123" name="det_mir">
+      <column id="1945" parent="123" name="family">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1947" parent="123" name="sib_gig">
+      <column id="1946" parent="123" name="gloria_djins">
+        <data-type>int(8)</data-type>
+      </column>
+      <column id="1947" parent="123" name="det_mir">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1948" parent="123" name="ostin">
+      <column id="1948" parent="123" name="sib_gig">
+        <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1949" parent="123" name="m_video">
+      <column id="1949" parent="123" name="ostin">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1950" parent="123" name="romika">
+      <column id="1950" parent="123" name="m_video">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1951" parent="123" name="avalone">
+      <column id="1951" parent="123" name="romika">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1952" parent="123" name="lumen">
+      <column id="1952" parent="123" name="avalone">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1953" parent="123" name="mothercare">
+      <column id="1953" parent="123" name="lumen">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1954" parent="123" name="dochki_synochki">
+      <column id="1954" parent="123" name="mothercare">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1955" parent="123" name="bystronom">
+      <column id="1955" parent="123" name="dochki_synochki">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1956" parent="123" name="e96">
+      <column id="1956" parent="123" name="bystronom">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1957" parent="123" name="dudnik">
+      <column id="1957" parent="123" name="e96">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1958" parent="123" name="letual">
+      <column id="1958" parent="123" name="dudnik">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1959" parent="123" name="mus_ars">
+      <column id="1959" parent="123" name="letual">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1960" parent="123" name="master_best">
+      <column id="1960" parent="123" name="mus_ars">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1961" parent="123" name="pris">
+      <column id="1961" parent="123" name="master_best">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1962" parent="123" name="music_land">
+      <column id="1962" parent="123" name="pris">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1963" parent="123" name="mango">
+      <column id="1963" parent="123" name="music_land">
         <data-type>int(8)</data-type>
       </column>
-      <column id="1964" parent="123" name="sinar">
+      <column id="1964" parent="123" name="mango">
+        <data-type>int(8)</data-type>
+      </column>
+      <column id="1965" parent="123" name="sinar">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1965" parent="123" name="limpopo">
+      <column id="1966" parent="123" name="limpopo">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1966" parent="123" name="sportmaster">
+      <column id="1967" parent="123" name="sportmaster">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1967" parent="123" name="salamander">
+      <column id="1968" parent="123" name="salamander">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1968" parent="123" name="zolla">
+      <column id="1969" parent="123" name="zolla">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1969" parent="123" name="florange">
+      <column id="1970" parent="123" name="florange">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1970" parent="123" name="marks_spenser">
+      <column id="1971" parent="123" name="marks_spenser">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1971" parent="123" name="malonfashn">
+      <column id="1972" parent="123" name="malonfashn">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1972" parent="123" name="natti">
+      <column id="1973" parent="123" name="natti">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1973" parent="123" name="dns">
+      <column id="1974" parent="123" name="dns">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="1974" parent="123" name="piaterochka">
+      <column id="1975" parent="123" name="piaterochka">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1975" parent="123" name="radiotehnika">
+      <column id="1976" parent="123" name="radiotehnika">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1976" parent="123" name="levis">
+      <column id="1977" parent="123" name="levis">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1977" parent="123" name="zavhoz">
+      <column id="1978" parent="123" name="zavhoz">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1978" parent="123" name="neposedy">
+      <column id="1979" parent="123" name="neposedy">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1979" parent="123" name="tomas_munc">
+      <column id="1980" parent="123" name="tomas_munc">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1980" parent="123" name="marka_rus">
+      <column id="1981" parent="123" name="marka_rus">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1981" parent="123" name="colormon">
+      <column id="1982" parent="123" name="colormon">
         <data-type>int(11)</data-type>
       </column>
-      <column id="1982" parent="123" name="askania">
+      <column id="1983" parent="123" name="askania">
         <data-type>int(11)</data-type>
       </column>
-      <key id="1983" parent="123" name="PRIMARY">
+      <key id="1984" parent="123" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1984" parent="124" name="id">
+      <column id="1985" parent="124" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="1985" parent="124" name="date">
+      <column id="1986" parent="124" name="date">
         <data-type>date</data-type>
       </column>
-      <column id="1986" parent="124" name="weight">
+      <column id="1987" parent="124" name="weight">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="1987" parent="124" name="doll">
+      <column id="1988" parent="124" name="doll">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="1988" parent="124" name="euro">
+      <column id="1989" parent="124" name="euro">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="1989" parent="124" name="oz">
+      <column id="1990" parent="124" name="oz">
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="1990" parent="124" name="mish_oz">
+      <column id="1991" parent="124" name="mish_oz">
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="1991" parent="124" name="kkal">
+      <column id="1992" parent="124" name="kkal">
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="1992" parent="124" name="useful_bal">
+      <column id="1993" parent="124" name="useful_bal">
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="1993" parent="124" name="sun_set">
+      <column id="1994" parent="124" name="sun_set">
         <mandatory>1</mandatory>
         <data-type>varchar(24)</data-type>
       </column>
-      <column id="1994" parent="124" name="sun_rise">
+      <column id="1995" parent="124" name="sun_rise">
         <mandatory>1</mandatory>
         <data-type>varchar(24)</data-type>
       </column>
-      <column id="1995" parent="124" name="moon_old">
+      <column id="1996" parent="124" name="moon_old">
         <data-type>int(8)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="1996" parent="124" name="oil_brend">
+      <column id="1997" parent="124" name="oil_brend">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="1997" parent="124" name="spent">
+      <column id="1998" parent="124" name="spent">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <key id="1998" parent="124" name="PRIMARY">
+      <key id="1999" parent="124" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="1999" parent="125" name="id">
+      <column id="2000" parent="125" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="2000" parent="125" name="img">
+      <column id="2001" parent="125" name="img">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2001" parent="125" name="orig_tag">
+      <column id="2002" parent="125" name="orig_tag">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2002" parent="125" name="cont_art_id">
+      <column id="2003" parent="125" name="cont_art_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="2003" parent="125" name="ux_image_storage_cont_art_id">
+      <index id="2004" parent="125" name="ux_image_storage_cont_art_id">
         <columns>cont_art_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="2004" parent="125" name="PRIMARY">
+      <key id="2005" parent="125" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="2005" parent="125" name="image_storage_ibfk_1">
+      <foreign-key id="2006" parent="125" name="image_storage_ibfk_1">
         <columns>cont_art_id</columns>
         <ref-key>~.qparticles_content.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>

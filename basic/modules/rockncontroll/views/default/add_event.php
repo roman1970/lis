@@ -24,12 +24,13 @@
             function() {
                 
                 var cat = $("#cat").val();
+                var old_data_ev = $("#old_data_ev").val();
                 var txt = $("#text").val();
                 
                 if (cat == '') {alert('Введите категорию!'); return;}
                 if (txt == '') {alert('Введите текст!'); return;}
 
-                rec(cat, txt, user);
+                rec(cat, txt, user, old_data_ev);
 
             });
 
@@ -41,12 +42,12 @@
     });
     
 
-    function rec(cat, txt, user) {
+    function rec(cat, txt, user, old_data_ev) {
 
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/events",
-            data: "cat="+cat+"&text="+txt+"&user="+user,
+            data: "cat="+cat+"&text="+txt+"&user="+user+"&old_data_ev="+old_data_ev,
             success: function(html){
                 $("#res").html(html);
 
@@ -87,6 +88,7 @@
             <h3>Добавить событие?</h3>
             <p>
                 <input type="text" class="form-control" id="cat"  placeholder="Категория">
+                <input type="text" class="form-control" id="old_data_ev"  placeholder="Дата в формате ГГГГ-ММ-ДД">
                 <textarea class="form-control" id="text"  placeholder="событие" rows="10" cols="45"></textarea>
                 <br>
                 <button type="button" class="btn btn-success" id="rec_event" >Записать!</button>
@@ -100,7 +102,7 @@
             if($today_event) :
                 foreach ($today_event as $event) :
                 ?>
-                    <li style="color: rgb(255, 215, 0);; text-align: left"><?=$event->cat->name?> - <?=$event->text?></li>
+                    <li style="color: rgb(255, 215, 0);; text-align: left"><?=date('H:i',$event->act->time)?> - <?=$event->cat->name?> - <?=$event->text?></li>
 
                 <?php endforeach; ?>
             <?php endif; ?>
