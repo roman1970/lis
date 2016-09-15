@@ -1303,18 +1303,28 @@ class ParsersController extends Controller
      * Парсер хабрахабра
      * @param $url
      */
-    public function actionHabrParser($url){
+    public function actionHabrParser($url, $title){
         $tag_in = '';
         $tag_out = '';
+        $cut = '';
+        $source = 329;
 
         if(strstr($url, 'habrahabr.ru/company')){
             $tag_in = 'class="company_post"';
             $tag_out = 'class="post__tags"';
+
         }
 
         elseif(strstr($url, 'habrahabr') || strstr($url,'geektimes')) {
             $tag_in = 'class="post_show"';
             $tag_out = 'class="post__tags"';
+
+        }
+
+        elseif(strstr($url, 'wikipedia')) {
+            $tag_in = 'id="mw-content-text"';
+            $tag_out = 'class="visualClear"';
+            $source = 394;
 
         }
 
@@ -1332,6 +1342,7 @@ class ParsersController extends Controller
             '<img><li><ol><p><strong><table><pre>' .
             '<tr><td><th><u><ul>';
         $content = strip_tags($content, $allowedTags);
+        $content = str_replace($cut, '', $content);
 
        
         $artContent = new ArticlesContent;
@@ -1340,7 +1351,7 @@ class ParsersController extends Controller
             ->scalar();
         $artContent->source_id = 329;
         $artContent->body = $content;
-        $artContent->minititle = $url;
+        $artContent->minititle = $title;
         $artContent->save(false);
         //var_dump($artContent);
 

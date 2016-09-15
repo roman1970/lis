@@ -25,6 +25,7 @@ use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
+use app\models\Weathernew;
 use app\modules\currency\models\CurrHistory;
 use app\modules\diary\models\Maner;
 use Yii;
@@ -1657,6 +1658,34 @@ class DefaultController extends FrontEndController
     
     private function daysFromTwoTimes($begin, $end){
         return round((($end-$begin)/(24*60*60)),0,PHP_ROUND_HALF_UP)+1;
+    }
+    
+    public function actionWeather(){
+        //$cities = [4081, 31763, 10854, 22890, 3821];
+      
+        $weather[3] = Weathernew::find()
+            ->where(['city_id' => 4081])
+            ->orderBy('id DESC')
+            ->one();
+        $weather[1] = Weathernew::find()
+            ->where(['city_id' => 31763])
+            ->orderBy('id DESC')
+            ->one();
+        $weather[] = Weathernew::find()
+            ->where(['city_id' => 10854])
+            ->orderBy('id DESC')
+            ->one();
+        $weather[] = Weathernew::find()
+            ->where(['city_id' => 22890])
+            ->orderBy('id DESC')
+            ->one();
+        $weather[] = Weathernew::find()
+            ->where(['city_id' => 3821])
+            ->orderBy('id DESC')
+            ->one();
+
+        return $this->renderPartial('weather', ['weather' => $weather]);
+
     }
 
 }
