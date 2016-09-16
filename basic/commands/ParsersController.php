@@ -382,11 +382,16 @@ class ParsersController extends Controller
                                     img {width: 100%;min-height: 100px;}
                                     h3,h4,h5 {color: #994b43; text-align: left; margin-top: 1px; margin-bottom: 5px;}
                                     .mini{font-size: 10px; margin: 0; }
-                            </style>');
+                                    .image img{width: auto;}
+                            </style>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                            ');
         fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)." ".$arr['article_title']."</h3><div class=\"btn-group\">
         <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
         
-      </div>");
+      </div>                <script>
+                              $('.mw-editsection-visualeditor').hide();
+                            </script>");
 
         /*блок еды
        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
@@ -1342,14 +1347,15 @@ class ParsersController extends Controller
             '<img><li><ol><p><strong><table><pre>' .
             '<tr><td><th><u><ul>';
         $content = strip_tags($content, $allowedTags);
-        $content = str_replace($cut, '', $content);
+        $content = preg_replace('$\[.*?\]$','',$content);
+        $content = str_replace('id="mw-content-text" lang="ru" dir="ltr" class="mw-content-ltr">', '', $content);
 
        
         $artContent = new ArticlesContent;
         $artContent->articles_id = (int)Articles::find()
             ->select('MAX(id)')
             ->scalar();
-        $artContent->source_id = 329;
+        $artContent->source_id = $source;
         $artContent->body = $content;
         $artContent->minititle = $title;
         $artContent->save(false);
