@@ -782,8 +782,8 @@ class ParsersController extends Controller
     public function actionMtsDetalization()
     {
         $users_arr = [
-            //1 => 'sv_teldoc.xml',
-            //8 => 'rom_teldoc.xml',
+            1 => 'sv_teldoc.xml',
+            8 => 'rom_teldoc.xml',
             11 => 'mishach_teldoc.xml',
         ];
 
