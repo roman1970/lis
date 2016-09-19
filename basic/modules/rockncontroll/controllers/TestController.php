@@ -33,13 +33,14 @@ class TestController extends FrontEndController
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
             if(Yii::$app->getRequest()->getQueryParam('presize') &&
-                Yii::$app->getRequest()->getQueryParam('speed') &&
+                Yii::$app->getRequest()->getQueryParam('speed') !== null &&
                 Yii::$app->getRequest()->getQueryParam('eng_ru') &&
                 Yii::$app->getRequest()->getQueryParam('cat')) {
 
                 $act = new DiaryActs();
                 $act->model_id = 13;
                 $act->user_id = $user->id;
+
                 if((float)Yii::$app->getRequest()->getQueryParam('presize') > 95 && (float)Yii::$app->getRequest()->getQueryParam('speed') > 30) $act->mark = 2;
                 elseif ((float)Yii::$app->getRequest()->getQueryParam('presize') > 95) $act->mark = 1;
                 else $act->mark = 0;
