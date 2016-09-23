@@ -1254,7 +1254,6 @@ class ParsersController extends Controller
                 return $e->getMessage();
             }
 
-
             
             // return var_dump($sum_spent );
         }
@@ -1284,7 +1283,7 @@ class ParsersController extends Controller
             //echo $klavaro_balls;
             
             if(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one())    {
-                $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one()->value/2000) + $klavaro_balls;
+                $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 18])->orderBy('id DESC')->one()->value/2000) + $klavaro_balls;
             }
     
             else $act->mark = 0;
