@@ -422,10 +422,13 @@ class ParsersController extends Controller
        }
        */
         // блок статей
+        $i=0;
         if(isset($articles) && $arr['article_title']){
+
              fwrite($file, "<hr><h4>**Статьи**</h4>");
              foreach ($articles as $article) {
-                  fwrite($file, "<hr><h4>".$article->source->author->name." - - ".$article->source->title."</h4>");
+                 $i++;
+                  fwrite($file, "<hr><h4>*".$i." ".$article->source->author->name." - - ".$article->source->title."</h4>");
                   fwrite($file, "<h4>".$article->minititle."</h4>");
                   fwrite($file, $article->body);
               }
@@ -434,7 +437,8 @@ class ParsersController extends Controller
         if(isset($arr['items'])){
             fwrite($file, "<hr><h4>**Краткости талантов**</h4>");
             foreach ($arr['items'] as $time => $item){
-                fwrite($file, "<p class='mini'>".date('H:i',$time)." ");
+                $i++;
+                fwrite($file, "<p class='mini'>*".$i." ".date('H:i',$time)." ");
                 fwrite($file, $item->title."<br>");
                 fwrite($file, " ".$item->source->title." - ".$item->source->author->name." - ".$item->cat->name."</p>");
                 if($item->old_data) fwrite($file, "<p class='mini'>".$item->old_data."</p>");
@@ -445,7 +449,8 @@ class ParsersController extends Controller
         if(isset($arr['events'])){
             fwrite($file, "<hr><h4>**События**</h4>");
             foreach ($arr['events'] as $time => $event){
-                fwrite($file, "<p class='mini'>".date('H:i',$time)." -");
+                $i++;
+                fwrite($file, "<p class='mini'>*".$i." ".date('H:i',$time)." -");
                 fwrite($file, $event->cat->name." - ");
                 if($event->old_data) fwrite($file, " ".$event->old_data."</p>");
                 else fwrite($file, "</p>");
