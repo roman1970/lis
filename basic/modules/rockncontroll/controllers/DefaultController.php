@@ -1549,31 +1549,31 @@ class DefaultController extends FrontEndController
                 $cat = 113;
                 break;
             case 8:
-                $cat = 114;
+                $cat = 116;
                 break;
             case 9:
+                $cat = 116;
+                break;
+            case 10:
                 $cat = 116;
                 break;
             case 11:
                 $cat = 116;
                 break;
             case 12:
-                $cat = 53;
+                $cat = 116;
                 break;
             case 13:
-                $cat = 136;
+                $cat = 116;
+                break;
+            case 14:
+                $cat = 116;
                 break;
             case 15:
                 $cat = 116;
                 break;
-            case 16:
-                $cat = 116;
-                break;
-            case 17:
-                $cat = 116;
-                break;
             case 18:
-                $cat = 136;
+                $cat = 114;
                 break;
             case 19:
                 $cat = 114;
