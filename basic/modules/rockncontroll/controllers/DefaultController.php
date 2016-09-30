@@ -233,6 +233,13 @@ class DefaultController extends FrontEndController
 
         $current_hour = date('G', time())+7;
         $current_day_of_year = date('z', time())+7;
+        $day_number_first_sept = date('z', mktime(0, 0, 0, 9, 1, 2016))+7;
+        $first_sept_time = mktime(0, 0, 0, 9, 1, 2016) + 9*60*60;
+       
+        //return date('Y-m-d', $first_sept_time);
+        $first_sept_act = DiaryActs::find()->where("time > $first_sept_time")->one();
+
+
         $task_str = '';
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -241,6 +248,26 @@ class DefaultController extends FrontEndController
                 ->where("status = 3 and hour = $current_hour and user_id = $user")
                 ->all();
 
+            $spent = Bought::find()
+                ->select('SUM(spent)')
+                ->where("act_id > $first_sept_act->id")
+                ->scalar();
+
+            $incomes = Incomes::find()
+                ->select('SUM(money)')
+                ->where("act_id > $first_sept_act->id")
+                ->andWhere("income_id IN (3,4,6,16)")
+                ->scalar();
+            
+
+            $days_from_first_sept_to_today = $current_day_of_year - $day_number_first_sept + 1;
+            
+            $avg_spent_day = round($spent/$days_from_first_sept_to_today, 2);
+
+            $avg_incomes_day = round($incomes/$days_from_first_sept_to_today, 2);
+            
+            
+            
             $sum_kt = Maner::find()
                 ->select('SUM(kt)')
                 ->where(['year' => 2016])
@@ -281,11 +308,18 @@ class DefaultController extends FrontEndController
             $kt = round($current_day_of_year/($sum_kt + $sum_tochka), 1);
             $we = round($weight, 2);
 
+          
+
 
             //return "Коэффициент T ".round($current_day_of_year/($sum_kt + $sum_tochka), 1)."
             //<br> Средний вес конца года ". round($weight, 2);
             
-            return $this->renderPartial('actual_datas', ['kt' => $kt, 'we' => $we, 'avg_oz' => $avg_oz]);
+            return $this->renderPartial('actual_datas', ['kt' => $kt, 
+                'we' => $we, 
+                'avg_oz' => $avg_oz, 
+                'avg_spent_day' => $avg_spent_day,
+                'avg_incomes_day' => $avg_incomes_day
+            ]);
 
             /*
             Текущие задачи не выводим
