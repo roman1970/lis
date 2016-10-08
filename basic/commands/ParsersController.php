@@ -442,6 +442,7 @@ class ParsersController extends Controller
                 fwrite($file, $item->title."<br>");
                 fwrite($file, " ".$item->source->title." - ".$item->source->author->name." - ".$item->cat->name."</p>");
                 if($item->old_data) fwrite($file, "<p class='mini'>".$item->old_data."</p>");
+                if($item->img){ fwrite($file, "<img src=/".$item->img.">");}
                 fwrite($file, "<p>".nl2br($item->text)."</p>");
             }
         }
