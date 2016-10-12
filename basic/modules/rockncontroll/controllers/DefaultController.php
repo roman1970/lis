@@ -1450,6 +1450,7 @@ class DefaultController extends FrontEndController
                                 ->scalar();
                             $bal_sum = $not_curr_sum + Helper::currencyAdapter($dollar, 11) + Helper::currencyAdapter($euro, 12);
 
+
                             return $this->renderPartial('all_incomes', ['user' => $user, 'incomes' => $all_incomes_grouped, 'bal_sum' => $bal_sum]);
 
                         }
@@ -1478,6 +1479,7 @@ class DefaultController extends FrontEndController
                 ->where("income_id  = 9")
                 ->scalar();
             $bal_sum = $not_curr_sum + Helper::currencyAdapter($dollar,11) + Helper::currencyAdapter($euro,12);
+            //sreturn Helper::currencyAdapter($dollar, 11);
 
             return $this->renderPartial('income', ['user' => $user, 'incomes' => $all_incomes_grouped, 'bal_sum' => $bal_sum]);
 

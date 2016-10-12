@@ -308,6 +308,7 @@ class ParsersController extends Controller
         $article_time = '00:00';
         $start_day = strtotime('now 00:00:00');
         $today = date('Ymd', $start_day);
+        //$today = '20161011_01';
         //echo $today.PHP_EOL; exit;
         
         $today_acts = DiaryActs::find()
@@ -386,12 +387,15 @@ class ParsersController extends Controller
                             </style>
                             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
                             ');
-        fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)." ".$arr['article_title']."</h3><div class=\"btn-group\">
-        <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
-        
-      </div>                <script>
-                              $('.mw-editsection-visualeditor').hide();
-                            </script>");
+        if(isset($arr['article_title'])){
+            fwrite($file, "<hr><h3>".date('d-m-Y', $start_day)." ".$arr['article_title']."</h3><div class=\"btn-group\">
+            <button type=\"button\" class=\"btn btn-default\"><span class=\"glyphicon glyphicon-star\"></button>
+            
+          </div>                <script>
+                                  $('.mw-editsection-visualeditor').hide();
+                                </script>");
+        }
+
 
         /*блок еды
        if(isset($arr['ate'])){ fwrite($file, "<p>Съел $ate_sum_kkal kkal</p> 
@@ -447,6 +451,7 @@ class ParsersController extends Controller
             }
         }
         //блок событий
+        //var_dump($arr['events']);
         if(isset($arr['events'])){
             fwrite($file, "<hr><h4>**События**</h4>");
             foreach ($arr['events'] as $time => $event){
