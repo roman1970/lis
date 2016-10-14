@@ -1293,7 +1293,7 @@ class ParsersController extends Controller
             //$klavaro_balls = ( isset($klavaro_eng_today) ? $klavaro_eng_today->value : 0 ) + ( isset($klavaro_ru_today) ? $klavaro_eng_today->value : 0 );
             //echo $klavaro_balls;
             
-            if(DiaryRecDayParams::find()->where(['day_param_id' => 19])->orderBy('id DESC')->one())    {
+            if(DiaryRecDayParams::find()->where(['day_param_id' => 18])->orderBy('id DESC')->one())    {
                 $act->mark =  (int)round(DiaryRecDayParams::find()->where(['day_param_id' => 18])->orderBy('id DESC')->one()->value/2000) + $klavaro_balls;
             }
     
