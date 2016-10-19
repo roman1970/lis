@@ -58,6 +58,7 @@ class RandController extends Controller
                 ->all();
 
             if($alboms) {
+
                 $rand = rand(0,count($alboms));
 
                 $new_played = new Played();
@@ -83,12 +84,19 @@ class RandController extends Controller
             if($alboms) {
 
                 $rand = rand(0,count($alboms));
+                $data = readline("Устроит ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name." ? Y или N ? ");
+                if($data == 'N') {
+                    $this->actionRandAlbom();
+                }
 
-                $new_played = new Played();
-                $new_played->source_id = $alboms[$rand]->id;
-                $new_played->save(false);
+                else {
+                    $new_played = new Played();
+                    $new_played->source_id = $alboms[$rand]->id;
+                    $new_played->save(false);
 
-                echo "Ставь ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name.PHP_EOL;
+                    echo "Ставь ".$alboms[$rand]->title." -- ". $alboms[$rand]->author->name.PHP_EOL;
+                }
+
             }
             else echo "Ничего нет".PHP_EOL;
         }
