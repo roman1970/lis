@@ -480,9 +480,61 @@ class ArticlesController extends BackEndController
 
         return $this->redirect(Url::toRoute('articles/index'));
         
+    }
+    
+    public function actionKlavir(){
+
+        $article_id = Articles::find()
+            ->select('MAX(id)')
+            ->scalar();
+        
+        if($article_id) $article = Articles::findOne($article_id);
+        else return $this->redirect(Url::toRoute('articles/index'));
+
+        $artContent = new ArticlesContent;
+
+        if ($artContent->load(Yii::$app->request->post())) {
+            $artContent->body = Yii::$app->request->post('ArticlesContent')['body'];
+            $artContent->minititle = Yii::$app->request->post('ArticlesContent')['minititle'];
+            $artContent->source_id = 434;
+
+            $artContent->articles_id = $article_id;
+
+
+            if($this->loadModel($article_id)->site_id == 13) {
+                $act = new DiaryActs();
+                $act->model_id = 6;
+                $act->mark = 1;
+                $act->user_id = 8;
+                $act->save(false);
+            }
+
+            $artContent->save();
+
+
+            $content = ArticlesContent::find()
+                ->where(['articles_id' => $article_id]);
+
+            $dataCont = new ActiveDataProvider([
+                'query' => $content,
+
+            ]);
+
+            return $this->render('pages', [
+                'content' => $dataCont,
+                'model' => $artContent,
+
+            ]);
+
+        } else {
+
+            return $this->render('klavir', ['model' => $artContent]);
+        }
 
 
     }
+        
+   
 
     /*
     function get_picture($url, $target){

@@ -68,6 +68,7 @@ AppAsset::register($this);
             ['label' => 'КХЛ', 'url' => ['/khl/default/index']],
             ['label' => 'Item', 'url' => ['/item/index']],
             ['label' => 'Картинку событию', 'url' => ['/event/index']],
+            ['label' => 'Контент-тренажёр ДЗ', 'url' => ['/articles/klavir']],
             ],
         ]);
         ?>
