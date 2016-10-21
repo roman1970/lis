@@ -15,7 +15,7 @@ use yii\bootstrap\ActiveForm;
         <?= $form->field($model, 'minititle')->textInput()  ?>
         
         
-            <?= $form->field($model, 'body')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'input', 'onFocus' => 'runTime()', 'onkeyup' => 'calcSign()'])  ?>
+            <?= $form->field($model, 'body')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'input', 'onFocus' => 'runTime()', 'onkeyup' => 'calcSign(event.keyCode)'])  ?>
 
 
         <div class="form-group">
@@ -36,7 +36,7 @@ use yii\bootstrap\ActiveForm;
 <script>
 
     var i = 0;
-    var sign = 0;
+    var words = 0;
     var intervalID;
     var singInSecond;
 
@@ -50,16 +50,17 @@ use yii\bootstrap\ActiveForm;
          }, 1000)
     }
 
-    function calcSign() {
-        sign++;
+    function calcSign(keyCode) {
+        //if(keyCode == 8) sign--;
+        if(keyCode == 32) words++;
         var shoSingn = document.getElementById('shoSign');
-        shoSingn.innerHTML = sign;
+        shoSingn.innerHTML = words;
     }
 
     function result() {
         clearInterval(intervalID);
-        singInSecond = sign / i;
-        alert('Ваша скорость составила: ' + singInSecond + 'знаков в секунду');
+        singInSecond = words / (i / 60);
+        alert('Ваша скорость составила: ' + singInSecond.toFixed(1) + ' слов в минуту');
 
     }
 

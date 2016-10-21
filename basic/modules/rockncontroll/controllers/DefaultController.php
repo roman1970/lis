@@ -1115,11 +1115,27 @@ class DefaultController extends FrontEndController
                     $item->update(false);
                 }
 
+
+                return "<p>Следующий $item->title, сказал заведующий! </p>";
+
+            }
+        }
+    }
+
+    public function actionFrash(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+                if(Items::find()->where(['is_next' => 1])->one()){
+                    $item = Items::find()->where(['is_next' => 1])->one();
+                    $item->is_next = 0;
+                    $item->update(false);
+
+
                 $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
                 $item->is_next = 1;
                 $item->update(false);
 
-                return "<p>Следующий $item->title, сказал заведующий! </p>";
+                return "<p>Очередь сброшена!</p>";
 
             }
         }

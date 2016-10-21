@@ -30,6 +30,19 @@
         });
 
     }
+    
+    function frash(user) {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/frash/",
+            data: "user="+user,
+            success: function(html){
+                $("#res_qu").html(html);
+            }
+
+        });
+        
+    }
 </script>
 <style>
     .song-name{
@@ -57,4 +70,7 @@
         <hr>
     <?php endforeach; ?>
 
+</div>
+<div id="res_qu">
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="frash(user)">Сброс очереди</button>
 </div>
