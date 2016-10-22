@@ -1115,6 +1115,10 @@ class DefaultController extends FrontEndController
                     $item->update(false);
                 }
 
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $item->is_next = 1;
+                $item->update(false);
+
 
                 return "<p>Следующий $item->title, сказал заведующий! </p>";
 
@@ -1131,9 +1135,12 @@ class DefaultController extends FrontEndController
                     $item->update(false);
 
 
-                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
-                $item->is_next = 1;
-                $item->update(false);
+                    $first_song = Items::find()->where("(cat_id = 90 or cat_id = 89)")
+                        ->orderBy('id ASC')
+                        ->one();
+                    $first_song->is_next = 1;
+                    $item->update(false);
+
 
                 return "<p>Очередь сброшена!</p>";
 
