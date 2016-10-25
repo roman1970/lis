@@ -13,6 +13,7 @@ use yii\web\UploadedFile;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\sphinx\Query; // обязательно используем sphinx вместо стандартной yii\db\Query
 
 class ArticlesController extends BackEndController
 {
@@ -483,6 +484,21 @@ class ArticlesController extends BackEndController
     }
     
     public function actionKlavir(){
+
+
+        $query  = new Query();
+       // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
+        $query->from('src1')
+             ->match('test')
+             ->snippetCallback(function ($rows) {
+                     $result = [];
+                     foreach ($rows as $row) {
+                            $result[] = file_get_contents('/var/lib/sphinxsearch/data/test1' . $row['id'] . '.txt');
+                         }
+                     return $result;
+                 })
+             ->all();
+        var_dump($query); exit;
 
         $article_id = Articles::find()
             ->select('MAX(id)')

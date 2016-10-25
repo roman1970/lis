@@ -35,6 +35,7 @@ use app\models\Categories;
 use app\models\Articles;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
+use yii\sphinx\Query;
 
 
 class DefaultController extends FrontEndController
@@ -1745,6 +1746,42 @@ class DefaultController extends FrontEndController
 
         return $this->renderPartial('weather', ['weather' => $weather]);
 
+    }
+
+    function actionSearch()
+    {
+
+        if (Yii::$app->getRequest()->getQueryParam('user')) {
+            
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('text')) {
+               // $rows = Yii::$app->getRequest()->getQueryParam('text');
+
+               /*$query = new Query;
+                $rows = $query->from('items')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                    ->all();
+               */
+
+                $sql = 'SELECT * FROM items';
+
+                $rows = Yii::$app->sphinx->createCommand($sql)->queryAll();
+
+               // $sSql = 'SELECT id FROM items WHERE MATCH(' . Yii::app()->sphinx->quoteValue(Yii::$app->getRequest()->getQueryParam('text')) . ')';
+
+                return $this->renderPartial('searched', ['rows' => $rows]);
+
+            }
+
+
+            return $this->renderPartial('search_form');
+
+        }
     }
 
 }

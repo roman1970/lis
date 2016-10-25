@@ -27,7 +27,7 @@ $config = [
             'admins' => ['roman']
         ],
         'rbac' => [
-            'class' => 'dektrium\rbac\Module',
+            'class' => 'dektrium\rbac\RbacWebModule',
             'controllerMap' => [
                 'assignment' => [
                     'class' => 'dektrium\rbac\controllers\AssignmentController',
@@ -66,6 +66,14 @@ $config = [
         'translater' => [
             'class' => 'app\components\TranslateHelper'
         ],
+        'sphinx' => [
+            'class' => 'yii\sphinx\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;port=9306;', 
+            // Обязательно укажите порт, который Вы задали в конфигурационном файле sphinx, секция searchd параметр
+            // listen     'username' => '',     'password' => '',
+            ],
+
+           // http://bar-data.com/blog/yii2/sphinx-and-yii2-integration-an-example-of-working-with-the-sphinx-on-yii2#hcq=Hdb7w0q
         /*
         'user' => [
             'identityClass' => 'app\models\User',

@@ -75,6 +75,12 @@ $config = [
         'cart' => [
             'class' => 'app\components\ShoppingCart'
         ],
+        'sphinx' => [
+            'class' => 'yii\sphinx\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;port=9313;',
+            // Обязательно укажите порт, который Вы задали в конфигурационном файле sphinx, секция searchd параметр
+            // listen     'username' => '',     'password' => '',
+        ],
 
         /*
          * 'view' => [

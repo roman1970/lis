@@ -81,6 +81,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'incomes')">Incomes</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'weather')">Погода</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'klavaro', 1)">Klavaro</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'search')">Найти</button>
 </div>
 
 <div id="show_menu">
