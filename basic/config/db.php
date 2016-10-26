@@ -10,6 +10,15 @@ if(!isset($dbName))
             $dbPassword = 'vbifcdtnf';
             $dbHost = 'localhost';
             break;
+        /*
+
+        case '/home/romanych/public_html/plis/basic/config':
+            $dbName = '';
+            $dbUser = '';
+            $dbPassword = '';
+            $dbHost = '127.0.0.1';
+            break;
+        */
 
         case '/home/virtwww/w_qplis-ru_c772050d/http/lis/basic/config':
             $dbName = 'gb_x_qplis';

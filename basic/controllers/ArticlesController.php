@@ -488,8 +488,8 @@ class ArticlesController extends BackEndController
 
         $query  = new Query();
        // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
-        $query->from('src1')
-             ->match('test')
+        $query->from('items')
+             ->match('шкалика')
              ->snippetCallback(function ($rows) {
                      $result = [];
                      foreach ($rows as $row) {

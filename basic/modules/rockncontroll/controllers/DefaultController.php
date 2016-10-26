@@ -36,6 +36,7 @@ use app\models\Articles;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\sphinx\Query;
+use yii\sphinx\MatchExpression;
 
 
 class DefaultController extends FrontEndController
@@ -1761,16 +1762,40 @@ class DefaultController extends FrontEndController
 
             if (Yii::$app->getRequest()->getQueryParam('text')) {
                // $rows = Yii::$app->getRequest()->getQueryParam('text');
+                /*
 
-               /*$query = new Query;
-                $rows = $query->from('items')
-                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+               $query = new Query();
+                try {
+                    $query->from('items')->match("шкалика");
+
+                    // build and execute the query
+                    $command = $query->createCommand();
+                  // $command->sql returns the actual SQL
+                    $rows = $command->queryAll();
+                } catch (\ErrorException $e) {
+
+                    return $this->renderPartial('searched', ['rows' => $e->getMessage()]);
+                }
+                */
+                $rows = (new Query())
+                    ->match(
+                    // produces '((@title "Yii") (@author "Paul")) | (@content "Sphinx")' :
+                        (new MatchExpression())
+                            ->match(['title' => 'шкалика'])
+                          //  ->andMatch(['author' => 'Paul'])
+                          //  ->orMatch(['content' => 'Sphinx'])
+                    )
                     ->all();
-               */
+               // $query_search  = new Query(); $search_result = $query_search->from('siteSearch')->match($q)-all();
 
-                $sql = 'SELECT * FROM items';
+               // http://bar-data.com/blog/yii2/sphinx-and-yii2-integration-an-example-of-working-with-the-sphinx-on-yii2#hcq=cmYIH0q
+
+
+
+               /*$sql = 'SELECT * FROM items';
 
                 $rows = Yii::$app->sphinx->createCommand($sql)->queryAll();
+               */
 
                // $sSql = 'SELECT id FROM items WHERE MATCH(' . Yii::app()->sphinx->quoteValue(Yii::$app->getRequest()->getQueryParam('text')) . ')';
 

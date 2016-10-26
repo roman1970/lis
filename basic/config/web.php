@@ -68,9 +68,11 @@ $config = [
         ],
         'sphinx' => [
             'class' => 'yii\sphinx\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;port=9306;', 
+            'dsn' => 'mysql:host=127.0.0.1;port=9306;charset=utf8',
             // Обязательно укажите порт, который Вы задали в конфигурационном файле sphinx, секция searchd параметр
-            // listen     'username' => '',     'password' => '',
+            // listen
+            'username' => '',
+            'password' => '',
             ],
 
            // http://bar-data.com/blog/yii2/sphinx-and-yii2-integration-an-example-of-working-with-the-sphinx-on-yii2#hcq=Hdb7w0q
