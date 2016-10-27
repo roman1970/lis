@@ -42,7 +42,11 @@
 
 
 </script>
-
+<style>
+    .form-group{
+        text-align: center;
+    }
+</style>
 <div class="container">
     <form class="form-inline center" role="form" id="form-ate">
         <div class="form-group">

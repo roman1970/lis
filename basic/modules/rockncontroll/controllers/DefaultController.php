@@ -1761,45 +1761,40 @@ class DefaultController extends FrontEndController
 
 
             if (Yii::$app->getRequest()->getQueryParam('text')) {
-               // $rows = Yii::$app->getRequest()->getQueryParam('text');
-                /*
 
-               $query = new Query();
-                try {
-                    $query->from('items')->match("шкалика");
-
-                    // build and execute the query
-                    $command = $query->createCommand();
-                  // $command->sql returns the actual SQL
-                    $rows = $command->queryAll();
-                } catch (\ErrorException $e) {
-
-                    return $this->renderPartial('searched', ['rows' => $e->getMessage()]);
-                }
-                */
-                $rows = (new Query())
-                    ->match(
-                    // produces '((@title "Yii") (@author "Paul")) | (@content "Sphinx")' :
-                        (new MatchExpression())
-                            ->match(['title' => 'шкалика'])
-                          //  ->andMatch(['author' => 'Paul'])
-                          //  ->orMatch(['content' => 'Sphinx'])
-                    )
+                $items_records = [];
+                $events_records = [];
+               
+                $query  = new Query();
+                // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
+                $query_items_ids = $query->from('items')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
                     ->all();
-               // $query_search  = new Query(); $search_result = $query_search->from('siteSearch')->match($q)-all();
 
-               // http://bar-data.com/blog/yii2/sphinx-and-yii2-integration-an-example-of-working-with-the-sphinx-on-yii2#hcq=cmYIH0q
+                foreach ($query_items_ids as $arr_item_rec){
+                    foreach ($arr_item_rec as $id){
+                        $items_records[] = Items::findOne((int)$id);
+                    }
+                }
+                    //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
+
+              /*  $query_events_ids = $query->from('events')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                    ->all();
+                foreach ($query_events_ids as $arr_event_rec){
+                    foreach ($arr_event_rec as $id) {
+                        $events_records[] = Event::findOne((int)$id);
+                    }
+                }
+              */
 
 
 
-               /*$sql = 'SELECT * FROM items';
 
-                $rows = Yii::$app->sphinx->createCommand($sql)->queryAll();
-               */
+              //  var_dump(Items::findOne($r)); exit;
 
-               // $sSql = 'SELECT id FROM items WHERE MATCH(' . Yii::app()->sphinx->quoteValue(Yii::$app->getRequest()->getQueryParam('text')) . ')';
-
-                return $this->renderPartial('searched', ['rows' => $rows]);
+                return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records)) ? $items_records : 'Ничего не найдено',
+                    'events_rows' => (is_array($events_records) && !empty($events_records)) ? $events_records : 'Ничего не найдено']);
 
             }
 

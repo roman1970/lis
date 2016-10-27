@@ -7,6 +7,7 @@ use app\models\Articles;
 use app\models\ArticlesContent;
 use app\models\DiaryActs;
 use app\models\ImageStorage;
+use app\models\Items;
 use app\models\Source;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
@@ -485,20 +486,17 @@ class ArticlesController extends BackEndController
     
     public function actionKlavir(){
 
+/*
 
         $query  = new Query();
        // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
-        $query->from('items')
+        $r = $query->from('items')
              ->match('шкалика')
-             ->snippetCallback(function ($rows) {
-                     $result = [];
-                     foreach ($rows as $row) {
-                            $result[] = file_get_contents('/var/lib/sphinxsearch/data/test1' . $row['id'] . '.txt');
-                         }
-                     return $result;
-                 })
              ->all();
-        var_dump($query); exit;
+
+        var_dump(Items::findOne($r)); exit;
+*/
+
 
         $article_id = Articles::find()
             ->select('MAX(id)')
