@@ -1778,15 +1778,16 @@ class DefaultController extends FrontEndController
                 }
                     //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
 
-              /*  $query_events_ids = $query->from('events')
-                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
-                    ->all();
-                foreach ($query_events_ids as $arr_event_rec){
-                    foreach ($arr_event_rec as $id) {
-                        $events_records[] = Event::findOne((int)$id);
-                    }
-                }
-              */
+                $query_events_ids = $query->from('events')
+                      ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                      ->all();
+                  foreach ($query_events_ids as $arr_event_rec){
+                      foreach ($arr_event_rec as $id) {
+                          $events_records[] = Event::findOne((int)$id);
+                      }
+                  }
+                  
+              //var_dump($query_events_ids); exit;
 
 
 
