@@ -61,14 +61,21 @@
 <div id="res"></div>
 <div class="accord">
 
+    <?php // var_dump($thoughts);
+    //echo $thoughts[rand(0,count($thoughts-1))]->text;  ?>
 
     <?php foreach ($songs as $song): ?>
 
         <h3 class="song-name"> <input type="radio" name="reper" onclick="saveNextSong(user, <?= $song->id ?>)" value="<?= $song->id ?>"> <?= $song->title ?> </h3>
 
-        <span class="song-text" ><?= nl2br($song->text) ?></span>
+        <span class="song-text" ><?= nl2br($song->text) ?><br>
+
+
+
+        </span>
         <hr>
     <?php endforeach; ?>
+
 
 </div>
 <div id="res_qu">

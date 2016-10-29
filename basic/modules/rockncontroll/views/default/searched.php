@@ -1,3 +1,6 @@
+<style>
+    img{width: 100%}
+</style>
 <div style="text-align: center; color: white">
     <h3>Краткости талантов</h3>
     <?php
@@ -19,8 +22,11 @@
             foreach ($events_rows as $rec): $i++;
                 ?>
                 <hr>
-                <h4><?=$i?>) <?=$rec->act_id?></h4>
+                <h4><?=$i?>) <?=date('Y-m-d', $rec->act->time)?></h4>
                 <p><?=nl2br($rec->text)?></p>
+                <?php if($rec->img) : ?>
+                <p><img src="<?=$rec->img?>"></p>
+                <?php endif; ?>
                 <?php
             endforeach;
         else: echo $events_rows;

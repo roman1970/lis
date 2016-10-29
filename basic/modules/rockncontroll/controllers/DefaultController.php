@@ -5,6 +5,7 @@ namespace app\modules\rockncontroll\controllers;
 
 use app\components\FrontEndController;
 use app\components\Helper;
+use app\models\ArticlesContent;
 use app\models\Bought;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
@@ -1086,14 +1087,22 @@ class DefaultController extends FrontEndController
             $songs = Items::find()->where("(cat_id = 90 or cat_id = 89) and id >= $song_id")
                 ->orderBy('id ASC')
                 ->all();
+            
+           $thoughts = Items::find()->where("(source_id = 27 or source_id = 17) and id >= $song_id")
+               ->orderBy('id ASC')
+               ->all();
+
+            //var_dump($thoughts); exit;
+            
+            
 
             if(count($songs) == 1) {
                 $songs[0]->is_next = 0;
                 $songs[0]->update(false);
             }
             
-            return $this->renderPartial('repertoire', ['songs' =>  $songs]);
-
+            return $this->renderPartial('repertoire', ['songs' =>  $songs, 'thoughts' =>  $thoughts]);
+ 
         }
 
 
@@ -1749,6 +1758,10 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Поиск Sphinx айтемов и событий
+     * @return string
+     */
     function actionSearch()
     {
 
@@ -1781,18 +1794,15 @@ class DefaultController extends FrontEndController
                 $query_events_ids = $query->from('events')
                       ->match(Yii::$app->getRequest()->getQueryParam('text'))
                       ->all();
+
                   foreach ($query_events_ids as $arr_event_rec){
+
                       foreach ($arr_event_rec as $id) {
                           $events_records[] = Event::findOne((int)$id);
                       }
                   }
-                  
-              //var_dump($query_events_ids); exit;
-
-
-
-
-              //  var_dump(Items::findOne($r)); exit;
+                sort($events_records);
+                krsort($events_records);
 
                 return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records)) ? $items_records : 'Ничего не найдено',
                     'events_rows' => (is_array($events_records) && !empty($events_records)) ? $events_records : 'Ничего не найдено']);
@@ -1804,5 +1814,50 @@ class DefaultController extends FrontEndController
 
         }
     }
+
+    /**
+     * Поиск Sphinx в статьях 
+     * @return string
+     */
+    function actionArticleSearch(){
+        if (Yii::$app->getRequest()->getQueryParam('user')) {
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('text')) {
+
+                $articles_records = [];
+
+                $query  = new Query();
+                // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
+                $query_articles_ids = $query->from('articles')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                    ->all();
+
+                foreach ($query_articles_ids as $arr_articles_rec){
+                    foreach ($arr_articles_rec as $id){
+                        $articles_records[] = ArticlesContent::findOne((int)$id);
+                    }
+                }
+                
+
+                //  var_dump(Items::findOne($r)); exit;
+
+                return $this->renderPartial('articles_searched', ['articles_rows' => (is_array($articles_records) && !empty($articles_records)) ? $articles_records : 'Ничего не найдено']);
+
+            }
+
+
+            return $this->renderPartial('article_search_form');
+
+        }
+        
+    }
+    
+    
 
 }

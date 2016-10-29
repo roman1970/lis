@@ -18,14 +18,14 @@
             function () {
                 $(this).select();
             })
-       
+        
     });
 
     function find(txt, user) {
 
         $.ajax({
             type: "GET",
-            url: "rockncontroll/default/search",
+            url: "rockncontroll/default/article-search",
             data: "text=" + txt + "&user=" + user,
             success: function (html) {
                 $("#res").html(html);
@@ -50,7 +50,7 @@
             <p>
                 <input type="text" class="form-control" id="text"  placeholder="Что найти">
 
-                <button type="button" class="btn btn-success" id="search" >Найти!</button>
+                <button type="button" class="btn btn-success" id="search" >Найти статью!</button>
             </p>
             <div id="res"></div>
         </div>
