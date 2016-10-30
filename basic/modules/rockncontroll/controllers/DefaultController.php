@@ -311,7 +311,7 @@ class DefaultController extends FrontEndController
             $kt = round($current_day_of_year/($sum_kt + $sum_tochka), 1);
             $we = round($weight, 2);
 
-          
+
 
 
             //return "Коэффициент T ".round($current_day_of_year/($sum_kt + $sum_tochka), 1)."
@@ -321,7 +321,8 @@ class DefaultController extends FrontEndController
                 'we' => $we, 
                 'avg_oz' => $avg_oz, 
                 'avg_spent_day' => $avg_spent_day,
-                'avg_incomes_day' => $avg_incomes_day
+                'avg_incomes_day' => $avg_incomes_day,
+              //  'thoughts' => $thoughts
             ]);
 
             /*
@@ -1088,9 +1089,10 @@ class DefaultController extends FrontEndController
                 ->orderBy('id ASC')
                 ->all();
             
-           $thoughts = Items::find()->where("(source_id = 27 or source_id = 17) and id >= $song_id")
+           /*$thoughts = Items::find()->where("(source_id = 27 or source_id = 17) and id >= $song_id")
                ->orderBy('id ASC')
                ->all();
+           */
 
             //var_dump($thoughts); exit;
             
@@ -1101,7 +1103,7 @@ class DefaultController extends FrontEndController
                 $songs[0]->update(false);
             }
             
-            return $this->renderPartial('repertoire', ['songs' =>  $songs, 'thoughts' =>  $thoughts]);
+            return $this->renderPartial('repertoire', ['songs' =>  $songs]);
  
         }
 
@@ -1801,11 +1803,13 @@ class DefaultController extends FrontEndController
                           $events_records[] = Event::findOne((int)$id);
                       }
                   }
+
+                //var_dump($events_records); exit;
                 sort($events_records);
                 krsort($events_records);
 
-                return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records)) ? $items_records : 'Ничего не найдено',
-                    'events_rows' => (is_array($events_records) && !empty($events_records)) ? $events_records : 'Ничего не найдено']);
+                return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records) && $items_records) ? $items_records : 'Ничего не найдено',
+                    'events_rows' => (is_array($events_records) && !empty($events_records) && $events_records) ? $events_records : 'Ничего не найдено']);
 
             }
 
@@ -1856,6 +1860,15 @@ class DefaultController extends FrontEndController
 
         }
         
+    }
+
+
+    function actionRandItem(){
+        //return 45;
+        $thoughts = Items::find()->where("source_id = 27 or source_id = 17 or source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104")
+            ->orderBy('id ASC')
+            ->all();
+        return $thoughts[rand(0, count($thoughts)-1)]->text;
     }
     
     

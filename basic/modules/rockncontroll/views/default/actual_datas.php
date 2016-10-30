@@ -1,5 +1,4 @@
 
-
 <table class="table_data">
     <tbody>
     <tr>
@@ -23,3 +22,18 @@
 
     </tbody>
 </table>
+<div id="rand_item"></div>
+<script>
+
+    setInterval(function () {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/rand-item/",
+            success: function(html){
+                $("#rand_item").html(html);
+            }
+
+        });
+
+    }, 20000);
+</script>

@@ -46,8 +46,8 @@
 </script>
 <style>
     img{width: 100%}
-    span,pre{color: #0a0a0a}
-    h4{color: white}
+    span,pre{color: #0a0a0a; width: 100%}
+    h4{color: white; overflow: hidden;}
 </style>
 <div class="accord" style="text-align: left; color: white; font-size: 20px">
     <?php

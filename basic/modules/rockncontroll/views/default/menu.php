@@ -1,3 +1,9 @@
+<style>
+    #current_task{
+        height: 100px;
+        overflow: auto;
+    }
+</style>
 <div class="alert alert-success">
     <p>Привет, <?= $user->name ?></p>
     <p id="current_task"></p>
