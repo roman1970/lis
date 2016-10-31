@@ -837,7 +837,7 @@ LandberryAsset::register($this);
 
     <!-- End Contact Details -->
 
-    <?php // $content ?>
+    <?= $content ?>
 
 
 
