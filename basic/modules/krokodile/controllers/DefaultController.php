@@ -9,6 +9,7 @@ use app\models\ArticlesContent;
 use app\models\Author;
 use app\models\Comments;
 use app\models\ContactForm;
+use app\models\Items;
 use app\models\RadioComment;
 use app\models\Source;
 use Yii;
@@ -80,6 +81,20 @@ class DefaultController extends FrontEndController
                 'module_path' => \Yii::$app->view->theme->baseUrl]);
 
     }
+
+    function actionRandItem(){
+        //return 45;
+        $thoughts = Items::find()
+            ->where("source_id = 27 or source_id = 17 or
+            source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
+            ->andWhere('cens = 0')
+            ->orderBy('id ASC')
+            ->all();
+        $random_ind = rand(0, count($thoughts)-1);
+        return nl2br($thoughts[$random_ind]->text).' <br><br><span style="font-size: 15px"> ('.$thoughts[$random_ind]->source->title. ' - ' .
+            $thoughts[$random_ind]->source->author->name.')</span>';
+    }
+
 
 
 }
