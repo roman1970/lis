@@ -1865,7 +1865,9 @@ class DefaultController extends FrontEndController
 
     function actionRandItem(){
         //return 45;
-        $thoughts = Items::find()->where("source_id = 27 or source_id = 17 or source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104")
+        $thoughts = Items::find()
+            //->where("source_id = 27 or source_id = 17 or
+            //source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
             ->orderBy('id ASC')
             ->all();
         return $thoughts[rand(0, count($thoughts)-1)]->text;
