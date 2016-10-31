@@ -2,7 +2,7 @@
     $(document).ready(function() {
 
         var au = document.getElementById('au');
-        au.src = 'http://37.192.182.101:10088/ices';
+        au.src = 'http://37.192.187.83:10088/ices';
 
         au.onerror = function() {
             window.location = '/krokodile/default/noradio/';
