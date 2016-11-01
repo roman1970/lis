@@ -319,7 +319,7 @@ LandberryAsset::register($this);
 
                     <img src="images/oceny_site.jpg" alt="">
 
-                    <a href="http://markself.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://berries.qplis.ru" target="_blank" class="team-overlay">
 
                         <span class="top">Дневник для оценки своих действий</span>
 
@@ -331,7 +331,7 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>MARKSELF.QPLIS.RU</h3>
+                    <h3>BERRIES.QPLIS.RU</h3>
 
                     <p>Мой сын использует эту систему для поддержания себя в форме</p>
 
