@@ -1338,7 +1338,7 @@ class ParsersController extends Controller
 
         elseif(strstr($url, 'wikipedia')) {
             $tag_in = 'id="mw-content-text"';
-            $tag_out = 'class="visualClear"';
+            $tag_out = 'printfooter';
             $source = 394;
 
         }

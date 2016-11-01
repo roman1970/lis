@@ -11,11 +11,15 @@ use yii\widgets\ActiveForm;
                 </div>
               
                 <?php
+                if(__DIR__ == '/home/romanych/public_html/plis/basic/modules/knoledges/views/default'):
+                    $form = ActiveForm::begin(); ?>
+                    <?= $form->field($uploadFile, 'file')->fileInput() ?>
+                    <?= \yii\helpers\Html::button('Отправить', ['class' => 'btn btn-primary', 'id' => 'send']);?>
+                    <?php ActiveForm::end();
+                    endif;
+                ?>
 
-                $form = ActiveForm::begin(); ?>
-                <?= $form->field($uploadFile, 'file')->fileInput() ?>
-                <?= \yii\helpers\Html::button('Отправить', ['class' => 'btn btn-primary', 'id' => 'send']);?>
-                <?php ActiveForm::end();?>
+
 
                 <?php if (!empty($articles)): ?>
                 <div class="row">
