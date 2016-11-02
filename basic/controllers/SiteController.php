@@ -65,7 +65,7 @@ class SiteController extends BackEndController
     {
         $model = new ContactForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['mail@qplis.ru'])) {
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 
 
