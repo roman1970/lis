@@ -114,7 +114,7 @@ $config = [
                 'username' => 'u424229',
                 'password' => '280699b4gh',
                 'port' => '25',
-                'encryption' => 'tls',
+                //'encryption' => 'tls',
             ],
         ],
         'log' => [
