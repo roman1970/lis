@@ -349,7 +349,7 @@ LandberryAsset::register($this);
 
                     <img src="images/wealth.jpg" alt="">
 
-                    <a href="http://oppositions.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://weather.qplis.ru" target="_blank" class="team-overlay">
 
                         <span class="top">Сайт-листинг с интересными фактами</span>
 
@@ -811,16 +811,6 @@ LandberryAsset::register($this);
 
                 <div class="detail">
 
-                   
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4 col-sm-4 col-xs-12">
-
-                <div class="detail last">
-
                     <i class="fa fa-envelope"></i>
 
                     <span>r0man4ernyshev@gmail.com</span>
@@ -828,6 +818,8 @@ LandberryAsset::register($this);
                 </div>
 
             </div>
+
+
 
         </div>
 

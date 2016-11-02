@@ -46,7 +46,7 @@ use yii\captcha\Captcha;
 
                     <div class="form-group">
 
-                        <?= $form->field($model, 'subject')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Subject'])->label(false)  ?>
+                        <?php /*$form->field($model, 'subject')->textInput(['class' => 'form-control input-lg', 'placeholder' => 'Subject'])->label(false)  */?>
 
                     </div>
 
