@@ -811,9 +811,7 @@ LandberryAsset::register($this);
 
                 <div class="detail">
 
-                    <i class="fa fa-phone"></i>
-
-                    <span>+7 913 924-73-88</span>
+                   
 
                 </div>
 

@@ -1863,6 +1863,10 @@ class DefaultController extends FrontEndController
     }
 
 
+    /***
+     * Случайный айтем
+     * @return mixed
+     */
     function actionRandItem(){
         //return 45;
         $thoughts = Items::find()
@@ -1872,7 +1876,38 @@ class DefaultController extends FrontEndController
             ->all();
         return $thoughts[rand(0, count($thoughts)-1)]->text;
     }
-    
+
+    function  actionRecRemind(){
+
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            //if()return Yii::$app->getRequest()->getQueryParam('text');
+
+            if (Yii::$app->getRequest()->getQueryParam('txt')) {
+                $reminder = fopen("/home/romanych/public_html/plis/basic/data/reminder.txt", "w");
+                $res = fwrite($reminder, Yii::$app->getRequest()->getQueryParam('txt'));
+                fclose($reminder);
+                if($res) return 'Записано!';
+                else return 'Ошибка!';
+            }
+
+
+            try {
+                $text = file_get_contents("/home/romanych/public_html/plis/basic/data/reminder.txt");
+            } catch (\ErrorException $e) {
+                return $e->getMessage();
+            }
+
+
+            return $this->renderPartial('form_reminder', ['user' => $user, 'note' => $text]);
+        }
+    }
+
+    function actionRemind(){
+        return file_get_contents("/home/romanych/public_html/plis/basic/data/reminder.txt");
+    }
     
 
 }

@@ -4,8 +4,21 @@
         overflow: auto;
     }
 </style>
+<script>
+   
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/remind/",
+            success: function(html){
+                $("#note_remind").html(html);
+            }
+
+        });
+
+
+</script>
 <div class="alert alert-success">
-    <p>Привет, <?= $user->name ?></p>
+    <p>Привет, <?= $user->name ?> ! <span id="note_remind"></span></p>
     <p id="current_task"></p>
 </div>
 <script>
@@ -89,6 +102,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'klavaro', 1)">Klavaro</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'search')">Найти</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'article-search')">Найти статьи</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'rec-remind')">Напомнить</button>
 </div>
 
 <div id="show_menu">

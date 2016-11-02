@@ -735,7 +735,7 @@ hr {
 }
 
 #text_contakt {
-    position: absolute;
+    /*position: absolute;*/
     left: 350px;
     top: 40px;
     font-weight: bold;

@@ -104,14 +104,17 @@
         Ваше имя:<br /><input type='text' id="nm"  size="30"/><br />
         Ваш email:<br /> <input type='text' id="em" size="30"/><br />
         Ваш телефон: <br /><input type='text' id="tl" size="30"/></p><br />
+    <textarea id="tx" rows="10" cols="28" style="border-radius:10px;"></textarea><br />
+    <div id="text_contakt">
+
+
+
+        <button id="send" >Отправить сообщение</button>
+        <p style="color: #444" id="statusMess"></p>
+
+
+    </div>
 
 </div>
-<div id="text_contakt">
 
-    <textarea id="tx" rows="10" cols="28" style="border-radius:10px;"></textarea><br />
-
-    <button id="send" >Отправить сообщение</button>
-    <p style="color: #444" id="statusMess"></p>
-
-
-</div><br />
+<br />
