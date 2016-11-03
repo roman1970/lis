@@ -504,7 +504,6 @@ class ParsersController extends Controller
             $data_dash = Helper::getDateIntervalYesterdayInDashOrSlashFormat(new \DateTime(), $i, 'dash');
 
             $url = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='.$data_slash;
-            //var_dump($url);
 
             $xml_contents = file_get_contents($url);
             if ($xml_contents === false)
@@ -516,8 +515,10 @@ class ParsersController extends Controller
 
             foreach ($xml as $node) {
                 $current_curr = new CurrHistory();
-                if(Currencies::findOne(['valute_id' => $node->attributes()->ID]))
-                    $current_curr->currency_id = Currencies::findOne(['valute_id' => $node->attributes()->ID])->id;
+                //var_dump($node->attributes()->ID);
+                if(Currencies::find()->where('valute_id like "%'.$node->attributes()->ID.'%"')->one())
+                   // var_dump(Currencies::find()->where('valute_id like "%'.$node->attributes()->ID.'%"')->one());
+                   $current_curr->currency_id = Currencies::find()->where('valute_id like "%'.$node->attributes()->ID.'%"')->one()->id;
                 else {
                     $new_currency = new Currencies();
                     $new_currency->name = TranslateHelper::translit($node->Name);
