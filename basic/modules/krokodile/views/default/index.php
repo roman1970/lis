@@ -40,7 +40,7 @@
     setInterval(function () {
         $.ajax({
             type: "GET",
-            url: "krokodile/default/rand-item/",
+            url: "http://37.192.187.83:10033/krokodile/default/rand-item/",
             success: function(html){
                 $("#rand_item").html(html);
             }
@@ -71,6 +71,7 @@
 
         <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
             <div id="comments">
+                <span>Комментарии не модерируются! Будьте людьми - не материтесь! И не рекламируйте увеличители!</span>
 
                 <?= \app\components\RadioCommentsWidget::widget([
                     'module_path' => \Yii::$app->view->theme->baseUrl]) ?>
