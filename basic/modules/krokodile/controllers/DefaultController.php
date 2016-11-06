@@ -82,6 +82,10 @@ class DefaultController extends FrontEndController
 
     }
 
+    /**
+     * Случайный айтем
+     * @return string
+     */
     function actionRandItem(){
         //return 45;
         $thoughts = Items::find()

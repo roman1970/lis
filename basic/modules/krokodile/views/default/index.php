@@ -5,29 +5,6 @@
         au.src = 'http://37.192.187.83:10088/ices';
 
 
-
-        /*
-
-        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
-
-        var xhr = new XHR();
-
-        // (2) запрос на другой домен :)
-        xhr.open('GET', 'http://37.192.187.83:10033/krokodile/default/rand-item/', true);
-
-        xhr.onload = function() {
-            alert( this.responseText );
-        };
-
-        xhr.onerror = function() {
-            alert( 'Ошибка ' + this.status );
-        };
-
-        xhr.send();
-        */
-
-        
-
         au.onerror = function() {
             window.location = '/krokodile/default/noradio/';
         };
@@ -60,38 +37,16 @@
             });
 
     });
-
+    //Вытягиваем случайный айтем
     setInterval(function () {
 
-        //var iblock = document.getElementById('item_block');
-        //iblock.removeChild(script);
-
         var script = document.createElement('script');
-        //item.className = "alert alert-success";
+
         script.src = 'http://37.192.187.83:10033/krokodile/default/rand-item/';
         script.type = 'text/javascript';
 
-
-
         document.body.appendChild(script);
 
-
-
-        /*
-        var ri = document.getElementById('script_item');
-        ri.src = '';
-        ri.src = 'http://37.192.187.83:10033/krokodile/default/rand-item/';
-        ri.type = 'text/javascript';
-
-        $.ajax({
-            type: "GET",
-            url: "http://37.192.187.83:10033/krokodile/default/rand-item/",
-            success: function(html){
-                $("#rand_item").html(html);
-            }
-
-        });
-        */
     }, 20000);
 
 </script>
