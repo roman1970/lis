@@ -91,8 +91,11 @@ class DefaultController extends FrontEndController
             ->orderBy('id ASC')
             ->all();
         $random_ind = rand(0, count($thoughts)-1);
-        return nl2br($thoughts[$random_ind]->text).' <br><br><span style="font-size: 15px"> ('.$thoughts[$random_ind]->source->title. ' - ' .
-            $thoughts[$random_ind]->source->author->name.')</span>';
+        
+        if($thoughts[$random_ind])
+            return "document.getElementById('rand').innerHTML = \"".addcslashes(nl2br($thoughts[$random_ind]->text, false), "\r\n\"\'")."<br><span style='font-size: 15px'> (".$thoughts[$random_ind]->source->title. " - " .
+            $thoughts[$random_ind]->source->author->name.")</span>"."\";";
+        else return "document.getElementById('rand').innerHTML = 'Доброго Вам Времени!';";
     }
 
 

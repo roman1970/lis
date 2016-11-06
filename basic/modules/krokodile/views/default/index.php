@@ -4,6 +4,30 @@
         var au = document.getElementById('au');
         au.src = 'http://37.192.187.83:10088/ices';
 
+
+
+        /*
+
+        var XHR = ("onload" in new XMLHttpRequest()) ? XMLHttpRequest : XDomainRequest;
+
+        var xhr = new XHR();
+
+        // (2) запрос на другой домен :)
+        xhr.open('GET', 'http://37.192.187.83:10033/krokodile/default/rand-item/', true);
+
+        xhr.onload = function() {
+            alert( this.responseText );
+        };
+
+        xhr.onerror = function() {
+            alert( 'Ошибка ' + this.status );
+        };
+
+        xhr.send();
+        */
+
+        
+
         au.onerror = function() {
             window.location = '/krokodile/default/noradio/';
         };
@@ -38,6 +62,27 @@
     });
 
     setInterval(function () {
+
+        //var iblock = document.getElementById('item_block');
+        //iblock.removeChild(script);
+
+        var script = document.createElement('script');
+        //item.className = "alert alert-success";
+        script.src = 'http://37.192.187.83:10033/krokodile/default/rand-item/';
+        script.type = 'text/javascript';
+
+
+
+        document.body.appendChild(script);
+
+
+
+        /*
+        var ri = document.getElementById('script_item');
+        ri.src = '';
+        ri.src = 'http://37.192.187.83:10033/krokodile/default/rand-item/';
+        ri.type = 'text/javascript';
+
         $.ajax({
             type: "GET",
             url: "http://37.192.187.83:10033/krokodile/default/rand-item/",
@@ -46,9 +91,11 @@
             }
 
         });
-
+        */
     }, 20000);
+
 </script>
+<script id="script_item"></script>
 
 <div class="container">
 
@@ -58,8 +105,9 @@
             <p class="pull-right visible-xs">
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
-            <div class="jumbotron">
-                <h3 id="rand_item">Доброго Вам Времени!</h3>
+            <div class="jumbotron" id="item_block">
+                <script></script>
+                <h3 id="rand">Доброго Вам Времени!</h3>
 
                 <audio id="au" autoplay >
                 </audio>
@@ -101,7 +149,3 @@
     <hr>
 
 </div>
-
-
-<?php
-echo "ok, Krok";
