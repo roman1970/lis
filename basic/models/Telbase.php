@@ -26,6 +26,8 @@ use Yii;
  */
 class Telbase extends \yii\db\ActiveRecord
 {
+    public $sum;
+    public $cnt;
     /**
      * @inheritdoc
      */

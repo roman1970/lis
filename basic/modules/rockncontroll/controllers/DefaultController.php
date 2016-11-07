@@ -29,6 +29,7 @@ use app\models\Tasked;
 use app\models\Weathernew;
 use app\modules\currency\models\CurrHistory;
 use app\modules\diary\models\Maner;
+use app\modules\diary\models\Telbase;
 use Yii;
 use app\models\Categories;
 //use yii\data\Pagination;
@@ -1905,8 +1906,32 @@ class DefaultController extends FrontEndController
         }
     }
 
+    /**
+     * Напоминалка
+     * @return string
+     */
     function actionRemind(){
         return file_get_contents("/home/romanych/public_html/plis/basic/data/reminder.txt");
+    }
+    
+    function actionTelephone(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+            //return Yii::$app->getRequest()->getQueryParam('user');
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            try {
+                $tells = Telbase::find()
+                    ->select(['nom_tel, COUNT(*) as cnt'])
+                    ->groupBy('nom_tel')
+                    ->all();
+            } catch (\ErrorException $e) {
+                return $e->getMessage();
+            }
+            return var_dump($tells);
+
+            return $this->renderPartial('telephone', ['user' => $user, 'tells' => $tells]);
+        }
     }
     
 

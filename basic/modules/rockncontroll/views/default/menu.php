@@ -103,6 +103,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'search')">Найти</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'article-search')">Найти статьи</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'rec-remind')">Напомнить</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'telephone')">Телефон</button>
 </div>
 
 <div id="show_menu">
