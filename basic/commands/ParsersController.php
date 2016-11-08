@@ -1344,6 +1344,13 @@ class ParsersController extends Controller
 
         }
 
+        elseif(strstr($url, 'highload')) {
+            $tag_in = 'page_wrapper';
+            $tag_out = 'social-likes social-likes_visible';
+            $source = 394;
+
+        }
+
         //echo $tag_in;
         //echo $tag_out;  exit;
 

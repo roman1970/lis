@@ -26,6 +26,7 @@ use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
+use app\models\TelBasemts;
 use app\models\Weathernew;
 use app\modules\currency\models\CurrHistory;
 use app\modules\diary\models\Maner;
@@ -1921,14 +1922,17 @@ class DefaultController extends FrontEndController
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
             try {
-                $tells = Telbase::find()
-                    ->select(['nom_tel, COUNT(*) as cnt'])
+                $tells = TelBasemts::find()
+                    ->select(['id, nom_tel, COUNT(*) as cnt'])
+                    ->where(['user_id' => 8])
                     ->groupBy('nom_tel')
+                    ->orderBy('cnt DESC')
+                    ->limit(50)
                     ->all();
             } catch (\ErrorException $e) {
                 return $e->getMessage();
             }
-            return var_dump($tells);
+            //return var_dump($tells);
 
             return $this->renderPartial('telephone', ['user' => $user, 'tells' => $tells]);
         }
