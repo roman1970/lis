@@ -47,16 +47,18 @@
                 var tags = $("#tags").val();
                 var txt = $("#text").val();
                 var old_data = $("#old_data").val();
+                var cens = $("#cens").val();
                 
 
                 if (title == '') {alert('Введите название!'); return;}
                 if (source == '') {alert('Введите источник!'); return;}
                 if (cat == '') {alert('Введите категорию!'); return;}
                 if (tags == '') {alert('Введите тэги!'); return;}
+                if (cens == '') {alert('Введите уровень цензуры!'); return;}
                 if (txt == '') {alert('Введите текст!'); return;}
                 if (old_data == '') {old_data = 0;}
 
-                rec(title, source, cat, tags, txt, user, old_data);
+                rec(title, source, cat, tags, txt, user, old_data, cens);
 
             });
 
@@ -99,12 +101,12 @@
     });
 
 
-    function rec(title, source, cat, tags, txt, user, old_data) {
+    function rec(title, source, cat, tags, txt, user, old_data, cens) {
 
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/record-item",
-            data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data,
+            data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data+"&cens="+cens,
             success: function(html){
                 $("#res").html(html);
 
@@ -148,6 +150,7 @@
                 <input type="text" class="form-control" id="source"  placeholder="Источник">
                 <input type="text" class="form-control" id="cat"  placeholder="Категория">
                 <input type="text" class="form-control" id="tags"  placeholder="Тэги">
+                <input type="text" class="form-control" id="cens"  placeholder="Уровень цензуры, 0 - +6" value="0">
                 <input type="text" class="form-control" id="old_data"  placeholder="Дата в формате ГГГГ-ММ-ДД">
                 <textarea class="form-control" id="text"  placeholder="Текст" rows="10" cols="45"></textarea>
                 <br>

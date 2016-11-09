@@ -67,6 +67,7 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
+            $model->cens = Yii::$app->request->post('Items')['cens'];
             //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
 
             if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
@@ -137,6 +138,7 @@ class ItemController extends BackEndController
             $model->text = Yii::$app->request->post('Items')['text'];
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
+            $model->cens = Yii::$app->request->post('Items')['cens'];
             //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
             
             if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){

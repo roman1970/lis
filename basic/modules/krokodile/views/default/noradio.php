@@ -36,7 +36,7 @@
                 <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
             </p>
             <div class="jumbotron">
-                <h1>Серёга! Дай мне знать и я запущу радио!</h1>
+                <h1>Тестовая трансляция с 9 до 15 часов по Новосибирскому времени!</h1>
 
             </div>
             <div class="row">

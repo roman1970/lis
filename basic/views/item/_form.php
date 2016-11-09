@@ -78,6 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
             ?>
             <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
+            <?=  $form->field($model, 'cens')->textInput()  ?>
             <?php  $form->field($model, 'tags')->textInput()  ?>
             <?php echo $form->field($model, 'tags')->widget(
                 AutoComplete::className(), [

@@ -1193,6 +1193,7 @@ class DefaultController extends FrontEndController
                     $item->text = Yii::$app->getRequest()->getQueryParam('txt');
                     $item->tags = Yii::$app->getRequest()->getQueryParam('tags');
                     $item->title = Yii::$app->getRequest()->getQueryParam('title');
+                    $item->cens = Yii::$app->getRequest()->getQueryParam('cens');
 
                    // return var_dump($item);
                     if(Yii::$app->getRequest()->getQueryParam('old_data'))
