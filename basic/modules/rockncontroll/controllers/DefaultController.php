@@ -1141,6 +1141,10 @@ class DefaultController extends FrontEndController
         }
     }
 
+    /**
+     * Сброс очереди репертуара
+     * @return string
+     */
     public function actionFrash(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -1915,7 +1919,11 @@ class DefaultController extends FrontEndController
     function actionRemind(){
         return file_get_contents("/home/romanych/public_html/plis/basic/data/reminder.txt");
     }
-    
+
+    /***
+     * Вывод количества соединений оператора сотовой связи
+     * @return string
+     */
     function actionTelephone(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
             //return Yii::$app->getRequest()->getQueryParam('user');
@@ -1938,6 +1946,16 @@ class DefaultController extends FrontEndController
             return $this->renderPartial('telephone', ['user' => $user, 'tells' => $tells]);
         }
     }
+
+    /**
+     * Вывод главных валют
+     * @return string
+     */
+    function actionGetCurrency(){
+        return '$'.round(Helper::currencyAdapter(1, 11), 2). ' &euro;' . round(Helper::currencyAdapter(1, 12), 2) . ' ';
+
+    }
+
     
 
 }

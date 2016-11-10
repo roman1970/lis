@@ -15,10 +15,19 @@
 
         });
 
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/get-currency/",
+            success: function(html){
+                $("#curr").html(html);
+            }
+
+        });
+
 
 </script>
 <div class="alert alert-success">
-    <p>Привет, <?= $user->name ?> ! <span id="note_remind"></span></p>
+    <p><span id="curr"></span>Привет, <?= $user->name ?> ! <span id="note_remind"></span></p>
     <p id="current_task"></p>
 </div>
 <script>

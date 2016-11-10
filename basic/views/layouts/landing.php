@@ -875,7 +875,11 @@ LandberryAsset::register($this);
         <!-- Copyright -->
         <p class="center grey">&copy; qpLIS <?= date('Y') ?></p>
         <!-- End Copyright -->
-
+       <?php /*<p style="text-align: center">
+            <a href="http://corp.wamba.com/ru/test/"><img border="0" src="http://corp.wamba.com/ru/test/widget/?id=121806" /></a>
+        </p>
+        */
+       ?>
     </div>
 
 </footer>
