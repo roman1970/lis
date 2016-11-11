@@ -167,5 +167,6 @@ if (YII_ENV_DEV) {
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = 'yii\gii\Module';
 }
-//print_r($config); exit;
+//$config['test'][] = 2;
+//var_dump($config); exit;
 return $config;
