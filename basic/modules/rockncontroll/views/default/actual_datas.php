@@ -24,16 +24,27 @@
 </table>
 <div id="rand_item"></div>
 <script>
+        var h;
+        setInterval(function () {
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/default/rand-item/",
+                success: function(html){
+                    $("#rand_item").html(html);
+                    h = html;
+                }
 
-    setInterval(function () {
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/rand-item/",
-            success: function(html){
-                $("#rand_item").html(html);
-            }
+            });
+
+        }, 20000);
+        $('#current_task').mouseover(function() {
+
+            $("#stop_item_block").parent().show();
+            $("#stop_item_block").html(h);
+        });
+        $('#stop_item_block').mouseover(function() {
+            $("#stop_item_block").parent().hide();
 
         });
 
-    }, 20000);
 </script>

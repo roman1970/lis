@@ -30,6 +30,7 @@
     <p><span id="curr"></span>Привет, <?= $user->name ?> ! <span id="note_remind"></span></p>
     <p id="current_task"></p>
 </div>
+<div class="alert alert-success" ><p id="stop_item_block"></p></div>
 <script>
     var user = <?= $user->id ?>;
     $(document).ready(function() {
@@ -45,6 +46,7 @@
         });
        
         $("#show_menu").hide();
+        $("#stop_item_block").parent().hide();
 
         $("#show_menu").click(
             function() {
@@ -118,4 +120,6 @@
 <div id="show_menu">
     <button type="button" class="btn btn-success btn-lg btn-block" >Меню</button>
 </div>
+
+
 

@@ -1879,7 +1879,7 @@ class DefaultController extends FrontEndController
         $thoughts = Items::find()
             //->where("source_id = 27 or source_id = 17 or
             //source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
-                ->where('cat_id <> 90 and cat_id <> 89')
+                ->where('NOT `cat_id` IN (89,90)')
             ->orderBy('id ASC')
             ->all();
         return $thoughts[rand(0, count($thoughts)-1)]->text;
