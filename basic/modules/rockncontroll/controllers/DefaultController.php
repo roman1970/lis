@@ -1882,7 +1882,8 @@ class DefaultController extends FrontEndController
                 ->where('NOT `cat_id` IN (89,90)')
             ->orderBy('id ASC')
             ->all();
-        return $thoughts[rand(0, count($thoughts)-1)]->text;
+        $rand_thought = $thoughts[rand(0, count($thoughts)-1)];
+        return $rand_thought->text;
     }
 
     function  actionRecRemind(){
