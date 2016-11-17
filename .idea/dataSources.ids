@@ -18727,4 +18727,14 @@ type</columns>
       </foreign-key>
     </database-model>
   </data-source>
+  <data-source name="MySQL - gb_agregsev@mysql92.1gb.ru" uuid="2dcd779b-7169-4382-a997-2daab073f771">
+    <database-info product="MySQL" version="5.5.35-rel33.0-log" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.35 ( Revision: 5fb9c5849535c13917c2cf9baaece6ef9693ef27 )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
+    <database-model serializer="dbm" rdbms="MYSQL" format-version="2.5">
+      <schema id="1" name="gb_agregsev"/>
+    </database-model>
+  </data-source>
 </component>
