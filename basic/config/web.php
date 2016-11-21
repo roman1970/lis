@@ -57,7 +57,7 @@ $config = [
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => '7haKvarJ7EWfIVOQeT6CaP_Am-8B1ZmL',
+            'cookieValidationKey' => $params['cookieValidationKey']
             //'enableCsrfValidation' => false,
         ],
         'cache' => [
@@ -113,9 +113,9 @@ $config = [
             'useFileTransport' => false,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
-                'host' => 'smtp-20.1gb.ru',
-                'username' => 'u424229',
-                'password' => '280699b4gh',
+                'host' => $params['email_host'],
+                'username' => $params['mail_username'],
+                'password' => $params['mail_password'],
                 'port' => '465',
                 //'encryption' => 'tls',
             ],

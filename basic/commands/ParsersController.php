@@ -797,6 +797,7 @@ class ParsersController extends Controller
             1 => 'sv_teldoc.xml',
             8 => 'rom_teldoc.xml',
             11 => 'mishach_teldoc.xml',
+            12 => 'ba_teldoc.xml'
         ];
 
         foreach ($users_arr as $user => $user_file) {

@@ -5,12 +5,15 @@ if(!isset($dbName))
     switch (__DIR__)
     {
         case '/home/romanych/public_html/plis/basic/config':
-            $dbName = 'plis';
-            $dbUser = 'root';
-            $dbPassword = 'vbifcdtnf';
-            $dbHost = 'localhost';
+            $dbName = $params['db_name'];
+            $dbUser = $params['db_username'];
+            $dbPassword = $params['db_password'];
+            $dbHost = $params['db_host'];
             break;
         /*
+         *  'dsn' => 'mysql:host='.$params['db_host'].';dbname='.$params['db_name'],
+    'username' => $params['db_username'],
+    'password' => $params['db_password'],
 
         case '/home/romanych/public_html/plis/basic/config':
             $dbName = '';
@@ -18,6 +21,9 @@ if(!isset($dbName))
             $dbPassword = '';
             $dbHost = '127.0.0.1';
             break;
+
+
+
         */
 
         case '/home/virtwww/w_qplis-ru_c772050d/http/lis/basic/config':
@@ -39,8 +45,8 @@ if(!isset($dbName))
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host='.$dbHost.';dbname='.$dbName,
-    'username' => $dbUser,
-    'password' => $dbPassword,
+    'dsn' => 'mysql:host='.$params['db_host'].';dbname='.$params['db_name'],
+    'username' => $params['db_username'],
+    'password' => $params['db_password'],
     'charset' => 'utf8',
 ];
