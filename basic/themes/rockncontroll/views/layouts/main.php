@@ -30,7 +30,7 @@ KrokodileAsset::register($this);
 <?php $this->beginBody() ?>
 <style type="text/css">
     body{
-        background: rgb(119, 165, 179);
+        background: rgb(104, 126, 140);
     }
 
     table{
