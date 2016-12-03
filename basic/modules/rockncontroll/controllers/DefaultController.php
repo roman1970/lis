@@ -19,6 +19,7 @@ use app\models\Income;
 use app\models\Incomes;
 use app\models\Items;
 //use app\models\MarkGroup;
+use app\models\Log;
 use app\models\MarkUser;
 use app\models\Products;
 use app\models\Shop;
@@ -1087,7 +1088,7 @@ class DefaultController extends FrontEndController
 
             //return $song_id;
 
-            $songs = Items::find()->where("(cat_id = 90 or cat_id = 89) and id >= $song_id")
+            $songs = Items::find()->where("(cat_id = 90 or cat_id = 89) and id >= $song_id and published = 1")
                 ->orderBy('id ASC')
                 ->all();
             
@@ -1956,6 +1957,18 @@ class DefaultController extends FrontEndController
     function actionGetCurrency(){
         return '$'.round(Helper::currencyAdapter(1, 11), 2). ' &euro;' . round(Helper::currencyAdapter(1, 12), 2) . ' ';
 
+    }
+    
+    function actionLogs(){
+
+        $logs = Log::find()
+            ->where("ip NOT IN('192.168.1.1', '127.0.0.1', '213.87.126.229')")
+            ->orderBy('id DESC')
+            ->limit(50)
+            ->all();
+
+        return $this->renderPartial('logs', ['logs' => $logs]);
+        
     }
 
     

@@ -137,6 +137,7 @@ $config = [
             'ruleFile' => 'components/rbac/rules.php'
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'db_sevens' => require(__DIR__ . '/db_seven.php'),
 
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

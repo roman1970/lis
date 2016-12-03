@@ -9,7 +9,7 @@
         var n = '';
 
 
-        $("#send").click(
+        $("#send_claim").click(
             function() {
                 name_string = name.val();
 
@@ -39,6 +39,3 @@
     <?php \yii\widgets\ActiveForm::end();?>
 
 </div>
-
-<?php
-echo 'jj';
