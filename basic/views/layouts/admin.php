@@ -69,6 +69,7 @@ AppAsset::register($this);
             ['label' => 'Item', 'url' => ['/item/index']],
             ['label' => 'Картинку событию', 'url' => ['/event/index']],
             ['label' => 'Контент-тренажёр ДЗ', 'url' => ['/articles/klavir']],
+            ['label' => 'Тексты песен', 'url' => ['/songtext/index']],
             ],
         ]);
         ?>

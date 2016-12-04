@@ -45,16 +45,19 @@
     }
 </script>
 <style>
+    .accord{
+        text-align: center;
+    }
     .song-name{
         font-size: 18px;
         color: rgb(255, 250, 240);
         cursor: pointer;
-        text-align: center;
+
     }
     .song-text{
         font-size: 16px;
         color: rgb(255, 253, 150);
-        text-align: center;
+
     }
 </style>
 

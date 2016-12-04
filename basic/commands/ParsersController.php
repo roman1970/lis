@@ -1438,5 +1438,59 @@ class ParsersController extends Controller
     }
 
 
+    /**
+     * Парсинг ссылок на песни в таблицу текстов
+     */
+    function actionGetMusicLinks(){
+        $dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms';
+        $authors = scandir($dir);
+
+        //return var_dump($list);
+
+        if (is_array($authors)) {
+
+            $authors = array_diff($authors, array('.', '..'));
+            if ($authors) {
+
+                foreach ($authors as $author) {
+
+                    $path = $dir . '/' . $author;
+
+                    if (is_dir($path))
+                        $alboms = scandir($path);
+
+                        if(is_array($alboms)){
+                            $alboms = array_diff($alboms, array('.', '..'));
+
+                            if($alboms){
+                                foreach ($alboms as $albom){
+
+                                    $path = $dir . '/' . $author .'/'. $albom;
+
+                                    $songs = scandir($path);
+                                    $songs = array_diff($songs, array('.', '..'));
+                                    //var_dump($songs); exit;
+
+                                    foreach ($songs as $song){
+                                        echo $path .'/'. $albom . '/'. $song . PHP_EOL;
+                                    }
+
+                                }
+                            }
+
+
+                        }
+
+                }
+
+            }
+        }
+        else {
+            echo 'cant';
+        }
+
+    }
+
+
    
 }

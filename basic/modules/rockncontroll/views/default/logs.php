@@ -27,7 +27,7 @@
     </tr>
     <?php $i=0; foreach ($logs as $log) : ?>
         <tr >
-            <td style="width: 30%"><?= $log->ip ?> ::: <?= date('d-m-Y H:m',$log->time) ?></td>
+            <td style="width: 30%"><?= $log->ip ?> <br> <?= date('d-m-Y H:m',$log->time) ?></td>
             <td> <?= $log->body ?></td>
 
 
