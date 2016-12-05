@@ -1465,15 +1465,32 @@ class ParsersController extends Controller
                             if($alboms){
                                 foreach ($alboms as $albom){
 
-                                    $path = $dir . '/' . $author .'/'. $albom;
+                                    $path = $dir .'/'. $author .'/'. $albom;
 
-                                    $songs = scandir($path);
-                                    $songs = array_diff($songs, array('.', '..'));
+                                    if(is_dir($path)) {
+                                        $songs = scandir($path);
+                                        $songs = array_diff($songs, array('.', '..'));
+                                        foreach ($songs as $song){
+
+                                            $song_path = $path .'/'.$song;
+                                            if(is_dir($song_path)) {
+                                                $sub_songs = scandir($song_path);
+                                                $sub_songs = array_diff($sub_songs, array('.', '..'));
+                                                foreach ($sub_songs as $sub_song){
+                                                    echo $path .'/'. $song . '/'. $sub_song .PHP_EOL;
+                                                }
+                                            }
+                                            else echo $path .'/'. $song . PHP_EOL;
+                                        }
+                                    }
+                                    else{
+                                      echo $path.'-----no---dir--------------';
+                                    }
+
+
                                     //var_dump($songs); exit;
 
-                                    foreach ($songs as $song){
-                                        echo $path .'/'. $albom . '/'. $song . PHP_EOL;
-                                    }
+
 
                                 }
                             }
