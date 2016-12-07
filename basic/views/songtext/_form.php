@@ -44,7 +44,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'autoFill'=>true
                 ],
                 'options'=>[
-                    'class'=>'form-control'
+                    'class'=>'form-control',
+                    'value'=> $model->isNewRecord ? '' : \app\models\Source::findOne($model->source_id)->title
                 ]
             ]);
             ?>

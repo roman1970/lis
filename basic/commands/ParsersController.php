@@ -17,6 +17,7 @@ use app\models\Event;
 use app\models\Incomes;
 use app\models\Items;
 use app\models\Snapshot;
+use app\models\SongText;
 use app\models\Source;
 use app\models\Tag;
 use app\models\Tasked;
@@ -1464,33 +1465,55 @@ class ParsersController extends Controller
 
                             if($alboms){
                                 foreach ($alboms as $albom){
+                                    
 
                                     $path = $dir .'/'. $author .'/'. $albom;
+
+
+                                    if($source = Source::find()->where("title like '%".addslashes($albom)."%'")->one()) {
+
+                                        echo $source->title;
+                                        //exit;
+                                    }
+                                    else  continue;
+
 
                                     if(is_dir($path)) {
                                         $songs = scandir($path);
                                         $songs = array_diff($songs, array('.', '..'));
                                         foreach ($songs as $song){
+                                            
+                                            $song_obj = new SongText();
+                                            try {
+                                                $song_obj->source_id = $source->id;
+                                            } catch (\ErrorException $e) {
+                                                echo $e->getMessage();
+                                                continue;
+                                            }
 
                                             $song_path = $path .'/'.$song;
                                             if(is_dir($song_path)) {
                                                 $sub_songs = scandir($song_path);
                                                 $sub_songs = array_diff($sub_songs, array('.', '..'));
                                                 foreach ($sub_songs as $sub_song){
-                                                    echo $path .'/'. $song . '/'. $sub_song .PHP_EOL;
+                                                    if(preg_match('/(.+).mp3$/',$sub_song, $match))
+                                                        $song_obj->title = $sub_song;
+                                                        $song_obj->link = $path .'/'. $song .'/'. $sub_song;
+
                                                 }
                                             }
-                                            else echo $path .'/'. $song . PHP_EOL;
+                                            else
+                                                if(preg_match('/(.+).mp3$/',$song, $match)) {
+                                                    $song_obj->title = $song;
+                                                    $song_obj->link = $path .'/'. $song;
+                                                }
+
+                                            $song_obj->save(false);
                                         }
                                     }
                                     else{
                                       echo $path.'-----no---dir--------------';
                                     }
-
-
-                                    //var_dump($songs); exit;
-
-
 
                                 }
                             }

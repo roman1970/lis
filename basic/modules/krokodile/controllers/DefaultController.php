@@ -11,6 +11,7 @@ use app\models\Comments;
 use app\models\ContactForm;
 use app\models\Items;
 use app\models\RadioComment;
+use app\models\SongText;
 use app\models\Source;
 use Yii;
 use app\models\Categories;
@@ -29,13 +30,15 @@ class DefaultController extends FrontEndController
     {
         $comment = new RadioComment();
 
+
         return $this->render('index',['comment' => $comment]);
 
     }
     
     public function actionNoradio(){
         $comment = new RadioComment();
-        return $this->render('noradio',['comment' => $comment]);
+        $texts = SongText::find()->limit(10)->all();
+        return $this->render('noradio',['comment' => $comment, 'texts' => $texts]);
     }
 
     /**
