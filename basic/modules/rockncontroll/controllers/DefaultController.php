@@ -23,6 +23,7 @@ use app\models\Log;
 use app\models\MarkUser;
 use app\models\Products;
 use app\models\Shop;
+use app\models\SongText;
 use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
@@ -1414,6 +1415,7 @@ class DefaultController extends FrontEndController
             //return var_dump($user);
 
             if($user) {
+             
                return $this->renderPartial('menu', ['user' => $user]);
             }
             else return false;
@@ -1969,6 +1971,55 @@ class DefaultController extends FrontEndController
 
         return $this->renderPartial('logs', ['logs' => $logs]);
         
+    }
+    
+    function actionMusic(){
+        if($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+            if (!$user) return 'Доступ запрещен!';
+
+
+          //  if (Yii::$app->getRequest()->getQueryParam('text')) {
+
+                $songs = [];
+              
+
+                $query  = new Query();
+                // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
+                $songs_ids = $query->from('songtexts')
+                    ->match('bad')
+                    ->all();
+
+                foreach ($songs_ids as $arr_item_rec){
+                    foreach ($arr_item_rec as $id){
+                        $songs[] = SongText::findOne((int)$id);
+                    }
+                }
+                //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
+
+              
+
+
+            //$songs = SongText::find()->all();
+            //$rand_song = self::randObjFromSetOfObj($songs);
+            //return var_dump(SongText::findOne(2));
+            //if(strstr($rand_song->link, '.mp3'))
+                  return $this->renderPartial('songs', ['songs' => $songs]);
+
+            //else  return $this->renderPartial('songs', ['song' => SongText::findOne(2)]);
+
+
+        }
+    }
+
+    /**
+     * Случайный объект из набора объектов
+     * @param $set_of_obj
+     * @return mixed
+     */
+    static function  randObjFromSetOfObj($set_of_obj){
+        return $set_of_obj[rand(0, count($set_of_obj)-1)];
+
     }
 
     

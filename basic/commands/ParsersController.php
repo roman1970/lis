@@ -1531,6 +1531,25 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Для обрезки ссылки в базе песен
+     */
+   function actionSongTextCutLink(){
+       
+       for ($i=25; $i<=6069; $i++) {
+           if(SongText::findOne($i) && SongText::findOne($i)->link != null) {
+               $song = SongText::findOne($i);
+               $song->link = substr(SongText::findOne($i)->link, 48);
+               //echo $song->link.PHP_EOL;
+               $song->update(false);
+               echo $i.PHP_EOL;
+           }
+
+       }
+
+   }
+    
+
 
    
 }

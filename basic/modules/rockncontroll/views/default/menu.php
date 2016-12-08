@@ -116,6 +116,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'rec-remind')">Напомнить</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'telephone')">Телефон</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'logs')">Логи nginx</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'music')">Музыка</button>
 </div>
 
 <div id="show_menu">

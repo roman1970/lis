@@ -29,10 +29,7 @@
 </script>
 <div class="container">
 
-    <?php
-    foreach ($texts as $text){
-        echo "<a href='".$text->link."'>".$text->title."</a>";
-    }
+    
 
     $form = \yii\widgets\ActiveForm::begin(); ?>
     <?= $form->field($comment, 'name')->textInput(['size' => 45, 'id' => 'comm_name']); ?>
