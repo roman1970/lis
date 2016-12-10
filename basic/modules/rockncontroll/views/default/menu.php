@@ -117,6 +117,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'telephone')">Телефон</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'logs')">Логи nginx</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'music')">Музыка</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'concert')">Концерт</button>
 </div>
 
 <div id="show_menu">

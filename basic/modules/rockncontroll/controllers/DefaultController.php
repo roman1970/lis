@@ -47,6 +47,8 @@ use yii\sphinx\MatchExpression;
 class DefaultController extends FrontEndController
 {
     public $current_user;
+    public $choosen_songs = [];
+    public $rand_tag = [];
 
     /**
      * @return string
@@ -2020,6 +2022,106 @@ class DefaultController extends FrontEndController
     static function  randObjFromSetOfObj($set_of_obj){
         return $set_of_obj[rand(0, count($set_of_obj)-1)];
 
+    }
+    
+    function actionConcert(){
+        if($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            
+            if(!$user) return 'Доступ запрещн!';
+
+            // $user = Yii::$app->getRequest()->getQueryParam('user');
+
+            if(Items::find()->where(['is_next' => 1])->one()){
+                $item = Items::find()->where(['is_next' => 1])->one();
+                $song_id = $item->id;
+            }
+
+            else $song_id = 100;
+
+            $songs = [];
+
+            //return $song_id;
+
+            $songs1 = Items::find()->where("(source_id = 6 or source_id = 40) and id < $song_id and published = 1")
+                ->limit(5)
+                ->orderBy('id DESC')
+                ->all();
+            $songs2 = Items::find()->where("(source_id = 19 or source_id = 41) and id < $song_id and published = 1")
+                ->limit(5)
+                ->orderBy('id DESC')
+                ->all();
+            $songs3 = Items::find()->where("source_id = 38 and id < $song_id and published = 1")
+                ->limit(5)
+                ->orderBy('id DESC')
+                ->all();
+            $songs4 = Items::find()->where("(source_id = 29 or source_id = 326 or source_id = 526) and id < $song_id and published = 1")
+                ->limit(1)
+                ->orderBy('id DESC')
+                ->all();
+
+            $songs = array_merge($songs1,$songs2,$songs3,$songs4);
+            shuffle($songs);
+
+            //return var_dump($songs);
+
+            //$choosen_songs = [];
+
+            foreach ($songs as $song){
+                try {
+
+                    $items_records = [];
+
+
+                    $tags = explode(',',$song->tags);
+                    $rand_tag = $tags[mt_rand(0, count($tags)-1)];
+
+                    $this->rand_tag[] = $rand_tag;
+
+                    $query  = new Query();
+                    // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
+                    $query_items_ids = $query->from('items')
+                        ->match($rand_tag)
+                        ->all();
+
+                    //return var_dump($query_items_ids);
+
+                    foreach ($query_items_ids as $arr_item_rec){
+                        foreach ($arr_item_rec as $id){
+
+                            $item = Items::findOne((int)$id);
+
+                            if($item->cat_id == 93 || $item->cat_id == 104 || $item->cat_id == 105 || $item->cat_id == 143 || $item->cat_id == 136)
+                                $items_records[] = Items::findOne((int)$id);
+
+                        }
+                    }
+                    //return var_dump($items_records[mt_rand(0,count($items_records)-1)]->text);
+                    if(empty($items_records)) continue;
+
+                    $rand_index = mt_rand(0,count($items_records)-1);
+
+                    $song->phrase = $items_records[$rand_index]->text;
+
+                    if(isset($items_records[$rand_index+1]) && $song->phrase != $song->phrase2)
+                        $song->phrase2 = $items_records[$rand_index+1]->text;
+                    else $song->phrase2 = $items_records[0]->text;
+                    //return $song->phrase.'<br>'.$song->phrase2;
+                   //return var_dump($song);
+
+                        $this->choosen_songs[] = $song;
+                    } catch (\ErrorException $e) {
+                        return $e->getMessage();
+                    }
+                }
+                //exit;
+
+            //return var_dump($this->choosen_songs);
+
+
+            return $this->renderPartial('concert', ['songs' =>  $this->choosen_songs, 'tags' => $this->rand_tag]);
+
+        }
+        
     }
 
     

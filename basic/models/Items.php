@@ -20,6 +20,8 @@ class Items extends \yii\db\ActiveRecord
     public $current_playlist = 0;
     public $source_title;
     public $cat_title;
+    public $phrase;
+    public $phrase2;
     
     const PLAYLIST_PLUS_6 = 1;
     const PLAYLIST_PLUS_12 = 2;
