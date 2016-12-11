@@ -6,9 +6,11 @@ use app\components\TranslateHelper;
 use app\models\Source;
 use app\models\ArticlesContent;
 use app\models\SourceSearch;
+use app\models\UploadForm;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 
 class SourceController extends BackEndController
 {
@@ -38,6 +40,19 @@ class SourceController extends BackEndController
     public function actionCreate()
     {
         $model = new Source();
+        
+        $uploadImg = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            
+            $uploadImg->img = UploadedFile::getInstance($uploadImg, 'img');
+
+            if($uploadImg->img && $uploadImg->validate()) {
+                $uploadImg->img->saveAs('uploads/covers/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
+
+            }
+            else { print_r($uploadImg->getErrors()); }
+        }
 
 
         if ($model->load(Yii::$app->request->post())) {
@@ -45,6 +60,8 @@ class SourceController extends BackEndController
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
             $model->status = Yii::$app->request->post('Source')['status'];
             $model->cat_id = Yii::$app->request->post('Source')['cat_id'];
+            if(isset($uploadImg->img))
+                $model->cover = Url::base().'uploads/covers/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
             $model->save(false);
 
             $sources = Source::find();
@@ -58,7 +75,7 @@ class SourceController extends BackEndController
 
             return $this->render('_form', [
                 'model' => $model,
-
+                'uploadImg' => $uploadImg,
             ]);
         }
 
@@ -69,12 +86,27 @@ class SourceController extends BackEndController
         $model = $this->loadModel($id);
 
 
-        //var_dump($uploadImg); exit;
+        $uploadImg = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+
+            $uploadImg->img = UploadedFile::getInstance($uploadImg, 'img');
+
+            if($uploadImg->img && $uploadImg->validate()) {
+                $uploadImg->img->saveAs('uploads/covers/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension);
+
+            }
+            else { print_r($uploadImg->getErrors()); }
+        }
+
+
         if ($model->load(Yii::$app->request->post())) {
             $model->title = Yii::$app->request->post('Source')['title'];
             $model->author_id = Yii::$app->request->post('Source')['author_id'];
             $model->status = Yii::$app->request->post('Source')['status'];
             $model->cat_id = Yii::$app->request->post('Source')['cat_id'];
+            if(isset($uploadImg->img))
+                $model->cover = Url::base().'uploads/covers/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
             $model->save(false);
 
             return $this->redirect(Url::toRoute('source/index'));
@@ -82,6 +114,7 @@ class SourceController extends BackEndController
 
             return $this->render('_form', [
                 'model' => $model,
+                'uploadImg' => $uploadImg,
             ]);
         }
 

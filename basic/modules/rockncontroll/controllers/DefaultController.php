@@ -49,6 +49,7 @@ class DefaultController extends FrontEndController
     public $current_user;
     public $choosen_songs = [];
     public $rand_tag = [];
+    public $songs;
 
     /**
      * @return string
@@ -1974,44 +1975,70 @@ class DefaultController extends FrontEndController
         return $this->renderPartial('logs', ['logs' => $logs]);
         
     }
-    
+
+    /**
+     * Для выбора и прослушивания музыки
+     * @return string
+     */
     function actionMusic(){
         if($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
             if (!$user) return 'Доступ запрещен!';
 
 
-          //  if (Yii::$app->getRequest()->getQueryParam('text')) {
+             if (Yii::$app->getRequest()->getQueryParam('theme_song')) {
 
-                $songs = [];
-              
+                $theme = Yii::$app->getRequest()->getQueryParam('theme_song');
 
-                $query  = new Query();
-                // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
-                $songs_ids = $query->from('songtexts')
-                    ->match('bad')
-                    ->all();
+                 $arr_theme = explode(',', Yii::$app->getRequest()->getQueryParam('theme_song'));
 
-                foreach ($songs_ids as $arr_item_rec){
-                    foreach ($arr_item_rec as $id){
-                        $songs[] = SongText::findOne((int)$id);
-                    }
+                 if(!empty($arr_theme))
+                     $this->songs = [];
+
+                     foreach ($arr_theme as $theme) {
+
+                         $query = new Query();
+
+                         $songs_ids = $query->from('songtexts')
+                             ->match($theme)
+                             ->all();
+
+                         foreach ($songs_ids as $arr_item_rec) {
+                             foreach ($arr_item_rec as $id) {
+                                 $this->songs[] = SongText::findOne((int)$id);
+                             }
+                         }
+                     }
+
+                     //return var_dump($arr);
+
+                 return $this->renderPartial('songs', ['songs' => $this->songs]);
+
+                 //else  return $this->renderPartial('songs', ['song' => SongText::findOne(2)]);
+             }
+
+            $songs = [];
+
+
+            $query = new Query();
+
+            $songs_ids = $query->from('songtexts')
+                ->match('new year')
+                ->all();
+
+            foreach ($songs_ids as $arr_item_rec) {
+                foreach ($arr_item_rec as $id) {
+                    $songs[] = SongText::findOne((int)$id);
                 }
-                //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
+            }
 
-              
-
-
-            //$songs = SongText::find()->all();
-            //$rand_song = self::randObjFromSetOfObj($songs);
-            //return var_dump(SongText::findOne(2));
-            //if(strstr($rand_song->link, '.mp3'))
-                  return $this->renderPartial('songs', ['songs' => $songs]);
-
-            //else  return $this->renderPartial('songs', ['song' => SongText::findOne(2)]);
+            return $this->renderPartial('songs', ['songs' => $songs]);
 
 
         }
+
+
+
     }
 
     /**
@@ -2023,7 +2050,11 @@ class DefaultController extends FrontEndController
         return $set_of_obj[rand(0, count($set_of_obj)-1)];
 
     }
-    
+
+    /**
+     * Выборка для случайного концерта
+     * @return string
+     */
     function actionConcert(){
         if($user = Yii::$app->getRequest()->getQueryParam('user')) {
             

@@ -17,7 +17,7 @@ class SongtextSearch extends SongText
 
     public function search($params)
     {
-        $query = SongText::find();
+        $query = SongText::find()->where(['text' => '']);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

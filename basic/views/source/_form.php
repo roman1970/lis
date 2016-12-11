@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         </div>
         <div class="col-lg-10">
-            <?php $form = ActiveForm::begin(['id' => 'sources-form']); ?>
+            <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);  ?>
 
             <?= $form->field($model, 'title')->textInput()  ?>
 
@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ['prompt' => 'Выбрать автора'])  ?>
             <?= $form->field($model, 'cat_id')->dropDownList(ArrayHelper::map(\app\models\Categories::find()->all(),'id','name'),
                 ['prompt' => 'Выбрать категорию'])  ?>
+            <?= $form->field($uploadImg, 'img')->fileInput() ?>
 
 
             <div class="form-group">

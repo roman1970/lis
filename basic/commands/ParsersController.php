@@ -1549,6 +1549,79 @@ class ParsersController extends Controller
 
    }
     
+    function actionGetMusicLinksAlbom($new_artist){
+        $dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/'.$new_artist;
+
+        $alboms = scandir($dir);
+
+        if(is_array($alboms)){
+            $alboms = array_diff($alboms, array('.', '..'));
+
+            if($alboms){
+                foreach ($alboms as $albom){
+
+                    $source = new Source();
+
+                    $source->title = $albom;
+                    
+                    if(Author::find()->where('name like "%'.addslashes($new_artist).'%"')->one())
+                        $source->author_id = Author::find()->where("name like '%".addslashes($new_artist)."%'")->one()->id;
+                    else return 'author error';
+                    
+                    $source->status = 1;
+                    $source->cat_id = 34;
+                    if(!$source->save(false)) return 'source error';
+                    else echo $source->title.' made'.PHP_EOL;
+
+                    $path = $dir .'/'. $albom;
+
+
+                    if(is_dir($path)) {
+                        $songs = scandir($path);
+                        $songs = array_diff($songs, array('.', '..'));
+                        foreach ($songs as $song){
+
+                            $song_obj = new SongText();
+                            try {
+                                $song_obj->source_id = $source->id;
+                            } catch (\ErrorException $e) {
+                                echo $e->getMessage();
+                                continue;
+                            }
+
+                            $song_path = $path .'/'.$song;
+                            if(is_dir($song_path)) {
+                                $sub_songs = scandir($song_path);
+                                $sub_songs = array_diff($sub_songs, array('.', '..'));
+                                foreach ($sub_songs as $sub_song){
+                                    if(preg_match('/(.+).mp3$/',$sub_song, $match))
+                                        $song_obj->title = $sub_song;
+                                    $song_obj->link = $path .'/'. $song .'/'. $sub_song;
+
+                                }
+                            }
+                            else
+                                if(preg_match('/(.+).mp3$/',$song, $match)) {
+                                    $song_obj->title = $song;
+                                    $song_obj->link = $path .'/'. $song;
+                                }
+
+                            $song_obj->save(false);
+                        }
+                    }
+                    else{
+                        echo $path.'-----no---dir--------------';
+                    }
+
+                }
+            }
+
+
+        }
+
+
+    }
+    
 
 
    

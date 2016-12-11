@@ -72,12 +72,14 @@
 
         <h3 class="song-name"> <?= $song->title ?> </h3>
 
-         <span class="song-text"><p class="phrase"> <?= nl2br($song->phrase) ?></p>
+
+         <span class="song-text">
              <br>
              <hr>
              <p class="phrase"><?= nl2br($song->phrase2) ?></p>
              <br>
              <hr><?= nl2br($song->text) ?></span>
+        <p class="phrase"> <?= nl2br($song->phrase) ?></p>
 
         <hr><hr>
     <?php endforeach; ?>
