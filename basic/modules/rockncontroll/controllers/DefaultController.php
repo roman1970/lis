@@ -2155,6 +2155,30 @@ class DefaultController extends FrontEndController
         
     }
 
+    function actionSpent(){
+        if($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+            if (!$user) return 'Доступ запрещн!';
+
+            //return 'ok';
+            try {
+                $spents = Bought::find()
+                    ->select(['id, spent, product_id, COUNT(*) as cnt, SUM(spent) as sum'])
+                    ->where(['user_id' => 8])
+                    ->andWhere('id > 28')
+                    ->groupBy('product_id')
+                    ->orderBy('sum DESC')
+                    ->limit(20)
+                    ->all();
+               // return var_dump($spents);
+            } catch (\ErrorException $e) {
+                return $e->getMessage();
+            }
+            
+            return $this->renderPartial('spent', ['spents' => $spents]);
+        }
+    }
+
     
 
 }

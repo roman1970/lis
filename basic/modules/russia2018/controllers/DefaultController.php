@@ -262,8 +262,17 @@ class DefaultController extends FrontEndController
         
        // var_dump($matchs);
 
+        try {
+        //$is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
+        $team_obj = TeamSum::find()->where("name like '" . $team . "'")->one();
+        $is_club = $team_obj->is_club;
 
-        $is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
+          // return var_dump($team_obj);
+
+           $this->updateTeamData($team_obj, $matchs);
+        } catch (\ErrorException $e) {
+            return $e->getMessage();
+        }
 
         if($matchs) {
             $tour_table = TeamSum::find()->where("is_club = ".$is_club. " and is_tour_visual = 1 or name like'".$team."'")->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])->all();
@@ -1027,64 +1036,10 @@ class DefaultController extends FrontEndController
         foreach ($matchs as $key => $mtch) {
 
             $team = TeamSum::find()->where("name like '".$key."'")->one();
-            if($team) {
 
-            $team->cash_cout  = count($mtch);
-            $team->cash_vic = 0;
-            $team->cash_nob  = 0;
-            $team->cash_def = 0;
-            $team->cash_g_get = 0;
-            $team->cash_g_let = 0;
-            $team->cash_balls = 0;
-
-                foreach ($mtch as $match) {
-                    
-                    if (strstr($match->host, $key)) {
-
-                       // $team->cash_cout = count($mtch);
-                        //var_dump(strstr($match->host, $key)); exit;
-
-                        if ($match->gett > $match->lett) {
-                            $team->cash_vic += 1;
-                            $team->cash_g_get += $match->gett;
-                            $team->cash_g_let += $match->lett;
-                            $team->cash_balls += 3;
-                            //$team->update(false);
-                        } elseif ($match->gett == $match->lett) {
-                            $team->cash_nob += 1;
-                            $team->cash_g_get += $match->gett;
-                            $team->cash_g_let += $match->lett;
-                            $team->cash_balls += 1;
-                        } else {
-                            $team->cash_def += 1;
-                            $team->cash_g_get += $match->gett;
-                            $team->cash_g_let += $match->lett;
-                        }
-
-
-                    } else {
-
-                        if ($match->gett > $match->lett) {
-                            $team->cash_def += 1;
-                            $team->cash_g_let += $match->gett;
-                            $team->cash_g_get += $match->lett;
-                        } elseif ($match->gett == $match->lett) {
-                            $team->cash_nob += 1;
-                            $team->cash_g_let += $match->gett;
-                            $team->cash_g_get += $match->lett;
-                            $team->cash_balls += 1;
-                        } else {
-                            $team->cash_vic += 1;
-                            $team->cash_g_let += $match->gett;
-                            $team->cash_g_get += $match->lett;
-                            $team->cash_balls += 3;
-                        }
-                    }
-                    $team->update(false);
-                }
-
+            if(isset($team[0])) $this->updateTeamData($team[0], $mtch);
                 
-            }
+
 
         }
 
@@ -1140,6 +1095,69 @@ class DefaultController extends FrontEndController
             if (substr($k,0,5)=="HTTP_" AND preg_match($ip_pattern,$v)) $ret.=$k.": ".$v."\n";
         }
         return $ret;
+    }
+
+    function updateTeamData(TeamSum $team, $mtch){
+
+        try {
+            $team->cash_cout = count($mtch);
+            $team->cash_vic = 0;
+            $team->cash_nob = 0;
+            $team->cash_def = 0;
+            $team->cash_g_get = 0;
+            $team->cash_g_let = 0;
+            $team->cash_balls = 0;
+
+            foreach ($mtch as $match) {
+
+                if (strstr($match->host, $team->name)) {
+
+                    // $team->cash_cout = count($mtch);
+                    //var_dump(strstr($match->host, $key)); exit;
+
+                    if ($match->gett > $match->lett) {
+                        $team->cash_vic += 1;
+                        $team->cash_g_get += $match->gett;
+                        $team->cash_g_let += $match->lett;
+                        $team->cash_balls += 3;
+                        //$team->update(false);
+                    } elseif ($match->gett == $match->lett) {
+                        $team->cash_nob += 1;
+                        $team->cash_g_get += $match->gett;
+                        $team->cash_g_let += $match->lett;
+                        $team->cash_balls += 1;
+                    } else {
+                        $team->cash_def += 1;
+                        $team->cash_g_get += $match->gett;
+                        $team->cash_g_let += $match->lett;
+                    }
+
+
+                } else {
+
+                    if ($match->gett > $match->lett) {
+                        $team->cash_def += 1;
+                        $team->cash_g_let += $match->gett;
+                        $team->cash_g_get += $match->lett;
+                    } elseif ($match->gett == $match->lett) {
+                        $team->cash_nob += 1;
+                        $team->cash_g_let += $match->gett;
+                        $team->cash_g_get += $match->lett;
+                        $team->cash_balls += 1;
+                    } else {
+                        $team->cash_vic += 1;
+                        $team->cash_g_let += $match->gett;
+                        $team->cash_g_get += $match->lett;
+                        $team->cash_balls += 3;
+                    }
+                }
+                $team->update(false);
+            }
+        } catch (\ErrorException $e) {
+            return $e->getMessage();
+        }
+
+
     }
 
 

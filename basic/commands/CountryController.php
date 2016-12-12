@@ -1152,4 +1152,102 @@ class CountryController extends Controller
 
     }
 
+    function actionGrandTeamsSummary(){
+
+        $from = 72736;
+        $to = Matches::find()
+            ->select('MAX(id)')
+            ->scalar();
+
+        $matchs = [];
+        //$is_club = 1;
+
+        //echo TeamSum::find()->where("name like '".$team."'")->one()->is_club;
+
+
+               
+                    $grands = TeamSum::find()->where('is_tour_visual = 1')->all();
+                    foreach ($grands as $grand) {
+
+                        $matchs[$grand->name] = Matches::find()
+                            ->orderBy('id DESC')
+                            // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
+                            ->where("host like('_" . $grand->name . "') or guest like('" . $grand->name . "_') or (host like('_" . $grand->name . " (%') and host not like('_" . $grand->name . " (Б)%') ) or (guest like('" . $grand->name . " (%') and guest not like('" . $grand->name . " (Б)%'))")
+                            ->andWhere("id > " . $from . " and id < " . $to . " ")
+                            ->all();
+                    }
+
+
+        //var_dump($matchs);
+        //var_dump($to);
+        // exit;
+
+        foreach ($matchs as $key => $mtch) {
+
+            $team = TeamSum::find()->where("name like '".$key."'")->one();
+            if($team) {
+                echo $key.PHP_EOL;
+
+                $team->cash_cout  = count($mtch);
+                $team->cash_vic = 0;
+                $team->cash_nob  = 0;
+                $team->cash_def = 0;
+                $team->cash_g_get = 0;
+                $team->cash_g_let = 0;
+                $team->cash_balls = 0;
+
+                foreach ($mtch as $match) {
+
+                    if (strstr($match->host, $key)) {
+
+                        // $team->cash_cout = count($mtch);
+                        //var_dump(strstr($match->host, $key)); exit;
+
+                        if ($match->gett > $match->lett) {
+                            $team->cash_vic += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                            $team->cash_balls += 3;
+                            //$team->update(false);
+                        } elseif ($match->gett == $match->lett) {
+                            $team->cash_nob += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                            $team->cash_balls += 1;
+                        } else {
+                            $team->cash_def += 1;
+                            $team->cash_g_get += $match->gett;
+                            $team->cash_g_let += $match->lett;
+                        }
+
+
+                    } else {
+
+                        if ($match->gett > $match->lett) {
+                            $team->cash_def += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                        } elseif ($match->gett == $match->lett) {
+                            $team->cash_nob += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                            $team->cash_balls += 1;
+                        } else {
+                            $team->cash_vic += 1;
+                            $team->cash_g_let += $match->gett;
+                            $team->cash_g_get += $match->lett;
+                            $team->cash_balls += 3;
+                        }
+                    }
+                    $team->update(false);
+                }
+
+
+            }
+
+        }
+
+
+    }
+
 }

@@ -22,6 +22,8 @@ use Yii;
  */
 class Bought extends \yii\db\ActiveRecord
 {
+    public $sum;
+    public $cnt;
     /**
      * @inheritdoc
      */
