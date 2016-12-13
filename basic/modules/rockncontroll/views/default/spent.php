@@ -159,6 +159,29 @@
             </tbody>
         </table>
 
+        <h3>Категории</h3>
+
+        <table class="table">
+            <tbody>
+            <tr >
+                <td>м</td>
+                <td>товар</td>
+
+                <td>сумма</td>
+            </tr>
+            <?php $i=0; foreach ($product_cats_list as $cat_id => $sum) : $i++;  ?>
+                <tr >
+                    <td><?= $i ?></td>
+                    <td><?= \app\models\Categories::findOne($cat_id)->name ?></td>
+
+                    <td><?= $sum ?></td>
+                </tr>
+
+            <?php endforeach; ?>
+
+            </tbody>
+        </table>
+
 
     </div>
 

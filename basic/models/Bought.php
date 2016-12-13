@@ -95,4 +95,8 @@ class Bought extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Shop::className(), ['id' => 'shop_id']);
     }
+
+    public function getProducts() {
+        return $this->hasMany(Products::className(), ['product_id' => 'id']);
+    }
 }

@@ -74,4 +74,8 @@ class Categories extends \yii\db\ActiveRecord
     {
         return new CategoriesQuery(get_called_class());
     }
+
+    public function getProducts() {
+        return $this->hasMany(Products::className(), ['cat_id' => 'id']);
+    }
 }

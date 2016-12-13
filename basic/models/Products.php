@@ -20,6 +20,8 @@ use Yii;
  */
 class Products extends \yii\db\ActiveRecord
 {
+    public $sum;
+    public $cnt;
     /**
      * @inheritdoc
      */

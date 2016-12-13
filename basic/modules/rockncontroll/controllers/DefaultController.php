@@ -2166,6 +2166,7 @@ class DefaultController extends FrontEndController
                     ->select(['id, spent, product_id, COUNT(*) as cnt, SUM(spent) as sum'])
                     ->where(['user_id' => 8])
                     ->andWhere('id > 28')
+                   // ->with('products')
                     ->groupBy('product_id')
                     ->orderBy('sum DESC')
                     ->limit(20)
@@ -2178,12 +2179,31 @@ class DefaultController extends FrontEndController
                     ->orderBy('sum DESC')
                     ->limit(20)
                     ->all();
+
+                $products = Products::find()
+                    ->select(['id, cat_id, COUNT(*) as cnt'])
+                    ->groupBy('cat_id')
+                    ->all();
+
+
+                return var_dump($spents);
+
+                $product_cats_list = ArrayHelper::map(Products::find()
+                    ->select(['id as dd, cat_id, COUNT(*) as cnt, SUM(select spent from bought where id = dd) as sum'])
+                    ->groupBy('cat_id')
+                    ->orderBy('sum DESC')
+                    ->all(), 'cat_id', 'sum');
+
+                return var_dump($product_cats_list);
+
+                
+
                // return var_dump($spents);
             } catch (\ErrorException $e) {
                 return $e->getMessage();
             }
             
-            return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents]);
+            return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents, 'product_cats_list' => $product_cats_list]);
         }
     }
 
