@@ -2170,12 +2170,20 @@ class DefaultController extends FrontEndController
                     ->orderBy('sum DESC')
                     ->limit(20)
                     ->all();
+                $shop_spents = Bought::find()
+                    ->select(['id, spent, shop_id, COUNT(*) as cnt, SUM(spent) as sum'])
+                    ->where(['user_id' => 8])
+                    ->andWhere('id > 28')
+                    ->groupBy('shop_id')
+                    ->orderBy('sum DESC')
+                    ->limit(20)
+                    ->all();
                // return var_dump($spents);
             } catch (\ErrorException $e) {
                 return $e->getMessage();
             }
             
-            return $this->renderPartial('spent', ['spents' => $spents]);
+            return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents]);
         }
     }
 

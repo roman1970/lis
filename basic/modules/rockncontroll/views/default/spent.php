@@ -113,6 +113,8 @@
     </form>
     <div id="sum_bought">
 
+        <h3>Товары</h3>
+
         <table class="table">
             <tbody>
             <tr >
@@ -125,6 +127,29 @@
                 <tr >
                     <td><?= $i ?></td>
                     <td><?= $spent->product->name ?></td>
+
+                    <td><?= round($spent->sum, 2) ?></td>
+                </tr>
+
+            <?php endforeach; ?>
+
+            </tbody>
+        </table>
+
+        <h3>Магазины</h3>
+
+        <table class="table">
+            <tbody>
+            <tr >
+                <td>м</td>
+                <td>товар</td>
+
+                <td>сумма</td>
+            </tr>
+            <?php $i=0; foreach ($shop_spents as $spent) : $i++;  ?>
+                <tr >
+                    <td><?= $i ?></td>
+                    <td><?= $spent->shop->name ?></td>
 
                     <td><?= round($spent->sum, 2) ?></td>
                 </tr>
