@@ -1548,7 +1548,12 @@ class ParsersController extends Controller
        }
 
    }
-    
+
+    /***
+     * Создание записей в таблице текстов песен по директориям с музыкой
+     * @param $new_artist
+     * @return string
+     */
     function actionGetMusicLinksAlbom($new_artist){
         $dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/'.$new_artist;
 
@@ -1628,6 +1633,19 @@ class ParsersController extends Controller
         }
 
 
+    }
+    
+    function actionFillPogodaxxi(){
+       $time_first = mktime(0, 0, 0, 1, 1, 2001); 
+        echo $time_first.PHP_EOL;
+        $i=0;
+        $time = $time_first;
+        while($i<10){
+            $i++;
+            $time += $time_first+(60*60*24);
+            echo date('d-m-Y', $time ).PHP_EOL;
+            
+        }
     }
     
 

@@ -56,9 +56,9 @@ KrokodileAsset::register($this);
 
      .table_data > tbody > tr > td{
          padding: 0;
-         width: 20%;
+         width: 16.66%;
          color: currentColor;
-         font-size: 15px;
+         font-size: 14px;
      }
 
     header{

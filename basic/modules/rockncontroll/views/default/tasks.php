@@ -91,10 +91,12 @@
     table > tbody > tr > td{
         padding: 0;
         font-size: 20px;
+        word-break: break-all;
     }
 
     h3, p, #form-task{
         text-align: center;
+        color: white;
     }
 
     @media (min-width:320px) and (max-width:767px) {
