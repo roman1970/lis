@@ -1552,7 +1552,13 @@ class ParsersController extends Controller
     function actionGetMusicLinksAlbom($new_artist){
         $dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/'.$new_artist;
 
-        $alboms = scandir($dir);
+        //return var_dump($dir);
+
+        try {
+            $alboms = scandir($dir);
+        } catch (\ErrorException $e) {
+           return $e->getMessage();
+        }
 
         if(is_array($alboms)){
             $alboms = array_diff($alboms, array('.', '..'));
@@ -1560,13 +1566,15 @@ class ParsersController extends Controller
             if($alboms){
                 foreach ($alboms as $albom){
 
+                   // return var_dump($albom);
+
                     $source = new Source();
 
                     $source->title = $albom;
                     
                     if(Author::find()->where('name like "%'.addslashes($new_artist).'%"')->one())
                         $source->author_id = Author::find()->where("name like '%".addslashes($new_artist)."%'")->one()->id;
-                    else return 'author error';
+                    else return('author error');
                     
                     $source->status = 1;
                     $source->cat_id = 34;
@@ -1596,14 +1604,14 @@ class ParsersController extends Controller
                                 foreach ($sub_songs as $sub_song){
                                     if(preg_match('/(.+).mp3$/',$sub_song, $match))
                                         $song_obj->title = $sub_song;
-                                    $song_obj->link = $path .'/'. $song .'/'. $sub_song;
+                                    $song_obj->link = substr($path .'/'. $song .'/'. $sub_song, 48);
 
                                 }
                             }
                             else
                                 if(preg_match('/(.+).mp3$/',$song, $match)) {
                                     $song_obj->title = $song;
-                                    $song_obj->link = $path .'/'. $song;
+                                    $song_obj->link = substr($path .'/'. $song, 48);
                                 }
 
                             $song_obj->save(false);

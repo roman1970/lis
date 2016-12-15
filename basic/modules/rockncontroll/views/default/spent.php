@@ -1,12 +1,12 @@
 <script>
     $(document).ready(function() {
 
-        $('#product').autoComplete({
+        $('#request').autoComplete({
             minChars: 3,
             source: function (term, suggest) {
                 term = term.toLowerCase();
                 console.log(term);
-                $.getJSON("rockncontroll/default/products", function (data) {
+                $.getJSON("rockncontroll/default/shops-products-cats", function (data) {
 
                     choices = data;
                     var suggestions = [];
@@ -19,24 +19,7 @@
             }
         });
 
-        $('#shop').autoComplete({
-            minChars: 3,
-            source: function (term, suggest) {
-                term = term.toLowerCase();
-                console.log(term);
-                $.getJSON("rockncontroll/default/shops", function (data) {
-
-                    choices = data;
-                    var suggestions = [];
-                    for (i = 0; i < choices.length; i++)
-                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
-                    suggest(suggestions);
-
-                }, "json");
-
-            }
-        });
-
+       
         $("#get_spent").click(
             function() {
 
@@ -165,16 +148,18 @@
             <tbody>
             <tr >
                 <td>м</td>
-                <td>товар</td>
+                <td>категория</td>
 
                 <td>сумма</td>
             </tr>
-            <?php $i=0; foreach ($product_cats_list as $cat_id => $sum) : $i++;  ?>
+            <?php $i=0;   foreach ($prod_boughts as $cat => $sum) : $i++;  ?>
+                <?php if($i > 30) : exit; ?>
+                    <?php endif; ?>
                 <tr >
                     <td><?= $i ?></td>
-                    <td><?= \app\models\Categories::findOne($cat_id)->name ?></td>
+                    <td><?= $cat ?></td>
 
-                    <td><?= $sum ?></td>
+                    <td><?= round($sum, 2) ?></td>
                 </tr>
 
             <?php endforeach; ?>

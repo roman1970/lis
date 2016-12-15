@@ -1312,6 +1312,27 @@ class DefaultController extends FrontEndController
         return  json_encode($res);
     }
 
+    public function actionShopsProductsCats(){
+        $res = [];
+
+        $shops = Shop::find()->all();
+        $products = Products::find()->all();
+        $cats = Categories::find()->where(['site_id' => 11])->all();
+
+        foreach ($shops as $shop){
+            $res[] = $shop->name;
+
+        }
+        foreach ($products as $product){
+            $res[] = $product->name;
+        }
+        foreach ($cats as $cat){
+            $res[] = $cat->title;
+        }
+
+        return  json_encode($res);
+    }
+
     /**
      * Приходы для автокомплита
      * @return string
@@ -2155,10 +2176,114 @@ class DefaultController extends FrontEndController
         
     }
 
+
+
     function actionSpent(){
         if($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
             if (!$user) return 'Доступ запрещн!';
+
+            if (Yii::$app->getRequest()->getQueryParam('request')) {
+               // return Yii::$app->getRequest()->getQueryParam('request');
+
+                $shop = Shop::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+
+                if($shop)  {
+                    //return var_dump($shop->id);
+                    $shop_spent_sum = Bought::find()
+                        ->select(['id, spent, shop_id, COUNT(*) as cnt, SUM(spent) as sum'])
+                        ->where(['user_id' => 8, 'shop_id' => $shop->id])
+                        ->andWhere('id > 28')
+                        ->one();
+                    
+                    $shop_last_spent = Bought::find()
+                        ->where(['user_id' => 8, 'shop_id' => $shop->id])
+                        ->andWhere('id > 28')
+                        ->orderBy('id DESC')
+                        ->limit(30)
+                        ->all();
+
+                   //return var_dump($shop_spent);
+                    return $this->renderPartial('spent_shop', ['spent_sum' => $shop_spent_sum, 'spents' => $shop_last_spent]);
+                }
+                
+                $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+
+                if($product)  {
+                    //return var_dump($shop->id);
+                    $product_spent = Bought::find()
+                        ->select(['id, spent, shop_id, COUNT(*) as cnt, SUM(spent) as sum'])
+                        ->where(['user_id' => 8, 'product_id' => $product->id])
+                        ->andWhere('id > 28')
+                        ->one();
+                    $product_last_spent = Bought::find()
+                        ->where(['user_id' => 8, 'product_id' => $product->id])
+                        ->andWhere('id > 28')
+                        ->orderBy('id DESC')
+                        ->limit(30)
+                        ->all();
+
+                    //return var_dump($product_last_spent);
+                    return $this->renderPartial('spent_product', ['spent' => $product_spent, 'spents' => $product_last_spent, 'product' => $product->name]);
+                }
+
+                $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+
+                if($product)  {
+                    //return var_dump($shop->id);
+                    $product_spent = Bought::find()
+                        ->select(['id, spent, shop_id, COUNT(*) as cnt, SUM(spent) as sum'])
+                        ->where(['user_id' => 8, 'product_id' => $product->id])
+                        ->andWhere('id > 28')
+                        ->one();
+                    $product_last_spent = Bought::find()
+                        ->where(['user_id' => 8, 'product_id' => $product->id])
+                        ->andWhere('id > 28')
+                        ->orderBy('id DESC')
+                        ->limit(30)
+                        ->all();
+
+                    //return var_dump($product_last_spent);
+                    return $this->renderPartial('spent_product', ['spent' => $product_spent, 'spents' => $product_last_spent, 'product' => $product->name]);
+                }
+
+                $cat = Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+
+                if($cat)  {
+
+                    $sum = 0;
+                    $spent_prods = [];
+
+                    $prods = Products::find()
+                        ->where(['cat_id' => $cat->id])
+                        ->all();
+
+                    //return var_dump($prods);
+
+                    foreach ($prods as $prod) {
+
+                        $cat_products_ids = implode(',', ArrayHelper::map(Products::find()->where(['cat_id' => $prod->cat->id])->all(), 'id', 'id'));
+
+                        $sum = Bought::find()
+                            ->select('SUM(spent) as sum')
+                            ->where('product_id IN (' . $cat_products_ids . ')')
+                            ->andWhere('id > 28')
+                            ->scalar();
+                        $spent_prods[$prod->name] = Bought::find()
+                            ->select('SUM(spent) as sum')
+                            ->where(['user_id' => 8, 'product_id' => $prod->id])
+                            ->andWhere('id > 28')
+                            ->scalar();
+                    }
+
+                    arsort($spent_prods);
+
+                    //return var_dump($spent_prods);
+                    return $this->renderPartial('spent_cat', ['sum' => $sum, 'spent_prods' => $spent_prods, 'cat' => $cat->name]);
+                }
+
+
+            }
 
             //return 'ok';
             try {
@@ -2166,7 +2291,6 @@ class DefaultController extends FrontEndController
                     ->select(['id, spent, product_id, COUNT(*) as cnt, SUM(spent) as sum'])
                     ->where(['user_id' => 8])
                     ->andWhere('id > 28')
-                   // ->with('products')
                     ->groupBy('product_id')
                     ->orderBy('sum DESC')
                     ->limit(20)
@@ -2180,30 +2304,36 @@ class DefaultController extends FrontEndController
                     ->limit(20)
                     ->all();
 
-                $products = Products::find()
+
+                $prod_boughts = [];
+
+                $prods = Products::find()
                     ->select(['id, cat_id, COUNT(*) as cnt'])
                     ->groupBy('cat_id')
                     ->all();
 
+                //return var_dump($prods);
 
-                return var_dump($spents);
+                foreach ($prods as $prod) {
 
-                $product_cats_list = ArrayHelper::map(Products::find()
-                    ->select(['id as dd, cat_id, COUNT(*) as cnt, SUM(select spent from bought where id = dd) as sum'])
-                    ->groupBy('cat_id')
-                    ->orderBy('sum DESC')
-                    ->all(), 'cat_id', 'sum');
+                    $cat_products_ids = implode(',', ArrayHelper::map(Products::find()->where(['cat_id' => $prod->cat->id])->all(), 'id', 'id'));
 
-                return var_dump($product_cats_list);
+                    $prod_boughts[$prod->cat->name] = Bought::find()
+                        ->select('SUM(spent) as sum')
+                        ->where('product_id IN (' . $cat_products_ids . ')')
+                        ->andWhere('id > 28')
+                        ->scalar();
+                }
 
-                
+                arsort($prod_boughts);
+                    
 
-               // return var_dump($spents);
+               //return var_dump($prod_boughts);
             } catch (\ErrorException $e) {
                 return $e->getMessage();
             }
             
-            return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents, 'product_cats_list' => $product_cats_list]);
+            return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents, 'prod_boughts' => $prod_boughts]);
         }
     }
 

@@ -29,8 +29,25 @@ KrokodileAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 <style type="text/css">
+    .btn-success {
+        color: rgb(255, 255, 255);
+        background-color: rgb(62, 149, 137);
+        border-color: rgb(62, 149, 137);
+    }
+    .btn-success:hover{
+        background-color: rgb(42, 83, 109);
+        border-color: rgb(62, 90, 149);
+    }
+
+    .alert-success {
+        color: rgb(231, 228, 214);
+        background-color: rgb(42, 83, 109);
+        border-color: rgb(62, 90, 149);
+    }
+
     body{
-        background: rgb(104, 126, 140);
+        background: rgb(42, 83, 109);
+        font-family: "Verdana", "sans-serif";
     }
 
     table{
@@ -45,7 +62,7 @@ KrokodileAsset::register($this);
      }
 
     header{
-        background-color: rgb(92, 184, 92);
+        background-color: rgb(62, 149, 137);
         border-radius: 5%;
         color: white;
     }
