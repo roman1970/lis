@@ -16,6 +16,7 @@ use app\models\DiaryRecDayParams;
 use app\models\Event;
 use app\models\Incomes;
 use app\models\Items;
+use app\models\PogodaXXI;
 use app\models\Snapshot;
 use app\models\SongText;
 use app\models\Source;
@@ -1637,13 +1638,25 @@ class ParsersController extends Controller
     
     function actionFillPogodaxxi(){
        $time_first = mktime(0, 0, 0, 1, 1, 2001); 
-        echo $time_first.PHP_EOL;
+        $time_end = mktime(0, 0, 0, 1, 1, 2009);
+        // echo date('d-m-Y',$time_first).PHP_EOL;
+        //echo date('d-m-Y',$time_first+(60*60*24)).PHP_EOL;
         $i=0;
-        $time = $time_first;
-        while($i<10){
+        //$time = $time_first;
+        while($i < 3650 ){
             $i++;
-            $time += $time_first+(60*60*24);
-            echo date('d-m-Y', $time ).PHP_EOL;
+            if($time_first+(60*60*24*$i) > $time_end) break;
+            //$time += $time_first+(60*60*24);
+            $day = new PogodaXXI();
+            $day->year = (int)date('Y', $time_first+(60*60*24*$i));
+            $day->date = (int)date('j', $time_first+(60*60*24*$i));
+            $day->month = (int)date('n', $time_first+(60*60*24*$i));
+            $day->week = (int)date('W', $time_first+(60*60*24*$i));
+            $day->day_week = (int)date('w', $time_first+(60*60*24*$i));
+            $day->save(false);
+            
+            echo date('d-m-Y', $time_first+(60*60*24*$i)).' done '.PHP_EOL;
+            
             
         }
     }

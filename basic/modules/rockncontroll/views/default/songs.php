@@ -93,8 +93,8 @@
                 <img src="<?=$song->source->cover?>">
                 <?php endif; ?>
                 <p><?=$song->source->author->name?> *** <?=$song->source->title?> *** <?=$song->title?></p>
-                <audio controls="controls" ">
-                <source src="http://37.192.187.83:10080<?=$song->link?>" type='audio/mpeg'>
+                <audio controls="controls" >
+                    <source src="http://37.192.187.83:10080<?=$song->link?>" type='audio/mpeg'>
                 </audio>
             </div>
             <hr>

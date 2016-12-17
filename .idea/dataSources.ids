@@ -7831,7 +7831,15 @@ type</columns>
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <key id="2043" parent="128" name="PRIMARY">
+      <column id="2043" parent="128" name="max_temp">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="2044" parent="128" name="min_temp">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <key id="2045" parent="128" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
