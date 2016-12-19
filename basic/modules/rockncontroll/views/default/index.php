@@ -1,3 +1,5 @@
+<?php  use miloschuman\highcharts\Highcharts; ?>
+
 <script>
     var arr = [];
     $(document).ready(function() {
@@ -94,6 +96,8 @@
     <div id="rechange">
         <div class="col-md-4 col-md-offset-4">
 
+
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"></h3>
@@ -134,4 +138,21 @@
         
     </div>
     <div id="summary"></div>
+    <?php
+    echo Highcharts::widget([
+        'options'=>'{
+                  "title": { "text": "Fruit Consumption" },
+                  "xAxis": {
+                     "categories": ["Apples", "Bananas", "Oranges"]
+                  },
+                  "yAxis": {
+                     "title": { "text": "Fruit eaten" }
+                  },
+                  "series": [
+                     { "name": "Jane", "data": [1, 0, 4] },
+                     { "name": "John", "data": [5, 7,3] }
+                  ]
+               }'
+    ]);
+    ?>
 </div>

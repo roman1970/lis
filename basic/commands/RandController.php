@@ -9,6 +9,7 @@ namespace app\commands;
 
 
 use app\models\Author;
+use app\models\Items;
 use app\models\Played;
 use app\models\Source;
 use yii\console\Controller;
@@ -102,6 +103,15 @@ class RandController extends Controller
         }
 
 
+    }
+    
+    function actionRamdItem(){
+        $items = Items::find()->all();
+        echo $items[rand(0, count($items)-1)]->text.PHP_EOL.
+               $items[rand(0, count($items)-1)]->text.PHP_EOL.
+               $items[rand(0, count($items)-1)]->text.PHP_EOL.
+            $items[rand(0, count($items)-1)]->text.PHP_EOL.
+             $items[rand(0, count($items)-1)]->text.PHP_EOL;
     }
 
 }

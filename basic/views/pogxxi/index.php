@@ -25,7 +25,7 @@ AppAsset::register($this);
 </div>
 
 <div class="col-sm-9 col-md-10 main">
-    <h1 class="page-header">Тексты песен</h1>
+    <h1 class="page-header">Погода XXI</h1>
     <?php  //var_dump($articles); exit; ?>
     <?= GridView::widget([
         'dataProvider' => $days,

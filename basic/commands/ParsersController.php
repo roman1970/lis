@@ -1635,7 +1635,11 @@ class ParsersController extends Controller
 
 
     }
-    
+
+    /**
+     * Заполнение таблицы Погода XXI
+     * 
+     */
     function actionFillPogodaxxi(){
        $time_first = mktime(0, 0, 0, 1, 1, 2001); 
         $time_end = mktime(0, 0, 0, 1, 1, 2009);

@@ -5,11 +5,15 @@ use yii\bootstrap\Nav;
 use app\assets\AppAsset;
 use yii\grid\GridView;
 use yii\helpers\Url;
+use miloschuman\highcharts\Highcharts;
 
 AppAsset::register($this);
 ?>
 <div class="col-sm-3 col-md-2 sidebar">
     <?php
+
+
+
 
     echo Nav::widget([
         'options' => ['class' => 'nav nav-sidebar'],
@@ -25,8 +29,23 @@ AppAsset::register($this);
 </div>
 
 <div class="col-sm-9 col-md-10 main">
+
     <h1 class="page-header">Источники</h1>
-    <?php  //var_dump($sources); exit; ?>
+    <?php  echo Highcharts::widget([
+        'options' => [
+            'title' => ['text' => 'Fruit Consumption'],
+            'xAxis' => [
+                'categories' => ['Apples', 'Bananas', 'Oranges']
+            ],
+            'yAxis' => [
+                'title' => ['text' => 'Fruit eaten']
+            ],
+            'series' => [
+                ['name' => 'Jane', 'data' => [1, 0, 4]],
+                ['name' => 'John', 'data' => [5, 7, 3]]
+            ]
+        ]
+    ]); ?>
     <?= GridView::widget([
         'dataProvider' => $sources,
         'filterModel' => $searchModel,

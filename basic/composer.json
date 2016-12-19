@@ -23,7 +23,8 @@
         "vova07/yii2-imperavi-widget": "*",
         "dektrium/yii2-rbac": "dev-master",
         "yiisoft/yii2-sphinx": "~2.0.0",
-        "yiisoft/yii2-jui": "~2.0.0"
+        "yiisoft/yii2-jui": "~2.0.0",
+        "miloschuman/yii2-highcharts-widget": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
