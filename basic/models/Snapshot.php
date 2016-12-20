@@ -17,6 +17,7 @@ use Yii;
  */
 class Snapshot extends \yii\db\ActiveRecord
 {
+    public $sum;
     /**
      * @inheritdoc
      */

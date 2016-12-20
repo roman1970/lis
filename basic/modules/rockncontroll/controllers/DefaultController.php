@@ -23,6 +23,7 @@ use app\models\Log;
 use app\models\MarkUser;
 use app\models\Products;
 use app\models\Shop;
+use app\models\Snapshot;
 use app\models\SongText;
 use app\models\Source;
 use app\models\Tag;
@@ -2337,6 +2338,35 @@ class DefaultController extends FrontEndController
         }
     }
 
+
+    /**
+     * Данные для постоения графиков
+     * @return string
+     */
+    function actionGraf(){
+        
+        $weigth16 = [];
+        $weigth17 = [];
+
+     
+            for($i=1; $i<=12; $i++) {
+
+                if($i<10) $month = '0'.$i;
+                else $month = $i;
+
+                $weigth16['name'] = '2016';
+                $weigth16['data'][] = (float)Snapshot::find()->select(['AVG(weight)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $weigth17['name'] = '2017';
+                $weigth17['data'][] = (float)Snapshot::find()->select(['AVG(weight)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+            }
+        
+
+        //$weights = implode(',', $arr);
+       // return var_dump(json_encode($arr));
+        return $this->renderPartial('graf',['weigth16' => json_encode($weigth16), 'weigth17' => json_encode($weigth17)]);
+    }
     
 
 }
