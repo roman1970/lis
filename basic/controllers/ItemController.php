@@ -68,6 +68,7 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->cens = Yii::$app->request->post('Items')['cens'];
+            $model->cens = Yii::$app->request->post('Items')['published'];
             //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
 
             if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
@@ -139,6 +140,7 @@ class ItemController extends BackEndController
             $model->tags = Yii::$app->request->post('Items')['tags'];
             $model->title = Yii::$app->request->post('Items')['title'];
             $model->cens = Yii::$app->request->post('Items')['cens'];
+            $model->cens = Yii::$app->request->post('Items')['published'];
             //$model->cat_id = Yii::$app->request->post('Items')['cat_id'];
             
             if(Categories::find()->where(['title' => Yii::$app->request->post('Items')['cat_title']])->one()){
@@ -211,7 +213,7 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionListNoAudio(){
-        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_id <> 43");
+        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_id <> 43 and cat_id <> 53")->orderBy('id');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,

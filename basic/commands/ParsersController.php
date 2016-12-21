@@ -975,7 +975,7 @@ class ParsersController extends Controller
         $pesni = Items::find()->where(["source_id" => 6])->all();
         shuffle($pesni);
 
-        for($i=0; $i<100; $i++){
+        for($i=0; $i<1000; $i++){
             if(isset($dibilizmy[$i]))
                 array_push($arr, $dibilizmy[$i]);
             if(isset($limerik[$i]))
@@ -996,8 +996,7 @@ class ParsersController extends Controller
                 $one = str_replace('/music', 'music', $item->audio_link);
                 fwrite($f, "/home/romanych/".$one.PHP_EOL);
             }
-
-            else fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/".$item->audio_link.PHP_EOL);
+            elseif ($item->audio_link) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/".$item->audio_link.PHP_EOL);
 
         }
 

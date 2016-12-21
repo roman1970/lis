@@ -1204,6 +1204,7 @@ class DefaultController extends FrontEndController
                     $item->tags = Yii::$app->getRequest()->getQueryParam('tags');
                     $item->title = Yii::$app->getRequest()->getQueryParam('title');
                     $item->cens = Yii::$app->getRequest()->getQueryParam('cens');
+                    $item->published = Yii::$app->getRequest()->getQueryParam('published');
 
                    // return var_dump($item);
                     if(Yii::$app->getRequest()->getQueryParam('old_data'))
@@ -2348,6 +2349,17 @@ class DefaultController extends FrontEndController
         $weigth16 = [];
         $weigth17 = [];
 
+        $spent16 = [];
+        $spent17 = [];
+
+        $oz16 = [];
+        $oz17 = [];
+
+        $doll16 = [];
+        $doll17 = [];
+        $euro16 = [];
+        $euro17 = [];
+
      
             for($i=1; $i<=12; $i++) {
 
@@ -2360,12 +2372,46 @@ class DefaultController extends FrontEndController
                 $weigth17['name'] = '2017';
                 $weigth17['data'][] = (float)Snapshot::find()->select(['AVG(weight)'])->where('date like "%2017-'.$month.'-%"')->scalar();
 
+                $spent16['name'] = '2016';
+                $spent16['data'][] = (float)Snapshot::find()->select(['AVG(spent)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $spent17['name'] = '2017';
+                $spent17['data'][] = (float)Snapshot::find()->select(['AVG(spent)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $oz16['name'] = '2016';
+                $oz16['data'][] = (float)Snapshot::find()->select(['AVG(oz)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $oz17['name'] = '2017';
+                $oz17['data'][] = (float)Snapshot::find()->select(['AVG(oz)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $doll16['name'] = 'Доллар-2016';
+                $doll16['data'][] = (float)Snapshot::find()->select(['AVG(doll)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $doll17['name'] = 'Доллар-2017';
+                $doll17['data'][] = (float)Snapshot::find()->select(['AVG(doll)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $euro16['name'] = 'Евро-2016';
+                $euro16['data'][] = (float)Snapshot::find()->select(['AVG(euro)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $euro17['name'] = 'Евро-2017';
+                $euro17['data'][] = (float)Snapshot::find()->select(['AVG(euro)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
             }
         
 
         //$weights = implode(',', $arr);
        // return var_dump(json_encode($arr));
-        return $this->renderPartial('graf',['weigth16' => json_encode($weigth16), 'weigth17' => json_encode($weigth17)]);
+        return $this->renderPartial('graf',['weigth16' => json_encode($weigth16),
+                                            'weigth17' => json_encode($weigth17),
+                                            'spent16' => json_encode($spent16),
+                                            'spent17' => json_encode($spent17),
+                                            'doll16' => json_encode($doll16),
+                                            'doll17' => json_encode($doll17),
+                                            'euro16' => json_encode($euro16),
+                                            'euro17' => json_encode($euro17),
+                                            'oz16' => json_encode($oz16),
+                                            'oz17' => json_encode($oz17)
+                                           ]);
     }
     
 

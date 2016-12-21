@@ -30,9 +30,10 @@ KrokodileAsset::register($this);
 <div class="container">
     <header>
         <div class="logo">
-            <h1 class="main_title">ИНТЕРНЕТ-РАДИО <br>"Комната с мехом"</h1>
+            <h1 class="main_title">РАДИО-БЛОГ <br>"Комната с мехом"</h1>
         </div>
         <p style="text-align: center; font-size: large">Ведущий - "Бард, который перевернул ЗИЛ" - Роман Беляшов! </p>
+        <p style="text-align: center; font-size: large"><img src='<?=\yii\helpers\Url::to('/uploads/barded.jpg')?>' width="200px"><br>Трансляция ежедневно с 14:00 до 18:00 по московскому времени </p>
     </header>
 
     <?=$content?>

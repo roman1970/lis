@@ -251,12 +251,12 @@
     });
     */
     $(function () {
-        Highcharts.chart('grafs', {
+        Highcharts.chart('graf_weight', {
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Weight'
+                text: 'Мой вес'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -287,6 +287,120 @@
         });
     });
 
+    $(function () {
+        Highcharts.chart('graf_spent', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Траты'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            },
+
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'руб'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} RUB</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.1,
+                    borderWidth: 0
+                }
+            },
+            series: [<?= $spent16 ?> , <?= $spent17 ?>]
+        });
+    });
+
+    $(function () {
+        Highcharts.chart('graf_doll_euro', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Доллар-Евро'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            },
+
+            yAxis: {
+                min: 50,
+                title: {
+                    text: 'руб'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} RUB</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.1,
+                    borderWidth: 0
+                }
+            },
+            series: [<?= $doll16 ?> , <?= $doll17 ?>, <?= $euro16 ?> , <?= $euro17 ?>]
+        });
+    });
+
+    $(function () {
+        Highcharts.chart('graf_oz', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Оценка'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            },
+
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'балл'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} bal</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.1,
+                    borderWidth: 0
+                }
+            },
+            series: [<?= $oz16 ?> , <?= $oz17 ?>]
+        });
+    });
+
 </script>
 
-<div id="grafs" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_weight" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_spent" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_doll_euro" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_oz" style="min-width: 310px; height: 250px; margin: 0 auto"></div>

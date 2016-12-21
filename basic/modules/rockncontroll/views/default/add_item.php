@@ -48,6 +48,7 @@
                 var txt = $("#text").val();
                 var old_data = $("#old_data").val();
                 var cens = $("#cens").val();
+                var published = $("#published").val();
                 
 
                 if (title == '') {alert('Введите название!'); return;}
@@ -57,8 +58,9 @@
                 if (cens == '') {alert('Введите уровень цензуры!'); return;}
                 if (txt == '') {alert('Введите текст!'); return;}
                 if (old_data == '') {old_data = 0;}
+                if (published == '') {published = 1;}
 
-                rec(title, source, cat, tags, txt, user, old_data, cens);
+                rec(title, source, cat, tags, txt, user, old_data, cens, published);
 
             });
 
@@ -101,12 +103,12 @@
     });
 
 
-    function rec(title, source, cat, tags, txt, user, old_data, cens) {
+    function rec(title, source, cat, tags, txt, user, old_data, cens, published) {
 
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/record-item",
-            data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data+"&cens="+cens,
+            data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data+"&cens="+cens+"&published="+published,
             success: function(html){
                 $("#res").html(html);
 
@@ -150,6 +152,7 @@
                 <input type="text" class="form-control" id="source"  placeholder="Источник">
                 <input type="text" class="form-control" id="cat"  placeholder="Категория">
                 <input type="text" class="form-control" id="tags"  placeholder="Тэги">
+                <input type="text" class="form-control" id="published"  placeholder="Опубликовать 1, нет 0">
                 <input type="text" class="form-control" id="cens"  placeholder="Уровень цензуры, 0 - +6" value="0">
                 <input type="text" class="form-control" id="old_data"  placeholder="Дата в формате ГГГГ-ММ-ДД">
                 <textarea class="form-control" id="text"  placeholder="Текст" rows="10" cols="45"></textarea>

@@ -95,6 +95,7 @@ class DefaultController extends FrontEndController
             ->where("source_id = 27 or source_id = 17 or
             source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
             ->andWhere('cens = 0')
+            ->andWhere('published = 1')
             ->orderBy('id ASC')
             ->all();
         $random_ind = rand(0, count($thoughts)-1);
