@@ -120,6 +120,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'music')">Музыка</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'concert')">Концерт</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'graf')">Графики</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'football')">Футбол 2016-2018</button>
 </div>
 
 <div id="show_menu">

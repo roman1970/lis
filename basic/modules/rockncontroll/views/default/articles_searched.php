@@ -45,9 +45,12 @@
     }
 </script>
 <style>
-    img{width: 100%}
-    span,pre{color: #0a0a0a; width: 100%}
-    h4{color: white; overflow: hidden;}
+    .article {display: block; color: rgb(230, 218, 192); font-size: 15px; font-family: Ubuntu;}
+     img {width: 100%}
+    .article pre p {color: #0a0a0a; width: 100%}
+    .article p {color: rgb(230, 218, 192); font-size: 15px; font-family: Ubuntu;}
+    h4 {color: white; overflow: hidden;}
+    .article ul li {color: rgb(230, 218, 192); font-size: 15px;}
 </style>
 <div class="accord" style="text-align: left; color: white; font-size: 20px">
     <?php
@@ -57,7 +60,7 @@
             ?>
             <hr>
             <h4><?=$i?>) <?=$rec->minititle?></h4>
-            <span><?=nl2br($rec->body)?></span>
+            <span class="article"><?=$rec->body?></span>
             <?php
         endforeach;
     else: echo $articles_rows;

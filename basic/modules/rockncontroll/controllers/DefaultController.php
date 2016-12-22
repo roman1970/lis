@@ -29,6 +29,7 @@ use app\models\Source;
 use app\models\Tag;
 use app\models\Task;
 use app\models\Tasked;
+use app\models\TeamSum;
 use app\models\TelBasemts;
 use app\models\Weathernew;
 use app\modules\currency\models\CurrHistory;
@@ -2179,7 +2180,10 @@ class DefaultController extends FrontEndController
     }
 
 
-
+    /**
+     * Траты
+     * @return string
+     */
     function actionSpent(){
         if($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -2413,6 +2417,24 @@ class DefaultController extends FrontEndController
                                             'oz17' => json_encode($oz17)
                                            ]);
     }
-    
+
+    function actionFootball(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+
+            if (!$user) return 'Доступ запрещн!';
+            $clubs = TeamSum::find()
+                ->where("is_club = 1 and is_tour_visual = 1")
+                ->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])
+                ->all();
+            $countries = TeamSum::find()
+                ->where("is_club = 0 and is_tour_visual = 1")
+                ->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])
+                ->all();
+            //return var_dump($clubs);
+
+            return $this->renderPartial('football', ['clubs' => $clubs, 'countries' => $countries]);
+        }
+    }
 
 }
