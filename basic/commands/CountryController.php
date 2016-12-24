@@ -1172,7 +1172,7 @@ class CountryController extends Controller
                         $matchs[$grand->name] = Matches::find()
                             ->orderBy('id DESC')
                             // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
-                            ->where("host like('_" . $grand->name . "') or guest like('" . $grand->name . "_') or (host like('_" . $grand->name . " (%') and host not like('_" . $grand->name . " (Б)%') ) or (guest like('" . $grand->name . " (%') and guest not like('" . $grand->name . " (Б)%'))")
+                            ->where("host like('_" . addslashes($grand->name) . "') or guest like('" . addslashes($grand->name) . "_') or (host like('_" . addslashes($grand->name) . " (%') and host not like('_" . addslashes($grand->name) . " (Б)%') ) or (guest like('" . addslashes($grand->name) . " (%') and guest not like('" . addslashes($grand->name) . " (Б)%'))")
                             ->andWhere("id > " . $from . " and id < " . $to . " ")
                             ->all();
                     }
@@ -1184,7 +1184,7 @@ class CountryController extends Controller
 
         foreach ($matchs as $key => $mtch) {
 
-            $team = TeamSum::find()->where("name like '".$key."'")->one();
+            $team = TeamSum::find()->where("name like '".addslashes($key)."'")->one();
             if($team) {
                 echo $key.PHP_EOL;
 

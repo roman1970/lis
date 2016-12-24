@@ -62,7 +62,11 @@
                             <source src="http://37.192.187.83:10080/<?=$rec->audio_link?>" type='audio/mpeg'>
                         </audio><br>
                     <?php endif; ?>
+                    <?php if($rec->img) : ?>
+                        <img src="<?=$rec->img?>">
+                    <?php endif; ?>
                     <?=nl2br($rec->text)?>
+                    <?='('.$rec->source->title.' - '.$rec->source->author->name.')'?>
                 </p>
                 <?php
             endforeach;
