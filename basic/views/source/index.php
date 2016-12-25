@@ -30,22 +30,7 @@ AppAsset::register($this);
 
 <div class="col-sm-9 col-md-10 main">
 
-    <h1 class="page-header">Источники</h1>
-    <?php  echo Highcharts::widget([
-        'options' => [
-            'title' => ['text' => 'Fruit Consumption'],
-            'xAxis' => [
-                'categories' => ['Apples', 'Bananas', 'Oranges']
-            ],
-            'yAxis' => [
-                'title' => ['text' => 'Fruit eaten']
-            ],
-            'series' => [
-                ['name' => 'Jane', 'data' => [1, 0, 4]],
-                ['name' => 'John', 'data' => [5, 7, 3]]
-            ]
-        ]
-    ]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $sources,
         'filterModel' => $searchModel,

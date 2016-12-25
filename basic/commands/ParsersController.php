@@ -91,30 +91,81 @@ class ParsersController extends Controller
     }
 
 
-    public function actionSoccerstand(){
+    public function actionSoccerstand($match_code=''){
+
+        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
+
+        preg_replace("/[0-9]{10}/", "", $day_data);
+        
+
+        $arr = explode(':',preg_replace("/[^-0-9а-ярьтуёА-ЯЁ.,!?:()№ ]+/", "", $day_data)); var_dump($arr); exit;
+
+        $output = [];
+
+        preg_match_all('/AA÷([0-9A-Za-z]{8})¬AD/', $day_data, $output);
+
+       //var_dump(substr($output[0][1], 4, 8)); exit;
+
+        $i=0;
+
+        $handle = fopen(Url::to("@app/commands/soccertest.html"), "w");
+
+        foreach ($output[0] as $match_code) {
+            if($i==3) return;
+            $i++;
+
+            $urls = [ "http://www.soccerstand.com/ru/match/".substr($match_code, 4, 8)."/#match-summary",
+                     "http://d.soccerstand.com/ru/x/feed/d_su_".substr($match_code, 4, 8)."_ru_1",
+                     "http://d.soccerstand.com/ru/x/feed/d_st_".substr($match_code, 4, 8)."_ru_1",
+                     "http://d.soccerstand.com/ru/x/feed/d_li_".substr($match_code, 4, 8)."_ru_1"
+            ];
+
+           foreach ($urls as $url) {
+
+               $data = $this->_soccerStandCurl($url);
+               fwrite($handle,  $data);
+           }
+
+
+
+        }
+        fclose($handle);
+
+
+
+    }
+
+    function time_in($str)
+    {
+        return date('Y-d-m',$str);
+    }
+
+
+    private function _soccerStandCurl($url){
 
         $ch = curl_init();
-        $url = "http://d.soccerstand.com/ru/x/feed/d_su_S2vkOWlT_ru_1";
         curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // возвратить то что вернул сервер
         curl_setopt($ch, CURLOPT_HTTPHEADER,
             [
-              //'Accept-Encoding:gzip, deflate, sdch',
-              //'Accept-Language:*',
-               'Cache-Control:no-cache',
-              'Connection:keep-alive',
-              'Cookie:_dc_gtm_UA-28208502-12=1; _ga=GA1.2.1191596796.1477908016',
-               'Host:d.soccerstand.com', 'Pragma:no-cache',
-               'Referer:http://d.soccerstand.com/ru/x/feed/proxy-local',
-               'User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
-              'X-Fsign:SW9D1eZo',
-              'X-GeoIP:1',
-              'X-Requested-With:XMLHttpRequest', 'Accept-Charset: Windows-1251,utf-8;q=0.7,*;q=0.7']);
+                //'Accept-Encoding:gzip, deflate, sdch',
+                //'Accept-Language:*',
+                'Cache-Control:no-cache',
+                'Connection:keep-alive',
+                'Cookie:_dc_gtm_UA-28208502-12=1; _ga=GA1.2.1191596796.1477908016',
+                'Host:d.soccerstand.com', 'Pragma:no-cache',
+                'Referer:http://d.soccerstand.com/ru/x/feed/proxy-local',
+                'User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+                'X-Fsign:SW9D1eZo',
+                'X-GeoIP:1',
+                'X-Requested-With:XMLHttpRequest',
+                'Accept-Charset: Windows-1251,utf-8;q=0.7,*;q=0.7'
+            ]);
 
-        strip_tags(curl_exec($ch));
+        $output = curl_exec($ch);
         curl_close($ch);
 
-
-
+        return $output;
     }
 
     /**
@@ -216,7 +267,6 @@ class ParsersController extends Controller
 
 
     }
-
     /**
      * Генератор тэговых страниц
      */
