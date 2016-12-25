@@ -1,3 +1,4 @@
+
 <script>
     $(document).ready(function() {
         $(".accord h4:first").addClass("active");
@@ -45,10 +46,29 @@
     }
 </script>
 <style>
-    .article {display: block; color: rgb(230, 218, 192); font-size: 15px; font-family: Ubuntu;}
+    @media(min-width:320px) and (max-width:767px){.container{width: 100%; padding: 0 3px;}}
+    .article {
+        display: block; 
+        color: rgb(105, 102, 105);
+        font-size: 17px;
+        border-radius: 5px;
+        font-family: Ubuntu;
+        background: #ffffff url(<?=$this->theme->getUrl('img/bg.jpg')?>) repeat-y top center;
+        background-size: 100%;
+        line-height: 20px;
+        padding: 10px;
+        /*color:#333333;
+        font-size: 13px;
+        line-height: 24px;
+         font-family: 'Tinos', sans-serif;*/
+    
+    }
+    .post__title, h1, h2{
+        font-size: 25px;
+    }
      img {width: 100%}
     .article pre p {color: #0a0a0a; width: 100%}
-    .article p {color: rgb(230, 218, 192); font-size: 15px; font-family: Ubuntu;}
+    .article p {color: color: rgb(105, 102, 105); font-size: 17px; font-family: Ubuntu;}
     h4 {color: white; overflow: hidden;}
     .article ul li {color: rgb(230, 218, 192); font-size: 15px;}
 </style>

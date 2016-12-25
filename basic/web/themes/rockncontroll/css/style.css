@@ -195,7 +195,7 @@ a.next.upper.rel {}
    /* header{ padding: 15px 5px;}*/
     header .logo{padding:10px;}
     header .logo img{max-width: 100%;}
-    .container{width: 100%; padding: 0 10px;}
+    .container{width: 100%; padding: 0 3px;}
 
     .single{width: 100%; border: none;padding-right: 0;}
     aside{width: 100%;text-align: center;}

@@ -94,24 +94,25 @@ class ParsersController extends Controller
     public function actionSoccerstand(){
 
         $ch = curl_init();
-        $url = "http://www.soccerstand.com/ru/match/S2vkOWlT/#player-statistics;0";
+        $url = "http://d.soccerstand.com/ru/x/feed/d_su_S2vkOWlT_ru_1";
         curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11');
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_COOKIEJAR, 'cookie.txt');
-        curl_setopt($ch, CURLOPT_COOKIEFILE, 'cookie.txt');
-        curl_setopt ($ch, CURLOPT_COOKIE, session_name() . '=' . session_id());
-        $result = curl_exec($ch);
+        curl_setopt($ch, CURLOPT_HTTPHEADER,
+            [
+              //'Accept-Encoding:gzip, deflate, sdch',
+              //'Accept-Language:*',
+               'Cache-Control:no-cache',
+              'Connection:keep-alive',
+              'Cookie:_dc_gtm_UA-28208502-12=1; _ga=GA1.2.1191596796.1477908016',
+               'Host:d.soccerstand.com', 'Pragma:no-cache',
+               'Referer:http://d.soccerstand.com/ru/x/feed/proxy-local',
+               'User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+              'X-Fsign:SW9D1eZo',
+              'X-GeoIP:1',
+              'X-Requested-With:XMLHttpRequest', 'Accept-Charset: Windows-1251,utf-8;q=0.7,*;q=0.7']);
+
+        strip_tags(curl_exec($ch));
         curl_close($ch);
 
-        print_r($result);
-
-        $fp = fopen("soccertest.txt", "a"); // Открываем файл в режиме записи
-        $test = fwrite($fp, $result); // Запись в файл
-        if ($test) echo 'Данные в файл успешно занесены.';
-        else echo 'Ошибка при записи в файл.';
-        fclose($fp); //Закрытие файла
 
 
     }

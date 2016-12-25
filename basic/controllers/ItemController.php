@@ -204,7 +204,7 @@ class ItemController extends BackEndController
             return $this->render('index', ['items' => $dataProvider]);
         } else {
             throw new \yii\web\HttpException(404, 'Cant delete record.');
-        };
+        }
 
     }
 
