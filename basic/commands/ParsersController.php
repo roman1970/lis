@@ -92,17 +92,73 @@ class ParsersController extends Controller
 
 
     public function actionSoccerstand($match_code=''){
+        
+        $arr_date = [];
+        $tournament = [];
 
         $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
 
-        preg_replace("/[0-9]{10}/", "", $day_data);
-        
+        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцxшуыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
 
-        $arr = explode(':',preg_replace("/[^-0-9а-ярьтуёА-ЯЁ.,!?:()№ ]+/", "", $day_data)); var_dump($arr); exit;
+       //print_r($countries); exit;
+
+        $i=0;
+
+        $tournament = [];
+
+        foreach ($countries as $country) {
+            if($i==19) {
+                $matchs = explode('AB÷3¬CR÷3¬AC÷3¬', $country);
+                //var_dump($matchs);
+                //exit;
+
+                $n=0;
+                foreach ($matchs as $match) {
+
+                        $recs = explode('¬', $match);
+                        //print_r($recs); exit;
+
+                        foreach ($recs as $rec){
+                            $arr_loc[$i][$n] = explode('÷', $rec);
+                            if(is_array($arr_loc[$i])) {
+                                //print_r($arr_loc[$i]);
+                                if(isset($arr_loc[$i][$n][1]))
+                                    $tournament[$i][$n][$arr_loc[$i][$n][0]] = $arr_loc[$i][$n][1];
+                            }
+                            else{
+                                $n++; continue;
+                            }
+
+                        }
+                    $n++;
+                   // echo $n.PHP_EOL;
+                }
+            }
+
+
+
+            //$tournament[$i]['matches'][] = explode('3¬÷3¬÷3', $country);
+            /*
+             * AB÷3¬CR÷3¬AC÷3¬
+
+            $matches = explode('3¬÷3¬÷3', $country);
+
+            foreach ($matches as $match){
+               // preg_match_all("/([0-9]{10})¬/", $country, $tournament[$i]['match'][]);
+                $tournament[$i]['match'][] = explode('¬÷', $match);
+            }
+            */
+            $i++;
+
+        }
+      // exit;
+
+
+       //var_dump($tournament); exit;
 
         $output = [];
 
-        preg_match_all('/AA÷([0-9A-Za-z]{8})¬AD/', $day_data, $output);
+        //preg_match_all('/AA÷([0-9A-Za-z]{8})¬AD/', $day_data, $output);
 
        //var_dump(substr($output[0][1], 4, 8)); exit;
 
@@ -110,14 +166,14 @@ class ParsersController extends Controller
 
         $handle = fopen(Url::to("@app/commands/soccertest.html"), "w");
 
-        foreach ($output[0] as $match_code) {
-            if($i==3) return;
-            $i++;
+        //foreach ($output[0] as $match_code) {
+         //   if($i==3) return;
+        //    $i++;
 
-            $urls = [ "http://www.soccerstand.com/ru/match/".substr($match_code, 4, 8)."/#match-summary",
-                     "http://d.soccerstand.com/ru/x/feed/d_su_".substr($match_code, 4, 8)."_ru_1",
-                     "http://d.soccerstand.com/ru/x/feed/d_st_".substr($match_code, 4, 8)."_ru_1",
-                     "http://d.soccerstand.com/ru/x/feed/d_li_".substr($match_code, 4, 8)."_ru_1"
+            $urls = [
+                     "http://d.soccerstand.com/ru/x/feed/d_su_".$tournament[19][3]['AA']."_ru_1",
+                     "http://d.soccerstand.com/ru/x/feed/d_st_".$tournament[19][3]['AA']."_ru_1",
+                     "http://d.soccerstand.com/ru/x/feed/d_li_".$tournament[19][3]['AA']."_ru_1"
             ];
 
            foreach ($urls as $url) {
@@ -128,16 +184,11 @@ class ParsersController extends Controller
 
 
 
-        }
+        //}
         fclose($handle);
 
 
 
-    }
-
-    function time_in($str)
-    {
-        return date('Y-d-m',$str);
     }
 
 
