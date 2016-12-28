@@ -2363,6 +2363,18 @@ class DefaultController extends FrontEndController
         $doll17 = [];
         $euro16 = [];
         $euro17 = [];
+        
+        $el11216 = [];
+        $el11116 = [];
+        $el11217 = [];
+        $el11117 = [];
+
+        $cold_wat16 = [];
+        $hot_wat16 = [];
+        $cold_wat17 = [];
+        $hot_wat17 = [];
+
+        //return var_dump(DiaryRecDayParams::find()->where('day_param_id = 4 and act_id <'.$this->getMaxMonthActId(11, 2016))->orderBy('id DESC')->one());
 
      
             for($i=1; $i<=12; $i++) {
@@ -2400,11 +2412,43 @@ class DefaultController extends FrontEndController
                 $euro17['name'] = 'Евро-2017';
                 $euro17['data'][] = (float)Snapshot::find()->select(['AVG(euro)'])->where('date like "%2017-'.$month.'-%"')->scalar();
 
+                $el112['name'] = '112-2017';
+                $el112['data'][] = (float)Snapshot::find()->select(['AVG(el112)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $el111['name'] = '111-2017';
+                $el111['data'][] = (float)Snapshot::find()->select(['AVG(el111)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $el11217['name'] = '112-2017';
+                $el11217['data'][] = (float)Snapshot::find()->select(['AVG(el112)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $el11117['name'] = '111-2017';
+                $el11117['data'][] = (float)Snapshot::find()->select(['AVG(el111)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $el11216['name'] = '112-2016';
+                $el11216['data'][] = (float)Snapshot::find()->select(['AVG(el112)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $el11116['name'] = '111-2016';
+                $el11116['data'][] = (float)Snapshot::find()->select(['AVG(el111)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $hot_wat16['name'] = 'hot-2016';
+                $hot_wat16['data'][] = (float)Snapshot::find()->select(['AVG(water_hot)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $hot_wat17['name'] = 'hot-2017';
+                $hot_wat17['data'][] = (float)Snapshot::find()->select(['AVG(water_hot)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $cold_wat16['name'] = 'cold-2016';
+                $cold_wat16['data'][] = (float)Snapshot::find()->select(['AVG(water_cold)'])->where('date like "%2016-'.$month.'-%"')->scalar();
+
+                $cold_wat17['name'] = 'cold-2017';
+                $cold_wat17['data'][] = (float)Snapshot::find()->select(['AVG(water_cold)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
             }
+
+        //return $this->getMaxMonthActId(11, 2016);
         
 
         //$weights = implode(',', $arr);
-       // return var_dump(json_encode($arr));
+        //return var_dump($el11116);
         return $this->renderPartial('graf',['weigth16' => json_encode($weigth16),
                                             'weigth17' => json_encode($weigth17),
                                             'spent16' => json_encode($spent16),
@@ -2414,10 +2458,22 @@ class DefaultController extends FrontEndController
                                             'euro16' => json_encode($euro16),
                                             'euro17' => json_encode($euro17),
                                             'oz16' => json_encode($oz16),
-                                            'oz17' => json_encode($oz17)
+                                            'oz17' => json_encode($oz17),
+                                            'el11117' => json_encode($el11117),
+                                            'el11217' => json_encode($el11217),
+                                            'el11116' => json_encode($el11116),
+                                            'el11216' => json_encode($el11216),
+                                            'cold_wat16' => json_encode($cold_wat16),
+                                            'cold_wat17' => json_encode($cold_wat17),
+                                            'hot_wat16' => json_encode($hot_wat16),
+                                            'hot_wat17' => json_encode($hot_wat17),
                                            ]);
     }
 
+    /**
+     * Таблицы турнирные клубов и сборных футбола
+     * @return string
+     */
     function actionFootball(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -2435,6 +2491,21 @@ class DefaultController extends FrontEndController
 
             return $this->renderPartial('football', ['clubs' => $clubs, 'countries' => $countries]);
         }
+    }
+
+    /**
+     * Максимальный айдишник действия для данного месяца-года
+     * @param $month
+     * @param $year
+     * @return int
+     */
+    function getMaxMonthActId($month, $year){
+
+        $time_max_month = mktime(0, 0, 0, $month, (int)date('t', mktime(0, 0, 0, $month)), $year) + 9*60*60;
+        return   (int)DiaryActs::find()
+            ->select('MAX(id)')
+            ->where('time <'.$time_max_month)
+            ->scalar();
     }
 
 }

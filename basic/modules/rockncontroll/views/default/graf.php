@@ -303,7 +303,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'руб'
+                    text: 'руб/сут'
                 }
             },
             tooltip: {
@@ -340,7 +340,7 @@
             yAxis: {
                 min: 50,
                 title: {
-                    text: 'руб'
+                    text: 'руб/сут'
                 }
             },
             tooltip: {
@@ -377,7 +377,7 @@
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'балл'
+                    text: 'балл/сут'
                 }
             },
             tooltip: {
@@ -398,9 +398,85 @@
         });
     });
 
+    $(function () {
+        Highcharts.chart('graf_el', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Электросчётчики'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            },
+
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'кВт/сут'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} кВт</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.1,
+                    borderWidth: 0
+                }
+            },
+            series: [<?= $el11116 ?> , <?= $el11216 ?>, <?= $el11117 ?> , <?= $el11217 ?>]
+        });
+    });
+
+    $(function () {
+        Highcharts.chart('graf_water', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Водосчётчики'
+            },
+            xAxis: {
+                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                crosshair: true
+            },
+
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'кБМ -10*3/сут'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y:.1f} кБМ -10*3/сут</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.1,
+                    borderWidth: 0
+                }
+            },
+            series: [<?= $cold_wat16 ?> , <?= $cold_wat17 ?>, <?= $hot_wat16 ?> , <?= $cold_wat17 ?>]
+        });
+    });
+
 </script>
 
 <div id="graf_weight" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
 <div id="graf_spent" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
 <div id="graf_doll_euro" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
 <div id="graf_oz" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_el" style="min-width: 310px; height: 250px; margin: 0 auto"></div>
+<div id="graf_water" style="min-width: 310px; height: 250px; margin: 0 auto"></div>

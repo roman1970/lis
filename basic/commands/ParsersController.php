@@ -1310,6 +1310,9 @@ class ParsersController extends Controller
 
 
         $start_time = strtotime('now 00:00:00', time()+7*60*60);
+
+        //$start_time = mktime(7, 0, 0, 12, 27, 2016);
+        //echo  date('Y-d-m H:h', $start_time); exit;
         
         $snapshot = new Snapshot();
         $today_mark = DiaryActs::find()
@@ -1356,6 +1359,40 @@ class ParsersController extends Controller
 
         $snapshot->sun_rise = date_sunrise(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
         $snapshot->sun_set = date_sunset(time(), SUNFUNCS_RET_STRING, 55, 82, 90, 7);
+
+        try {
+            $el112 = DiaryRecDayParams::find()
+                ->where('day_param_id = 4')
+                ->orderBy('id DESC')
+                ->all();
+            $cold_water = DiaryRecDayParams::find()
+                ->where('day_param_id = 2')
+                ->orderBy('id DESC')
+                ->all();
+            $hot_water = DiaryRecDayParams::find()
+                ->where('day_param_id = 3')
+                ->orderBy('id DESC')
+                ->all();
+            $el111 = DiaryRecDayParams::find()
+                ->where('day_param_id = 25')
+                ->orderBy('id DESC')
+                ->all();
+
+            if ($el112) $snapshot->el112 = (int)$el112[0]->value - (int)$el112[1]->value;
+            if ($cold_water) $snapshot->water_cold = ($cold_water[0]->value - $cold_water[1]->value)*1000;
+            if ($hot_water) $snapshot->water_hot = ($hot_water[0]->value - $hot_water[1]->value)*1000;
+            if ($el111) $snapshot->el111 = (int)$el111[0]->value - (int)$el111[1]->value;
+        } catch (\ErrorException $e) {
+            $snapshot->el112 = 0;
+            $snapshot->water_cold = 0;
+            $snapshot->water_hot = 0;
+            $snapshot->el111 = 0;
+        }
+       // echo $snapshot->water_hot;
+
+
+       // exit;
+        
 
         $today_acts_bought = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_time and user_id = 8 and model_id = 3")->all(), 'id', 'id'));
 
@@ -1764,6 +1801,80 @@ class ParsersController extends Controller
             
             
         }
+    }
+    
+    function actionFillSnapshotByCounters(){
+        $recs = Snapshot::find()->where('id > 60')->all();
+        $prev_el112 = 0;
+        $prev_hot_wat = 0;
+        $prev_cold_wat = 0;
+        $prev_el111 = 0;
+
+
+        foreach ($recs as $rec){
+
+            $data = explode('-',$rec->date);
+            $year = (int)$data[0]; $month = (int)$data[1]; $day = (int)$data[2];
+
+            $time_max = mktime(23, 59, 59, $month, $day, $year);
+            $time_min = mktime(23, 59, 59, $month, $day, $year) - 24*60*60;
+
+            $obj_el112 = DiaryRecDayParams::find()
+                ->where('day_param_id = 4 and act_id <'.$this->getActIdByTimestamp($time_max).' and act_id >'.$this->getActIdByTimestamp($time_min))
+                ->orderBy('id DESC')
+                ->one();
+            $obj_hot_wat = DiaryRecDayParams::find()
+                ->where('day_param_id = 3 and act_id <'.$this->getActIdByTimestamp($time_max).' and act_id >'.$this->getActIdByTimestamp($time_min))
+                ->orderBy('id DESC')
+                ->one();
+            $obj_cold_wat = DiaryRecDayParams::find()
+                ->where('day_param_id = 2 and act_id <'.$this->getActIdByTimestamp($time_max).' and act_id >'.$this->getActIdByTimestamp($time_min))
+                ->orderBy('id DESC')
+                ->one();
+            $obj_el111 = DiaryRecDayParams::find()
+                ->where('day_param_id = 25 and act_id <'.$this->getActIdByTimestamp($time_max).' and act_id >'.$this->getActIdByTimestamp($time_min))
+                ->orderBy('id DESC')
+                ->one();
+
+
+
+            if($obj_el112)$rec->el112 = round((float)$obj_el112->value - $prev_el112);
+            else $rec->el112 = 0;
+
+            if($obj_hot_wat)$rec->water_hot = ((float)$obj_hot_wat->value - $prev_hot_wat)*1000;
+            else $rec->water_hot = 0;
+
+            if($obj_cold_wat)$rec->water_cold = ((float)$obj_cold_wat->value - $prev_cold_wat)*1000;
+            else $rec->water_cold = 0;
+
+            //var_dump(round((float)$obj_cold_wat->value - $prev_cold_wat, 3)); exit;
+
+            if($obj_el111)$rec->el111 = round((float)$obj_el111->value - $prev_el111);
+            else $rec->el111 = 0;
+
+
+            $rec->update(false);
+
+            if($obj_el112)$prev_el112 = (float)$obj_el112->value;
+            if($obj_hot_wat)$prev_hot_wat = (float)$obj_hot_wat->value;
+            if($obj_cold_wat)$prev_cold_wat = (float)$obj_cold_wat->value;
+            if($obj_el111)$prev_el111 = (float)$obj_el111->value;
+
+        }
+
+    }
+
+    /**
+     * Максимальный айдишник действия по метке
+     * @param $time
+     * @return int
+     */
+    function getActIdByTimestamp($time){
+
+        return   (int)DiaryActs::find()
+            ->select('MAX(id)')
+            ->where('time <'.$time)
+            ->scalar();
     }
     
 

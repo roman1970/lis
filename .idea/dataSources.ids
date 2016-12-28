@@ -7680,166 +7680,182 @@ type</columns>
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <key id="2008" parent="124" name="PRIMARY">
+      <column id="2008" parent="124" name="el112">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="2009" parent="124" name="el111">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="2010" parent="124" name="water_cold">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <column id="2011" parent="124" name="water_hot">
+        <data-type>int(10)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
+      </column>
+      <key id="2012" parent="124" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <column id="2009" parent="125" name="id">
+      <column id="2013" parent="125" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="2010" parent="125" name="img">
+      <column id="2014" parent="125" name="img">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2011" parent="125" name="orig_tag">
+      <column id="2015" parent="125" name="orig_tag">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2012" parent="125" name="cont_art_id">
+      <column id="2016" parent="125" name="cont_art_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <index id="2013" parent="125" name="ux_image_storage_cont_art_id">
+      <index id="2017" parent="125" name="ux_image_storage_cont_art_id">
         <columns>cont_art_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="2014" parent="125" name="PRIMARY">
+      <key id="2018" parent="125" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="2015" parent="125" name="image_storage_ibfk_1">
+      <foreign-key id="2019" parent="125" name="image_storage_ibfk_1">
         <columns>cont_art_id</columns>
         <ref-key>~.qparticles_content.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="2016" parent="126" name="id">
+      <column id="2020" parent="126" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="2017" parent="126" name="presize">
+      <column id="2021" parent="126" name="presize">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="2018" parent="126" name="eng_ru">
+      <column id="2022" parent="126" name="eng_ru">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2019" parent="126" name="speed">
+      <column id="2023" parent="126" name="speed">
         <data-type>decimal(10,2)</data-type>
         <default-expression>&apos;0.00&apos;</default-expression>
       </column>
-      <column id="2020" parent="126" name="cat_id">
+      <column id="2024" parent="126" name="cat_id">
         <mandatory>1</mandatory>
         <data-type>int(8)</data-type>
       </column>
-      <column id="2021" parent="126" name="act_id">
+      <column id="2025" parent="126" name="act_id">
         <data-type>int(2)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <index id="2022" parent="126" name="ux_test_klavaro_act_id">
+      <index id="2026" parent="126" name="ux_test_klavaro_act_id">
         <columns>act_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <index id="2023" parent="126" name="ux_test_klavaro_cat_id">
+      <index id="2027" parent="126" name="ux_test_klavaro_cat_id">
         <columns>cat_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="2024" parent="126" name="PRIMARY">
+      <key id="2028" parent="126" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="2025" parent="126" name="test_klavaro_ibfk_1">
+      <foreign-key id="2029" parent="126" name="test_klavaro_ibfk_1">
         <columns>cat_id</columns>
         <ref-key>~.qpcategory.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <foreign-key id="2026" parent="126" name="test_klavaro_ibfk_2">
+      <foreign-key id="2030" parent="126" name="test_klavaro_ibfk_2">
         <columns>act_id</columns>
         <ref-key>~.controll_acts.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="2027" parent="127" name="id">
+      <column id="2031" parent="127" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="2028" parent="127" name="source_id">
+      <column id="2032" parent="127" name="source_id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
       </column>
-      <column id="2029" parent="127" name="title">
+      <column id="2033" parent="127" name="title">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2030" parent="127" name="text">
+      <column id="2034" parent="127" name="text">
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <column id="2031" parent="127" name="link">
+      <column id="2035" parent="127" name="link">
         <data-type>varchar(255)</data-type>
       </column>
-      <index id="2032" parent="127" name="ux_song_texts_source_id">
+      <index id="2036" parent="127" name="ux_song_texts_source_id">
         <columns>source_id</columns>
         <desc-columns></desc-columns>
       </index>
-      <key id="2033" parent="127" name="PRIMARY">
+      <key id="2037" parent="127" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
-      <foreign-key id="2034" parent="127" name="song_texts_ibfk_1">
+      <foreign-key id="2038" parent="127" name="song_texts_ibfk_1">
         <columns>source_id</columns>
         <ref-key>~.sources.PRIMARY</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
-      <column id="2035" parent="128" name="id">
+      <column id="2039" parent="128" name="id">
         <mandatory>1</mandatory>
         <data-type>int(11)</data-type>
         <sequence-identity>1</sequence-identity>
       </column>
-      <column id="2036" parent="128" name="title">
+      <column id="2040" parent="128" name="title">
         <mandatory>1</mandatory>
         <data-type>varchar(255)</data-type>
       </column>
-      <column id="2037" parent="128" name="year">
+      <column id="2041" parent="128" name="year">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
       </column>
-      <column id="2038" parent="128" name="date">
+      <column id="2042" parent="128" name="date">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
       </column>
-      <column id="2039" parent="128" name="month">
+      <column id="2043" parent="128" name="month">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
       </column>
-      <column id="2040" parent="128" name="week">
+      <column id="2044" parent="128" name="week">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
       </column>
-      <column id="2041" parent="128" name="day_week">
+      <column id="2045" parent="128" name="day_week">
         <mandatory>1</mandatory>
         <data-type>int(6)</data-type>
       </column>
-      <column id="2042" parent="128" name="prim">
+      <column id="2046" parent="128" name="prim">
         <mandatory>1</mandatory>
         <data-type>text</data-type>
       </column>
-      <column id="2043" parent="128" name="max_temp">
+      <column id="2047" parent="128" name="max_temp">
         <data-type>int(10)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="2044" parent="128" name="min_temp">
+      <column id="2048" parent="128" name="min_temp">
         <data-type>int(10)</data-type>
         <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <key id="2045" parent="128" name="PRIMARY">
+      <key id="2049" parent="128" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
