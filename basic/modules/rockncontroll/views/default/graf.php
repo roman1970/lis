@@ -293,7 +293,7 @@
                 type: 'column'
             },
             title: {
-                text: 'Траты'
+                text: 'Траты/Доходы'
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
@@ -320,7 +320,7 @@
                     borderWidth: 0
                 }
             },
-            series: [<?= $spent16 ?> , <?= $spent17 ?>]
+            series: [<?= $spent16 ?> , <?= $spent17 ?>, <?= $incomes16 ?> , <?= $incomes17 ?>]
         });
     });
 

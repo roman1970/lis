@@ -2355,6 +2355,8 @@ class DefaultController extends FrontEndController
 
         $spent16 = [];
         $spent17 = [];
+        $incomes16 = [];
+        $incomes17 = [];
 
         $oz16 = [];
         $oz17 = [];
@@ -2374,10 +2376,27 @@ class DefaultController extends FrontEndController
         $cold_wat17 = [];
         $hot_wat17 = [];
 
+
+        $income = 0;
+
         //return var_dump(DiaryRecDayParams::find()->where('day_param_id = 4 and act_id <'.$this->getMaxMonthActId(11, 2016))->orderBy('id DESC')->one());
 
+        //return var_dump(Incomes::find()->select(['SUM(money)'])->where('income_id IN (3, 4, 6, 16) and act_id IN ('.$this->getMonthActIds(1, 2016).')')->scalar()/(int)date('d', time()));
      
             for($i=1; $i<=12; $i++) {
+
+                if($this->getMonthActIds($i, 2016))
+                    $income16 = Incomes::find()
+                            ->select(['SUM(money)'])
+                            ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2016) . ')')
+                            ->scalar() / (int)date('d', time());
+                else $income16 = 0;
+                if($this->getMonthActIds($i, 2017))
+                    $income17 = Incomes::find()
+                            ->select(['SUM(money)'])
+                            ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2017) . ')')
+                            ->scalar() / (int)date('d', time());
+                else $income17 = 0;
 
                 if($i<10) $month = '0'.$i;
                 else $month = $i;
@@ -2388,11 +2407,18 @@ class DefaultController extends FrontEndController
                 $weigth17['name'] = '2017';
                 $weigth17['data'][] = (float)Snapshot::find()->select(['AVG(weight)'])->where('date like "%2017-'.$month.'-%"')->scalar();
 
-                $spent16['name'] = '2016';
+                $spent16['name'] = 'sp2016';
                 $spent16['data'][] = (float)Snapshot::find()->select(['AVG(spent)'])->where('date like "%2016-'.$month.'-%"')->scalar();
 
-                $spent17['name'] = '2017';
+                $spent17['name'] = 'sp2017';
                 $spent17['data'][] = (float)Snapshot::find()->select(['AVG(spent)'])->where('date like "%2017-'.$month.'-%"')->scalar();
+
+                $incomes16['name'] = 'inc2016';
+                $incomes16['data'][] = $income16;
+
+                $incomes17['name'] = 'inc2017';
+                $incomes17['data'][] = $income17;
+
 
                 $oz16['name'] = '2016';
                 $oz16['data'][] = (float)Snapshot::find()->select(['AVG(oz)'])->where('date like "%2016-'.$month.'-%"')->scalar();
@@ -2448,11 +2474,13 @@ class DefaultController extends FrontEndController
         
 
         //$weights = implode(',', $arr);
-        //return var_dump($el11116);
+        //return var_dump($incomes16);
         return $this->renderPartial('graf',['weigth16' => json_encode($weigth16),
                                             'weigth17' => json_encode($weigth17),
                                             'spent16' => json_encode($spent16),
                                             'spent17' => json_encode($spent17),
+                                            'incomes16' => json_encode($incomes16),
+                                            'incomes17' => json_encode($incomes17),
                                             'doll16' => json_encode($doll16),
                                             'doll17' => json_encode($doll17),
                                             'euro16' => json_encode($euro16),
@@ -2506,6 +2534,22 @@ class DefaultController extends FrontEndController
             ->select('MAX(id)')
             ->where('time <'.$time_max_month)
             ->scalar();
+    }
+
+    /**
+     * Получаеем айдишники действий по месяцу и году
+     * @param $month
+     * @param $year
+     * @return string
+     */
+    function getMonthActIds($month, $year){
+        $time_max_month = mktime(0, 0, 0, $month, (int)date('t', mktime(0, 0, 0, $month)), $year) + 9*60*60;
+        $time_min_month = mktime(0, 0, 0, $month, 1, $year) + 9*60*60;
+        $ids =  implode(',', ArrayHelper::map(DiaryActs::find()
+            ->where('time <'.$time_max_month.' and time >'.$time_min_month)
+            ->all(), 'id', 'id'));
+        if($ids) return $ids;
+        else return null;
     }
 
 }
