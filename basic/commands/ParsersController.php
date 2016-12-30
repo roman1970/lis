@@ -96,9 +96,9 @@ class ParsersController extends Controller
         $arr_date = [];
         $tournament = [];
 
-        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
+        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-2_7_ru_1");
 
-        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцxшуыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
+        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
 
        //print_r($countries); exit;
 
@@ -154,7 +154,7 @@ class ParsersController extends Controller
       // exit;
 
 
-       //var_dump($tournament); exit;
+       var_dump($tournament); exit;
 
         $output = [];
 
