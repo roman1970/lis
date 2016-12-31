@@ -32,11 +32,14 @@ use yii\helpers\Url;
 use Yii;
 use app\components\Helper;
 use app\components\TranslateHelper;
+use yii\sphinx\Query;
+use yii\sphinx\MatchExpression;
 
 
 class ParsersController extends Controller
 {
     public $arr = [];
+    public $songs;
     public $tournament = '';
     public static $str = '';
     public static $header = "<head>
@@ -1057,6 +1060,75 @@ class ParsersController extends Controller
         //var_dump($audio);
         
     }
+
+    /**
+     * Формирование плейлиста для радио с темой
+     * Например $ php yii parsers/make-theme-radio-playlist 'дети, child, children'
+     * Не забудем запустить ices
+     */
+    public function actionMakeThemeRadioPlaylist($words) {
+        $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+
+        $dibilizmy = Items::find()->where(["source_id" => 17])->all();
+        shuffle($dibilizmy);
+        $limerik = Items::find()->where(["source_id" => 27])->all();
+        shuffle($limerik);
+        
+       // $this->songs = [];
+
+        $arr_theme = explode(',', $words);
+
+        //var_dump($arr_theme);
+
+        if(empty($arr_theme))
+            $this->songs = [];
+
+        else {
+            foreach ($arr_theme as $theme) {
+
+                $query = new Query();
+
+                $songs_ids = $query->from('songtexts')
+                    ->match($theme)
+                    ->all();
+
+
+                foreach ($songs_ids as $arr_item_rec) {
+                    foreach ($arr_item_rec as $id) {
+                        $this->songs[] = SongText::findOne((int)$id);
+                    }
+                }
+
+                $query_items_ids = $query->from('items')
+                    ->match($theme)
+                    ->all();
+
+                foreach ($query_items_ids as $arr_item_rec){
+                    foreach ($arr_item_rec as $id){
+                        $this->songs[] = Items::findOne((int)$id);
+                    }
+                }
+            }
+        }
+
+
+        shuffle($this->songs);
+
+        foreach ($this->songs as $item){
+            if($item instanceof Items && $item->audio_link)
+                fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/".$item->audio_link.PHP_EOL);
+            if($item instanceof SongText)
+                fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link.PHP_EOL);
+
+        }
+
+        fclose($f);
+
+        //var_dump($audio);
+
+    }
+    
+    
 
     /**
      * Формирование рандомного (но с учетом статуса записи) плейлиста для радио

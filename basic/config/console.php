@@ -26,6 +26,14 @@ return [
                 ],
             ],
         ],
+        'sphinx' => [
+            'class' => 'yii\sphinx\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;port=9306;charset=utf8',
+            // Обязательно укажите порт, который Вы задали в конфигурационном файле sphinx, секция searchd параметр
+            // listen
+            'username' => '',
+            'password' => '',
+        ],
         /*
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',

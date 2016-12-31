@@ -2012,7 +2012,7 @@ class DefaultController extends FrontEndController
 
              if (Yii::$app->getRequest()->getQueryParam('theme_song')) {
 
-                $theme = Yii::$app->getRequest()->getQueryParam('theme_song');
+                //$theme = Yii::$app->getRequest()->getQueryParam('theme_song');
 
                  $arr_theme = explode(',', Yii::$app->getRequest()->getQueryParam('theme_song'));
 
