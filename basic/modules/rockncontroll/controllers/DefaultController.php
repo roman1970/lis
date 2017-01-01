@@ -245,13 +245,16 @@ class DefaultController extends FrontEndController
 
         $current_hour = date('G', time())+7;
         $current_day_of_year = date('z', time())+7;
-        $day_number_first_sept = date('z', mktime(0, 0, 0, 9, 1, 2016))+7;
-        $first_sept_time = mktime(0, 0, 0, 9, 1, 2016) + 9*60*60;
+        //$current_day_of_year = 365;
+        $day_number_first_sept = date('z', mktime(0, 0, 0, 1, 1, 2017))+7;
+        //$day_number_first_sept = 122;
+        $first_sept_time = mktime(0, 0, 0, 1, 1, 2017) + 7*60*60;
        
-        //return date('Y-m-d', $first_sept_time);
+        //return date('Y-m-d H', $first_sept_time);
         $first_sept_act = DiaryActs::find()->where("time > $first_sept_time")->one();
 
 
+        //return $first_sept_act->id;
         $task_str = '';
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -279,15 +282,17 @@ class DefaultController extends FrontEndController
             $avg_incomes_day = round($incomes/$days_from_first_sept_to_today, 2);
             
             
-            
+            /*
             $sum_kt = Maner::find()
                 ->select('SUM(kt)')
                 ->where(['year' => 2016])
                 ->scalar();
+            */
+            $sum_kt = 0;
             $sum_tochka = DiaryDoneDeal::find()
                 ->select('COUNT(id)')
                 ->where(['deal_id' => 30])
-                ->andWhere('id > 200')
+                ->andWhere("act_id > $first_sept_act->id")
                 ->scalar();
 
             /*средний вес из старой базы
@@ -304,20 +309,25 @@ class DefaultController extends FrontEndController
             $weight = DiaryRecDayParams::find()
                 ->select('AVG(value)')
                 ->where(['day_param_id' => 1])
+                ->andWhere("act_id >= 13129")
                 ->scalar();
 
             $sum_mark = DiaryActs::find()
                 ->select('SUM(mark)')
-                ->where("user_id = 8 and time > ".mktime(0,0,0,9,1,2016))
+                ->where("user_id = 8 and time > ".mktime(0,0,0,1,1,2017))
                 ->scalar();
             //return $sum_mark;
 
             //$first_day = DiaryActs::findOne(1);
             
-            $avg_oz = round($sum_mark/$this->daysFromTwoTimes(mktime(0,0,0,9,1,2016), strtotime('today')),2);
+            $avg_oz = round($sum_mark/$this->daysFromTwoTimes(mktime(0,0,0,1,1,2017), strtotime('today')),2);
             //return date('D',$first_day->time);
-            
-            $kt = round($current_day_of_year/($sum_kt + $sum_tochka), 1);
+
+            try {
+                $kt = round($current_day_of_year / ($sum_kt + $sum_tochka), 1);
+            } catch (\ErrorException $e) {
+                $kt = 365;
+            }
             $we = round($weight, 2);
 
 
@@ -2389,13 +2399,15 @@ class DefaultController extends FrontEndController
                     $income16 = Incomes::find()
                             ->select(['SUM(money)'])
                             ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2016) . ')')
-                            ->scalar() / (int)date('d', time());
+                            ->scalar() / (int)date('t', mktime(0, 0, 0, $i, (int)date('d', time()), 2016));
                 else $income16 = 0;
+
+                //if($i=12) return (int)date('t', mktime(0, 0, 0, $i, (int)date('d', time()), 2016));
                 if($this->getMonthActIds($i, 2017))
                     $income17 = Incomes::find()
                             ->select(['SUM(money)'])
                             ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2017) . ')')
-                            ->scalar() / (int)date('d', time());
+                            ->scalar() / (int)date('t', mktime(0, 0, 0, $i, (int)date('d', time()), 2017));
                 else $income17 = 0;
 
                 if($i<10) $month = '0'.$i;

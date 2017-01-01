@@ -80,9 +80,9 @@
                 ?>
                 <hr>
                 <h4><?=$i?>) <?=date('Y-m-d', $rec->act->time)?></h4>
-                <p><?=nl2br($rec->text)?></p>
+                <p><?=nl2br($rec->text)?><br>
                 <?php if($rec->img) : ?>
-                <p><img src="<?=$rec->img?>"></p>
+                <img src="<?=$rec->img?>"></p>
                 <?php endif; ?>
                 <?php
             endforeach;

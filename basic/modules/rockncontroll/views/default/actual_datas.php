@@ -10,23 +10,13 @@
         <td>I</td>
     </tr>
     <tr>
-        <td>2016</td>
-        <td><?= $kt ?></td>
-        <td><?= $we ?></td>
-        <td><?= round($avg_oz) ?></td>
+        <td>2017(16)</td>
+        <td><?= $kt ?>(11.3)</td>
+        <td><?= $we ?>(80.6)</td>
+        <td><?= round($avg_oz) ?>(42)</td>
         <td><?= round($avg_spent_day) ?></td>
         <td><?= round($avg_incomes_day) ?></td>
     </tr>
-    <tr>
-        <td>2017</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-        <td>-</td>
-    </tr>
-
-
     </tbody>
 </table>
 <div id="rand_item"></div>
