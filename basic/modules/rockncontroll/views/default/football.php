@@ -20,18 +20,35 @@
         <td>о</td>
     </tr>
     <?php $i=0; foreach ($clubs as $team) :  $i++; ?>
-            <tr>
-                <td><?= $i ?></td>
-                <td> <?= $team->name ?></td>
-                <td><?= $team->cash_cout ?></td>
-                <td>+<?= $team->cash_vic ?> </td>
-                <td>=<?= $team->cash_nob ?></td>
-                <td>-<?= $team->cash_def ?></td>
-                <td><?= $team->cash_g_get ?> :
-                    <?= $team->cash_g_let ?></td>
-                <td><?= $team->cash_balls ?></td>
-            </tr>
+        <?php if($i<3) : ?>
+            <style>
+                .table > tbody > tr > td{
+                    color: rgb(255, 112, 35);
+                }
+            </style>
 
+
+        <?php elseif($i>15) : ?>
+            <style>
+                .table > tbody > tr > td{
+                    color: rgb(105, 102, 105);
+                }
+            </style>
+        <?php endif; ?>
+
+        <tr>
+            <td><?= $i ?></td>
+            <td> <?= $team->name ?></td>
+            <td><?= $team->cash_cout ?></td>
+            <td>+<?= $team->cash_vic ?> </td>
+            <td>=<?= $team->cash_nob ?></td>
+            <td>-<?= $team->cash_def ?></td>
+            <td><?= $team->cash_g_get ?> :
+                <?= $team->cash_g_let ?></td>
+            <td><?= $team->cash_balls ?></td>
+        </tr>
+
+        
 
     <?php endforeach; ?>
     </tbody>
