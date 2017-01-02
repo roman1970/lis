@@ -2533,6 +2533,100 @@ class DefaultController extends FrontEndController
         }
     }
 
+
+    function actionRadio(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+            if (!$user) return 'Доступ запрещн!';
+
+
+
+            if (Yii::$app->getRequest()->getQueryParam('request')) {
+
+                $words = Yii::$app->getRequest()->getQueryParam('request');
+
+                //return var_dump($words);
+
+                try {
+                    $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+                } catch (\ErrorException $e) {
+                    return $e->getMessage();
+                }
+
+                $dibilizmy = Items::find()->where(["source_id" => 17])->all();
+                shuffle($dibilizmy);
+                $limerik = Items::find()->where(["source_id" => 27])->all();
+                shuffle($limerik);
+
+                // $this->songs = [];
+
+                $arr_theme = explode(',', $words);
+
+                //return var_dump($arr_theme);
+
+                if (empty($arr_theme))
+                    $this->songs = [];
+
+                else {
+                    foreach ($arr_theme as $theme) {
+
+                        $query = new Query();
+
+                        $songs_ids = $query->from('songtexts')
+                            ->match($theme)
+                            ->all();
+
+                        shuffle($songs_ids);
+
+
+                        foreach ($songs_ids as $arr_item_rec) {
+                            foreach ($arr_item_rec as $id) {
+                                $this->songs[SongText::findOne((int)$id)->source->author->name] = SongText::findOne((int)$id);
+                            }
+                        }
+
+                        $query_items_ids = $query->from('items')
+                            ->match($theme)
+                            ->all();
+
+                        shuffle($query_items_ids);
+
+                        foreach ($query_items_ids as $arr_item_rec) {
+                            foreach ($arr_item_rec as $id) {
+                                $this->songs[Items::findOne((int)$id)->source->author->name] = Items::findOne((int)$id);
+                            }
+                        }
+                    }
+                }
+
+
+                shuffle($this->songs);
+
+                $songs = [];
+
+                foreach ($this->songs as $item) {
+                    if ($item instanceof Items && $item->audio_link) {
+                        fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $item->audio_link . PHP_EOL);
+                        $songs[$item->source->author->name.' - '.$item->source->title] = $item->title;
+                    }
+
+                    if ($item instanceof SongText){
+                        fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik" . $item->link . PHP_EOL);
+                        $songs[$item->source->author->name.' - '.$item->source->title] = $item->title;
+                    }
+
+
+                }
+
+                fclose($f);
+                return $this->renderPartial('radio_pl', ['songs' => $songs]);
+            }
+
+            return $this->renderPartial('radio_form');
+
+        }
+    }
+
     /**
      * Максимальный айдишник действия для данного месяца-года
      * @param $month

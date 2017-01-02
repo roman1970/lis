@@ -10,10 +10,10 @@
     </tr>
     <tr>
         <td>2017(16)</td>
-        <td><?= $kt ?>(11.3)</td>
-        <td><?= $we ?>(80.6)</td>
-        <td><?= round($avg_oz) ?>(42)</td>
-        <td><?= round($avg_spent_day) ?>:<?= round($avg_incomes_day) ?></td>
+        <td><?= $kt ?> (11.3)</td>
+        <td><?= $we ?> (80.6)</td>
+        <td><?= round($avg_oz) ?> (42)</td>
+        <td><?= round($avg_spent_day) ?> : <?= round($avg_incomes_day) ?></td>
     </tr>
     </tbody>
 </table>

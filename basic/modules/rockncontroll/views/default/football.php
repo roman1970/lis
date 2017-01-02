@@ -3,6 +3,12 @@
         padding: 0;
         color: rgb(255, 215, 0);
     }
+    .table > tbody > tr.firsts td{
+        color: rgb(255, 140, 37);
+    }
+    .table > tbody > tr.lasts td{
+        color: rgb(129, 236, 255);
+    }
     h3{color: rgb(255, 215, 0); text-align: center}
 </style>
 <h3>Футбольные Клубы</h3>
@@ -20,35 +26,51 @@
         <td>о</td>
     </tr>
     <?php $i=0; foreach ($clubs as $team) :  $i++; ?>
-        <?php if($i<3) : ?>
-            <style>
-                .table > tbody > tr > td{
-                    color: rgb(255, 112, 35);
-                }
-            </style>
+        <?php if($i<=3) : ?>
+            
+            <tr class="firsts">
+                <td><?= $i ?></td>
+                <td> <?= $team->name ?></td>
+                <td><?= $team->cash_cout ?></td>
+                <td>+<?= $team->cash_vic ?> </td>
+                <td>=<?= $team->cash_nob ?></td>
+                <td>-<?= $team->cash_def ?></td>
+                <td><?= $team->cash_g_get ?> :
+                    <?= $team->cash_g_let ?></td>
+                <td><?= $team->cash_balls ?></td>
+            </tr>
 
 
         <?php elseif($i>15) : ?>
-            <style>
-                .table > tbody > tr > td{
-                    color: rgb(105, 102, 105);
-                }
-            </style>
+
+            <tr class="lasts">
+                <td><?= $i ?></td>
+                <td> <?= $team->name ?></td>
+                <td><?= $team->cash_cout ?></td>
+                <td>+<?= $team->cash_vic ?> </td>
+                <td>=<?= $team->cash_nob ?></td>
+                <td>-<?= $team->cash_def ?></td>
+                <td><?= $team->cash_g_get ?> :
+                    <?= $team->cash_g_let ?></td>
+                <td><?= $team->cash_balls ?></td>
+            </tr>
+
+        <?php else : ?>
+
+            <tr>
+                <td><?= $i ?></td>
+                <td> <?= $team->name ?></td>
+                <td><?= $team->cash_cout ?></td>
+                <td>+<?= $team->cash_vic ?> </td>
+                <td>=<?= $team->cash_nob ?></td>
+                <td>-<?= $team->cash_def ?></td>
+                <td><?= $team->cash_g_get ?> :
+                    <?= $team->cash_g_let ?></td>
+                <td><?= $team->cash_balls ?></td>
+            </tr>
+
+
         <?php endif; ?>
-
-        <tr>
-            <td><?= $i ?></td>
-            <td> <?= $team->name ?></td>
-            <td><?= $team->cash_cout ?></td>
-            <td>+<?= $team->cash_vic ?> </td>
-            <td>=<?= $team->cash_nob ?></td>
-            <td>-<?= $team->cash_def ?></td>
-            <td><?= $team->cash_g_get ?> :
-                <?= $team->cash_g_let ?></td>
-            <td><?= $team->cash_balls ?></td>
-        </tr>
-
-        
 
     <?php endforeach; ?>
     </tbody>
@@ -69,7 +91,9 @@
         <td>о</td>
     </tr>
     <?php $i=0; foreach ($countries as $team) :  $i++; ?>
-        <tr>
+        <?php if($i<=3) : ?>
+
+            <tr class="firsts">
             <td><?= $i ?></td>
             <td> <?= $team->name ?></td>
             <td><?= $team->cash_cout ?></td>
@@ -81,6 +105,34 @@
             <td><?= $team->cash_balls ?></td>
         </tr>
 
+            <?php elseif($i>15) : ?>
+
+            <tr class="lasts">
+                <td><?= $i ?></td>
+                <td> <?= $team->name ?></td>
+                <td><?= $team->cash_cout ?></td>
+                <td>+<?= $team->cash_vic ?> </td>
+                <td>=<?= $team->cash_nob ?></td>
+                <td>-<?= $team->cash_def ?></td>
+                <td><?= $team->cash_g_get ?> :
+                    <?= $team->cash_g_let ?></td>
+                <td><?= $team->cash_balls ?></td>
+            </tr>
+
+            <?php else : ?>
+
+            <tr>
+                <td><?= $i ?></td>
+                <td> <?= $team->name ?></td>
+                <td><?= $team->cash_cout ?></td>
+                <td>+<?= $team->cash_vic ?> </td>
+                <td>=<?= $team->cash_nob ?></td>
+                <td>-<?= $team->cash_def ?></td>
+                <td><?= $team->cash_g_get ?> :
+                    <?= $team->cash_g_let ?></td>
+                <td><?= $team->cash_balls ?></td>
+            </tr>
+        <?php endif; ?>
 
     <?php endforeach; ?>
     </tbody>
