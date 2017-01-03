@@ -326,7 +326,7 @@ class DefaultController extends FrontEndController
             try {
                 $kt = round($current_day_of_year / ($sum_kt + $sum_tochka), 1);
             } catch (\ErrorException $e) {
-                $kt = 365;
+                $kt = 0;
             }
             $we = round($weight, 2);
 
@@ -2534,6 +2534,10 @@ class DefaultController extends FrontEndController
     }
 
 
+    /**
+     * Формирование плейлиста для радио по ключевым словам
+     * @return string
+     */
     function actionRadio(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -2578,12 +2582,16 @@ class DefaultController extends FrontEndController
 
                         shuffle($songs_ids);
 
+                        //return var_dump($songs_ids);
+
 
                         foreach ($songs_ids as $arr_item_rec) {
                             foreach ($arr_item_rec as $id) {
                                 $this->songs[SongText::findOne((int)$id)->source->author->name] = SongText::findOne((int)$id);
                             }
                         }
+
+                        //return var_dump($this->songs);
 
                         $query_items_ids = $query->from('items')
                             ->match($theme)
