@@ -48,6 +48,11 @@ KrokodileAsset::register($this);
         background-color: rgb(42, 83, 109);
         border-color: rgb(62, 90, 149);
     }
+    .form-inline .form-group {
+     
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
 
     body{
         background: rgb(42, 83, 109);
@@ -76,7 +81,7 @@ KrokodileAsset::register($this);
     }
     @media(min-width:1199px) {
         .container {
-            width: 1100px;
+            width: 710px;
 
         }
     }

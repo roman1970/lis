@@ -1708,8 +1708,9 @@ class ParsersController extends Controller
                                                 $sub_songs = array_diff($sub_songs, array('.', '..'));
                                                 foreach ($sub_songs as $sub_song){
                                                     if(preg_match('/(.+).mp3$/',$sub_song, $match))
-                                                        $song_obj->title = $sub_song;
-                                                        $song_obj->link = $path .'/'. $song .'/'. $sub_song;
+                                                        echo mb_detect_encoding($sub_song);
+                                                        //$song_obj->title = $sub_song;
+                                                        //$song_obj->link = $path .'/'. $song .'/'. $sub_song;
 
                                                 }
                                             }
@@ -1719,7 +1720,7 @@ class ParsersController extends Controller
                                                     $song_obj->link = $path .'/'. $song;
                                                 }
 
-                                            $song_obj->save(false);
+                                            //$song_obj->save(false);
                                         }
                                     }
                                     else{
@@ -1794,8 +1795,8 @@ class ParsersController extends Controller
                     
                     $source->status = 1;
                     $source->cat_id = 34;
-                    if(!$source->save(false)) return 'source error';
-                    else echo $source->title.' made'.PHP_EOL;
+                   // if(!$source->save(false)) return 'source error';
+                    //else echo $source->title.' made'.PHP_EOL;
 
                     $path = $dir .'/'. $albom;
 
@@ -1821,16 +1822,17 @@ class ParsersController extends Controller
                                     if(preg_match('/(.+).mp3$/',$sub_song, $match))
                                         $song_obj->title = $sub_song;
                                     $song_obj->link = substr($path .'/'. $song .'/'. $sub_song, 48);
-
+                                    echo mb_detect_encoding($song_obj->link);
                                 }
                             }
                             else
                                 if(preg_match('/(.+).mp3$/',$song, $match)) {
-                                    $song_obj->title = $song;
+                                    //$song_obj->title = $song;
                                     $song_obj->link = substr($path .'/'. $song, 48);
+                                    echo mb_detect_encoding($song_obj->link);
                                 }
 
-                            $song_obj->save(false);
+                            //$song_obj->save(false);
                         }
                     }
                     else{
@@ -1947,6 +1949,17 @@ class ParsersController extends Controller
             ->select('MAX(id)')
             ->where('time <'.$time)
             ->scalar();
+    }
+    
+    
+    function actionDetectStrCod(){
+        $songs = SongText::find()->where('id > 8823')->all();
+        foreach ($songs as $song){
+            $song->title = utf8_decode($song->title);
+            echo mb_detect_encoding($song->title).'-'.$song->title.PHP_EOL;
+            $song->update(false);
+
+        }
     }
     
 

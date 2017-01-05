@@ -2549,7 +2549,18 @@ class DefaultController extends FrontEndController
 
                 $words = Yii::$app->getRequest()->getQueryParam('request');
 
-                //return var_dump($words);
+                //$words = urldecode($rec);
+
+                return var_dump(ord($words[0]).'-'.$words[0].PHP_EOL.$words[1].$words[2].$words[3].$words[4].$words[5].$words[6].$words[7]);
+
+               // return mb_check_encoding($words);
+
+                //$words = iconv("UTF-16", "UTF-8", $words);
+
+
+              // return var_dump(mb_detect_encoding($rec, "ASCII, UTF-16, UTF-8, UTF-32"));
+
+                //return var_dump(rawurldecode($words));
 
                 try {
                     $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');

@@ -22,6 +22,7 @@
     });
 
     function find(txt, user) {
+        //console.log(txt);
 
         $.ajax({
             type: "GET",
