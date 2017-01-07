@@ -92,6 +92,7 @@
         padding: 0;
         font-size: 20px;
         word-break: break-all;
+        color: white;
     }
 
     h3, p, #form-task{

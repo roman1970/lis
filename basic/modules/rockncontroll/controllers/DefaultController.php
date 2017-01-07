@@ -1926,6 +1926,10 @@ class DefaultController extends FrontEndController
         return $rand_thought->text;
     }
 
+    /**
+     * Обновление напоминалки
+     * @return string
+     */
     function  actionRecRemind(){
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -2551,7 +2555,7 @@ class DefaultController extends FrontEndController
 
                 //$words = urldecode($rec);
 
-                return var_dump(ord($words[0]).'-'.$words[0].PHP_EOL.$words[1].$words[2].$words[3].$words[4].$words[5].$words[6].$words[7]);
+               // return var_dump(ord($words[0]).'-'.$words[0].PHP_EOL.$words[1].$words[2].$words[3].$words[4].$words[5].$words[6].$words[7]);
 
                // return mb_check_encoding($words);
 

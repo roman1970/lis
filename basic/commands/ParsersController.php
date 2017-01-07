@@ -479,7 +479,7 @@ class ParsersController extends Controller
 
         //print_r($arr['articles']); var_dump($articles); exit;
 
-        $file = fopen("/home/romanych/www/vrs/diary/2016/$today.html", "w");
+        $file = fopen("/home/romanych/www/vrs/diary/2017/$today.html", "w");
         
         //хэдер
         fwrite($file, '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -1521,6 +1521,12 @@ class ParsersController extends Controller
     
             if($act->save(false)) echo 'ok';
 
+           if(!(int)date('z', time())%10){
+               $reminder = fopen("/home/romanych/public_html/plis/basic/data/reminder.txt", "a");
+               $res = fwrite($reminder, 'Backup! Clean! MTS!');
+               fclose($reminder);
+           }
+
         }
 
         //var_dump($snapshot);
@@ -1795,8 +1801,8 @@ class ParsersController extends Controller
                     
                     $source->status = 1;
                     $source->cat_id = 34;
-                   // if(!$source->save(false)) return 'source error';
-                    //else echo $source->title.' made'.PHP_EOL;
+                    if(!$source->save(false)) return 'source error';
+                    else echo $source->title.' made'.PHP_EOL;
 
                     $path = $dir .'/'. $albom;
 
@@ -1820,19 +1826,19 @@ class ParsersController extends Controller
                                 $sub_songs = array_diff($sub_songs, array('.', '..'));
                                 foreach ($sub_songs as $sub_song){
                                     if(preg_match('/(.+).mp3$/',$sub_song, $match))
-                                        $song_obj->title = $sub_song;
-                                    $song_obj->link = substr($path .'/'. $song .'/'. $sub_song, 48);
-                                    echo mb_detect_encoding($song_obj->link);
+                                        $song_obj->title = mb_convert_encoding($sub_song, "UTF-8");
+                                        $song_obj->link = substr($path .'/'. $song .'/'. $sub_song, 48);
+                                        //echo mb_detect_encoding($song_obj->link);
                                 }
                             }
                             else
                                 if(preg_match('/(.+).mp3$/',$song, $match)) {
-                                    //$song_obj->title = $song;
+                                    $song_obj->title = mb_convert_encoding($song, "UTF-8");;
                                     $song_obj->link = substr($path .'/'. $song, 48);
-                                    echo mb_detect_encoding($song_obj->link);
+                                    //echo mb_detect_encoding($song_obj->link);
                                 }
 
-                            //$song_obj->save(false);
+                            $song_obj->save(false);
                         }
                     }
                     else{

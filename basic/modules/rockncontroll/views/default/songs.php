@@ -87,10 +87,10 @@
 
 
     <?php  if(is_array($songs)) :
-        foreach ($songs as $song):  ?>
+        foreach ($songs as $song) : ?>
             <div class="center">
                 <?php if($song->source->cover) : ?>
-                <img src="<?=$song->source->cover?>">
+                    <img src="<?=$song->source->cover?>">
                 <?php endif; ?>
                 <p><?=$song->source->author->name?> *** <?=$song->source->title?> *** <?=$song->title?></p>
                 <audio controls="controls" >
