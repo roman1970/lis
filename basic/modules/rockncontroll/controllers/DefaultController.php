@@ -2681,4 +2681,38 @@ class DefaultController extends FrontEndController
         else return null;
     }
 
+
+    function actionRemember(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+            if (!$user) return 'Доступ запрещн!';
+
+            return file_get_contents("/home/romanych/public_html/plis/basic/data/remember.html");
+
+        }
+    }
+    
+    function actionLearned() {
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+            
+            $learned_items = Items::find()->where(['learned' => 2])->all();
+            foreach ($learned_items as $item){
+                $item->learned = 1;
+                $item->update(false);
+            }
+            $act = new DiaryActs();
+            $act->model_id = 14;
+            $act->user_id = Yii::$app->getRequest()->getQueryParam('user');
+            $act->mark = 3;
+            $act->mark_status = 0;
+            $act->save(false);
+
+        }
+    }
+
+
+
 }

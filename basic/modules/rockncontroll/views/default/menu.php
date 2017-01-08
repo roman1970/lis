@@ -91,6 +91,19 @@
         $("#menu").hide();
 
     }
+    
+    function learned(user=8) {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/learned/",
+            data: "user="+user,
+            success: function(){
+                $("#request_learned").clean();
+                $("#menu").show();
+            }
+
+        });
+    }
 
 
 
@@ -122,6 +135,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'graf')">Графики</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'football')">Футбол 2016-2018</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'radio')">Радио</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'remember')">Запомнить</button>
 </div>
 
 <div id="show_menu">

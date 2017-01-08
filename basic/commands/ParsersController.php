@@ -18,6 +18,7 @@ use app\models\Incomes;
 use app\models\Items;
 use app\models\PogodaXXI;
 use app\models\Snapshot;
+use app\models\Soccercode;
 use app\models\SongText;
 use app\models\Source;
 use app\models\Tag;
@@ -99,9 +100,9 @@ class ParsersController extends Controller
         $arr_date = [];
         $tournament = [];
 
-        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-2_7_ru_1");
+        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
 
-        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
+        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуэыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
 
        //print_r($countries); exit;
 
@@ -110,7 +111,7 @@ class ParsersController extends Controller
         $tournament = [];
 
         foreach ($countries as $country) {
-            if($i==19) {
+           // if($i==19) {
                 $matchs = explode('AB÷3¬CR÷3¬AC÷3¬', $country);
                 //var_dump($matchs);
                 //exit;
@@ -136,7 +137,7 @@ class ParsersController extends Controller
                     $n++;
                    // echo $n.PHP_EOL;
                 }
-            }
+         //   }
 
 
 
@@ -157,7 +158,123 @@ class ParsersController extends Controller
       // exit;
 
 
-       var_dump($tournament); exit;
+       //var_dump($tournament); exit;
+
+        foreach ($tournament as $t){
+            $zee = '';
+            $zb = 0;
+            $zy = '';
+            $zc = '';
+            $zd = '';
+            $ze = 0;
+            $zf = 0;
+            $zh = '';
+            $zj = 0;
+            $zl = '';
+            $zx = '';
+            $zcc = 0;
+            $aa = '';
+            $ad = 0;
+
+
+            if(isset($t[0]['ZEE']))
+                $zee = $t[0]['ZEE'];
+            if(isset($t[0]['ZB']))
+                $zb = $t[0]['ZB'];
+            if(isset($t[0]['ZY']))
+                $zy = $t[0]['ZY'];
+            if(isset($t[0]['ZC']))
+                $zc = $t[0]['ZC'];
+            if(isset($t[0]['ZD']))
+                $zd = $t[0]['ZD'];
+            if(isset($t[0]['ZE']))
+                $ze = $t[0]['ZE'];
+            if(isset($t[0]['ZF']))
+                $zf = $t[0]['ZF'];
+            if(isset($t[0]['ZH']))
+                $zh = $t[0]['ZH'];
+            if(isset($t[0]['ZJ']))
+                $zj = $t[0]['ZJ'];
+            if(isset($t[0]['ZL']))
+                $zl = $t[0]['ZL'];
+            if(isset($t[0]['ZX']))
+                $zx = $t[0]['ZX'];
+            if(isset($t[0]['ZCC']))
+                $zcc = $t[0]['ZCC'];
+            if(isset($t[0]['AA']))
+                $aa = $t[0]['AA'];
+            if(isset($t[0]['AD']))
+                $ad = $t[0]['AD'];
+
+            for($i=1; $i<count($t); $i++){
+
+                $match_soc = new Soccercode();
+
+                $match_soc->zee = $zee;
+                $match_soc->zb = $zb;
+                $match_soc->zy = $zy;
+                $match_soc->zс = $zc;
+                $match_soc->zd = $zd;
+                $match_soc->ze = $ze;
+                $match_soc->zf = $zf;
+
+                $match_soc->zh = $zh;
+                $match_soc->zj = $zj;
+                $match_soc->zl = $zl;
+                $match_soc->zx = $zx;
+                $match_soc->zcc = $zcc;
+                $match_soc->aa = $aa;
+                $match_soc->ad = $ad;
+
+                if(isset($t[$i]['CX']))
+                    $match_soc->cx = $t[$i]['CX'];
+                if(isset($t[$i]['AX']))
+                    $match_soc->ax = $t[$i]['AX'];
+                if(isset($t[$i]['AV']))
+                    $match_soc->av = $t[$i]['AV'];
+                if(isset($t[$i]['BX']))
+                    $match_soc->bx = $t[$i]['BX'];
+                if(isset($t[$i]['WN']))
+                    $match_soc->wn = $t[$i]['WN'];
+                if(isset($t[$i]['AF']))
+                    $match_soc->af = $t[$i]['AF'];
+                if(isset($t[$i]['WV']))
+                    $match_soc->wv = $t[$i]['WV'];
+
+                if(isset($t[$i]['AS']))
+                    $match_soc->as = $t[$i]['AS'];
+                if(isset($t[$i]['AZ']))
+                    $match_soc->az = $t[$i]['AZ'];
+                if(isset($t[$i]['AH']))
+                    $match_soc->ah = $t[$i]['AH'];
+                if(isset($t[$i]['BB']))
+                    $match_soc->bb = $t[$i]['BB'];
+                if(isset($t[$i]['BD']))
+                    $match_soc->bd = $t[$i]['BD'];
+                if(isset($t[$i]['WM']))
+                    $match_soc->wm = $t[$i]['WM'];
+                if(isset($t[$i]['AE']))
+                    $match_soc->ae = $t[$i]['AE'];
+
+                if(isset($t[$i]['ZA']))
+                    $match_soc->za = $t[$i]['ZA'];
+                if(isset($t[$i]['AG']))
+                    $match_soc->ag = $t[$i]['AG'];
+                if(isset($t[$i]['BA']))
+                    $match_soc->ba = $t[$i]['BA'];
+                if(isset($t[$i]['BC']))
+                    $match_soc->bc = $t[$i]['BC'];
+                if(isset($t[$i]['AN']))
+                    $match_soc->an = $t[$i]['AN'];
+
+                $match_soc->save(false);
+
+
+            }
+        }
+
+
+        exit;
 
         $output = [];
 

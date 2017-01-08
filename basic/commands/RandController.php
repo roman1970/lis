@@ -114,4 +114,78 @@ class RandController extends Controller
              $items[rand(0, count($items)-1)]->text.PHP_EOL;
     }
 
+
+    /**
+     * Генератор айтемов для заучивания
+     */
+    function actionGenStudy(){
+
+        if(Items::find()->where(['learned' => 2])->one()) exit('Недоученное!');
+        $rand_thoughts = [];
+
+        $dibilizmy = Items::find()
+            ->where("source_id = 17 or source_id = 27 or source_id = 19")
+            ->andWhere(['learned' => 0])
+            ->all();
+        shuffle($dibilizmy);
+
+        $frazy = Items::find()
+            ->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")
+            ->andWhere(['learned' => 0])
+            ->all();
+        shuffle($frazy);
+
+        $study = Items::find()
+            ->where("cat_id = 53 or cat_id = 136 or cat_id = 187")
+            ->andWhere(['learned' => 0])
+            ->all();
+        shuffle($study);
+
+        $from_out = Items::find()
+            ->where("cat_id = 94 or cat_id = 104")
+            ->andWhere(['learned' => 0])
+            ->all();
+        shuffle($from_out);
+
+        $english = Items::find()
+            ->where("cat_id = 155")
+            ->andWhere(['learned' => 0])
+            ->all();
+        shuffle($english);
+
+        $rand_dib = $dibilizmy[rand(0, count($dibilizmy)-1)];
+        if($rand_dib) $rand_dib->learned = 2; $rand_dib->update(false);
+        $rand_phrase = $frazy[rand(0, count($frazy)-1)];
+        if($rand_phrase) $rand_phrase->learned = 2; $rand_phrase->update(false);
+        $rand_study = $study[rand(0, count($study)-1)];
+        if($rand_study) $rand_study->learned = 2; $rand_study->update(false);
+        $rand_from = $from_out[rand(0, count($from_out)-1)];
+        if($rand_from) $rand_from->learned = 2; $rand_from->update(false);
+        $rand_english = $english[rand(0, count($english)-1)];
+        if($rand_english) $rand_english->learned = 2; $rand_english->update(false);
+
+
+        $rand_thoughts[$rand_dib->source->title.' - '.$rand_dib->source->author->name] = $rand_dib->text;
+        $rand_thoughts[$rand_phrase->source->title.' - '.$rand_phrase->source->author->name] = $rand_phrase->text;
+        $rand_thoughts[$rand_study->source->title.' - '.$rand_study->source->author->name] = $rand_study->text;
+        $rand_thoughts[$rand_from->source->title.' - '.$rand_from->source->author->name] = $rand_from->text;
+        $rand_thoughts[$rand_english->source->title.' - '.$rand_english->source->author->name] = $rand_english->text;
+
+        $html = '<style>p,h4{text-align: center; color: white}hr{margin: 0}</style>
+                 <h4>Учить</h4>
+                                                      <div>';
+
+        foreach ($rand_thoughts as $author => $item){
+            $html .= '<p>'.nl2br($item).'<br>'.'('.$author.')</p><br><hr>';
+        }
+
+        $html .= '</div><button type="button" class="btn btn-success btn-lg btn-block" onclick="learned()">Выучил!</button>
+                 <p id="request_learned"></p> ';
+
+        $rem = fopen("/home/romanych/public_html/plis/basic/data/remember.html", "w");
+        $res = fwrite($rem, $html);
+        fclose($rem);
+
+    }
+
 }
