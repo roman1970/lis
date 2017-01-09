@@ -48,6 +48,7 @@ return [
             'class' => 'app\components\MyManager',
         ],
         'db' => $db,
+        'db_test' => require(__DIR__ . '/db_test.php'),
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'baseUrl' => dirname(__DIR__),

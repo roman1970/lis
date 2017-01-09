@@ -146,6 +146,7 @@ $config = [
 
         'db' => require(__DIR__ . '/db.php'),
         'db_sevens' => require(__DIR__ . '/db_seven.php'),
+        'db_test' => require(__DIR__ . '/db_test.php'),
 
         'urlManager' => [
             'class' => 'yii\web\UrlManager',

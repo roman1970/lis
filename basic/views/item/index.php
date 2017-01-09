@@ -31,12 +31,14 @@ AppAsset::register($this);
         ],
     ]);
 
-    ?>
+    /*
     <!-- Информер RedDay.RU (Новосибирск)-->
     <a href="http://redday.ru/moon/" target="_new">
         <img src="http://redday.ru/informer/i_moon/245/bl.png" width="150" height="190" border="0" alt="Фазы Луны на RedDay.ru (Новосибирск)" />
     </a>
     <!-- / Информер RedDay.RU-->
+    */
+    ?>
 
 </div>
 

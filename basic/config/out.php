@@ -138,6 +138,7 @@ $config = [
         ],
         'db' => require(__DIR__ . '/db.php'),
         'db_sevens' => require(__DIR__ . '/db_seven.php'),
+        'db_test' => require(__DIR__ . '/db_test.php'),
 
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
@@ -149,7 +150,7 @@ $config = [
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id>' => '<module>/<controller>/<action>/',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id>/<page>' => '<module>/<controller>/<action>/',
-                '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'  => '<controller>/<action>',
 
 
             ],
