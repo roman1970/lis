@@ -468,7 +468,7 @@
                     borderWidth: 0
                 }
             },
-            series: [<?= $cold_wat16 ?> , <?= $cold_wat17 ?>, <?= $hot_wat16 ?> , <?= $cold_wat17 ?>]
+            series: [<?= $cold_wat16 ?> , <?= $cold_wat17 ?>, <?= $hot_wat16 ?> , <?= $hot_wat17 ?>]
         });
     });
 

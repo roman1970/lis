@@ -114,11 +114,21 @@ class ParsersController extends Controller
 
         $tournament = [];
 
+        $matchs = [];
+
         foreach ($countries as $country) {
-           // if($i==19) {
-                $matchs = explode('AB÷3¬CR÷3¬AC÷3¬', $country);
-                //var_dump($matchs);
-                //exit;
+
+
+               //$matchs = explode('AB÷3¬CR÷3¬AC', $country);
+
+               $matchs = preg_split('/¬AA/', $country, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+
+
+           //}
+
+          //  exit;
+
 
                 $n=0;
                 foreach ($matchs as $match) {
@@ -145,6 +155,12 @@ class ParsersController extends Controller
             $i++;
 
         }
+
+        //var_dump($tournament);
+
+        //  exit;
+
+
 
 
         foreach ($tournament as $t){
@@ -188,12 +204,11 @@ class ParsersController extends Controller
                 $zx = $t[0]['ZX'];
             if(isset($t[0]['ZCC']))
                 $zcc = $t[0]['ZCC'];
-            if(isset($t[0]['AA']))
-                $aa = $t[0]['AA'];
-            if(isset($t[0]['AD']))
-                $ad = $t[0]['AD'];
+
 
             for($i=1; $i<count($t); $i++){
+
+                //var_dump($t[$i]['']);
 
                 $match_soc = new Soccercode();
 
@@ -212,6 +227,11 @@ class ParsersController extends Controller
                 $match_soc->zcc = $zcc;
                 $match_soc->aa = $aa;
                 $match_soc->ad = $ad;
+
+                if(isset($t[$i]['']))
+                    $match_soc->aa = $t[$i][''];
+                if(isset($t[$i]['AD']))
+                    $match_soc->ad = $t[$i]['AD'];
 
                 if(isset($t[$i]['CX']))
                     $match_soc->cx = $t[$i]['CX'];
@@ -267,7 +287,17 @@ class ParsersController extends Controller
         //$test = SoccercodeTest::find()->where('id > 72734')->all();
         //var_dump($test);
 
-        $rec = Soccercode::findOne(152);
+        /*$test_url = 'http://d.soccerstand.com/ru/x/feed/f_1_-2_7_ru_1';
+        $handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
+        $data = $this->_soccerStandCurl($test_url);
+        fwrite($handle,  $data);
+        fclose($handle);
+
+        exit;
+        */
+
+
+        $rec = Soccercode::findOne(355);
         $date = date('h.m.Y', $rec->ad);
         $time = date('H:s', $rec->ad);
 
@@ -279,7 +309,7 @@ class ParsersController extends Controller
         
         $i=0;
 
-        //$handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
+
         
 
         $urls = [
@@ -327,8 +357,8 @@ class ParsersController extends Controller
             $host = $rec->af; //номинальный хозяин
             $guest = $rec->ae; //номинальный гость
             $score = ''; //счёт
-            $gett = 0; //голы, забитые хозяевами
-            $lett = 0; //голы, забитые гостями
+            $gett = $rec->as; //голы, забитые хозяевами
+            $lett = $rec->ag; //голы, забитые гостями
             $stay_h = ''; //расстановка хозяев
             $stay_g = ''; //расстановка гостей
             //$date = ''; // дата
