@@ -104,6 +104,21 @@ class SongtextController extends BackEndController
 
     }
 
+    public function actionDelete($id)
+    {
+
+        if ($model = $this->loadModel($id)->delete()) {
+            $searchModel = new SongtextSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+
+            return $this->render('index', ['texts' => $dataProvider, 'searchModel' => $searchModel]);
+        } else {
+            throw new \yii\web\HttpException(404, 'Cant delete record.');
+        }
+
+    }
+
     public function loadModel($id)
     {
 
