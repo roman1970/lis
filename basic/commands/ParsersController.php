@@ -292,7 +292,7 @@ class ParsersController extends Controller
         //var_dump($test);
 
         //$test_url = 'http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1';
-        $handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
+        //$handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
        /* $data = $this->_soccerStandCurl($test_url);
         fwrite($handle,  $data);
         fclose($handle);
@@ -302,9 +302,9 @@ class ParsersController extends Controller
 
 
 
-        $rec = Soccercode::findOne(456);
-        $date = date('h.m.Y', $rec->ad);
-        $time = date('H:s', $rec->ad);
+        $rec = Soccercode::findOne(670);
+        $date = date('d.m.Y', $rec->av);
+        $time = date('H:i', $rec->av);
 
 
         //exit;
@@ -326,106 +326,27 @@ class ParsersController extends Controller
             "http://d.soccerstand.com/ru/x/feed/d_li_".$rec->aa."_ru_1",
         ];
 
-        $data = '<script type="text/javascript">
-			// <![CDATA[
-			document.domain = \'soccerstand.com\';
-			var counter_duration_time = 60;
 
-			var participantEncodedIds = [\'tljXuHBC\',\'t4p0iC41\'];
-			var tournamentStageEncodedId = \'Sxm3klBf\';
-			var tournamentEncodedId = \'x2gVCNwJ\';
-			var detailPage = null;
-
-			var g2utime = 1483906500;
-			var game_utime = 1483906500;
-			var game_utime_end = 0;
-			var event_stage_type_id = 3;
-			var race_or_main_stage_status_id = null;
-			var event_stage_id = 3;
-			var game_update_time = 1484105626;			var app_gmt_offset = -10800;
-			var default_tz = 3;
-			var tudate = 1484092800;			var mid_s = 1;
-			var sport_id = 1;
-			var page_hlscore_title = "ГОЛ";
-			//var odds_format_url = "eu";
-			var mpe_alias = \'p1:100, p2:100, p3:100, p4:100, p5:100, p6:100, p7:100, p8:100, p9:100, p10:100\';
-			var mpe_delivery = \'a\';
-			var mpr = 18;
-			var refresh_serial = 0;
-			var event_stage_trans = new Array();
-			var home_3char = "SPO";
-			var away_3char = "FEI";
-			var title_at_char = "";
-			var isSwapped = "";
-			var playingOnSets = "";
-			var hasLiveCentreEnabled = 1;
-			var isParticipantDetail = 0;
-			var eventParticipantEncodedId = "ltB92yKu";
-			var stageId = "";
-			var externalProjectId = 0;
-			var hasScratches = false;
-			var tz_list = [-11,-10,-9,-8,-7,-6,-5,-4.5,-4,-3,-2,-1,+0,+1,+2,+3,+4,+5,+6,+7,+8,+9,+10,+11,+12,+13];			var sentences = [];
-			var sentences_parts = [];
-
-fs_detail.CA = "";fs_detail.DL = 1;fs_detail.DG = "2";fs_detail.DH = "1";fs_detail.DE = "2";fs_detail.DF = "1";fs_detail.DA = 3;fs_detail.DB = 3;fs_detail.AW = 1;fs_detail.DX = \'OD,HI,HH,LI,ST,LT,TA\';fs_detail.GB = \'{"default":true,"RU":true}\';fs_detail.HR = \'1483919045|\';fs_detail.CO = "n";event_stage_trans[1] = "&nbsp;"; event_stage_trans[45] = "Будет доигран позже"; event_stage_trans[42] = "Ожидание обновления"; event_stage_trans[2] = "Live"; event_stage_trans[12] = "1-й тайм"; event_stage_trans[38] = "Перерыв"; event_stage_trans[13] = "2-й тайм"; event_stage_trans[6] = "Дополнительное время"; event_stage_trans[7] = "Серия пенальти"; event_stage_trans[46] = "Перерыв"; event_stage_trans[3] = "Завершен"; event_stage_trans[10] = "После дополнительного времени"; event_stage_trans[11] = "После серии пенальти"; event_stage_trans[9] = "Неявка"; event_stage_trans[43] = "Задержка"; event_stage_trans[36] = "Прерван"; event_stage_trans[4] = "Перенесен"; event_stage_trans[5] = "Отменен"; event_stage_trans[37] = "Прерван"; event_stage_trans[54] = "Тех. поражение"; 
-			$(window).bind(\'load\', detail_load);
-			$(window).bind(\'load\', function()
-			{
-				try{
-					document.lsadvert_display();
-					document.show_social_button();
-				}
-				catch(e)
-				{
-				}
-			});
-			$(window).bind(\'hashchange\', detail_hashchange);
-			$(document).ready(function()
-			{
-				cjs.dic.get(\'DicProxy\').onReady(function()
-				{
-					detail_init(\'soccer\', \'S0HTALJ9\', game_update_time);
-					set_detail_bet_icon_states("tab-prematch-odds");
-					detail_tab();
-					detail_delegate_actions(1, \'soccer\', \'S0HTALJ9\');
-				});
-
-									initFeedRequest();
-					myTeamsInit(1);
-					if (typeof cjs.myTeams != \'undefined\')
-					{
-						cjs.myTeams.printToggleIcons();
-						cjs.myTeams.delegateTooltips();
-					}
-							});
-
-					// ]]>
-		</script><script type="text/javascript">
-// <![CDATA[
-var stats2Config = {"tournament":"x2gVCNwJ","tournamentStage":"Sxm3klBf","statsTabsConfig":{"16":{"name":"\u0422\u0430\u0431\u043b\u0438\u0446\u0430 Live","url":"live","sortKey":1},"1":{"name":"\u0422\u0430\u0431\u043b\u0438\u0446\u0430","url":"table","sortKey":2,"items":{"1":{"name":"\u0418\u0442\u043e\u0433\u043e","url":"overall","sortKey":1},"2":{"name":"\u0414\u043e\u043c\u0430","url":"home","sortKey":2},"3":{"name":"\u0412 \u0433\u043e\u0441\u0442\u044f\u0445","url":"away","sortKey":3}}},"5":{"name":"\u0424\u043e\u0440\u043c\u0430","url":"form","sortKey":3,"items":{"5":{"name":"\u0418\u0442\u043e\u0433\u043e","url":"overall","has_sub_items":true,"sortKey":1},"8":{"name":"\u0414\u043e\u043c\u0430","url":"home","has_sub_items":true,"sortKey":2},"9":{"name":"\u0412 \u0433\u043e\u0441\u0442\u044f\u0445","url":"away","has_sub_items":true,"sortKey":3}}},"6":{"name":"\u0411\u043e\u043b\u044c\u0448\u0435\/\u043c\u0435\u043d\u044c\u0448\u0435","url":"over_under","sortKey":4,"items":{"6":{"name":"\u0418\u0442\u043e\u0433\u043e","url":"overall","has_sub_items":true,"sortKey":1},"17":{"name":"\u0414\u043e\u043c\u0430","url":"home","has_sub_items":true,"sortKey":2},"18":{"name":"\u0412 \u0433\u043e\u0441\u0442\u044f\u0445","url":"away","has_sub_items":true,"sortKey":3}}},"7":{"name":"\u0421\u0435\u0440\u0438\u0438","url":"streaks","sortKey":5},"-1":{"name":"\u0421\u0435\u0442\u043a\u0430","url":"draw","sortKey":6},"13":{"url":"ht_ft","name":"HT\/FT","title":"\u0422\u0430\u0439\u043c\/\u043c\u0430\u0442\u0447","sortKey":7,"items":{"13":{"name":"\u0418\u0442\u043e\u0433\u043e","url":"overall","sortKey":1},"14":{"name":"\u0414\u043e\u043c\u0430","url":"home","sortKey":2},"15":{"name":"\u0412 \u0433\u043e\u0441\u0442\u044f\u0445","url":"away","sortKey":3}}},"10":{"name":"\u0411\u043e\u043c\u0431\u0430\u0440\u0434\u0438\u0440\u044b","url":"top_scorers","sortKey":8}},"statsOverUnderTypes":{"8":{"sort":0,"name":0.5,"default_tab_order":1},"1":{"sort":1,"name":1.5,"default_tab_order":0},"2":{"sort":2,"name":2.5,"default_tab_order":2},"3":{"sort":3,"name":3.5,"default_tab_order":0},"4":{"sort":4,"name":4.5,"default_tab_order":0},"5":{"sort":5,"name":5.5,"default_tab_order":0},"6":{"sort":6,"name":6.5,"default_tab_order":0},"7":{"sort":7,"name":7.5,"default_tab_order":0}}};
-
-// ]]>
-</script>';
 
         foreach ($urls as $url) {
 
 
-           $data .= $this->_soccerStandCurl($url);
-          //  $mm .= $this->_soccerStandCurl($url);
-           fwrite($handle,  $data);
+           //$data .= $this->_soccerStandCurl($url);
+           $mm .= $this->_soccerStandCurl($url);
+           //fwrite($handle,  $data);
         }
 
 
 
         //}
-        fclose($handle);
+        //fclose($handle);
 
-        exit;
+        //exit;
 
         //$url = Url::to("@app/web/uploads/soccertest.html");
 
         //$content = file_get_contents($url);
-       //$content = $mm;
+       $content = $mm;
         //var_dump(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true)); exit;
 
         //$content = iconv(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true), 'Windows-1251', $content);
