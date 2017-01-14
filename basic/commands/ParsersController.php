@@ -106,7 +106,7 @@ class ParsersController extends Controller
 
         $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
 
-        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуюэыйёА-ЯЁ.,!?:()№ ]+/", "", $day_data));
+        $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуюэыйёА-ЯЁ.,!?:()№\/ ]+/", "", $day_data));
 
        //print_r($countries); exit;
 
@@ -279,6 +279,7 @@ class ParsersController extends Controller
                     $match_soc->an = $t[$i]['AN'];
 
                 $match_soc->save(false);
+                //exit;
 
 
             }
@@ -292,7 +293,7 @@ class ParsersController extends Controller
         //var_dump($test);
 
         //$test_url = 'http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1';
-        //$handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
+        $handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
        /* $data = $this->_soccerStandCurl($test_url);
         fwrite($handle,  $data);
         fclose($handle);
@@ -302,9 +303,10 @@ class ParsersController extends Controller
 
 
 
-        $rec = Soccercode::findOne(670);
-        $date = date('d.m.Y', $rec->av);
-        $time = date('H:i', $rec->av);
+        $rec = Soccercode::findOne(805);
+        $date = date('d.m.Y', $rec->ad);
+        $time = date('H:i', $rec->ad);
+       
 
 
         //exit;
@@ -316,32 +318,36 @@ class ParsersController extends Controller
 
         //$this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1");
 
+        var_dump($this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/proxy-local"));
+        exit;
+
 
         
 
         $urls = [
-            "http://www.soccerstand.com/ru/match/".$rec->aa."/",
-            "http://d.soccerstand.com/ru/x/feed/d_su_".$rec->aa."_ru_1",
-            "http://d.soccerstand.com/ru/x/feed/d_st_".$rec->aa."_ru_1",
-            "http://d.soccerstand.com/ru/x/feed/d_li_".$rec->aa."_ru_1",
+            "https://www.facebook.com/rsrc.php/v3iSgH4/yb/l/en_US/RcW9ItWDVXf.js",
+            //"http://d.soccerstand.com/ru/x/feed/d_su_".$rec->aa."_ru_1",
+            //"http://d.soccerstand.com/ru/x/feed/d_st_".$rec->aa."_ru_1",
+            //"http://d.soccerstand.com/ru/x/feed/d_li_".$rec->aa."_ru_1",
         ];
 
+        $data = '';
 
 
         foreach ($urls as $url) {
 
 
-           //$data .= $this->_soccerStandCurl($url);
-           $mm .= $this->_soccerStandCurl($url);
-           //fwrite($handle,  $data);
+           $data .= $this->_soccerStandCurl($url);
+          // $mm .= $this->_soccerStandCurl($url);
+           fwrite($handle,  $data);
         }
 
 
 
         //}
-        //fclose($handle);
+        fclose($handle);
 
-        //exit;
+        exit;
 
         //$url = Url::to("@app/web/uploads/soccertest.html");
 
