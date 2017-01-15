@@ -303,7 +303,7 @@ class ParsersController extends Controller
 
 
 
-        $rec = Soccercode::findOne(805);
+        $rec = Soccercode::findOne(806);
         $date = date('d.m.Y', $rec->ad);
         $time = date('H:i', $rec->ad);
        
@@ -318,7 +318,7 @@ class ParsersController extends Controller
 
         //$this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1");
 
-        var_dump($this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/proxy-local"));
+        var_dump(file_get_contents("http://d.soccerstand.com/ru/x/feed/proxy-local"));
         exit;
 
 
