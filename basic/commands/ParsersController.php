@@ -118,30 +118,31 @@ class ParsersController extends Controller
 
         foreach ($countries as $country) {
 
+               //if($i>10) {print_r($country); exit;}
 
                //$matchs = explode('AB÷3¬CR÷3¬AC', $country);
 
                $matchs = preg_split('/¬AA/', $country, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-
-
-
-
            //}
 
           //  exit;
-
 
                 $n=0;
                 foreach ($matchs as $match) {
 
                         $recs = explode('¬', $match);
-                        //print_r($recs); exit;
+                   // if($i>10) {print_r($recs); exit;}
+
+                    if($n==0)$tournament[$i][$n]['tour'] = $recs[0];
 
                         foreach ($recs as $rec){
+
+
                             $arr_loc[$i][$n] = explode('÷', $rec);
+                            //print_r($rec); exit;
                             if(is_array($arr_loc[$i])) {
-                                //print_r($arr_loc[$i]);
+
                                 if(isset($arr_loc[$i][$n][1]))
                                     $tournament[$i][$n][$arr_loc[$i][$n][0]] = $arr_loc[$i][$n][1];
                             }
@@ -158,9 +159,9 @@ class ParsersController extends Controller
 
         }
 
-       // var_dump($tournament);
+      // var_dump($tournament);
 
-       // exit;
+      // exit;
 
        // var_dump($matchs); exit;
 
@@ -204,8 +205,8 @@ class ParsersController extends Controller
                 $zj = $t[0]['ZJ'];
             if(isset($t[0]['ZL']))
                 $zl = $t[0]['ZL'];
-            if(isset($t[0]['ZX']))
-                $zx = $t[0]['ZX'];
+            if(isset($t[0]['tour']))
+                $zx = trim($t[0]['tour']);
             if(isset($t[0]['ZCC']))
                 $zcc = $t[0]['ZCC'];
 
@@ -303,7 +304,7 @@ class ParsersController extends Controller
 
 
 
-        $rec = Soccercode::findOne(806);
+        $rec = Soccercode::findOne(1397);
         $date = date('d.m.Y', $rec->ad);
         $time = date('H:i', $rec->ad);
        
@@ -311,27 +312,28 @@ class ParsersController extends Controller
 
         //exit;
 
-        $mm = '';
+        $data = $this->_soccerStandDetailCurl("http://www.soccerstand.com/ru/match/".$rec->aa."/#match-summary");
 
         
         $i=0;
 
-        //$this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1");
+        //$this->_soccerStandDetailCurl("http://d.soccerstand.com/ru/x/feed/proxy-local");
 
-        var_dump(file_get_contents("http://d.soccerstand.com/ru/x/feed/proxy-local"));
-        exit;
+        //var_dump($this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/df_dos_1_b9axRGb4_"));
+       // exit;
 
 
         
 
         $urls = [
-            "https://www.facebook.com/rsrc.php/v3iSgH4/yb/l/en_US/RcW9ItWDVXf.js",
-            //"http://d.soccerstand.com/ru/x/feed/d_su_".$rec->aa."_ru_1",
-            //"http://d.soccerstand.com/ru/x/feed/d_st_".$rec->aa."_ru_1",
-            //"http://d.soccerstand.com/ru/x/feed/d_li_".$rec->aa."_ru_1",
+
+            "http://d.soccerstand.com/ru/x/feed/d_su_".$rec->aa."_ru_1",
+            "http://d.soccerstand.com/ru/x/feed/d_st_".$rec->aa."_ru_1",
+            "http://d.soccerstand.com/ru/x/feed/d_li_".$rec->aa."_ru_1",
+            "http://d.soccerstand.com/ru/x/feed/df_dos_1_".$rec->aa."_"
         ];
 
-        $data = '';
+        //$data = '';
 
 
         foreach ($urls as $url) {
@@ -341,6 +343,8 @@ class ParsersController extends Controller
           // $mm .= $this->_soccerStandCurl($url);
            fwrite($handle,  $data);
         }
+
+
 
 
 
@@ -978,6 +982,38 @@ class ParsersController extends Controller
                 'X-GeoIP:1',
                 'X-Requested-With:XMLHttpRequest',
                 'Accept-Charset: Windows-1251,utf-8;q=0.7,*;q=0.7'
+            ]);
+
+        $output = curl_exec($ch);
+        curl_close($ch);
+
+        return $output;
+    }
+
+    /**
+     *
+     * @param $url
+     * @return mixed
+     */
+    private function _soccerStandDetailCurl($url){
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // возвратить то что вернул сервер
+        curl_setopt($ch, CURLOPT_HTTPHEADER,
+            [
+                //'Accept-Encoding:gzip, deflate, sdch',
+                //'Accept-Language:*',
+                'Cache-Control:no-cache',
+                'Connection:keep-alive',
+                'Cookie:my_project=455; _dc_gtm_UA-28208502-12=1; _gat_UA-28208502-12=1; _ga=GA1.2.1191596796.1477908016',
+                'Host:www.soccerstand.com', 'Pragma:no-cache',
+                //'Referer:http://d.soccerstand.com/ru/x/feed/proxy-local',
+                'User-Agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
+                'Upgrade-Insecure-Requests:1',
+                'Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                //'X-Requested-With:XMLHttpRequest',
+                //'Accept-Charset: Windows-1251,utf-8;q=0.7,*;q=0.7'
             ]);
 
         $output = curl_exec($ch);
