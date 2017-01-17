@@ -779,6 +779,20 @@
                         <?php endif; ?>
 
 
+                        <?php if($match->saves_h != 0 || $match->saves_g != 0) : ?>
+
+                            <table id="coach" cellpadding="0" >
+                                <tr>
+                                    <td class="left"><?php echo $match->saves_h; ?></td>
+                                    <td class="center">сейвы</td>
+                                    <td class="right"><?php echo $match->saves_g; ?> </td>
+
+                                </tr>
+                            </table>
+
+                        <?php endif; ?>
+
+
 
                         
 
