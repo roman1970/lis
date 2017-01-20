@@ -136,6 +136,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'football')">Футбол 2016-2018</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'radio')">Радио</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'remember')">Запомнить</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'project')">Проект</button>
 </div>
 
 <div id="show_menu">

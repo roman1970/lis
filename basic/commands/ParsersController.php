@@ -16,6 +16,7 @@ use app\models\DiaryRecDayParams;
 use app\models\Event;
 use app\models\Incomes;
 use app\models\Items;
+use app\models\Matches;
 use app\models\PogodaXXI;
 use app\models\Snapshot;
 use app\models\Soccercode;
@@ -104,7 +105,7 @@ class ParsersController extends Controller
         $arr_date = [];
         $tournament = [];
 
-        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
+        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-2_7_ru_1");
 
         $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуюэыйёА-ЯЁ.,!?:()№\/ ]+/", "", $day_data));
 
@@ -288,48 +289,29 @@ class ParsersController extends Controller
 
     }
 
+    /**
+     * Автопарсер soccerstand
+     * @throws \Exception
+     */
     function actionStatSoccerstand()
     {
+        
+        $last_id = (int)file_get_contents(Url::to("@app/web/uploads/soccertest.html"));
 
-        //$test = SoccercodeTest::find()->where('id > 72734')->all();
-        //var_dump($test);
-
-        //$test_url = 'http://d.soccerstand.com/ru/x/feed/d_su_S0HTALJ9_ru_1';
-        //$handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
-        /* $data = $this->_soccerStandCurl($test_url);
-         fwrite($handle,  $data);
-         fclose($handle);
-
-         exit;
-         */
-
-        for ($i = 1937; $i < 1950; $i++) {
+        for ($i = $last_id+1; Soccercode::findOne($i); $i++) {
             echo $i.PHP_EOL;
 
-
             $rec = Soccercode::findOne($i);
-            $date = date('d.m.Y', $rec->ad);
-            $time = date('H:i', $rec->ad);
+            $date = date('d.m.Y', $rec->ad+7*60*60);
+            $time = date('H:i', $rec->ad+7*60*60);
 
-
-            //exit;
-
-            $mm = $this->_soccerStandDetailCurl("http://www.soccerstand.com/ru/match/" . $rec->aa . "/#match-summary");
-
-
-            //$this->_soccerStandDetailCurl("http://d.soccerstand.com/ru/x/feed/proxy-local");
-
-            //var_dump($this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/df_dos_1_b9axRGb4_"));
-            // exit;
-
-            // $bets = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/df_dos_1_".$rec->aa."_");
+            $content = $this->_soccerStandDetailCurl("http://www.soccerstand.com/ru/match/" . $rec->aa . "/#match-summary");
+            
             $prepared = explode('÷', explode('¬', $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/df_dos_1_" . $rec->aa . "_"))[0]);
             if (isset($prepared[1]) && explode('|', $prepared[1])[1] && explode('|', $prepared[1])[2]) $bets = explode('|', $prepared[1]);
             else $bets = [];
 
-            //var_dump($bets); exit;
-
-
+           
             $urls = [
 
                 "http://d.soccerstand.com/ru/x/feed/d_su_" . $rec->aa . "_ru_1",
@@ -338,45 +320,20 @@ class ParsersController extends Controller
 
             ];
 
-            //$data = '';
-            //$mm = '';
 
             foreach ($urls as $url) {
 
-
-                // $data .= $this->_soccerStandCurl($url);
-                $mm .= $this->_soccerStandCurl($url);
-                // fwrite($handle,  $data);
+                $content .= $this->_soccerStandCurl($url);
+                
             }
 
-
-            //}
-            //fclose($handle);
-
-            // exit;
-
-            //$url = Url::to("@app/web/uploads/soccertest.html");
-
-            //$content = file_get_contents($url);
-            $content = $mm;
-            //var_dump(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true)); exit;
-
-            //$content = iconv(mb_detect_encoding($content, array('UTF-8', 'Windows-1251'), true), 'Windows-1251', $content);
 
             $content = str_replace(chr(9), '', $content);
             $content = str_replace(chr(11), '', $content);  // заменяем табуляцию на пробел
             $content = str_replace(chr(13), '', $content);
             $content = str_replace(chr(10), '', $content);
 
-            /* $chars = preg_split('/div id=\"detcon\"/', $content, -1, PREG_SPLIT_NO_EMPTY); //разделяем контент на матчи
-             $j = count($chars);
-
-
-             for ($m = 0; $m < $j; $m++) {
-            */
-
-
-            //инициализация переменных
+            
             $tournament = ''; // турнир
             $host = $rec->ae; //номинальный хозяин
             $guest = $rec->af; //номинальный гость
@@ -874,26 +831,8 @@ class ParsersController extends Controller
                     $onehalf_g = (int)$node->nodeValue;
             }
 
-            /*
-                if($host) $host = addslashes($host);
-                if($yel_kart_h) $yel_kart_h = addslashes($yel_kart_h);
-                if($red_kart_h) $red_kart_h = addslashes($red_kart_h);
-                if($substit_h) $substit_h = addslashes($substit_h);
-                if($goul_h) $goul_h = addslashes($goul_h);
-                if($pen_miss_h) $pen_miss_h = addslashes($pen_miss_h);
-                if($stra_h) $stra_h = addslashes($stra_h);
-
-                if($guest) $guest = addslashes($guest);
-                if($yel_kart_g) $yel_kart_g = addslashes($yel_kart_g);
-                if($red_kart_g) $red_kart_g = addslashes($red_kart_g);
-                if($substit_g) $substit_g = addslashes($substit_g);
-                if($goul_g) $goul_g = addslashes($goul_g);
-                if($pen_miss_g) $pen_miss_g = addslashes($pen_miss_g);
-                if($stra_g) $stra_g = addslashes($stra_g);
-            */
-
-            //if (isset($date) && ($tournament != '') && isset($host) && ($host != '')) {
-            $match = new SoccercodeTest();
+          
+            $match = new Matches();
 
             $match->date = $date;
             $match->time = $time;
@@ -946,15 +885,21 @@ class ParsersController extends Controller
             $match->bet_n = $bet_n;
             $match->bet_g = $bet_g;
 
-            var_dump($match);
+            //var_dump($match);
 
-            $match->save(false);
-
-            //}
+            if($match->save(false)){
+                $rec->match_id = $match->id;
+                $rec->update(false);
+                $last_id = $rec->id;
+               
+            }
 
         }
 
-
+        $handle = fopen(Url::to("@app/web/uploads/soccertest.html"), "w");
+        fwrite($handle,  $last_id);
+        fclose($handle);
+        
     }
 
         /**
@@ -962,8 +907,7 @@ class ParsersController extends Controller
          * @param $url
          * @return mixed
          */
-        private
-        function _soccerStandCurl($url)
+        private function _soccerStandCurl($url)
         {
 
             $ch = curl_init();

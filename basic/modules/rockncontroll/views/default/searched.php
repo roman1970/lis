@@ -52,8 +52,7 @@
     <?php
         $i=0;
         if(is_array($items_rows)) :
-            foreach ($items_rows as $rec): $i++;
-                ?>
+            foreach ($items_rows as $rec): $i++; ?>
                 <hr>
                 <h4><?=$i?>) <?=$rec->title?></h4>
                 <p>
@@ -64,17 +63,20 @@
                     <?php endif; ?>
                     <?php if($rec->img) : ?>
                         <img src="<?=$rec->img?>">
-                    <?php endif; ?>
-                    <?=nl2br($rec->text)?>
+                    <?php endif;
+                    ?>
+                    
+                    <?=$rec->text?>
+
                     <?='('.$rec->source->title.' - '.$rec->source->author->name.')'?>
                 </p>
-                <?php
-            endforeach;
+            <?php
+               endforeach;
             else: echo $items_rows;
         endif;
     ?>
     <h3>События</h3>
-    <?php
+    <?php //var_dump($events_rows); exit;
         if(is_array($events_rows)) :
             foreach ($events_rows as $rec): $i++;
                 ?>

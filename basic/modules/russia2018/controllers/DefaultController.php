@@ -78,9 +78,7 @@ class DefaultController extends FrontEndController
 
         $data_id_from = 1;
 
-        $data_id_to = Matches::find()
-            ->select('MAX(id)')
-            ->scalar();
+
 
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
@@ -97,6 +95,10 @@ class DefaultController extends FrontEndController
             $data_id_to = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('toto')])->one()->id;
 
         }
+
+        $data_id_to = Matches::find()
+            ->select('MAX(id)')
+            ->scalar();
         //var_dump($data_id_to); exit;
 
         if(Yii::$app->getRequest()->getQueryParam('host')) $team = trim(Yii::$app->getRequest()->getQueryParam('host'));
@@ -187,6 +189,8 @@ class DefaultController extends FrontEndController
             ->select('MAX(id)')
             ->scalar();
 
+        //return $data_id_to;
+
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
@@ -260,7 +264,7 @@ class DefaultController extends FrontEndController
         }
 
         
-       // var_dump($matchs);
+       //return var_dump($matchs);
 
         try {
         //$is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
@@ -485,6 +489,7 @@ class DefaultController extends FrontEndController
      * @return string
      */
     public function actionMatchu() {
+
         $model = new Strategy();
         if(Yii::$app->getRequest()->getQueryParam('hoster')) {
             $hoster = Yii::$app->getRequest()->getQueryParam('hoster');
@@ -712,6 +717,8 @@ class DefaultController extends FrontEndController
                 ->all();
             //echo  $hoster; echo  $guester; exit;
         }
+
+
 
         $this->betsGenerate($matchs);
 

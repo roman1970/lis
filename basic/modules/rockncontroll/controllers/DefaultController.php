@@ -15,6 +15,7 @@ use app\models\DiaryDish;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
 use app\models\Event;
+use app\models\Idea;
 use app\models\Income;
 use app\models\Incomes;
 use app\models\Items;
@@ -1309,6 +1310,23 @@ class DefaultController extends FrontEndController
     }
 
     /**
+     * Идеи для автокомплита
+     * @return string
+     */
+    public function actionIdeas(){
+        $res = [];
+
+        $m = Idea::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->title;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
      * Магазины для автокомплита
      * @return string
      */
@@ -1833,11 +1851,15 @@ class DefaultController extends FrontEndController
                     ->match(Yii::$app->getRequest()->getQueryParam('text'))
                     ->all();
 
+
+
                 foreach ($query_items_ids as $arr_item_rec){
                     foreach ($arr_item_rec as $id){
                         $items_records[] = Items::findOne((int)$id);
                     }
                 }
+
+                //return var_dump($items_records);
                     //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
 
                 $query_events_ids = $query->from('events')
@@ -1851,9 +1873,10 @@ class DefaultController extends FrontEndController
                       }
                   }
 
-                //var_dump($events_records); exit;
+
                 sort($events_records);
                 krsort($events_records);
+                //var_dump($events_records); exit;
 
                 return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records) && $items_records) ? $items_records : 'Ничего не найдено',
                     'events_rows' => (is_array($events_records) && !empty($events_records) && $events_records) ? $events_records : 'Ничего не найдено']);
@@ -2682,6 +2705,10 @@ class DefaultController extends FrontEndController
     }
 
 
+    /**
+     * Запомнить
+     * @return string
+     */
     function actionRemember(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -2691,7 +2718,11 @@ class DefaultController extends FrontEndController
 
         }
     }
-    
+
+    /**
+     * Выучил
+     * @return string
+     */
     function actionLearned() {
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
             //return $user;
@@ -2709,6 +2740,41 @@ class DefaultController extends FrontEndController
             $act->mark = 3;
             $act->mark_status = 0;
             $act->save(false);
+
+        }
+    }
+
+    function actionProject(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+           // return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+            
+            $ideas = Idea::find()->all();
+
+            if (Yii::$app->getRequest()->getQueryParam('request')) {
+                $idea = new Idea();
+                $idea->title = Yii::$app->getRequest()->getQueryParam('request');
+                $idea->save(false);
+
+                return $this->renderPartial('idea_work', ['idea' => $idea]);
+
+            }
+
+            if (Yii::$app->getRequest()->getQueryParam('find')) {
+
+
+                //return var_dump(Idea::find()->where('title like "%'.Yii::$app->getRequest()->getQueryParam('find').'%"')->one());
+
+                $idea = Idea::find()->where('title like "%'.Yii::$app->getRequest()->getQueryParam('find').'%"')->one();
+
+                if($idea) return $this->renderPartial('idea_work', ['idea' => $idea]);
+                else return 'uups!';
+
+            }
+
+            return $this->renderPartial('add_idea_form');
+
 
         }
     }
