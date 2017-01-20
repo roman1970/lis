@@ -280,7 +280,9 @@ class ParsersController extends Controller
                 if(isset($t[$i]['AN']))
                     $match_soc->an = $t[$i]['AN'];
 
-                $match_soc->save(false);
+
+                if($match_soc->save(false)) echo $match_soc->id." success";
+                else echo $match_soc->id." fail";
                 //exit;
 
 
