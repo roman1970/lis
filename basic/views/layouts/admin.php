@@ -71,6 +71,7 @@ AppAsset::register($this);
                 ['label' => 'Контент-тренажёр ДЗ', 'url' => ['/articles/klavir']],
                 ['label' => 'Тексты песен', 'url' => ['/songtext/index']],
                 ['label' => 'Погода XXI века', 'url' => ['/pogxxi/index']],
+                ['label' => 'Вопрос для проверки', 'url' => ['/quest/index']],
             ],
         ]);
         ?>

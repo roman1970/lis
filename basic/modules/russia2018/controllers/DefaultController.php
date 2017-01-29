@@ -104,6 +104,8 @@ class DefaultController extends FrontEndController
         if(Yii::$app->getRequest()->getQueryParam('host')) $team = trim(Yii::$app->getRequest()->getQueryParam('host'));
         else $team = '';
 
+       // return $team;
+
         $limit = 10;
 
         $bet = 1;
@@ -154,7 +156,7 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_".$team."') or guest like('".$team."_') or (host like('_".$team." (%') and host not like('_".$team." (Б)%') ) or (guest like('".$team." (%') and guest not like('".$team." (Б)%'))")
+                ->where("host like('_".addslashes($team)."') or guest like('".addslashes($team)."_') or (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') ) or (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%'))")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -258,7 +260,7 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_".$team."') or guest like('".$team."_') or (host like('_".$team." (%') and host not like('_".$team." (Б)%') ) or (guest like('".$team." (%') and guest not like('".$team." (Б)%'))")
+                ->where("host like('_".addslashes($team)."') or guest like('".addslashes($team)."_') or (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') ) or (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%'))")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -268,7 +270,7 @@ class DefaultController extends FrontEndController
 
         try {
         //$is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
-        $team_obj = TeamSum::find()->where("name like '" . $team . "'")->one();
+        $team_obj = TeamSum::find()->where("name like '" . addslashes($team) . "'")->one();
         $is_club = $team_obj->is_club;
 
           // return var_dump($team_obj);
@@ -279,7 +281,7 @@ class DefaultController extends FrontEndController
         }
 
         if($matchs) {
-            $tour_table = TeamSum::find()->where("is_club = ".$is_club. " and is_tour_visual = 1 or name like'".$team."'")->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])->all();
+            $tour_table = TeamSum::find()->where("is_club = ".$is_club. " and is_tour_visual = 1 or name like'".addslashes($team)."'")->orderBy(["cash_balls" => SORT_DESC, "cash_g_get" => SORT_DESC])->all();
             return $this->renderPartial('teams', [
                 'summary' => $tour_table,
                 'this_team' => $team

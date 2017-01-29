@@ -27,4 +27,9 @@ class DefaultController extends FrontEndController
         ]);
     }
 
+    public function actionTruee($id){
+        return $id;
+    }
+
+
 }

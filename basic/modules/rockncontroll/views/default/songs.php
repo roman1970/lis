@@ -1,5 +1,8 @@
 <script>
 
+    var source_id = <?= (isset($source->id)) ? $source->id : 1 ?>;
+    var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+
     var songs = [
         <?php  foreach ($songs as $song):  ?>
         {url:'http://localhost:8088<?=$song->link?>', name: '<?=$song->title?> - <?=$song->source->title?>'},
@@ -10,7 +13,7 @@
         $("#play").click(
             function() {
 
-                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+
                
                 var theme_song = $("#theme_song").val();
                 
@@ -26,6 +29,19 @@
 
             });
 
+        $("#new_marker").click(
+            function() {
+
+                var mark = $("#mark").val();
+
+                if (mark == '') {alert('Введите текст закладки!'); return;}
+
+                new_mark(mark, source_id, user);
+
+            });
+
+
+
     });
 
 
@@ -37,6 +53,21 @@
             data: "theme_song="+theme_song+"&user="+user,
             success: function(html){
                 $("#sum_play").html(html);
+
+            }
+
+        });
+
+    }
+
+    function new_mark(mark, id, user) {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/markers",
+            data: "mark="+mark+"&id="+id+"&user="+user,
+            success: function(html){
+                $("#summary").html(html);
 
             }
 
@@ -73,6 +104,24 @@
 </style>
 
 <div id="sum_play">
+<form class="form-inline center" role="form" id="form-event">
+    <div class="form-group">
+        <h3>Тренируемся:</h3>
+        <h4><?= $source->author->name ?></h4>
+        <h4><?= $source->title ?></h4>
+        <p class="marker"><?= $source->marker ?></p>
+
+        <h3>Закладка:</h3>
+        <p>
+            <input type="text" class="form-control" id="mark" value="<?= $source->marker ?>" >
+            <br>
+            <button type="button" class="btn btn-success" id="new_marker" >Новая закладка!</button>
+        </p>
+        <div id="res"></div>
+    </div>
+</form>
+
+
 <form class="form-inline center" role="form" id="form-ate">
     <div class="form-group">
         <h3>Найти пестню!</h3>
@@ -84,6 +133,8 @@
         </p>
     </div>
 </form>
+    
+
 
 
     <?php  if(is_array($songs)) :

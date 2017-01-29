@@ -69,8 +69,8 @@
      img {width: 100%}
     .article pre p {color: #0a0a0a; width: 100%}
     .article p {color: color: rgb(105, 102, 105); font-size: 17px; font-family: Ubuntu;}
-    h4 {color: white; overflow: hidden;}
-    .article ul li {color: rgb(230, 218, 192); font-size: 15px;}
+    h4 {color: #439ab2; overflow: hidden;}
+    .article ul li {color: rgb(23, 73, 20); font-size: 15px;}
 </style>
 <div class="accord" style="text-align: left; color: white; font-size: 20px">
     <?php

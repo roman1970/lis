@@ -22,6 +22,7 @@ use app\models\Items;
 //use app\models\MarkGroup;
 use app\models\Log;
 use app\models\MarkUser;
+use app\models\NsbNews;
 use app\models\Products;
 use app\models\Shop;
 use app\models\Snapshot;
@@ -32,6 +33,7 @@ use app\models\Task;
 use app\models\Tasked;
 use app\models\TeamSum;
 use app\models\TelBasemts;
+use app\models\TestAnswers;
 use app\models\Weathernew;
 use app\modules\currency\models\CurrHistory;
 use app\modules\diary\models\Maner;
@@ -1683,7 +1685,7 @@ class DefaultController extends FrontEndController
                 $cat = 136;
                 break;
             case 7:
-                $cat = 113;
+                $cat = 116;
                 break;
             case 8:
                 $cat = 116;
@@ -1692,10 +1694,10 @@ class DefaultController extends FrontEndController
                 $cat = 116;
                 break;
             case 10:
-                $cat = 116;
+                $cat = 202;
                 break;
             case 11:
-                $cat = 116;
+                $cat = 202;
                 break;
             case 12:
                 $cat = 116;
@@ -1719,7 +1721,7 @@ class DefaultController extends FrontEndController
                 $cat = 53;
         }
 
-       // return $cat;
+       //return $cat;
 
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
@@ -1736,11 +1738,23 @@ class DefaultController extends FrontEndController
                 $update_source->is_next = 0;
                 $update_source->update(false);
 
+                if($update_source->id == 1276) return "<h4 style='text-align: center; color: white;'>Закладка сохранена!</h4>";
+
                 //return var_dump($update_source);
                 
-                $next_source = Source::find()
-                    ->where("id > $update_source->id and cat_id = $cat ")
-                    ->one();
+                if($cat == 136) {
+                    $next_source = Source::find()
+                        ->where("id > $update_source->id and (cat_id = 136 or cat_id = 113) ")
+                        ->one();
+                }
+
+                else{
+                    $next_source = Source::find()
+                        ->where("id > $update_source->id and cat_id = $cat ")
+                        ->one();
+                }
+
+
                 if(!$next_source) {
                     $next_source = Source::find()
                         ->where("cat_id = $cat")
@@ -1755,10 +1769,18 @@ class DefaultController extends FrontEndController
 
                 return $this->renderPartial('source', ['source' => $next_source, 'user' => $user]);
             }
+
+            if($cat == 136) {
+                $source = Source::find()
+                    ->where("(cat_id = 136 or cat_id = 113) and is_next = 1")
+                    ->one();
+            }
             
-            $source = Source::find()
-                ->where("cat_id = $cat and is_next = 1")
-                ->one();
+            else {
+                $source = Source::find()
+                    ->where("cat_id = $cat and is_next = 1")
+                    ->one();
+            }
 
                 return $this->renderPartial('source', ['source' => $source, 'user' => $user]);
             }
@@ -1826,7 +1848,7 @@ class DefaultController extends FrontEndController
     }
 
     /**
-     * Поиск Sphinx айтемов и событий
+     * Поиск Sphinx айтемов, событий и новостей
      * @return string
      */
     function actionSearch()
@@ -1844,13 +1866,13 @@ class DefaultController extends FrontEndController
 
                 $items_records = [];
                 $events_records = [];
+                $news_records = [];
                
                 $query  = new Query();
                 // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
                 $query_items_ids = $query->from('items')
                     ->match(Yii::$app->getRequest()->getQueryParam('text'))
                     ->all();
-
 
 
                 foreach ($query_items_ids as $arr_item_rec){
@@ -1873,13 +1895,28 @@ class DefaultController extends FrontEndController
                       }
                   }
 
+                $query_news_ids = $query->from('news')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                    ->all();
+
+                foreach ($query_news_ids as $arr_new_rec){
+
+                    foreach ($arr_new_rec as $id) {
+                        $news_records[] = NsbNews::findOne((int)$id);
+                    }
+                }
+
 
                 sort($events_records);
                 krsort($events_records);
-                //var_dump($events_records); exit;
+                //var_dump($query_news_ids); exit;
+
+                $ideas = Idea::find()->all();
 
                 return $this->renderPartial('searched', ['items_rows' => (is_array($items_records) && !empty($items_records) && $items_records) ? $items_records : 'Ничего не найдено',
-                    'events_rows' => (is_array($events_records) && !empty($events_records) && $events_records) ? $events_records : 'Ничего не найдено']);
+                    'events_rows' => (is_array($events_records) && !empty($events_records) && $events_records) ? $events_records : 'Ничего не найдено',
+                    'news_rows' => (is_array($news_records) && !empty($news_records) && $news_records) ? $news_records : 'Ничего не найдено',
+                    'ideas' => $ideas]);
 
             }
 
@@ -2046,6 +2083,8 @@ class DefaultController extends FrontEndController
 
             if (!$user) return 'Доступ запрещен!';
 
+            $learn_source = Source::findOne(1276);
+
 
              if (Yii::$app->getRequest()->getQueryParam('theme_song')) {
 
@@ -2073,10 +2112,12 @@ class DefaultController extends FrontEndController
 
                      //return var_dump($arr);
 
-                 return $this->renderPartial('songs', ['songs' => $this->songs]);
+                 return $this->renderPartial('songs', ['songs' => $this->songs, 'source' => $learn_source]);
 
                  //else  return $this->renderPartial('songs', ['song' => SongText::findOne(2)]);
              }
+
+
 
             $songs = [];
 
@@ -2093,7 +2134,7 @@ class DefaultController extends FrontEndController
                 }
             }
 
-            return $this->renderPartial('songs', ['songs' => $songs]);
+            return $this->renderPartial('songs', ['songs' => $songs, 'source' => $learn_source]);
 
 
         }
@@ -2744,20 +2785,24 @@ class DefaultController extends FrontEndController
         }
     }
 
+    /**
+     * Работа с проектами
+     * @return string
+     */
     function actionProject(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
            // return $user;
 
             if (!$user) return 'Доступ запрещн!';
             
-            $ideas = Idea::find()->all();
+            //$ideas = Idea::find()->all();
 
             if (Yii::$app->getRequest()->getQueryParam('request')) {
                 $idea = new Idea();
                 $idea->title = Yii::$app->getRequest()->getQueryParam('request');
                 $idea->save(false);
 
-                return $this->renderPartial('idea_work', ['idea' => $idea]);
+                return $this->renderPartial('idea_work', ['idea' => $idea, 'user' => $user]);
 
             }
 
@@ -2768,8 +2813,23 @@ class DefaultController extends FrontEndController
 
                 $idea = Idea::find()->where('title like "%'.Yii::$app->getRequest()->getQueryParam('find').'%"')->one();
 
-                if($idea) return $this->renderPartial('idea_work', ['idea' => $idea]);
+                if($idea) {
+                    $bound_items = explode(',', $idea->items);
+                    //return var_dump($bound_items);
+                    return $this->renderPartial('idea_work', ['idea' => $idea, 'user' => $user, 'bound_items' => $bound_items]);
+                }
                 else return 'uups!';
+
+            }
+
+            if (Yii::$app->getRequest()->getQueryParam('edited') && Yii::$app->getRequest()->getQueryParam('id')) {
+
+                $edited_idea = Idea::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $edited_idea->text = Yii::$app->getRequest()->getQueryParam('edited');
+
+                if($edited_idea->save(false)) return "<p>Изменения сохранены</p>";
+                else return "<p>Ошибка</p>";
+
 
             }
 
@@ -2777,6 +2837,53 @@ class DefaultController extends FrontEndController
 
 
         }
+    }
+
+    /**
+     * Привязка айтемов к проекту
+     * @return string
+     */
+    function actionBindProjectItem(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+
+            if (Yii::$app->getRequest()->getQueryParam('idea') &&  Yii::$app->getRequest()->getQueryParam('id')) {
+
+                $idea = Idea::find()->where('title like "%' . Yii::$app->getRequest()->getQueryParam('idea') . '%"')->one();
+                if($idea) {
+                    $idea->items .= Yii::$app->getRequest()->getQueryParam('id').",";
+                    $idea->update(false);
+                    return "<p>Привязано!</p>";
+                }
+                else return "Ошибка";
+
+            }
+        }
+
+    }
+    
+
+    function actionNews(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+            
+            $news = NsbNews::find()->limit(20)->orderBy('id DESC')->all();
+
+            //return var_dump($news);
+
+            return $this->renderPartial('news', ['news' => $news, 'user' => $user]);
+            
+            
+        }
+    }
+
+
+    function actionTrue($id){
+       return TestAnswers::findOne($id)->true;
     }
 
 

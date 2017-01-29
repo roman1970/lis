@@ -1,12 +1,14 @@
 <script>
+    var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
     $(document).ready(function() {
+
         $(".accord h4:first").addClass("active");
 
-        $(".accord p").hide();
+        $(".accord div").hide();
 
         $(".accord h4").click(function() {
 
-            $(this).next("p").slideToggle("slow").siblings("p:visible").slideUp("slow");
+            $(this).next("div").slideToggle("slow").siblings("div:visible").slideUp("slow");
 
 
             $(this).toggleClass("active");
@@ -14,13 +16,65 @@
             $(this).siblings("h4").removeClass("active");
         });
 
+        $("#bind").click(
+            function() {
+
+                var title = $("#idea_title").val();
+                alert(title);
+
+                //bind_item(txt, user, idea_id);
+
+            });
+
+
 
     });
+
+    function bind(id) {
+
+        var title = $("#idea_title_" + id).val();
+        //alert(title);
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/bind-project-item",
+            data: "idea=" + title + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
+
+    function autocompl(id) {
+
+        $('#idea_title_' + id).autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/ideas", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+    }
+
 </script>
 
 <style>
     img{width: 100%}
     h4{cursor: pointer}
+    h3{ color: rgb(255, 215, 0); }
 
     audio
     {
@@ -48,14 +102,17 @@
 </style>
 
 <div style="text-align: center; color: white" class="accord">
+    <hr>
+    <hr>
     <h3>Краткости талантов</h3>
+    <hr>
     <?php
         $i=0;
         if(is_array($items_rows)) :
             foreach ($items_rows as $rec): $i++; ?>
                 <hr>
                 <h4><?=$i?>) <?=$rec->title?></h4>
-                <p>
+                <div>
                     <?php if($rec->audio_link) : ?>
                         <audio controls="controls" >
                             <source src="http://37.192.187.83:10080/<?=$rec->audio_link?>" type='audio/mpeg'>
@@ -66,29 +123,55 @@
                     <?php endif;
                     ?>
                     
-                    <?=$rec->text?>
+                    <?=nl2br($rec->text)?>
 
-                    <?='('.$rec->source->title.' - '.$rec->source->author->name.')'?>
-                </p>
+                    <?='<br>('.$rec->source->title.' - '.$rec->source->author->name.')'?>
+                    <form class="form-inline center" role="form" id="form-event">
+                        <input type="text" class="form-control" id="idea_title_<?=$rec->id?>" onfocus="autocompl(<?=$rec->id?>)" placeholder="Идея">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="bind(<?=$rec->id?>)" >Привязать айтем к идее!</button>
+
+                    </form>
+                </div>
+
             <?php
                endforeach;
             else: echo $items_rows;
         endif;
     ?>
+    <hr>
+    <hr>
     <h3>События</h3>
+    <hr>
     <?php //var_dump($events_rows); exit;
         if(is_array($events_rows)) :
             foreach ($events_rows as $rec): $i++;
                 ?>
                 <hr>
                 <h4><?=$i?>) <?=date('Y-m-d', $rec->act->time)?></h4>
-                <p><?=nl2br($rec->text)?><br>
+                <div><?=nl2br($rec->text)?><br>
                 <?php if($rec->img) : ?>
-                <img src="<?=$rec->img?>"></p>
+                <img src="<?=$rec->img?>">
                 <?php endif; ?>
+                </div>
                 <?php
             endforeach;
         else: echo $events_rows;
+    endif;
+    ?>
+    <hr>
+    <hr>
+    <h3>Новости</h3>
+    <hr>
+    <?php //var_dump($events_rows); exit;
+    if(is_array($news_rows)) :
+        foreach ($news_rows as $rec): $i++;
+            ?>
+            <hr>
+            <h4><?=$i?>) <?=$rec->title?></h4>
+            <div><?=nl2br($rec->description)?></div>
+        <?php endforeach;
+    else: echo $news_rows;
     endif;
     ?>
 </div>
