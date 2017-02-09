@@ -30,7 +30,7 @@ KnoledgesAsset::register($this);
 
 <body>
 <?php $this->beginBody() ?>
-
+<?php /*
             <header>
                 <div class="container">
                     <div class="logo">
@@ -38,6 +38,7 @@ KnoledgesAsset::register($this);
                     </div>
                 </div>
             </header>
+ */?>
         <div class="container">
             <?=$content;?>
         </div>

@@ -31,7 +31,7 @@
 
     
 
-    $form = \yii\widgets\ActiveForm::begin(); ?>
+    <?php $form = \yii\widgets\ActiveForm::begin(); ?>
     <?= $form->field($comment, 'name')->textInput(['size' => 45, 'id' => 'comm_name']); ?>
     <?= $form->field($comment, 'body')->textarea(['rows' => 10, 'cols' => 45, 'id' => 'comm_body']) ?>
 

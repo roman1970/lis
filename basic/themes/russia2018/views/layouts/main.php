@@ -34,7 +34,7 @@ Russia2018Asset::register($this);
     <?php $this->beginBody() ?>
     <?= $content ?>
 
-s
+
     <?php $this->endBody() ?>
     </body>
 </html>

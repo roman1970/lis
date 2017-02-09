@@ -16,6 +16,7 @@ use app\models\Categories;
 use yii\data\Pagination;
 
 use app\models\Articles;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\UploadedFile;
 
@@ -30,24 +31,72 @@ class DefaultController extends FrontEndController
     public $author;
     public static $content_id;
 
+    /*public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['tablo'],
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                ],
+            ],
+        ];
+    }
+    */
+
     /**
      * @return string
      */
     public function actionIndex()
     {
-           $tests = TestQuestions::find()->where(['cat_id' => 205])->all();
-        
-           $test = $tests[rand(0,count($tests)-1)];
+        if(isset(Yii::$app->request->get()['id'])){
+            return $this->render('tablo');
+        }
+        else{
+            $tests = TestQuestions::find()->where(['cat_id' => 205])->all();
 
-           // $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
-           // $articles = Articles::find()->where('site_id ='.$this->site->id.' or site_id = 13')->all();
+            $test = $tests[rand(0,count($tests)-1)];
 
-        //$cats = Categories::find()->leaves()->all();
+            return $this->render('index',
+                ['test' => $test]
+            );
+        }
 
-        return $this->render('index', 
-           ['test' => $test]
-        );
 
+    }
+    
+    public function actionTablo(){
+        //return var_dump(Yii::$app->request->get()['id']);
+        //return var_dump($_SERVER['HTTP_REFERER']);
+        //return $this->redirect(Yii::$app->request->referrer);
+        if(Yii::$app->request->get()['id']){
+            return $this->render('tablo');
+        }
+        else {
+            //return var_dump('g');
+            $tests = TestQuestions::find()->where(['cat_id' => 205])->all();
+
+            $test = $tests[rand(0,count($tests)-1)];
+
+            // $cats = Categories::find()->where('site_id ='.$this->site->id)->roots()->all();
+            // $articles = Articles::find()->where('site_id ='.$this->site->id.' or site_id = 13')->all();
+
+            //$cats = Categories::find()->leaves()->all();
+
+            return $this->render('index',
+                ['test' => $test]
+            );
+        }
     }
 
     /**
@@ -126,11 +175,6 @@ class DefaultController extends FrontEndController
         else echo 'ooppps!';
     }
     
-    public function actionTablo(){
-        echo 'ffff';
-    }
-    
    
-
 
 }

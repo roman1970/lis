@@ -16,6 +16,7 @@
         var choices;
         var log = $("#log");
         var key = $("#key");
+        var h;
 
 
         var k = false;
@@ -412,18 +413,39 @@
         });
     }
 
+    setTimeout(function run() {
+
+        $.ajax({
+            type: "GET",
+            url: "russia2018/default/rand-new/",
+            success: function(html){
+                $("#rand_new").html(html);
+                h = html;
+            }
+
+        });
+        setTimeout(run, 30000);
+
+    }, 30000);
+
 
 </script>
 <style>
     .jumbotron {
-        background-color: rgb(7, 63, 50);
-        box-shadow: inset rgba(250,250,250,250) -8px 8px 8px, inset rgba(255,255,255,255) 8px 3px 8px, rgba(0,0,0,0) 3px 3px 8px -3px;
+        background-color: rgba(3, 63, 6, 0.72);
+       /* box-shadow: inset rgba(250,250,250,250) -8px 8px 8px, inset rgba(255,255,255,255) 8px 3px 8px, rgba(0,0,0,0) 3px 3px 8px -3px;*/
         padding: 20px;
+        border: 4px solid white;
 
     }
-    .jumbotron h3{
-        color: white;
+    .jumbotron h3, h2{
+        color: rgb(224, 204, 34);
     }
+
+    .jumbotron h2{
+        padding-left: 20px;
+    }
+
     .container {
         max-width: 720px;
         padding-top: 20px;
@@ -464,10 +486,10 @@
         color: rgba(255, 252, 249, 0.6);
     }
 
-    h3 {
-
-           text-align: center;
-       }
+    .jumbotron p {
+        font-size: 15px;
+        color: white;
+    }
 
     .fa-2x{
         font-size: 1em;
@@ -477,11 +499,33 @@
         height: 220px;
     }
 
+    .news{
+        font-size: 13px;
+    }
+
+    #emb{
+        width: 10%;
+    }
+    #remain{
+        text-align: left;
+    }
+
 
     @media (min-width: 1200px)
         .container {
             max-width: 720px;
         }
+
+    @media (min-width: 350px) {
+        .form-inline .form-control {
+            display: inline-block;
+            width: auto;
+            vertical-align: middle;
+        }
+    }
+
+
+
 
 </style>
 
@@ -491,7 +535,18 @@
         </canvas>
 
 
+
         <div class="jumbotron" >
+            <table>
+                <tr>
+                    <td id="emb"> <img src="uploads/FIFA_World_Cup_2018_Logo.png" width="100%"></td>
+                    <td id="remain"> <h2>До открытия Чемпионата Мира 2018 осталось <?= round((mktime(0,0,0,6,10,2018)-time())/(60*60*24))?> дней</h2></td>
+                </tr>
+            </table>
+
+
+
+           <p class="news" id="rand_new"> <?= $new ?> </p>
 
             <form class="form-inline" role="form" id="team">
                 <h3>Матчи футбольной команды</h3>
@@ -514,7 +569,7 @@
                     <input type='hidden' class="aer" id="bet" size="30"/>
                     <p>
                         <input type="text" class="form-control" id="host"  placeholder="Название команды">
-                         <?= \yii\jui\DatePicker::widget([
+                         <?php /* \yii\jui\DatePicker::widget([
                             'name'  => 'from_date',
                             'value'  => '2016-07-12',
                             'dateFormat' => 'dd.MM.yyyy',
@@ -522,10 +577,10 @@
                             //'inline' => true,
                             //'containerOptions' => ['width' => '100']
                         ]);
-                        ?>
+                        */ ?>
 
-                     <span id="blinkingText1">Начните вводить команду</span>
-                        <?= \yii\jui\DatePicker::widget([
+                     <span id="blinkingText1">Начните вводить команду</span> <br>
+                        <?php /* \yii\jui\DatePicker::widget([
                             'name'  => 'to_date',
                             'value'  => date('Y-m-d', time()),
                             'dateFormat' => 'dd.MM.yyyy',
@@ -533,7 +588,7 @@
                             //'inline' => true,
                             //'containerOptions' => ['width' => '100']
                         ]);
-                        ?>
+                        */ ?>
                         <button type="button" class="btn btn-success" id="send" >Показать</button>
                     </p>
                 </div>
@@ -553,9 +608,12 @@
                 </div>
             </form>
 
+            <?php /*
+
             <p><?= (isset($user)) ? "Привет, ".var_dump($user) : ""?></p>
             
             <button type="button" class="btn btn-success" id="progn" >Сделай прогноз</button>
+           
 
             <div id="log-block">
                 <h3>Заполните форму</h3>
@@ -579,7 +637,8 @@
 
             <div id="button_reload" style="display: none">
                 <button type="button" class="btn btn-success" id="reload">Выйти из прогнозов</button>
-            </div>
+            </div> 
+  */ ?>            
 
 
         </div>

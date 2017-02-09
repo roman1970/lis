@@ -20,7 +20,7 @@
 <div id="rand_item"></div>
 <script>
         var h;
-        setInterval(function () {
+        /*setInterval(function () {
             $.ajax({
                 type: "GET",
                 url: "rockncontroll/default/rand-item/",
@@ -32,6 +32,24 @@
             });
 
         }, 20000);
+        */
+
+
+        setTimeout(function run() {
+
+            $.ajax({
+                type: "GET",
+                url: "rockncontroll/default/rand-item/",
+                success: function(html){
+                    $("#rand_item").html(html);
+                    h = html;
+                }
+
+            });
+            setTimeout(run, 20000);
+
+        }, 20000);
+
         $('#current_task').mouseover(function() {
 
             $("#stop_item_block").parent().show();

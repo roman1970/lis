@@ -7,6 +7,7 @@ use app\components\FrontEndController;
 use app\components\Helper;
 use app\models\ArticlesContent;
 use app\models\Bought;
+use app\models\DiaryActModel;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
 use app\models\DiaryDayParams;
@@ -15,6 +16,7 @@ use app\models\DiaryDish;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
 use app\models\Event;
+use app\models\FootballNews;
 use app\models\Idea;
 use app\models\Income;
 use app\models\Incomes;
@@ -29,6 +31,7 @@ use app\models\Snapshot;
 use app\models\SongText;
 use app\models\Source;
 use app\models\Tag;
+use app\models\TagProds;
 use app\models\Task;
 use app\models\Tasked;
 use app\models\TeamSum;
@@ -1351,6 +1354,7 @@ class DefaultController extends FrontEndController
         $shops = Shop::find()->all();
         $products = Products::find()->all();
         $cats = Categories::find()->where(['site_id' => 11])->all();
+        $tags = TagProds::find()->all();
 
         foreach ($shops as $shop){
             $res[] = $shop->name;
@@ -1361,6 +1365,9 @@ class DefaultController extends FrontEndController
         }
         foreach ($cats as $cat){
             $res[] = $cat->title;
+        }
+        foreach ($tags as $tag){
+            $res[] = $tag->prod;
         }
 
         return  json_encode($res);
@@ -1744,14 +1751,18 @@ class DefaultController extends FrontEndController
                 
                 if($cat == 136) {
                     $next_source = Source::find()
-                        ->where("id > $update_source->id and (cat_id = 136 or cat_id = 113) ")
+                        ->where("(cat_id = 136 or cat_id = 113)  and (id > $update_source->id ) ")
+                        ->orderBy('id ASC')
                         ->one();
+                    //return var_dump($next_source);
                 }
 
                 else{
+                   
                     $next_source = Source::find()
                         ->where("id > $update_source->id and cat_id = $cat ")
                         ->one();
+
                 }
 
 
@@ -1867,6 +1878,7 @@ class DefaultController extends FrontEndController
                 $items_records = [];
                 $events_records = [];
                 $news_records = [];
+                //$football_news_records = [];
                
                 $query  = new Query();
                 // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
@@ -1884,9 +1896,21 @@ class DefaultController extends FrontEndController
                 //return var_dump($items_records);
                     //return $this->renderPartial('searched', ['items_rows' => $items_records, 'events_rows' => 2]);
 
-                $query_events_ids = $query->from('events')
-                      ->match(Yii::$app->getRequest()->getQueryParam('text'))
-                      ->all();
+                //$query2  = new Query();
+
+
+
+               try {
+                    //return var_dump($query->prepare(Yii::$app->db->queryBuilder)->createCommand()->rawSql);
+                    //return var_dump($query->prepare(Yii::$app->db->queryBuilder)->createCommand()->sql);
+                    $query_events_ids = $query->from('events')
+                        ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                        ->all();
+
+                } catch (\Exception $e) {
+                    return $e->getMessage();
+                }
+
 
                   foreach ($query_events_ids as $arr_event_rec){
 
@@ -1894,6 +1918,8 @@ class DefaultController extends FrontEndController
                           $events_records[] = Event::findOne((int)$id);
                       }
                   }
+
+
 
                 $query_news_ids = $query->from('news')
                     ->match(Yii::$app->getRequest()->getQueryParam('text'))
@@ -1907,9 +1933,22 @@ class DefaultController extends FrontEndController
                 }
 
 
+                $query_football_news_ids = $query->from('football_news')
+                    ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                    ->all();
+
+                foreach ($query_football_news_ids as $arr_new_rec){
+
+                    foreach ($arr_new_rec as $id) {
+                        $news_records[] = FootballNews::findOne((int)$id);
+                    }
+                }
+
+
                 sort($events_records);
                 krsort($events_records);
-                //var_dump($query_news_ids); exit;
+
+               // var_dump($query_news_ids); exit;
 
                 $ideas = Idea::find()->all();
 
@@ -1976,6 +2015,7 @@ class DefaultController extends FrontEndController
      */
     function actionRandItem(){
         //return 45;
+        $date = '';
         $thoughts = Items::find()
             //->where("source_id = 27 or source_id = 17 or
             //source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
@@ -1983,7 +2023,8 @@ class DefaultController extends FrontEndController
             ->orderBy('id ASC')
             ->all();
         $rand_thought = $thoughts[rand(0, count($thoughts)-1)];
-        return $rand_thought->text;
+        if($rand_thought->old_data) $date = '('.$rand_thought->old_data.')';
+        return $rand_thought->text.' '.$date;
     }
 
     /**
@@ -2065,7 +2106,7 @@ class DefaultController extends FrontEndController
     function actionLogs(){
 
         $logs = Log::find()
-            ->where("ip NOT IN('192.168.1.1', '127.0.0.1', '213.87.126.229')")
+            ->where("ip NOT LIKE '192.168%' and ip NOT LIKE '127.%' and ip NOT LIKE '213.87%'")
             ->orderBy('id DESC')
             ->limit(50)
             ->all();
@@ -2268,7 +2309,7 @@ class DefaultController extends FrontEndController
             if (!$user) return 'Доступ запрещн!';
 
             if (Yii::$app->getRequest()->getQueryParam('request')) {
-               // return Yii::$app->getRequest()->getQueryParam('request');
+               //return Yii::$app->getRequest()->getQueryParam('request');
 
                 $shop = Shop::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
 
@@ -2287,29 +2328,18 @@ class DefaultController extends FrontEndController
                         ->limit(30)
                         ->all();
 
-                   //return var_dump($shop_spent);
-                    return $this->renderPartial('spent_shop', ['spent_sum' => $shop_spent_sum, 'spents' => $shop_last_spent]);
+                    $json_datas_2016 = $this->modelBoughtMonthlyYearGraph('shop', 2016, $shop->id);
+                    $json_datas_2017 = $this->modelBoughtMonthlyYearGraph('shop', 2017, $shop->id);
+
+
+                   //return var_dump($json_datas_2017);
+                    return $this->renderPartial('spent_shop', ['spent_sum' => $shop_spent_sum, 
+                                                                 'spents' => $shop_last_spent, 
+                                                                 'json_datas_2016' => $json_datas_2016, 
+                                                                 'json_datas_2017' => $json_datas_2017]);
                 }
                 
-                $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
 
-                if($product)  {
-                    //return var_dump($shop->id);
-                    $product_spent = Bought::find()
-                        ->select(['id, spent, shop_id, COUNT(*) as cnt, SUM(spent) as sum'])
-                        ->where(['user_id' => 8, 'product_id' => $product->id])
-                        ->andWhere('id > 28')
-                        ->one();
-                    $product_last_spent = Bought::find()
-                        ->where(['user_id' => 8, 'product_id' => $product->id])
-                        ->andWhere('id > 28')
-                        ->orderBy('id DESC')
-                        ->limit(30)
-                        ->all();
-
-                    //return var_dump($product_last_spent);
-                    return $this->renderPartial('spent_product', ['spent' => $product_spent, 'spents' => $product_last_spent, 'product' => $product->name]);
-                }
 
                 $product = Products::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
 
@@ -2327,11 +2357,19 @@ class DefaultController extends FrontEndController
                         ->limit(30)
                         ->all();
 
+                    $json_datas_2016 = $this->modelBoughtMonthlyYearGraph('product', 2016, $product->id);
+                    $json_datas_2017 = $this->modelBoughtMonthlyYearGraph('product', 2017, $product->id);
+
                     //return var_dump($product_last_spent);
-                    return $this->renderPartial('spent_product', ['spent' => $product_spent, 'spents' => $product_last_spent, 'product' => $product->name]);
+                    return $this->renderPartial('spent_product', ['spent' => $product_spent, 
+                        'spents' => $product_last_spent, 
+                        'product' => $product->name,  
+                        'json_datas_2016' => $json_datas_2016,
+                        'json_datas_2017' => $json_datas_2017]);
                 }
 
                 $cat = Categories::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+
 
                 if($cat)  {
 
@@ -2347,7 +2385,7 @@ class DefaultController extends FrontEndController
                     foreach ($prods as $prod) {
 
                         $cat_products_ids = implode(',', ArrayHelper::map(Products::find()->where(['cat_id' => $prod->cat->id])->all(), 'id', 'id'));
-
+                        //return var_dump($cat_products_ids);
                         $sum = Bought::find()
                             ->select('SUM(spent) as sum')
                             ->where('product_id IN (' . $cat_products_ids . ')')
@@ -2362,9 +2400,48 @@ class DefaultController extends FrontEndController
 
                     arsort($spent_prods);
 
+                    $json_datas_2016 = $this->modelBoughtMonthlyYearGraph('cat', 2016, $cat->id);
+                    $json_datas_2017 = $this->modelBoughtMonthlyYearGraph('cat', 2017, $cat->id);
+
                     //return var_dump($spent_prods);
-                    return $this->renderPartial('spent_cat', ['sum' => $sum, 'spent_prods' => $spent_prods, 'cat' => $cat->name]);
+                    return $this->renderPartial('spent_cat', ['sum' => $sum, 'spent_prods' => $spent_prods, 'cat' => $cat->name, 
+                        'json_datas_2016' => $json_datas_2016,
+                        'json_datas_2017' => $json_datas_2017]);
                 }
+
+                $tag = TagProds::find()->where(['prod' => Yii::$app->getRequest()->getQueryParam('request')])->one();
+               // return var_dump($tag);
+
+                if($tag){
+                    $products_ids = implode(',', ArrayHelper::map(Products::find()->where('name like "'.$tag->prod.'%"')->all(), 'id', 'id'));
+                    //return var_dump($products_ids);
+                    $sum = Bought::find()
+                        ->select('SUM(spent) as sum')
+                        ->where('product_id IN (' . $products_ids . ')')
+                        ->andWhere('id > 28')
+                        ->scalar();
+                    $product_last_spent = Bought::find()
+                        ->where('product_id IN (' . $products_ids . ')')
+                        ->andWhere('id > 28')
+                        ->orderBy('id DESC')
+                        ->limit(30)
+                        ->all();
+
+                    $json_datas_2016 = $this->modelBoughtMonthlyYearGraph('tag', 2016, $tag->prod);
+                    $json_datas_2017 = $this->modelBoughtMonthlyYearGraph('tag', 2017, $tag->prod);
+
+                    //$json_datas_2016 = 0;
+                    //$json_datas_2017 = 0;
+
+                    //return var_dump($product_spent);
+                    return $this->renderPartial('spent_like_group', ['sum' => $sum,
+                        'spents' => $product_last_spent,
+                        'json_datas_2016' => $json_datas_2016,
+                        'json_datas_2017' => $json_datas_2017
+                    ]);
+                }
+
+                else return 'Ошибка:товар введён с ошибкой';
 
 
             }
@@ -2419,6 +2496,95 @@ class DefaultController extends FrontEndController
             
             return $this->renderPartial('spent', ['spents' => $spents, 'shop_spents' => $shop_spents, 'prod_boughts' => $prod_boughts]);
         }
+    }
+
+
+    /**
+     * Отдаёт Json для построения графика заданных модели данных и года
+     * @param $model_name
+     * @param $year
+     * @return string
+     */
+    function modelBoughtMonthlyYearGraph($model_name, $year, $id){
+        $array = [];
+
+        if($model_name == 'shop') {
+            for($i=1; $i<=12; $i++) {
+                if($this->getMonthYearModelActIds($i, $year, 'bought')) {
+
+                    $bought = Bought::find()
+                        ->select(['SUM(spent)'])
+                        ->where('act_id IN (' . $this->getMonthYearModelActIds($i, $year, 'bought') . ')')
+                        ->andWhere(['shop_id' => $id])
+                        ->scalar();
+                    //return var_dump($bought);
+                }
+                else $bought = 0;
+
+                $array['name'] = $year;
+                $array['data'][] = (int)$bought;
+
+            }
+        }
+        if($model_name == 'product') {
+            for($i=1; $i<=12; $i++) {
+                if($this->getMonthYearModelActIds($i, $year, 'bought'))
+
+                    $bought = Bought::find()
+                        ->select(['SUM(spent)'])
+                        ->where('act_id IN (' . $this->getMonthYearModelActIds($i, $year, 'bought') . ')')
+                        ->andWhere(['product_id' => $id])
+                        ->scalar();
+                else $bought = 0;
+
+                $array['name'] = $year;
+                $array['data'][] = (int)$bought;
+
+            }
+        }
+        if($model_name == 'cat') {
+            for($i=1; $i<=12; $i++) {
+                if($this->getMonthYearModelActIds($i, $year, 'bought')){
+                    
+                    $cat_products_ids = implode(',', ArrayHelper::map(Products::find()->where(['cat_id' => $id])->all(), 'id', 'id'));
+                    $bought = Bought::find()
+                        ->select(['SUM(spent)'])
+                        ->where('act_id IN (' . $this->getMonthYearModelActIds($i, $year, 'bought') . ')')
+                        ->andWhere('product_id IN (' . $cat_products_ids . ')')
+                        ->scalar();
+                }
+
+                    
+                else $bought = 0;
+
+                $array['name'] = $year;
+                $array['data'][] = (int)$bought;
+
+            }
+        }
+        if($model_name == 'tag') {
+            for($i=1; $i<=12; $i++) {
+                if($this->getMonthYearModelActIds($i, $year, 'bought')){
+
+                    $products_ids = implode(',', ArrayHelper::map(Products::find()->where('name like "%'.$id.'%"')->all(), 'id', 'id'));
+                    $bought = Bought::find()
+                        ->select(['SUM(spent)'])
+                        ->where('act_id IN (' . $this->getMonthYearModelActIds($i, $year, 'bought') . ')')
+                        ->andWhere('product_id IN (' . $products_ids . ')')
+                        ->scalar();
+                }
+
+
+                else $bought = 0;
+
+                $array['name'] = $year;
+                $array['data'][] = (int)$bought;
+
+            }
+        }
+
+        return json_encode($array);
+        
     }
 
 
@@ -2554,7 +2720,7 @@ class DefaultController extends FrontEndController
         
 
         //$weights = implode(',', $arr);
-        //return var_dump($incomes16);
+        //return var_dump(json_encode($weigth16));
         return $this->renderPartial('graf',['weigth16' => json_encode($weigth16),
                                             'weigth17' => json_encode($weigth17),
                                             'spent16' => json_encode($spent16),
@@ -2745,6 +2911,25 @@ class DefaultController extends FrontEndController
         else return null;
     }
 
+    /**
+     * Айдишники действий по месяцу, году и модели
+     * @param $month
+     * @param $year
+     * @param $model_name
+     * @return null|string
+     */
+    function getMonthYearModelActIds($month, $year, $model_name){
+        $time_max_month = mktime(0, 0, 0, $month, (int)date('t', mktime(0, 0, 0, $month)), $year) + 9*60*60;
+        $time_min_month = mktime(0, 0, 0, $month, 1, $year) + 9*60*60;
+        $model = DiaryActModel::find()->where('name like "%'.$model_name.'%"')->one();
+        $ids =  implode(',', ArrayHelper::map(DiaryActs::find()
+            ->where('time <'.$time_max_month.' and time >'.$time_min_month)
+            ->andWhere(['model_id' => $model->id])
+            ->all(), 'id', 'id'));
+        if($ids) return $ids;
+        else return null;
+    }
+
 
     /**
      * Запомнить
@@ -2864,6 +3049,40 @@ class DefaultController extends FrontEndController
 
     }
     
+    function actionAddItemToPlayList(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+
+            if (Yii::$app->getRequest()->getQueryParam('id')) {
+
+                
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                if($item){
+                    if(!$item->audio_link) return "<p>Нет записи!</p>";
+                    $item->play_status = 5;
+
+                    $max_que = Items::find()
+                        ->select('MAX(radio_que)')
+                        ->where(['play_status' => 5])
+                        ->scalar();
+
+                    $item->radio_que = $max_que+1;
+
+                    //return $max_que;
+
+                    $item->update(false);
+                    return "<p>Добавлено!</p>";
+                    }
+                    else return "Ошибка";
+
+                }
+
+            }
+        
+    }
+    
 
     function actionNews(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
@@ -2871,9 +3090,14 @@ class DefaultController extends FrontEndController
 
             if (!$user) return 'Доступ запрещн!';
             
-            $news = NsbNews::find()->limit(20)->orderBy('id DESC')->all();
+            $nsk_news = NsbNews::find()->limit(20)->orderBy('id DESC')->all();
+            $football_news = FootballNews::find()->limit(20)->orderBy('id DESC')->all();
 
-            //return var_dump($news);
+            $news = array_merge($nsk_news,$football_news);
+
+            shuffle($news);
+
+           // return var_dump($football_news);
 
             return $this->renderPartial('news', ['news' => $news, 'user' => $user]);
             

@@ -1172,7 +1172,10 @@ class CountryController extends Controller
                         $matchs[$grand->name] = Matches::find()
                             ->orderBy('id DESC')
                             // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
-                            ->where("host like('_" . addslashes($grand->name) . "') or guest like('" . addslashes($grand->name) . "_') or (host like('_" . addslashes($grand->name) . " (%') and host not like('_" . addslashes($grand->name) . " (Б)%') ) or (guest like('" . addslashes($grand->name) . " (%') and guest not like('" . addslashes($grand->name) . " (Б)%'))")
+                            ->where("host like('_" . addslashes($grand->name) . "') or guest like('" . addslashes($grand->name) . "_') or
+                             (host like('_" . addslashes($grand->name) . " (%') and host not like('_" . addslashes($grand->name) . " (Б)%') and host not like('_" . addslashes($grand->name) . " (Ж)%')) or
+                             (guest like('" . addslashes($grand->name) . " (%') and guest not like('" . addslashes($grand->name) . " (Б)%') and guest not like('" . addslashes($grand->name) . " (Ж)%'))")
+
                             ->andWhere("id > " . $from . " and id < " . $to . " ")
                             ->all();
                     }

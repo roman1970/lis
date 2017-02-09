@@ -46,6 +46,19 @@
 
         });
     }
+    
+    function toPlayList(id) {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/add-item-to-play-list",
+            data: "user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
 
     function autocompl(id) {
 
@@ -130,6 +143,7 @@
                         <input type="text" class="form-control" id="idea_title_<?=$rec->id?>" onfocus="autocompl(<?=$rec->id?>)" placeholder="Идея">
                         <br>
                         <button type="button" class="btn btn-success" onclick="bind(<?=$rec->id?>)" >Привязать айтем к идее!</button>
+                        <button type="button" class="btn btn-success" onclick="toPlayList(<?=$rec->id?>)" >Добавить в конец основного плейлиста!</button>
 
                     </form>
                 </div>

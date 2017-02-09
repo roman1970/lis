@@ -1,12 +1,4 @@
-<?php 
-use yii\helpers\Url;
-use yii\widgets\ActiveForm;
-?>
-
 <style>
-    .theme_title{
-        text-align: center;
-    }
     body{
         background-color: rgb(91, 192, 222);
     }
@@ -44,28 +36,7 @@ use yii\widgets\ActiveForm;
     }
 
 </style>
-
-    <div class="content" id="tester">
-            <div class="uli">
-
-                <div class="theme_title">
-                    <h1>Проверь себя</h1>
-                    <h4><?= $test->body ?></h4>
-                    <?php foreach ($test->answers as $key => $answer): ?>
-                       <p><input type="radio"  onclick="(<?= $answer->id ?>)" name="q" value="<?= $answer->id ?>">
-                           <?= $answer->body ?></p>
-                    <?php endforeach; ?>
-                    <div id="res_qu">
-                        <button type="button" class="btn btn-success btn-lg btn-block" id="w">Проверить</button>
-                    </div>
-
-                </div>
-                
-
-            </div>
-    </div>
-
-<div id="block" style="display: none">
+<div id="block">
     <div class='container' id="tablo">
         <h2 id="tournament">Чемпионат</h2>
         <div class="table-responsive">
@@ -136,7 +107,7 @@ use yii\widgets\ActiveForm;
                     stopClock();
                     finish.innerHTML = 'Матч окончен!';
                     var audio = new Audio(); // Создаём новый элемент Audio
-                    audio.src = 'uploads/mozart.mp3'; // Указываем путь к звуку "клика"
+                    audio.src = 'verdy_march_aida.mp3'; // Указываем путь к звуку "клика"
                     audio.autoplay = true; // Автоматически запускаем
                 }
             }, 1000);
@@ -173,59 +144,4 @@ use yii\widgets\ActiveForm;
 
     }
 
-
-    document.getElementById("w").onclick = function(){
-
-        var z = document.getElementsByName('q'), s='Choose your destiny!!';
-
-        for (var i = 0; i < z.length; i++)  {
-
-            if  (z[i].checked) {
-                //alert(z[i].checked);
-
-               // alert(isItTrue(z[i].value));
-                $.ajax({
-                    type: "GET",
-                    url: "rockncontroll/default/true/",
-                    data: "id="+z[i].value,
-                    success: function(html){
-                        if(html==1){
-                            alert("Молодец");
-                            document.getElementById('block').style.display = 'block';
-                            document.getElementById('tester').style.display = 'none';
-                        }
-                        else {
-                            alert('Попробуй ещё');
-                            location.reload();
-                        }
-
-                    }
-
-                });
-                break;
-
-            }
-
-        }
-
-    };
-
-    function isItTrue(id) {
-
-
-        $.ajax({
-            type: "GET",
-            url: "rockncontroll/default/true/",
-            data: "id="+id,
-            success: function(html){
-                alert(html);
-                return(html);
-            }
-
-        });
-
-
-    }
-
 </script>
-

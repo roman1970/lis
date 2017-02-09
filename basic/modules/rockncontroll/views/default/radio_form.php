@@ -14,6 +14,12 @@
 
             });
 
+        $("#player").click(
+            function() {
+                $("#silent").display = 'none';
+
+            });
+
         $('#words').focus(
             function () {
                 $(this).select();
@@ -43,8 +49,19 @@
     .form-group{
         text-align: center;
     }
+    h4,p, #silent{
+        color: white;
+        text-align: center;
+    }
 </style>
 <div class="container">
+    <div id="silent">Включить радио</div>
+
+    <p style="text-align: center" id="player">
+        <audio controls="controls" >
+            <source src="http://37.192.187.83:10088/ices" >
+        </audio>
+    </p>
     <form class="form-inline center" role="form" id="form-ate">
         <div class="form-group">
 

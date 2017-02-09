@@ -37,6 +37,41 @@
             });
 
     });
+    function addComment(name, body, content) {
+
+        //Валидация
+        if (name === "") {
+            alert("Введите Имя или перезагрузите страницу");
+            return false;
+        }
+
+        if (body === "") {
+            alert("Введите Текст");
+            return false;
+        }
+
+
+        $.ajax({
+            type: "GET",
+            url: "/krokodile/default/addcomment/",
+            data: "name="+name+"&body="+body+"&content_id="+content,
+            success: function(html){
+                $("#base").html(html);
+            }
+
+        });
+
+    }
+    /*Симуляция сна*/
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds){
+                break;
+            }
+        }
+    }
+
     //Вытягиваем случайный айтем
     setInterval(function () {
 
@@ -57,9 +92,7 @@
     <div class="row row-offcanvas row-offcanvas-right">
 
         <div class="col-xs-12 col-sm-9">
-            <p class="pull-right visible-xs">
-                <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
-            </p>
+
             <div class="jumbotron" id="item_block">
                 <script></script>
                 <h3 id="rand">Доброго Вам Времени!</h3>

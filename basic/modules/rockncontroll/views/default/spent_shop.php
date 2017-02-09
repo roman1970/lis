@@ -1,3 +1,4 @@
+
 <style>
     .table, h3{
         text-align: center;
@@ -22,6 +23,9 @@
 
     </tbody>
 </table>
+
+<?= $this->render('one_graph', ['data_2016' => $json_datas_2016, 'data_2017' => $json_datas_2017]);
+//var_dump($json_datas);?>
 
 <table class="table">
     <tbody>

@@ -4,6 +4,8 @@ namespace app\modules\russia2018\controllers;
 
 use app\components\BetChempionWidget;
 use app\components\FrontEndController;
+use app\models\Event;
+use app\models\FootballNews;
 use app\models\Matches;
 use app\models\Team;
 use app\models\TeamSum;
@@ -29,6 +31,7 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex()
     {
+        $text = '';
         //$visit = new Visit();
         /*$userHost = Yii::$app->request->userHost;
         $userIP = Yii::$app->request->userIP;
@@ -50,9 +53,7 @@ class DefaultController extends FrontEndController
 
             $matchs = Matches::find()
                 ->orderBy('id DESC')
-                ->where("tournament like('УКРАИНА: Лига Пари-Матч%') 
-                or tournament like('%Международный кубок чемпионов%') 
-                or tournament like('%РОССИЯ: Премьер-лига%')
+                ->where("tournament like('%РОССИЯ: Премьер-лига%')
                 or tournament like('%АНГЛИЯ: Премьер-лига%')")
                 //->where('tournament IN ('.$this->tournaments.')')
                 ->limit(10)
@@ -61,9 +62,19 @@ class DefaultController extends FrontEndController
             //$cats = Categories::find()->leaves()->all();
             $this->betsGenerate($matchs);
            // var_dump($matchs);
+        
+            $news = Event::find()->where('cat_id = 145 or cat_id = 120')->orderBy('id DESC')->limit(5)->all();
+            $news2 = FootballNews::find()->orderBy('id DESC')->limit(5)->all();
+
+            $new = $this->randObjFromSetOfObj(array_merge($news,$news2));
+        
+            if($new instanceof Event) $text = $new->text;
+            elseif($new instanceof FootballNews) $text = $new->description;
+
+           // return var_dump($new);
 
             shuffle($matchs);
-            return $this->render('index', ['matchs' => $matchs,
+            return $this->render('index', ['matchs' => $matchs, 'new' => $text,
                 'model' => $model,
                 'bet_h' => $this->bet_h,
                 'bet_n' => $this->bet_n,
@@ -76,14 +87,14 @@ class DefaultController extends FrontEndController
      */
     public function actionStrateg() {
 
-        $data_id_from = 1;
+        $data_id_from = 73000;
 
 
 
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
-            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 53915;
+            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 71623;
 
             else {
                 $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
@@ -128,6 +139,14 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
+        elseif ($team == 'Реал Сосьедад') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Реал Сосьедад') or guest like('Реал Сосьедад_')) and tournament like('%ИСПАНИЯ%') or (host like('_Реал Сосьедад (Исп)') or guest like('Реал Сосьедад (Исп)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         elseif ($team == 'СКА-Хабаровск') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -156,7 +175,11 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_".addslashes($team)."') or guest like('".addslashes($team)."_') or (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') ) or (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%'))")
+                ->where("host like('_".addslashes($team)."') or
+                 guest like('".addslashes($team)."_') or
+                  (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') and host not like('_".addslashes($team)." (Ж)%')) or
+                   (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%') and guest not like('".addslashes($team)." (Ж)%')) 
+                   ")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -185,7 +208,7 @@ class DefaultController extends FrontEndController
      */
     public function actionStrategu() {
 
-        $data_id_from = 1;
+        $data_id_from = 73000;
 
         $data_id_to = Matches::find()
             ->select('MAX(id)')
@@ -196,11 +219,11 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
-            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 53915;
+            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 73000;
 
             else {
                 $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
-                if($data_id_from < 53915) $data_id_from = 53915;
+                if($data_id_from < 73000) $data_id_from = 73000;
             }
 
             //var_dump($data_id_from); exit;
@@ -232,6 +255,14 @@ class DefaultController extends FrontEndController
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
+        elseif ($team == 'Реал Сосьедад') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Реал Сосьедад') or guest like('Реал Сосьедад_')) and tournament like('%ИСПАНИЯ%') or (host like('_Реал Сосьедад (Исп)') or guest like('Реал Сосьедад (Исп)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
         elseif ($team == 'СКА-Хабаровск') {
             $matchs = Matches::find()
                 ->orderBy('id DESC')
@@ -260,7 +291,11 @@ class DefaultController extends FrontEndController
             $matchs = Matches::find()
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-                ->where("host like('_".addslashes($team)."') or guest like('".addslashes($team)."_') or (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') ) or (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%'))")
+                ->where("host like('_".addslashes($team)."') or
+                 guest like('".addslashes($team)."_') or
+                  (host like('_".addslashes($team)." (%') and host not like('_".addslashes($team)." (Б)%') and host not like('_".addslashes($team)." (Ж)%')) or
+                   (guest like('".addslashes($team)." (%') and guest not like('".addslashes($team)." (Б)%') and guest not like('".addslashes($team)." (Ж)%')) 
+                   ")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -1167,6 +1202,26 @@ class DefaultController extends FrontEndController
         }
 
 
+    }
+
+    /**
+     * Случайный объект из набора объектов
+     * @param $set_of_obj
+     * @return mixed
+     */
+    static function  randObjFromSetOfObj($set_of_obj){
+        return $set_of_obj[rand(0, count($set_of_obj)-1)];
+
+    }
+    
+    function actionRandNew(){
+       
+        $news = FootballNews::find()
+            ->limit(20)
+            ->orderBy('id ASC')
+            ->all();
+        $rand_new = $news[rand(0, count($news)-1)];
+        return $rand_new->description;
     }
 
 

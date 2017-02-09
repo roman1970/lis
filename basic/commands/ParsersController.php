@@ -14,6 +14,7 @@ use app\models\DiaryDeals;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
 use app\models\Event;
+use app\models\FootballNews;
 use app\models\Incomes;
 use app\models\Items;
 use app\models\Matches;
@@ -1965,6 +1966,90 @@ class ParsersController extends Controller
             // print_r($arr);
         }
 
+
+        public function actionMakeRadioPlayListRandForAll(){
+
+            $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+            $arr = [];
+            $songs = [];
+            $sources = [];
+            $dibilizmy = Items::find()->where(["source_id" => 17])->all();
+            shuffle($dibilizmy);
+            $limerik = Items::find()->where(["source_id" => 27])->all();
+            shuffle($limerik);
+            $cavers = Items::find()->where(["source_id" => 38])->all();
+            shuffle($cavers);
+            $frazy = Items::find()->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")->all();
+            shuffle($frazy);
+            $peredelki = Items::find()->where(["source_id" => 19])->all();
+            shuffle($peredelki);
+            $pesni = Items::find()->where(["source_id" => 6])->all();
+            shuffle($pesni);
+            $kvn = Items::find()->where(["source_id" => 21])->all();
+            shuffle($kvn);
+
+           // $source_ids = Source::find()->all();
+
+            $max_song_id = (int)SongText::find()
+                ->select('MAX(id)')
+                ->scalar();
+            $authors_ids = ArrayHelper::map(Author::find()->where(['status' => 1])->all(), 'id', 'id');
+            //var_dump($authors_ids); exit;
+            foreach ($authors_ids as $id){
+                $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+            }
+           // $sources_ids = ArrayHelper::map(Author::find()->where(['status' => 1])->all(), 'id', 'id');
+            //
+
+
+            foreach ($sources as $id){
+                $source_songs = SongText::find()->where(["source_id" => $id])->all();
+                if(isset($source_songs) && count($source_songs)>0) {
+                    $songs[] = $source_songs[rand(0, count($source_songs)-1)];
+                }
+            }
+
+            //$songs[] = SongText::find()->where(["source_id" => $id])->one();
+
+
+            for ($i = 0; $i < 1000; $i++) {
+                if (isset($dibilizmy[$i]))
+                    array_push($arr, $dibilizmy[$i]);
+                if (isset($limerik[$i]))
+                    array_push($arr, $limerik[$i]);
+                if (isset($cavers[$i]))
+                    array_push($arr, $cavers[$i]);
+                if (isset($frazy[$i]))
+                    array_push($arr, $frazy[$i]);
+                if (isset($peredelki[$i]))
+                    array_push($arr, $peredelki[$i]);
+                if (isset($pesni[$i]))
+                    array_push($arr, $pesni[$i]);
+                if (isset($kvn[$i]))
+                    array_push($arr, $kvn[$i]);
+                if (isset($songs[$i]))
+                    array_push($arr, $songs[$i]);
+            }
+
+            //var_dump($arr); exit;
+            foreach ($arr as $item) {
+                if($item instanceof Items) {
+                    if (strstr($item->audio_link, '/music')) {
+                        $one = str_replace('/music', 'music', $item->audio_link);
+                        fwrite($f, "/home/romanych/" . $one . PHP_EOL);
+                    } elseif ($item->audio_link) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $item->audio_link . PHP_EOL);
+                }
+                elseif ($item instanceof SongText){
+                    if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
+                    elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                }
+            }
+
+            fclose($f);
+            // print_r($arr);
+
+        }
+
         /**
          * Рендеринг проигрывателя
          * @param $audio_link
@@ -2676,6 +2761,102 @@ class ParsersController extends Controller
 
         }
 
+        function actionAddAlbomToAuthor($artist){
+            $dir_list = [
+                '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/'. $artist,
+                '/musicplis/'. $artist
+            ];
+            //$dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/' . $new_artist;
+
+            //return var_dump($dir);
+
+            $i=0;
+
+            foreach ($dir_list as $dir) {
+                $i++;
+
+                try {
+                    $alboms = scandir($dir);
+                } catch (\ErrorException $e) {
+                    echo $e->getMessage() . PHP_EOL;
+                    continue;
+                }
+
+                if (is_array($alboms)) {
+                    $alboms = array_diff($alboms, array('.', '..'));
+
+                    if ($alboms) {
+                        foreach ($alboms as $albom) {
+                            //echo $albom;
+                            //$r = Source::find()->where('title LIKE "%'.$albom.'%"')->one();
+                           // var_dump($r);
+                            if(!Source::find()->where('title LIKE "%'.$albom.'%"')->one()) {
+                                $source = new Source();
+
+                                $source->title = $albom;
+
+                                if (Author::find()->where('name like "%' . addslashes($artist) . '%"')->one())
+                                    $source->author_id = Author::find()->where("name like '%" . addslashes($artist) . "%'")->one()->id;
+                                else return ('author error');
+
+                                $source->status = 1;
+                                $source->cat_id = 34;
+                                if (!$source->save(false)) return 'source error';
+                                else echo $source->title . ' made' . PHP_EOL;
+
+                                $path = $dir . '/' . $albom;
+
+
+                                if (is_dir($path)) {
+                                    //return var_dump($path);
+                                    $songs = scandir($path);
+                                    $songs = array_diff($songs, array('.', '..'));
+
+                                    //return var_dump($songs);
+                                    foreach ($songs as $song) {
+
+                                        $song_obj = new SongText();
+                                        try {
+                                            $song_obj->source_id = $source->id;
+                                        } catch (\ErrorException $e) {
+                                            echo $e->getMessage();
+                                            continue;
+                                        }
+
+                                        $song_path = $path . '/' . $song;
+                                        //return var_dump($song_path);
+                                        if (is_dir($song_path)) {
+                                            $sub_songs = scandir($song_path);
+                                            $sub_songs = array_diff($sub_songs, array('.', '..'));
+                                            foreach ($sub_songs as $sub_song) {
+                                                if (preg_match('/(.+).mp3$/', $sub_song, $match))
+                                                    $song_obj->title = mb_convert_encoding($sub_song, "UTF-8");
+                                                if($i==1)$song_obj->link = substr($path . '/' . $song . '/' . $sub_song, 48);
+                                                else $song_obj->link = $path . '/' . $song . '/' . $sub_song;
+                                                //echo mb_detect_encoding($song_obj->link);
+                                            }
+                                        } else
+                                            if (preg_match('/(.+).mp3$/', $song, $match)) {
+                                                $song_obj->title = mb_convert_encoding($song, "UTF-8");;
+                                                if($i==1)$song_obj->link = substr($path . '/' . $song, 48);
+                                                else $song_obj->link = $path . '/' . $song;
+                                                //return var_dump($song_obj);
+                                                //echo mb_detect_encoding($song_obj->link);
+                                            }
+
+                                        $song_obj->save(false);
+                                    }
+                                } else {
+                                    echo $path . '-----no---dir--------------';
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        }
+
         /**
          * Заполнение таблицы Погода XXI
          *
@@ -2795,7 +2976,9 @@ class ParsersController extends Controller
             }
         }
 
-    
+    /**
+     * Получение новостей Новосибирска
+     */
     function actionGetNsbNews(){
 
         $items = new \SimpleXMLElement(@file_get_contents($url = Url::to("http://news.ngs.ru/rss/")));
@@ -2827,6 +3010,41 @@ class ParsersController extends Controller
 
         }
         
+    }
+
+    function actionFootballNews(){
+
+        $items = new \SimpleXMLElement(@file_get_contents($url = Url::to("https://www.championat.com/rss/news/football/")));
+
+        //return var_dump($items->channel[0]->item[2]);
+
+        for($i=0; $i<20; $i++) {
+
+            $rec = new FootballNews();
+
+            $rec->title = $items->channel[0]->item[$i]->title;
+            $rec->description = $items->channel[0]->item[$i]->description;
+            $rec->guid = md5($items->channel[0]->item[$i]->guid);
+            $rec->link = $items->channel[0]->item[$i]->link;
+            $rec->pdalink = $items->channel[0]->item[$i]->pdalink;
+            //$rec->author = $items->channel[0]->item[$i]->author;
+            //$rec->category = $items->channel[0]->item[$i]->category[0].'$$'.$items->channel[0]->item[$i]->category[1];
+            //$rec->enclosure = $items->channel[0]->item[$i]->enclosure['url'].'$$'.$items->channel[0]->item[$i]->enclosure['type'];
+            $rec->pud_date = $items->channel[0]->item[$i]->pud_date;
+
+            try {
+                if ($rec->save(false))
+                    echo $rec->id . " success".PHP_EOL;
+                else
+                    echo $rec->id . " fail".PHP_EOL;
+            } catch (IntegrityException $e) {
+                echo $rec->id . " dubl ".$e->getMessage().PHP_EOL;
+                continue;
+            }
+
+
+        }
+
     }
 
    
