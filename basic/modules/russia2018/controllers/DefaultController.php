@@ -208,7 +208,7 @@ class DefaultController extends FrontEndController
      */
     public function actionStrategu() {
 
-        $data_id_from = 73000;
+        $data_id_from = 72736;
 
         $data_id_to = Matches::find()
             ->select('MAX(id)')
@@ -219,11 +219,11 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
-            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 73000;
+            if(!Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()) $data_id_from = 72736;
 
             else {
                 $data_id_from = Matches::find()->where(['date' => Yii::$app->getRequest()->getQueryParam('from')])->one()->id;
-                if($data_id_from < 73000) $data_id_from = 73000;
+                if($data_id_from < 72736) $data_id_from = 72736;
             }
 
             //var_dump($data_id_from); exit;
