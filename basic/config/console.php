@@ -1,6 +1,9 @@
 <?php
 
 Yii::setAlias('@tests', dirname(__DIR__) . '/tests');
+Yii::setAlias('@webroot', dirname(__DIR__) . '/web/themes/russia2018');
+Yii::setAlias('@russia_root', dirname(__DIR__) . '/web/themes/russia2018');
+Yii::setAlias('@web', dirname(__DIR__) .'/');
 
 $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');

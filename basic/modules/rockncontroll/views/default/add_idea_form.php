@@ -94,7 +94,18 @@
         });
     }
 
+    function findIdeaById(id) {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/project",
+            data: "id=" + id + "&user=" + user,
+            success: function (html) {
+                $("#res").html(html);
 
+            }
+
+        });
+    }
 
 </script>
 <style>
@@ -103,6 +114,12 @@
     }
     h4{
         color: rgb(255, 215, 0);
+    }
+    .accord p{
+        color: white;
+    }
+    .accord h4,p{
+        cursor: pointer;
     }
 </style>
 <div id="res" class="container">
@@ -126,5 +143,17 @@
             </p>
         </div>
     </form>
+
+    <div class="accord">
+        <?php  foreach ($ideas as $idea): ?>
+
+            <h4 class="idea-name"><?= $idea->title ?> </h4>
+
+            <p class="idea-text" onclick="findIdeaById(<?=$idea->id?>)" title="Кликни чтобы открыть"><?= nl2br($idea->text) ?></p>
+            <hr>
+        <?php endforeach; ?>
+    </div>
+
+
 
 </div>

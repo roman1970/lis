@@ -153,23 +153,55 @@ class RandController extends Controller
             ->all();
         shuffle($english);
 
-        $rand_dib = $dibilizmy[rand(0, count($dibilizmy)-1)];
-        if($rand_dib) $rand_dib->learned = 2; $rand_dib->update(false);
-        $rand_phrase = $frazy[rand(0, count($frazy)-1)];
-        if($rand_phrase) $rand_phrase->learned = 2; $rand_phrase->update(false);
-        $rand_study = $study[rand(0, count($study)-1)];
-        if($rand_study) $rand_study->learned = 2; $rand_study->update(false);
-        $rand_from = $from_out[rand(0, count($from_out)-1)];
-        if($rand_from) $rand_from->learned = 2; $rand_from->update(false);
-        $rand_english = $english[rand(0, count($english)-1)];
-        if($rand_english) $rand_english->learned = 2; $rand_english->update(false);
+       // var_dump($frazy); exit;
 
+        if(!empty($dibilizmy)) {
+            $rand_dib = $dibilizmy[rand(0, count($dibilizmy)-1)];
+            if($rand_dib) {
+                $rand_dib->learned = 2;
+                $rand_dib->update(false);
+                $rand_thoughts[$rand_dib->source->title.' - '.$rand_dib->source->author->name] = $rand_dib->text;
+            } 
+        }
 
-        $rand_thoughts[$rand_dib->source->title.' - '.$rand_dib->source->author->name] = $rand_dib->text;
-        $rand_thoughts[$rand_phrase->source->title.' - '.$rand_phrase->source->author->name] = $rand_phrase->text;
-        $rand_thoughts[$rand_study->source->title.' - '.$rand_study->source->author->name] = $rand_study->text;
-        $rand_thoughts[$rand_from->source->title.' - '.$rand_from->source->author->name] = $rand_from->text;
-        $rand_thoughts[$rand_english->source->title.' - '.$rand_english->source->author->name] = $rand_english->text;
+        if(!empty($frazy)) {
+            //var_dump($frazy);
+            $rand_phrase = $frazy[rand(0, count($frazy) - 1)];
+            if($rand_phrase) {
+                $rand_phrase->learned = 2;
+                $rand_phrase->update(false);
+                $rand_thoughts[$rand_phrase->source->title.' - '.$rand_phrase->source->author->name] = $rand_phrase->text;
+            } 
+        }
+       
+        if(!empty($study)) {
+            $rand_study = $study[rand(0, count($study)-1)];
+            if($rand_study) {
+                $rand_study->learned = 2;
+                $rand_study->update(false);
+                $rand_thoughts[$rand_study->source->title.' - '.$rand_study->source->author->name] = $rand_study->text;
+            }
+        }
+
+        if(!empty($from_out)) {
+            $rand_from = $from_out[rand(0, count($from_out)-1)];
+            if($rand_from) {
+                $rand_from->learned = 2;
+                $rand_from->update(false);
+                $rand_thoughts[$rand_from->source->title.' - '.$rand_from->source->author->name] = $rand_from->text;
+            }
+        }
+
+        if(!empty($english)){
+            $rand_english = $english[rand(0, count($english)-1)];
+            if($rand_english) {
+                $rand_english->learned = 2;
+                $rand_english->update(false);
+                $rand_thoughts[$rand_english->source->title.' - '.$rand_english->source->author->name] = $rand_english->text;
+            }
+
+        }
+
 
         $html = '<style>p,h4{text-align: center; color: white}hr{margin: 0}</style>
                  <h4>Учить</h4>

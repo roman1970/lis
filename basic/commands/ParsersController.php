@@ -108,7 +108,7 @@ class ParsersController extends Controller
         $arr_date = [];
         $tournament = [];
 
-        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_-1_7_ru_1");
+        $day_data = $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/f_1_0_0_ru_1");
 
         $countries = explode(':',preg_replace("/[^-A-Za-z0-9а-ярьтцхчшуюэыйёА-ЯЁ.,!?:()№\/ ]+/", "", $day_data));
 
@@ -288,7 +288,7 @@ class ParsersController extends Controller
                     if ($match_soc->save(false)) echo $match_soc->id . " success";
                     else echo $match_soc->id . " fail";
                 } catch (IntegrityException $e) {
-                    //echo $e->getMessage();
+                    echo $e->getMessage();
                     continue;
                 }
                 //exit;
@@ -805,6 +805,9 @@ class ParsersController extends Controller
                     $gett = (int)$sc[0];
                     $lett = (int)$sc[1];
                 }
+                if ($node->getAttribute('class') === 'mstat') {
+                    if ($node->nodeValue !== 'Завершен') $prim = $prim . " " . $node->nodeValue;
+                }
 
                 /*if ($node->getAttribute('class') === 'mstat-date') {
                     $date_time = $node->nodeValue;
@@ -815,9 +818,7 @@ class ParsersController extends Controller
                 }
 
 
-                if ($node->getAttribute('class') === 'mstat') {
-                    if ($node->nodeValue !== 'Завершен') $prim = $prim . " " . $node->nodeValue;
-                }
+
 
                 if ($node->getAttribute('class') === 'kx o_1')
                     $bet_h = (float)$node->nodeValue;
@@ -846,7 +847,9 @@ class ParsersController extends Controller
                     $onehalf_g = (int)$node->nodeValue;
             }
 
-          
+            if(strstr($prim, 'еренесён') || strstr($prim, 'postponed') || strstr($prim, 'Перенесен')) continue;
+
+            
             $match = new Matches();
 
             $match->date = $date;
@@ -1178,6 +1181,7 @@ class ParsersController extends Controller
             $arr['ate_sum_kkal'] = 0;
             $article_time = '00:00';
             $start_day = strtotime('now 00:00:00');
+            //$start_day = mktime(0,0,0,2,10,2017);
             $today = date('Ymd', $start_day);
             //$today = '20161011_01';
             //echo $today.PHP_EOL; exit;
@@ -1925,17 +1929,17 @@ class ParsersController extends Controller
         {
             $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
             $arr = [];
-            $dibilizmy = Items::find()->where(["source_id" => 17])->all();
+            $dibilizmy = Items::find()->where(["source_id" => 17])->andWhere("in_work_prim = ''")->all();
             shuffle($dibilizmy);
-            $limerik = Items::find()->where(["source_id" => 27])->all();
+            $limerik = Items::find()->where(["source_id" => 27])->andWhere("in_work_prim = ''")->all();
             shuffle($limerik);
-            $cavers = Items::find()->where(["source_id" => 38])->all();
+            $cavers = Items::find()->where(["source_id" => 38])->andWhere("in_work_prim = ''")->all();
             shuffle($cavers);
-            $frazy = Items::find()->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")->all();
+            $frazy = Items::find()->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")->andWhere("in_work_prim = ''")->all();
             shuffle($frazy);
-            $peredelki = Items::find()->where(["source_id" => 19])->all();
+            $peredelki = Items::find()->where(["source_id" => 19])->andWhere("in_work_prim = ''")->all();
             shuffle($peredelki);
-            $pesni = Items::find()->where(["source_id" => 6])->all();
+            $pesni = Items::find()->where(["source_id" => 6])->andWhere("in_work_prim = ''")->all();
             shuffle($pesni);
 
             for ($i = 0; $i < 1000; $i++) {
@@ -1957,6 +1961,7 @@ class ParsersController extends Controller
             foreach ($arr as $item) {
                 if (strstr($item->audio_link, '/music')) {
                     $one = str_replace('/music', 'music', $item->audio_link);
+                    //mp3/jingl_oho.mp3
                     fwrite($f, "/home/romanych/" . $one . PHP_EOL);
                 } elseif ($item->audio_link) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $item->audio_link . PHP_EOL);
 
@@ -3045,6 +3050,68 @@ class ParsersController extends Controller
 
         }
 
+    }
+
+    function actionBBCFootballNews()
+    {
+
+        //$arr = [];
+        $items_bbc = new \SimpleXMLElement(@file_get_contents($url = Url::to("http://feeds.bbci.co.uk/sport/football/rss.xml")));
+        //$items_fifa = new \SimpleXMLElement(@file_get_contents($url = Url::to("http://www.fifa.com/rss-feeds/index.html")));
+        //return var_dump($items_bbc->channel[0]->item[0]);
+
+        for($i=0; $i<20; $i++) {
+            $content = @file_get_contents(Url::to($items_bbc->channel[0]->item[$i]->link));
+            /*
+            $allowedTags = '<a><br><b><h1><h2><h3><h4><i>' .
+                '<img><li><ol><p><strong><table><pre>' .
+                '<tr><td><th><u><ul>';
+            $content = strip_tags($content, $allowedTags);
+            */
+
+
+            $dom = new \DomDocument();
+            libxml_use_internal_errors(true);
+            //$head = file_get_contents(Url::to("@app/commands/header.html"));
+            $new = $content; //добавляем хэдер
+
+            $dom->loadHTML($new);
+
+
+            $div = $dom->getElementsByTagName("div");
+            foreach ($div as $node) {
+                
+                if ($node->getAttribute('id') === 'story-body') {
+
+                    $rec = new FootballNews();
+
+                    $rec->title = substr($node->nodeValue, 0, 30);
+                    $rec->description = str_replace('                    ', '<br>', $node->nodeValue);
+                    $rec->guid = (string)$items_bbc->channel[0]->item[$i]->guid;
+                    $rec->link = (string)$items_bbc->channel[0]->item[$i]->link;
+                    //$rec->pdalink = $items->channel[0]->item[$i]->pdalink;
+                    $rec->author = 'BBC';
+                    //$rec->category = $items->channel[0]->item[$i]->category[0].'$$'.$items->channel[0]->item[$i]->category[1];
+                    //$rec->enclosure = $items->channel[0]->item[$i]->enclosure['url'].'$$'.$items->channel[0]->item[$i]->enclosure['type'];
+                    $rec->pud_date = $items_bbc->channel[0]->item[$i]->pudDate;
+
+                    try {
+                        if ($rec->save(false))
+                            echo $rec->id . " success" . PHP_EOL;
+                        else
+                            echo $rec->id . " fail" . PHP_EOL;
+                    } catch (IntegrityException $e) {
+                        echo $rec->id . " dubl " . $e->getMessage() . PHP_EOL;
+                        continue;
+                    }
+
+                }
+
+
+            }
+        }
+
+        
     }
 
    

@@ -5,7 +5,7 @@
 
     var songs = [
         <?php  foreach ($songs as $song):  ?>
-        {url:'http://localhost:8088<?=$song->link?>', name: '<?=$song->title?> - <?=$song->source->title?>'},
+        {url:'http://localhost:8088<?=addslashes($song->link)?>', name: '<?=addslashes($song->title)?> - <?=addslashes($song->source->title)?>'},
         <?php endforeach; ?>
     ];
     $(document).ready(function() {

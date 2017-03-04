@@ -47,6 +47,7 @@ use app\models\Categories;
 
 use app\models\Articles;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\sphinx\Query;
 use yii\sphinx\MatchExpression;
@@ -1718,6 +1719,9 @@ class DefaultController extends FrontEndController
             case 15:
                 $cat = 116;
                 break;
+            case 16:
+                $cat = 113;
+                break;
             case 18:
                 $cat = 114;
                 break;
@@ -1749,21 +1753,12 @@ class DefaultController extends FrontEndController
 
                 //return var_dump($update_source);
                 
-                if($cat == 136) {
-                    $next_source = Source::find()
-                        ->where("(cat_id = 136 or cat_id = 113)  and (id > $update_source->id ) ")
-                        ->orderBy('id ASC')
-                        ->one();
-                    //return var_dump($next_source);
-                }
 
-                else{
                    
-                    $next_source = Source::find()
-                        ->where("id > $update_source->id and cat_id = $cat ")
-                        ->one();
+                $next_source = Source::find()
+                    ->where("id > $update_source->id and cat_id = $cat ")
+                    ->one();
 
-                }
 
 
                 if(!$next_source) {
@@ -1781,17 +1776,11 @@ class DefaultController extends FrontEndController
                 return $this->renderPartial('source', ['source' => $next_source, 'user' => $user]);
             }
 
-            if($cat == 136) {
-                $source = Source::find()
-                    ->where("(cat_id = 136 or cat_id = 113) and is_next = 1")
-                    ->one();
-            }
-            
-            else {
+
                 $source = Source::find()
                     ->where("cat_id = $cat and is_next = 1")
                     ->one();
-            }
+
 
                 return $this->renderPartial('source', ['source' => $source, 'user' => $user]);
             }
@@ -2991,7 +2980,18 @@ class DefaultController extends FrontEndController
 
             }
 
-            if (Yii::$app->getRequest()->getQueryParam('find')) {
+            else if (Yii::$app->getRequest()->getQueryParam('edited') && Yii::$app->getRequest()->getQueryParam('id')) {
+
+                $edited_idea = Idea::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $edited_idea->text = Yii::$app->getRequest()->getQueryParam('edited');
+
+                if($edited_idea->save(false)) return "<p>Изменения сохранены</p>";
+                else return "<p>Ошибка</p>";
+
+
+            }
+
+            else if (Yii::$app->getRequest()->getQueryParam('find')) {
 
 
                 //return var_dump(Idea::find()->where('title like "%'.Yii::$app->getRequest()->getQueryParam('find').'%"')->one());
@@ -3007,22 +3007,32 @@ class DefaultController extends FrontEndController
 
             }
 
-            if (Yii::$app->getRequest()->getQueryParam('edited') && Yii::$app->getRequest()->getQueryParam('id')) {
+            else if (Yii::$app->getRequest()->getQueryParam('id')) {
 
-                $edited_idea = Idea::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
-                $edited_idea->text = Yii::$app->getRequest()->getQueryParam('edited');
 
-                if($edited_idea->save(false)) return "<p>Изменения сохранены</p>";
-                else return "<p>Ошибка</p>";
+                //return var_dump(Idea::find()->where('title like "%'.Yii::$app->getRequest()->getQueryParam('find').'%"')->one());
 
+                $idea = Idea::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+
+                if($idea) {
+                    $bound_items = explode(',', $idea->items);
+                    //return var_dump($bound_items);
+                    return $this->renderPartial('idea_work', ['idea' => $idea, 'user' => $user, 'bound_items' => $bound_items]);
+                }
+                else return 'uups!';
 
             }
 
-            return $this->renderPartial('add_idea_form');
+
+            
+            $ideas = Idea::find()->all();
+
+            return $this->renderPartial('add_idea_form', ['ideas' => $ideas]);
 
 
         }
     }
+    
 
     /**
      * Привязка айтемов к проекту
@@ -3108,6 +3118,50 @@ class DefaultController extends FrontEndController
 
     function actionTrue($id){
        return TestAnswers::findOne($id)->true;
+    }
+
+    function actionCopyright(){
+        $user = Yii::$app->getRequest()->getQueryParam('user');
+            //return $user;
+
+            if (!$user) return 'Доступ запрещён!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('id') &&
+                Yii::$app->getRequest()->getQueryParam('title') &&
+                Yii::$app->getRequest()->getQueryParam('text')) {
+
+
+                $new = FootballNews::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+
+                //return var_dump($new);
+
+                if($new){
+                    try {
+                        $new->title = Yii::$app->getRequest()->getQueryParam('title');
+                        $new->description = Yii::$app->getRequest()->getQueryParam('text');
+                        $new->author = $user;
+                        $new->update(false);
+
+                        $act = new DiaryActs();
+                        $act->model_id = 15;
+                        $act->user_id = (int)$user;
+                        $act->mark = 2;
+                        if($act->save(false)) return '<p>Сохранено!</p>';
+                    } catch (\Exception $e) {
+                        return $e->getMessage();
+                    }
+
+
+                }
+
+            }
+
+            $news = FootballNews::find()->where("author like '%BBC%'")->orderBy('id DESC')->limit(20)->all();
+
+
+            return $this->renderPartial('copyright', ['content' => $news]);
+
     }
 
 

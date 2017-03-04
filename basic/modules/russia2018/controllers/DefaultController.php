@@ -31,50 +31,83 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex()
     {
-        $text = '';
-        //$visit = new Visit();
-        /*$userHost = Yii::$app->request->userHost;
-        $userIP = Yii::$app->request->userIP;
-        if($userIP) $visit->ip = $userIP;
-        if(isset($_SERVER['HTTP_REFERER'])) $visit->refer = $_SERVER['HTTP_REFERER'];
-        else $visit->refer = self::get_all_ip();
-        $visit->browser = implode(';',$_SERVER);
-
-        foreach (getallheaders() as $name => $value) {
-            $visit->refer = "$name: $value\n";
-        }
-        */
-      
-
-        //$visit->save(false);
 
         $model = new Strategy();
+        $matchs = [];
 
 
-            $matchs = Matches::find()
+        /*$matchs = Matches::find()
                 ->orderBy('id DESC')
                 ->where("tournament like('%РОССИЯ: Премьер-лига%')
-                or tournament like('%АНГЛИЯ: Премьер-лига%')")
+                or tournament like('%АНГЛИЯ: Премьер-лига -%')")
                 //->where('tournament IN ('.$this->tournaments.')')
                 ->limit(10)
                 //->offset(30)
                 ->all();
+        */
+
+        $rus = Matches::find()
+            ->where("tournament like('%РОССИЯ: Премьер-лига%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $engl = Matches::find()
+            ->where("tournament like('%АНГЛИЯ: Премьер-лига -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $ita = Matches::find()
+            ->where("tournament like('%ИТАЛИЯ: Серия А -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $fran = Matches::find()
+            ->where("tournament like('%ФРАНЦИЯ: Первая лига -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $germ = Matches::find()
+            ->where("tournament like('%ГЕРМАНИЯ: Бундеслига -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $chemp_world = Matches::find()
+            ->where("tournament like('%Чемпионат мира -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+        $chemp_cup = Matches::find()
+            ->where("tournament like('%ЕВРОПА: Лига чемпионов -%')")
+            ->orderBy('id DESC')
+            ->limit(10)
+            ->all();
+
+        array_push($matchs, $rus[rand(0, count($rus)-1)]);
+        array_push($matchs, $engl[rand(0, count($engl)-1)]);
+        array_push($matchs, $ita[rand(0, count($ita)-1)]);
+        array_push($matchs, $fran[rand(0, count($fran)-1)]);
+        array_push($matchs, $germ[rand(0, count($germ)-1)]);
+        array_push($matchs, $chemp_world[rand(0, count($chemp_world)-1)]);
+        array_push($matchs, $chemp_cup[rand(0, count($chemp_cup)-1)]);
+
+
             //$cats = Categories::find()->leaves()->all();
             $this->betsGenerate($matchs);
-           // var_dump($matchs);
-        
-            $news = Event::find()->where('cat_id = 145 or cat_id = 120')->orderBy('id DESC')->limit(5)->all();
-            $news2 = FootballNews::find()->orderBy('id DESC')->limit(5)->all();
 
-            $new = $this->randObjFromSetOfObj(array_merge($news,$news2));
         
-            if($new instanceof Event) $text = $new->text;
-            elseif($new instanceof FootballNews) $text = $new->description;
+            //$news = Event::find()->where('cat_id = 145 or cat_id = 120')->orderBy('id DESC')->limit(5)->all();
+            $news = FootballNews::find()->where('author NOT LIKE "%BBC%" ')->orderBy('id DESC')->limit(20)->all();
 
-           // return var_dump($new);
+            //$new = $this->randObjFromSetOfObj(array_merge($news,$news2));
+
+            $rand_new = $news[rand(0, count($news)-1)]->description;
+
+
+           //return var_dump($rand_new);
 
             shuffle($matchs);
-            return $this->render('index', ['matchs' => $matchs, 'new' => $text,
+            return $this->render('index', ['matchs' => $matchs,
+                'new' => $rand_new,
                 'model' => $model,
                 'bet_h' => $this->bet_h,
                 'bet_n' => $this->bet_n,
@@ -88,9 +121,7 @@ class DefaultController extends FrontEndController
     public function actionStrateg() {
 
         $data_id_from = 73000;
-
-
-
+        
 
         if(Yii::$app->getRequest()->getQueryParam('from')) {
 
@@ -144,6 +175,14 @@ class DefaultController extends FrontEndController
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
                 ->where("(host like('_Реал Сосьедад') or guest like('Реал Сосьедад_')) and tournament like('%ИСПАНИЯ%') or (host like('_Реал Сосьедад (Исп)') or guest like('Реал Сосьедад (Исп)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
+        elseif ($team == 'Бенфика') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Бенфика') or guest like('Бенфика_')) and (tournament like('%ПОРТУГАЛИЯ%') or tournament like('%ЕВРОПА%')) or (host like('_Бенфика (Пор)') or guest like('Бенфика (Пор)'))")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -260,6 +299,14 @@ class DefaultController extends FrontEndController
                 ->orderBy('id DESC')
                 // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
                 ->where("(host like('_Реал Сосьедад') or guest like('Реал Сосьедад_')) and tournament like('%ИСПАНИЯ%') or (host like('_Реал Сосьедад (Исп)') or guest like('Реал Сосьедад (Исп)'))")
+                ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
+                ->all();
+        }
+        elseif ($team == 'Бенфика') {
+            $matchs = Matches::find()
+                ->orderBy('id DESC')
+                // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
+                ->where("(host like('_Бенфика') or guest like('Бенфика_')) and (tournament like('%ПОРТУГАЛИЯ%') or tournament like('%ЕВРОПА%')) or (host like('_Бенфика (Пор)') or guest like('Бенфика (Пор)'))")
                 ->andWhere("id > ".$data_id_from." and id < ".$data_id_to." ")
                 ->all();
         }
@@ -420,7 +467,7 @@ class DefaultController extends FrontEndController
         $matchs = Matches::find()
             ->orderBy('id DESC')
             // ->where("host like('%ЦСКА') or host like('%ЦСКА (Рос)')")
-            ->where("tournament like('".$tournament."') and date like('%".$year."%')")
+            ->where("tournament like('%".$tournament."%') and date like('%".$year."%')")
             ->all();
 
         $this->betsGenerate($matchs);
@@ -1218,7 +1265,8 @@ class DefaultController extends FrontEndController
        
         $news = FootballNews::find()
             ->limit(20)
-            ->orderBy('id ASC')
+            ->where('author NOT LIKE "%BBC%" ')
+            ->orderBy('id DESC')
             ->all();
         $rand_new = $news[rand(0, count($news)-1)];
         return $rand_new->description;

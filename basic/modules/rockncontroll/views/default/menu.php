@@ -46,6 +46,7 @@
         });
        
         $("#show_menu").hide();
+        $("#preloader").hide();
         $("#stop_item_block").parent().hide();
 
         $("#show_menu").click(
@@ -60,6 +61,8 @@
 
 
     function send(user, controller_str, test = 0) {
+
+        $("#summary").html("<div id='preloader'><img  src='uploads/preloader.gif'  alt='preloader' /></div>");
 
         if(test) {
             $.ajax({
@@ -98,8 +101,10 @@
             url: "rockncontroll/default/learned/",
             data: "user="+user,
             success: function(){
-                $("#request_learned").clean();
+
                 $("#menu").show();
+                $("#show_menu").hide();
+                $("#summary").hide();
             }
 
         });
@@ -108,7 +113,15 @@
 
 
 </script>
-
+<style>
+    #preloader{
+        text-align: center;
+        height: 500px;
+    }
+    #preloader img{
+        padding-top: 50px;
+    }
+</style>
 <div id="menu">
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'day-params')">Сегодня</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'show-task')">Задачи</button>
@@ -138,11 +151,14 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'remember')">Запомнить</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'project')">Проект</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'news')">Новости</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'copyright')">Копирайт</button>
 </div>
 
 <div id="show_menu">
     <button type="button" class="btn btn-success btn-lg btn-block" >Меню</button>
 </div>
+
+
 
 
 

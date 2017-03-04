@@ -1172,11 +1172,13 @@ class CountryController extends Controller
                         $matchs[$grand->name] = Matches::find()
                             ->orderBy('id DESC')
                             // ->where("host like('_".$grand->name."') or guest like('".$grand->name."_') or host like('_".$grand->name." (') or guest like('".$grand->name." (_') ")
-                            ->where("host like('_" . addslashes($grand->name) . "') or guest like('" . addslashes($grand->name) . "_') or
-                             (host like('_" . addslashes($grand->name) . " (%') and host not like('_" . addslashes($grand->name) . " (Б)%') and host not like('_" . addslashes($grand->name) . " (Ж)%')) or
-                             (guest like('" . addslashes($grand->name) . " (%') and guest not like('" . addslashes($grand->name) . " (Б)%') and guest not like('" . addslashes($grand->name) . " (Ж)%'))")
-
+                            ->where("((host like('_" . addslashes($grand->name) . "') or guest like('" . addslashes($grand->name) . "_')) ) or
+                             (host like('_" . addslashes($grand->name) . " (%') and host not like('_" . addslashes($grand->name) . " (Б)%') and
+                              host not like('_" . addslashes($grand->name) . " (Ж)%') and host not like('_" . addslashes($grand->name) . " (Люк)%') and tournament not like('%ЛЮКСЕМБУРГ%')) or
+                             (guest like('" . addslashes($grand->name) . " (%') and guest not like('" . addslashes($grand->name) . " (Б)%') and 
+                              guest not like('" . addslashes($grand->name) . " (Ж)%') and guest not like('" . addslashes($grand->name) . " (Люк)%') and tournament not like('%ЛЮКСЕМБУРГ%')) ")
                             ->andWhere("id > " . $from . " and id < " . $to . " ")
+                            ->andWhere("tournament not like('ЛЮКСЕМБУРГ%')")
                             ->all();
                     }
 

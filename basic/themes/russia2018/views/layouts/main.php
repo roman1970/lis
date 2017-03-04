@@ -19,14 +19,17 @@ Russia2018Asset::register($this);
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <script src="/themes/russia2018/js/jQuery-autoComplete-master/jquery.auto-complete.js"></script>
- */?>
+ 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/jquery-ui-git.js"></script>
         <link href="css/flags.css" rel="stylesheet">
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+ */?>
        
         <?php $this->head() ?>
     </head>
+    
 
     <body>
 

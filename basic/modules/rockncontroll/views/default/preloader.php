@@ -1,0 +1,1 @@
+<img id="preloader" src="uploads/preloader.gif" alt="preloader" />
