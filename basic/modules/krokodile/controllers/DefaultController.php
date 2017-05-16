@@ -95,7 +95,7 @@ class DefaultController extends FrontEndController
             ->where("source_id = 27 or source_id = 17 or
             source_id = 37 or source_id = 336 or source_id = 528 or cat_id = 104 or cat_id = 94")
             ->andWhere('cens = 0')
-            ->andWhere('published = 1')
+            //->andWhere('published = 1')
             ->orderBy('id ASC')
             ->all();
         $random_ind = rand(0, count($thoughts)-1);
@@ -104,6 +104,17 @@ class DefaultController extends FrontEndController
             return "document.getElementById('rand').innerHTML = \"".addcslashes(nl2br($thoughts[$random_ind]->text, false), "\r\n\"\'")."<br><span style='font-size: 15px'> (".$thoughts[$random_ind]->source->title. " - " .
             $thoughts[$random_ind]->source->author->name.")</span>"."\";";
         else return "document.getElementById('rand').innerHTML = 'Доброго Вам Времени!';";
+    }
+    
+    function actionGetItemByLink(){
+        $current_track = file("http://37.192.187.83:10088/ices.vclt") ?
+            substr(file("http://37.192.187.83:10088/ices.vclt")[1],6) : 'Радио-блог Комната с мехом';
+        
+        if($current_track){
+           return "document.getElementById('rand').innerHTML = '".trim($current_track)."';";
+        };
+        //return "document.getElementById('rand').innerHTML = 'Доброго Вам Времени!';";
+        return var_dump($current_track);
     }
 
 

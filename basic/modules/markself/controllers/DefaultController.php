@@ -7,6 +7,7 @@ use app\models\MarkActions;
 use app\models\MarkGroup;
 use app\models\MarkIt;
 use app\models\MarkUser;
+use app\models\RadioItem;
 use app\models\UploadForm;
 use Yii;
 use yii\web\UploadedFile;
@@ -313,6 +314,26 @@ class DefaultController extends FrontEndController
         }
         return true;
 
+    }
+
+    function getAudioTags($api_string){
+        $item = RadioItem::find()->where(['like', 'audio', trim($api_string)])->one();
+        //return var_dump($item);
+
+        if($item) return $item->cat->name." :: ".$item->anons." :: ".$item->title;
+
+        return trim($api_string);
+
+    }
+
+    function actionShowCurrentRadioTracks(){
+        $current_test = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/test_mp3")[64]));
+
+        $current_second = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/second_mp3")[64]));
+
+        $current_bard = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/bard_mp3")[64]));
+
+        return  "1. ".$current_test ."<br>2. " .$current_second ."<br>3. ". $current_bard;
     }
 
 

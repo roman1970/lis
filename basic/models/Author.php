@@ -43,4 +43,9 @@ class Author extends \yii\db\ActiveRecord
 
         ];
     }
+
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'country_id']);
+    }
 }

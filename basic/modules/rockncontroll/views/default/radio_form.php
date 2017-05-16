@@ -58,14 +58,28 @@
     <div id="silent">Включить радио</div>
 
     <p style="text-align: center" id="player">
-        <audio controls="controls" >
-            <source src="http://37.192.187.83:10088/ices" >
-        </audio>
+        <p>
+            <audio controls="controls" >
+                <source src="http://37.192.187.83:10088/test_mp3" >
+            </audio>
+        </p>
+        <p>
+            <audio controls="controls" >
+                <source src="http://37.192.187.83:10088/second_mp3" >
+            </audio>
+        </p>
+        <p>
+            <audio controls="controls" >
+                <source src="http://37.192.187.83:10088/bard_mp3" >
+            </audio>
+        </p>
+    <p id="radio"></p>
+
     </p>
     <form class="form-inline center" role="form" id="form-ate">
         <div class="form-group">
 
-            <p>
+            <p class="center">
                 <input type="text" class="form-control" id="words"  placeholder="Ключевые слова">
 
                 <button type="button" class="btn btn-success" id="make_pl" >Создать плейлист!</button>
@@ -75,3 +89,41 @@
     </form>
 
 </div>
+
+<script>
+
+
+    /*setInterval(function () {
+     $.ajax({
+     type: "GET",
+     url: "rockncontroll/default/rand-item/",
+     success: function(html){
+     $("#rand_item").html(html);
+     h = html;
+     }
+
+     });
+
+     }, 20000);
+     */
+
+
+    setTimeout(function run() {
+
+     $.ajax({
+     type: "GET",
+     url: "rockncontroll/default/show-current-radio-tracks/",
+     success: function(html){
+     $("#radio").html(html);
+     }
+
+     });
+     setTimeout(run, 10000);
+
+     }, 10000);
+
+
+
+
+
+</script>

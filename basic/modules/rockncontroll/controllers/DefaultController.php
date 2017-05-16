@@ -6,7 +6,10 @@ namespace app\modules\rockncontroll\controllers;
 use app\components\FrontEndController;
 use app\components\Helper;
 use app\models\ArticlesContent;
+use app\models\Author;
 use app\models\Bought;
+use app\models\Category;
+use app\models\Country;
 use app\models\DiaryActModel;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
@@ -26,6 +29,11 @@ use app\models\Log;
 use app\models\MarkUser;
 use app\models\NsbNews;
 use app\models\Products;
+use app\models\RadioAuthor;
+use app\models\RadioItem;
+use app\models\RadioSource;
+use app\models\RadioTheme;
+use app\models\RadioThemeItems;
 use app\models\Shop;
 use app\models\Snapshot;
 use app\models\SongText;
@@ -46,11 +54,13 @@ use app\models\Categories;
 //use yii\data\Pagination;
 
 use app\models\Articles;
+use yii\base\Theme;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\BadRequestHttpException;
 use yii\sphinx\Query;
 use yii\sphinx\MatchExpression;
+use yii\db\IntegrityException;
 
 
 class DefaultController extends FrontEndController
@@ -65,6 +75,17 @@ class DefaultController extends FrontEndController
      */
     public function actionIndex(){
 
+        /*try {
+            Category::find()->all();
+        } catch (IntegrityException $e) {
+
+            return $e->getMessage();
+
+        }
+        */
+
+
+        //return var_dump($current_bard);
         $denzh = time() - mktime(0, 0, 0, 5, 3, 70) + 9*60*60;
         $denzhisni = round(($denzh / 3600 / 24), 0);
 
@@ -78,7 +99,7 @@ class DefaultController extends FrontEndController
      */
     public function actionEat(){
 
-        $start_day = strtotime('now 00:00:00', time()+7*60*60);
+        $start_day = strtotime('now 00:00:00', time())+3*60*60;
 
         
         if(Yii::$app->getRequest()->getQueryParam('user'))  {
@@ -255,7 +276,7 @@ class DefaultController extends FrontEndController
         //$current_day_of_year = 365;
         $day_number_first_sept = date('z', mktime(0, 0, 0, 1, 1, 2017))+7;
         //$day_number_first_sept = 122;
-        $first_sept_time = mktime(0, 0, 0, 1, 1, 2017) + 7*60*60;
+        $first_sept_time = mktime(0, 0, 0, 1, 1, 2017) + 3*60*60;
        
         //return date('Y-m-d H', $first_sept_time);
         $first_sept_act = DiaryActs::find()->where("time > $first_sept_time")->one();
@@ -418,7 +439,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time()+3*60*60);
             //return date('D G:i', $start_day);
 
 
@@ -497,9 +518,21 @@ class DefaultController extends FrontEndController
 
             //$params = DiaryDayParams::find()->all();
 
+            //return var_dump(DiaryRecDayParams::find()->where('day_params_id=4')->all());
+            
+            $last_el_counter = DiaryRecDayParams::find()->where(['day_param_id' => 4])->orderBy('id DESC')->one()->value;
+            $last_hot_water_counter = DiaryRecDayParams::find()->where(['day_param_id' => 3])->orderBy('id DESC')->one()->value;
+            $last_cold_water_counter = DiaryRecDayParams::find()->where(['day_param_id' => 2])->orderBy('id DESC')->one()->value;
 
 
-            return $this->renderPartial('today_params', ['params' => $params, 'recorded_params' => $recorded , 'user' => $user->id]);
+            return $this->renderPartial('today_params', 
+                ['params' => $params, 
+                 'recorded_params' => $recorded , 
+                 'user' => $user->id, 
+                 'last_el_counter' => $last_el_counter,
+                 'last_hot_water_counter' => $last_hot_water_counter,
+                 'last_cold_water_counter' => $last_cold_water_counter
+               ]);
             
             
         }
@@ -514,7 +547,7 @@ class DefaultController extends FrontEndController
     public function actionChangeParam(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time()+3*60*60);
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
 
@@ -566,8 +599,19 @@ class DefaultController extends FrontEndController
                     //return var_dump($params);
 
 
-                    return $this->renderPartial('today_params', ['params' => $params, 'recorded_params' => $recorded , 'user' => $user->id]);
+                    $last_el_counter = DiaryRecDayParams::find()->where(['day_param_id' => 4])->orderBy('id DESC')->one()->value;
+                    $last_hot_water_counter = DiaryRecDayParams::find()->where(['day_param_id' => 3])->orderBy('id DESC')->one()->value;
+                    $last_cold_water_counter = DiaryRecDayParams::find()->where(['day_param_id' => 2])->orderBy('id DESC')->one()->value;
 
+
+                    return $this->renderPartial('today_params',
+                        ['params' => $params,
+                            'recorded_params' => $recorded ,
+                            'user' => $user->id,
+                            'last_el_counter' => $last_el_counter,
+                            'last_hot_water_counter' => $last_hot_water_counter,
+                            'last_cold_water_counter' => $last_cold_water_counter
+                        ]);
                 }
 
                 return 'НЕ получилось';
@@ -622,6 +666,156 @@ class DefaultController extends FrontEndController
             
             return $this->renderPartial('add_product');
         }
+
+        return '<p>Доступ запрещён</p>';
+    }
+
+    /**
+     * Добавление магазина
+     * @return string
+     */
+    public function actionAddShop(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+            if (!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name')) {
+
+                if(Shop::find()->where(['name' => Yii::$app->getRequest()->getQueryParam('name')])->one()){
+                   return '<p>Такой магазин уже есть</p>';
+                }
+
+                $shop = new Shop();
+                $shop->name = Yii::$app->getRequest()->getQueryParam('name');
+                try {
+                    if ($shop->save(false)) return "<span style='color:green; font-size: 15px;'>Магазин добавлен!</span>";
+                    // else return var_dump($product);
+
+                } catch (\ErrorException $e) {
+                    return $e->getMessage();
+                }
+            }
+        }
+
+        return '<p>Ошибка</p>';
+    }
+
+    /**
+     * Добавление автора
+     * @return string
+     */
+    public function actionAddAuthor(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+            if (!$user) return 'Доступ запрещен!';
+            //return 2;
+
+
+
+            if (Yii::$app->getRequest()->getQueryParam('name') &&
+                Yii::$app->getRequest()->getQueryParam('status') &&
+                Yii::$app->getRequest()->getQueryParam('country')) {
+
+
+
+                if(Author::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('name').'%"')->one()){
+                   // return var_dump(Author::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('name').'%"'));
+                    return '<p>Такой автор уже есть</p>';
+                }
+               //return 2;
+
+                $author = new Author();
+                if(Country::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('country').'%"')->one()){
+
+                    $author->country_id = Country::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('country').'%"')->one()->id;
+                }
+                else $author->country_id = 236;
+
+                //return 3;
+
+                $author->name = Yii::$app->getRequest()->getQueryParam('name');
+                $author->status =  Yii::$app->getRequest()->getQueryParam('status');
+                $author->description = '';
+                //return var_dump($author);
+
+                if($author->save(false)) {
+                    try {
+                        $radio_author = new RadioAuthor();
+                        $radio_author->id = $author->id;
+                        $radio_author->name = $author->name;
+                        $radio_author->save(false);
+                        return "<span style='color:green; font-size: 15px;'>Автор добавлен!</span>";
+                    } catch (IntegrityException $e) {
+                        return $e->getMessage();
+                    }
+                };
+
+            }
+        }
+
+        return '<p>Ошибка</p>';
+    }
+
+
+    /**
+     * Добавление источника
+     * @return string
+     */
+    public function actionAddSource(){
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+            if (!$user) return 'Доступ запрещен!';
+            //return 2;
+
+
+            if (Yii::$app->getRequest()->getQueryParam('title') &&
+                Yii::$app->getRequest()->getQueryParam('author') &&
+                Yii::$app->getRequest()->getQueryParam('cat')) {
+                //return 3;
+
+                $source = new Source();
+
+                if(Author::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('author').'%"')->one()){
+
+                    //return var_dump(Author::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('name').'%"'));
+                    $source->author_id = Author::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('author').'%"')->one()->id;
+                }
+                else return '<p>Ошибка сохранения автора</p>';
+
+                if(Categories::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('cat').'%"')->one()){
+
+                    $source->cat_id = Categories::find()->where('name like "%'. Yii::$app->getRequest()->getQueryParam('cat').'%"')->one()->id;
+                }
+                else return '<p>Ошибка сохранения категории</p>';
+
+                //return 5;
+
+                $source->title = Yii::$app->getRequest()->getQueryParam('title');
+                $source->status = 0;
+                
+
+                if($source->save(false)) {
+                    try {
+                        $radio_source = new RadioSource();
+                        $radio_source->id = $source->id;
+                        $radio_source->author_id = $source->author_id;
+                        $radio_source->title = $source->title;
+                        $radio_source->save(false);
+                        return "<span style='color:green; font-size: 15px;'>Источник добавлен!</span>";
+                    } catch (IntegrityException $e) {
+                        return $e->getMessage();
+                    }
+                }
+                else return '<p>Ошибка сохранения в базе</p>';
+
+            }
+        }
+
+        return '<p>Ошибка</p>';
     }
 
     /**
@@ -686,7 +880,8 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time())+3*60*60;
+            //return var_dump(date('Y-m-d H', $start_day));
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -781,7 +976,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time())+3*60*60;
 
 
             $user = MarkUser::findOne(11);
@@ -878,7 +1073,7 @@ class DefaultController extends FrontEndController
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time())+3*60*60;
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -975,7 +1170,7 @@ class DefaultController extends FrontEndController
      */
     public function actionBought(){
 
-        $start_day = strtotime('now 00:00:00', time()+7*60*60);
+        $start_day = strtotime('now 00:00:00', time()+3*60*60);
 
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
@@ -1349,6 +1544,53 @@ class DefaultController extends FrontEndController
         return  json_encode($res);
     }
 
+    public function actionCatPostRadio(){
+        $res = [];
+        //return  json_encode($res);
+
+
+        try {
+            $m = Category::find()->all();
+        } catch (IntegrityException $e) {
+            $res[] =  $e->getMessage();
+            return json_encode($res);
+
+        }
+
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+
+    }
+
+    public function actionThemeRadio(){
+        $res = [];
+        //return  json_encode($res);
+
+
+        try {
+            $m = RadioTheme::find()->all();
+        } catch (IntegrityException $e) {
+            $res[] =  $e->getMessage();
+            return json_encode($res);
+
+        }
+
+
+        foreach ($m as $h){
+            $res[] = $h->title;
+
+        }
+
+        return  json_encode($res);
+
+    }
+    
+
     public function actionShopsProductsCats(){
         $res = [];
 
@@ -1409,6 +1651,64 @@ class DefaultController extends FrontEndController
     }
 
     /**
+     * Все категории для автокомплита
+     * @return string
+     */
+    public function actionAllCats(){
+        $res = [];
+
+        $m = Categories::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    public function actionItems(){
+        $res = [];
+
+        $m = Items::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->title;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    public function actionSourceBooks(){
+       // return 2;
+        $res = [];
+
+        $m = Source::find()->where('status = 2')->all();
+
+        foreach ($m as $h){
+            $res[] = $h->title;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    public function actionSourceAlbum(){
+        // return 2;
+        $res = [];
+
+        $m = Source::find()->where('status <> 2')->all();
+
+        foreach ($m as $h){
+            $res[] = $h->title;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    /**
      * Категории дел для автокомплита
      * @return string
      */
@@ -1441,6 +1741,33 @@ class DefaultController extends FrontEndController
 
         return  json_encode($res);
     }
+
+    public function actionCountry(){
+        $res = [];
+
+        $m = Country::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
+    public function actionAuthor(){
+        $res = [];
+
+        $m = Author::find()->all();
+
+        foreach ($m as $h){
+            $res[] = $h->name;
+
+        }
+
+        return  json_encode($res);
+    }
+
 
 
     public function actionDataForCharts(){
@@ -1607,7 +1934,7 @@ class DefaultController extends FrontEndController
     public function actionEvents(){
         if(Yii::$app->getRequest()->getQueryParam('user')) {
 
-            $start_day = strtotime('now 00:00:00', time()+7*60*60);
+            $start_day = strtotime('now 00:00:00', time())+3*60*60;
 
 
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
@@ -1684,14 +2011,15 @@ class DefaultController extends FrontEndController
      */
     public function actionMarkers(){
 
-        $current_hour = date('G', time()+7*60*60);
+        $current_hour = date('G', time()+6*60*60);
         //return $current_hour;
 
 
         switch ($current_hour) {
-            case 6:
+            /*case 6:
                 $cat = 136;
                 break;
+            */
             case 7:
                 $cat = 116;
                 break;
@@ -1702,16 +2030,16 @@ class DefaultController extends FrontEndController
                 $cat = 116;
                 break;
             case 10:
-                $cat = 202;
+                $cat = 116;
                 break;
             case 11:
-                $cat = 202;
+                $cat = 116;
                 break;
             case 12:
-                $cat = 116;
+                $cat = 202;
                 break;
             case 13:
-                $cat = 116;
+                $cat = 202;
                 break;
             case 14:
                 $cat = 116;
@@ -1722,11 +2050,14 @@ class DefaultController extends FrontEndController
             case 16:
                 $cat = 113;
                 break;
+            case 17:
+                $cat = 116;
+                break;
             case 18:
                 $cat = 114;
                 break;
             case 19:
-                $cat = 114;
+                $cat = 116;
                 break;
             default:
                 $cat = 53;
@@ -1868,12 +2199,14 @@ class DefaultController extends FrontEndController
                 $events_records = [];
                 $news_records = [];
                 //$football_news_records = [];
+
                
                 $query  = new Query();
                 // $search_result = $query_search->from('siteSearch')->match($q)->all();  // поиск осуществляется по средством метода match с переданной поисковой фразой.
                 $query_items_ids = $query->from('items')
                     ->match(Yii::$app->getRequest()->getQueryParam('text'))
                     ->all();
+                //return var_dump($query_items_ids);
 
 
                 foreach ($query_items_ids as $arr_item_rec){
@@ -1989,12 +2322,90 @@ class DefaultController extends FrontEndController
                 return $this->renderPartial('articles_searched', ['articles_rows' => (is_array($articles_records) && !empty($articles_records)) ? $articles_records : 'Ничего не найдено']);
 
             }
-
-
-            return $this->renderPartial('article_search_form');
+            
+            $rand_article = $this->getRandArticle();
+            
+            
+            return $this->renderPartial('article_search_form', ['rec' => $rand_article]);
 
         }
+
+        return 'Доступ запрещен!';
         
+    }
+    
+    
+    function getRandArticle(){
+        $max_id = (int)ArticlesContent::find()
+            ->select('MAX(id)')
+            ->scalar();
+
+        $rand_article = ArticlesContent::findOne(rand(0, $max_id));
+        if(!$rand_article) return $this->getRandArticle();
+        return $rand_article;
+
+
+    }
+
+    /**
+     * Получить книгу
+     * @return string
+     */
+    function actionGetBook(){
+
+        if (Yii::$app->getRequest()->getQueryParam('user')) {
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+
+            if (Yii::$app->getRequest()->getQueryParam('book')) {
+
+                if(Source::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('book')])->one()){
+                    $source_id = Source::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('book')])->one()->id;
+                    $articles = ArticlesContent::find()->where("source_id=$source_id")->all();
+                    $items = Items::find()->where("source_id=$source_id")->all();
+
+                    return $this->renderPartial('book', ['articles' => $articles, 'items' => $items]);
+                    //return var_dump($items);
+                }
+
+
+            }
+
+        }
+
+    }
+    
+    function actionGetAlbum(){
+
+        if (Yii::$app->getRequest()->getQueryParam('user')) {
+
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+            if (Yii::$app->getRequest()->getQueryParam('album')) {
+
+                if(Source::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('album')])->one()){
+                    $source_id = Source::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('album')])->one()->id;
+                    
+                    
+                    $songs = SongText::find()->where("source_id=$source_id")->all();
+                    $source = Source::findOne($source_id);
+
+                    return $this->renderPartial('album', ['songs' => $songs, 'source' => $source]);
+                    //return var_dump($items);
+                }
+
+
+            }
+            
+
+        }
     }
 
 
@@ -2295,7 +2706,31 @@ class DefaultController extends FrontEndController
     function actionSpent(){
         if($user = Yii::$app->getRequest()->getQueryParam('user')) {
 
-            if (!$user) return 'Доступ запрещн!';
+            if(!$user) return 'Доступ запрещн!';
+
+            if(Yii::$app->getRequest()->getQueryParam('secs')){
+                //return Yii::$app->getRequest()->getQueryParam('secs');
+                $start_second = (int)Yii::$app->getRequest()->getQueryParam('secs') + 15*60*60;
+                $end_second = $start_second + 60*60*18;
+
+                $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_second and time < $end_second and user_id = $user and model_id = 3")->all(), 'id', 'id'));
+
+
+                $bought = [];
+                $sum_spent = 0;
+
+                if ($today_acts) {
+                    $bought = Bought::find()
+                        ->where("act_id  IN (" . $today_acts . ")")
+                        ->all();
+                    $sum_spent = Bought::find()
+                        ->select('SUM(spent)')
+                        ->where("act_id  IN (" . $today_acts . ")")
+                        ->scalar();
+                }
+
+                return $this->renderPartial('bought_today', ['bought_today' => $bought, 'sum_spent' => $sum_spent, 'user' => $user, 'time' => $start_second]);
+            }
 
             if (Yii::$app->getRequest()->getQueryParam('request')) {
                //return Yii::$app->getRequest()->getQueryParam('request');
@@ -2621,7 +3056,7 @@ class DefaultController extends FrontEndController
                 if($this->getMonthActIds($i, 2016))
                     $income16 = Incomes::find()
                             ->select(['SUM(money)'])
-                            ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2016) . ')')
+                            ->where('income_id IN (3, 4, 6, 16, 18, 19) and act_id IN (' . $this->getMonthActIds($i, 2016) . ')')
                             ->scalar() / (int)date('t', mktime(0, 0, 0, $i, (int)date('d', time()), 2016));
                 else $income16 = 0;
 
@@ -2629,7 +3064,7 @@ class DefaultController extends FrontEndController
                 if($this->getMonthActIds($i, 2017))
                     $income17 = Incomes::find()
                             ->select(['SUM(money)'])
-                            ->where('income_id IN (3, 4, 6, 16) and act_id IN (' . $this->getMonthActIds($i, 2017) . ')')
+                            ->where('income_id IN (3, 4, 6, 16, 18, 19) and act_id IN (' . $this->getMonthActIds($i, 2017) . ')')
                             ->scalar() / (int)date('t', mktime(0, 0, 0, $i, (int)date('d', time()), 2017));
                 else $income17 = 0;
 
@@ -3058,6 +3493,88 @@ class DefaultController extends FrontEndController
         }
 
     }
+
+    /**
+     * Привязывает айтем к другому
+     * @return string
+     * @throws \Exception
+     */
+    function actionBindNextItem(){
+
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+
+            if (Yii::$app->getRequest()->getQueryParam('next') &&  Yii::$app->getRequest()->getQueryParam('id')) {
+
+                $next = Items::find()->where('title like "%' . Yii::$app->getRequest()->getQueryParam('next') . '%"')->one();
+                $idea = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                if($idea && $next){
+                    $idea->bind_item_id = $next->id;
+                    $idea->update(false);
+                    $next->parent_item_id = $idea->id;
+                    $next->update(false);
+                    return "<p>Готово!</p>";
+
+                }
+                else return "<p>Ошибка!</p>";
+
+
+                /*
+                if($idea) {
+                    $idea->items .= Yii::$app->getRequest()->getQueryParam('id').",";
+                    $idea->update(false);
+                    return "<p>Привязано!</p>";
+                }
+                else return "Ошибка";
+                */
+
+            }
+        }
+
+    }
+
+    /**
+     * Добавляем айтем в работу
+     * @return string
+     * @throws \Exception
+     */
+    function actionAddInWork(){
+
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещн!';
+
+            if (Yii::$app->getRequest()->getQueryParam('text') &&  Yii::$app->getRequest()->getQueryParam('id')) {
+
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                if($item){
+                    $item->in_work_prim = Yii::$app->getRequest()->getQueryParam('text');
+                    $item->update(false);
+
+                    return "<p>Готово!</p>";
+
+                }
+                else return "<p>Ошибка!</p>";
+
+
+                /*
+                if($idea) {
+                    $idea->items .= Yii::$app->getRequest()->getQueryParam('id').",";
+                    $idea->update(false);
+                    return "<p>Привязано!</p>";
+                }
+                else return "Ошибка";
+                */
+
+            }
+        }
+
+    }
+    
+    
     
     function actionAddItemToPlayList(){
         if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
@@ -3164,6 +3681,182 @@ class DefaultController extends FrontEndController
 
     }
 
+    public function actionCatPost(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещён!';
+            
+
+            if (Yii::$app->getRequest()->getQueryParam('cat') &&  Yii::$app->getRequest()->getQueryParam('anons') &&
+                Yii::$app->getRequest()->getQueryParam('title')
+            ) {
+
+                //return 'gg';
+                //$query = new \yii\db\Query;
+                //return $query->prepare(Yii::$app->db->queryBuilder)->createCommand("SELECT * FROM category WHERE name LIKE 'Песни'")->sql;
+
+                try {
+                    $cat = Category::find()
+                        ->where(" name LIKE '" . Yii::$app->getRequest()->getQueryParam('cat') . "'")
+                        // ->where(['like', 'name', ''])
+                        // $query->andFilterWhere(['like', 'lower(isin)', strtolower($this->isin)])
+                        ->one();
+                    //return var_dump($cat);
+                } catch (\ErrorException $e) {
+                    return "<p style='color:white;'>".$e->getMessage()."</p>";
+                }
+                //return;
+                if(!$cat) {
+                    try {
+                        $max_id = Category::find()->select('MAX(id)')->scalar();
+                        //return var_dump($max_id);
+                        $new_cat = new Category();
+                        $new_cat->id = $max_id+1;
+                        $new_cat->tree = 0;
+                        $new_cat->lft = 0;
+                        $new_cat->rgt = 0;
+                        $new_cat->depth = 0;
+
+                        $new_cat->name = Yii::$app->getRequest()->getQueryParam('cat');
+                        //return var_dump($new_cat);
+                       // $new_cat->makeRoot();
+
+                       if(!$new_cat->makeRoot()) return var_dump($new_cat->getErrors());
+                        //$new_cat->makeRoot();
+                    } catch (\ErrorException $e) {
+                        return "<p style='color:white;'>".$e->getMessage()."</p>";
+                    }
+                    
+                }
+
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                
+                if($cat && $item){
+                    try {
+                        $radio_item = new RadioItem();
+                        $radio_item->cat_id = $cat->id;
+                        $radio_item->source_id = $item->source_id;
+                        $radio_item->title = Yii::$app->getRequest()->getQueryParam('title');
+                        $radio_item->text = $item->text;
+                        $radio_item->anons = Yii::$app->getRequest()->getQueryParam('anons');
+                        $radio_item->tags = $item->tags;
+                        $radio_item->audio = $item->audio_link;
+                        $radio_item->cens = $item->cens;
+                        if($item->img) $radio_item->img = $item->img;
+                        else $radio_item->img = '';
+                        $radio_item->published = 1;
+                        if ($radio_item->save(false)) return "<p>Добавлено!</p>";
+                        else  return "<p>Ошибка сохранения!</p>";
+                    } catch (IntegrityException $e) {
+                        return "<p style='color:white;'>".$e->getMessage()."</p>";
+                    }
+                }
+            }
+
+            return "<p>Ошибка!</p>";
+            
+        }
+
+    }
+
+    public function actionCreateTheme(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещён!';
+
+            if($title = Yii::$app->getRequest()->getQueryParam('title')){
+
+                $theme = new RadioTheme();
+                $theme->title = $title;
+                if($theme->save(false))  return "<p>Добавлена!</p>";
+
+            }
+
+        }
+
+        return "<p>Ошибка!</p>";
+    }
+    
+    public function actionBindItemToTheme(){
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+            //return $user;
+
+            if (!$user) return 'Доступ запрещён!';
+
+            if(Yii::$app->getRequest()->getQueryParam('title') && Yii::$app->getRequest()->getQueryParam('id')){
+
+                $theme_item = new RadioThemeItems();
+
+                if($theme = RadioTheme::find()->where(['title' => Yii::$app->getRequest()->getQueryParam('title')])->one()){
+                    $theme_item->theme_id = $theme->id;
+                }
+                
+                else return "<p>Тема не найдена!</p>";
+
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+
+                //return var_dump($item->audio_link);
+
+                try {
+                    $radio_item = RadioItem::find()
+                        ->where(" audio LIKE '" . $item->audio_link . "'")
+                       // ->where(['audio' => $item->audio_link])
+                        ->one();
+                } catch (IntegrityException $e) {
+                    return "<p style='color:white;'>".$e->getMessage()."</p>";
+                }
+
+                if($radio_item){
+                    $theme_item->item_id = $radio_item->id;
+                }
+
+                else return "<p>Айтем не найден!</p>";
+
+                $theme_item->prim = '';
+                $theme_item->title = '';
+
+                if($theme_item->save(false))  return "<p>Сделано!</p>";
+
+            }
+
+        }
+
+        return "<p>Ошибка!</p>";
+    }
+    
+    
+    function actionAddRadioLike(){
+        if($id = (int)Yii::$app->getRequest()->getQueryParam('id')) {
+            $item = RadioItem::findOne($id);
+            $item->likes++;
+            $item->update(false);
+            return 'Понравилось: '.$item->likes;
+        }
+        
+        return "<p>Ошибка!</p>";
+    }
+
+    function getAudioTags($api_string){
+        $item = RadioItem::find()->where(['like', 'audio', trim($api_string)])->one();
+        //return var_dump($item);
+           
+        if($item) return $item->cat->name." :: ".$item->anons." :: ".$item->title;
+        
+        return trim($api_string);
+
+    }
+
+    function actionShowCurrentRadioTracks(){
+        $current_test = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/test_mp3")[64]));
+
+        $current_second = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/second_mp3")[64]));
+
+        $current_bard = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/bard_mp3")[64]));
+
+        return  "1. ".$current_test ."<br>2. " .$current_second ."<br>3. ". $current_bard;
+    }
 
 
 }

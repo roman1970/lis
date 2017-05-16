@@ -226,6 +226,8 @@ class DefaultController extends FrontEndController
 
         //var_dump(count($matchs)); exit;
 
+        if(!$matchs) return "<p style='text-align: center;color: white;'>Не данных!</p>";
+
 
         $this->betsGenerate($matchs);
 
@@ -347,12 +349,16 @@ class DefaultController extends FrontEndController
                 ->all();
         }
 
+        if(!$matchs) return "<p style='text-align: center;color: white;'>Не данных!</p>";
+
         
        //return var_dump($matchs);
 
         try {
         //$is_club = $this->teamsSummary($matchs, $team, $data_id_from, $data_id_to);
         $team_obj = TeamSum::find()->where("name like '" . addslashes($team) . "'")->one();
+
+            if(!$team_obj) return "<p style='text-align: center;color: white;'>Не данных!</p>";
         $is_club = $team_obj->is_club;
 
           // return var_dump($team_obj);
@@ -556,6 +562,8 @@ class DefaultController extends FrontEndController
 
         $this->betsGenerate($matchs);
 
+        if(!$matchs) return "Не данных!";
+
 
 
         return $this->renderPartial('strat', ['matchs' => $matchs,
@@ -609,6 +617,8 @@ class DefaultController extends FrontEndController
                 ->where("host like('%" . $hoster . "%') and guest like('%" . $guester . "%')")
                 ->all();
         }
+
+        if(!$matchs) return "Не данных!";
 
         $this->betsGenerate($matchs);
 

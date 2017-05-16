@@ -15,7 +15,14 @@
     }
 </style>
 
-    <h3>Сегодня   <?= round($sum_spent, 2) ?> руб</h3>
+    <h3>
+        <?php if(isset($time)) : echo date('d-M-Y', $time)?>
+        <?php else: ?>
+
+        Сегодня   
+        <?php endif; ?>
+
+        <?= round($sum_spent, 2) ?> руб</h3>
 
 <table class="table">
     <tbody>

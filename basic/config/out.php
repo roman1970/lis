@@ -139,6 +139,7 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
         'db_sevens' => require(__DIR__ . '/db_seven.php'),
         'db_test' => require(__DIR__ . '/db_test.php'),
+        'db_postgres' => require(__DIR__ . '/db_postgres.php'),
 /*
         'assetManager' => [
             'bundles' => require(__DIR__ . 'assets-prod.php'),

@@ -1,4 +1,11 @@
 <script>
+
+    $( function() {
+        $("#datepicker").datepicker({
+            altFormat: "yy-mm-dd"
+        });
+    } );
+
     $(document).ready(function() {
 
         $('#request').autoComplete({
@@ -37,6 +44,23 @@
 
             });
 
+        $("#get_date_spent").click(
+            function() {
+
+                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+
+                var stringyDate = $("#datepicker").val(); // mm/dd/yyyy
+                var dateyDate = new Date(stringyDate);
+
+                var ms = dateyDate.valueOf();
+                var s = ms / 1000;
+                
+                get_date_spent(s);
+                
+            });
+
+
+
         $('#request').focus(
             function () {
                 $(this).select();
@@ -61,6 +85,22 @@
         });
 
     }
+
+    function get_date_spent(secs) {
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/spent",
+            data: "user="+user+"&secs="+secs,
+            success: function(html){
+                $("#sum_bought").html(html);
+
+            }
+
+        });
+
+    }
+    
 
 
 </script>
@@ -94,6 +134,18 @@
             </p>
         </div>
     </form>
+
+    <form class="form-inline center" role="form" id="form-date">
+        <div class="form-group">
+            <h3>Дата</h3>
+            <p>
+                <input type="text" class="form-control" id="datepicker" placeholder="Выбрать дату"><br>
+
+                <button type="button" class="btn btn-success" id="get_date_spent" >Получить!</button>
+            </p>
+        </div>
+    </form>
+
     <div id="sum_bought">
 
         <h3>Товары</h3>

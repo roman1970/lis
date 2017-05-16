@@ -52,6 +52,7 @@ return [
         ],
         'db' => $db,
         'db_test' => require(__DIR__ . '/db_test.php'),
+        'db_postgres' => require(__DIR__ . '/db_postgres.php'),
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'baseUrl' => dirname(__DIR__),

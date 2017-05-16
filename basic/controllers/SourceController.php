@@ -3,10 +3,12 @@ namespace app\controllers;
 
 use app\components\BackEndController;
 use app\components\TranslateHelper;
+use app\models\RadioSource;
 use app\models\Source;
 use app\models\ArticlesContent;
 use app\models\SourceSearch;
 use app\models\UploadForm;
+use yii\db\IntegrityException;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -62,7 +64,19 @@ class SourceController extends BackEndController
             $model->cat_id = Yii::$app->request->post('Source')['cat_id'];
             if(isset($uploadImg->img))
                 $model->cover = Url::base().'uploads/covers/' . Yii::$app->translater->translit($uploadImg->img->baseName) . '.' .$uploadImg->img->extension;
-            $model->save(false);
+            //$model->save(false);
+
+            if($model->save(false)) {
+                try {
+                    $radio_source = new RadioSource();
+                    $radio_source->id = $model->id;
+                    $radio_source->author_id = $model->author_id;
+                    $radio_source->title = $model->title;
+                    $radio_source->save(false);
+                } catch (IntegrityException $e) {
+                    return $e->getMessage();
+                }
+            };
 
             $sources = Source::find();
             $dataProvider = new ActiveDataProvider([

@@ -131,7 +131,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'markers')">Закладки</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'eat')">Съел</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'bought')">Купил</button>
-    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'add-product')">Добавить товар</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'add-product')">Добавить</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'spent')">Расходы</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'record-item')">Записать</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'repertoire')">Репертуар</button>

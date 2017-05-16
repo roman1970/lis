@@ -9,6 +9,25 @@
         <?php endforeach; ?>
     ];
     $(document).ready(function() {
+       // console.log(songs[0]);
+
+        $('#album').autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+
+                $.getJSON("rockncontroll/default/source-album", function (data) {
+                    console.log(data);
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
         
         $("#play").click(
             function() {
@@ -37,6 +56,17 @@
                 if (mark == '') {alert('Введите текст закладки!'); return;}
 
                 new_mark(mark, source_id, user);
+
+            });
+
+        $("#search_album").click(
+            function() {
+
+                var album = $("#album").val();
+
+                if (album == '') {alert('Начните вводить название альбома!'); return;}
+
+                search_album(album, user);
 
             });
 
@@ -73,6 +103,20 @@
 
         });
 
+    }
+    
+    function search_album(album, user) {
+        
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/get-album",
+            data: "album="+album+"&user="+user,
+            success: function(html){
+                $("#summary").html(html);
+
+            }
+
+        });
     }
 
 
@@ -118,6 +162,18 @@
             <button type="button" class="btn btn-success" id="new_marker" >Новая закладка!</button>
         </p>
         <div id="res"></div>
+    </div>
+</form>
+
+<form class="form-inline center" role="form" id="form-album">
+    <div class="form-group">
+        <h3>Найти альбом!</h3>
+        <p>
+
+            <input type="text" class="form-control" id="album"  placeholder="Альбом"><br>
+
+            <button type="button" class="btn btn-success" id="search_album" >Найти альбом!</button>
+        </p>
     </div>
 </form>
 

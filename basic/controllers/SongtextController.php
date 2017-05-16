@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use app\components\BackEndController;
+use app\models\RadioSongs;
 use app\models\SongText;
 //use app\models\SongTextSearch;
 use app\models\SongtextSearch;
@@ -86,6 +87,15 @@ class SongtextController extends BackEndController
 
             $model->save(false);
 
+            $song_postg = RadioSongs::findOne($model->id);
+            $song_postg->source_id = $model->source_id;
+            if($model->title) $song_postg->title = $model->title;
+            else $song_postg->title = '';
+            if($model->link)$song_postg->link = $model->link;
+            else $model->link = '';
+            $song_postg->text = $model->text;
+            $song_postg->update(false);
+
             $texts = SongText::find();
             $dataProvider = new ActiveDataProvider([
                 'query' => $texts,
@@ -108,6 +118,10 @@ class SongtextController extends BackEndController
     {
 
         if ($model = $this->loadModel($id)->delete()) {
+
+            $song_postg = RadioSongs::findOne($id);
+            $song_postg->delete();
+            
             $searchModel = new SongtextSearch();
             $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

@@ -19,7 +19,10 @@
         <td>рм</td>
         <td>о</td>
     </tr>
-    <?php $i=0;  foreach ($summary as $team) :  $i++; ?>
+    <?php $i=0;
+    if(!is_array($summary)) : ?> <p>'Данных нет((('</p>
+    <?php else :
+    foreach ($summary as $team) :  $i++; ?>
         <?php if ($this_team == $team->name ) : echo 'i'; ?>
             <tr >
                 <td style="color: #2cb7d5"><?= $i ?></td>
@@ -29,7 +32,7 @@
                 <td style="color: #2cb7d5">=<?= $team->cash_nob ?></td>
                 <td style="color: #2cb7d5">-<?= $team->cash_def ?></td>
                 <td style="color: #2cb7d5"><?= $team->cash_g_get ?> :
-                <?= $team->cash_g_let ?></td>
+                    <?= $team->cash_g_let ?></td>
                 <td style="color: #2cb7d5"><?= $team->cash_balls ?></td>
             </tr>
         <?php else : ?>
@@ -46,6 +49,9 @@
             </tr>
         <?php endif; ?>
     <?php endforeach; ?>
+    <?php endif; ?>
+
+
 
     </tbody>
 </table>

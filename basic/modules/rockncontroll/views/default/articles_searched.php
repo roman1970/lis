@@ -79,8 +79,15 @@
         foreach ($articles_rows as $rec): $i++;
             ?>
             <hr>
-            <h4><?=$i?>) <?=$rec->minititle?></h4>
-            <span class="article"><?=$rec->body?></span>
+            <h4><?=$i?>) <?=$rec->minititle?> :: <?=$rec->source->title?> :: <?=$rec->source->author->name ?></h4>
+
+            <span class="article">
+                  <?php if($rec->audio) : ?>
+                      <audio controls="controls" class="audio">
+                         <source src='<?=\yii\helpers\Url::to($rec->audio)?>' type='audio/mpeg'>
+                      </audio>
+                  <?php endif; ?>
+                <?=$rec->body?></span>
             <?php
         endforeach;
     else: echo $articles_rows;

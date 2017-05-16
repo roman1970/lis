@@ -46,6 +46,57 @@
 
         });
     }
+
+    function bindItem(id) {
+
+        var title = $("#item_title_" + id).val();
+        //alert(title);
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/bind-next-item",
+            data: "next=" + title + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
+    
+    function addInWork(id) {
+        var text = $("#in_work_item_" + id).val();
+        //alert(title);
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/add-in-work",
+            data: "text=" + text + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
+    
+    function addItemToRadioContent(id) {
+        var cat = $("#category_post_" + id).val();
+        var anons = $("#anons_post_" + id).val();
+        var title = $("#title_post_" + id).val();
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/cat-post",
+            data: "cat=" + cat +  "&anons=" + anons + "&title=" + title + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+        
+    }
     
     function toPlayList(id) {
         $.ajax({
@@ -78,6 +129,103 @@
                 }, "json");
 
             }
+        });
+
+    }
+
+    function autocompl_item(id) {
+
+        $('#item_title_' + id).autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/items", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+    }
+
+    function autocompl_cat_radio(id) {
+
+        $('#category_post_'+ id).autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/cat-post-radio", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+    }
+
+    function autocompl_theme_radio(id) {
+
+        $('#theme_title_'+ id).autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/theme-radio", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+    }
+    
+    function createTheme(id) {
+        var title = $("#theme_title_" + id).val();
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/create-theme",
+            data: "user=" + user + "&title=" + title,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
+
+    function bindItemToTheme(id) {
+        var title = $("#theme_title_" + id).val();
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/bind-item-to-theme",
+            data: "user=" + user + "&title=" + title + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
         });
 
     }
@@ -130,6 +278,7 @@
                         <audio controls="controls" >
                             <source src="http://37.192.187.83:10080/<?=$rec->audio_link?>" type='audio/mpeg'>
                         </audio><br>
+                        <button type="button" class="btn btn-success" onclick="toPlayList(<?=$rec->id?>)" >Добавить в конец основного плейлиста!</button><br>
                     <?php endif; ?>
                     <?php if($rec->img) : ?>
                         <img src="<?=$rec->img?>">
@@ -139,12 +288,33 @@
                     <?=nl2br($rec->text)?>
 
                     <?='<br>('.$rec->source->title.' - '.$rec->source->author->name.')'?>
-                    <form class="form-inline center" role="form" id="form-event">
+                    <form class="form-inline center" role="form" id="form-idea">
                         <input type="text" class="form-control" id="idea_title_<?=$rec->id?>" onfocus="autocompl(<?=$rec->id?>)" placeholder="Идея">
                         <br>
                         <button type="button" class="btn btn-success" onclick="bind(<?=$rec->id?>)" >Привязать айтем к идее!</button>
-                        <button type="button" class="btn btn-success" onclick="toPlayList(<?=$rec->id?>)" >Добавить в конец основного плейлиста!</button>
-
+                    </form>
+                    <form class="form-inline center" role="form" id="form-next">
+                        <input type="text" class="form-control" id="item_title_<?=$rec->id?>" onfocus="autocompl_item(<?=$rec->id?>)" placeholder="Next item <?=$rec->parent_item_id?>">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="bindItem(<?=$rec->id?>)" >Привязать как следующий!</button>
+                    </form>
+                    <form class="form-inline center" role="form" id="form-work">
+                        <input type="text" class="form-control" id="in_work_item_<?=$rec->id?>" onfocus="autocompl_item(<?=$rec->id?>)" placeholder="Примечане в работе">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="addInWork(<?=$rec->id?>)" >Добавить в работу!</button>
+                    </form>
+                    <form class="form-inline center" role="form" id="form-cat-post">
+                        <input type="text" class="form-control" id="category_post_<?=$rec->id?>" onfocus="autocompl_cat_radio(<?=$rec->id?>)" placeholder="Категория">
+                        <input type="text" class="form-control" id="anons_post_<?=$rec->id?>" placeholder="Анонс">
+                        <input type="text" class="form-control" id="title_post_<?=$rec->id?>" value="<?=$rec->title?>">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="addItemToRadioContent(<?=$rec->id?>)" >Добавить айтем в контент радио!</button>
+                    </form>
+                    <form class="form-inline center" role="form" id="form-create-theme">
+                        <input type="text" class="form-control" id="theme_title_<?=$rec->id?>" onfocus="autocompl_theme_radio(<?=$rec->id?>)" placeholder="Новая тема">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="createTheme(<?=$rec->id?>)" >Создать тему для радио!</button>
+                        <button type="button" class="btn btn-success" onclick="bindItemToTheme(<?=$rec->id?>)" >Привязать к теме айтем!</button>
                     </form>
                 </div>
 

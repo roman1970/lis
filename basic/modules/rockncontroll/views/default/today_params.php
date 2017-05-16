@@ -169,11 +169,20 @@
             <table class="table">
                 <tbody>
 
-                <?php foreach ($recorded_params as $param) :  ?>
+                <?php foreach ($recorded_params as $param) : ?>
 
                     <tr>
                         <td>
                             <?= $param->dayparam->name ?>
+                            <?php if($param->dayparam->id == 2) : ?>
+                               <?= $last_cold_water_counter ?>
+                            <?php endif; ?>
+                            <?php if($param->dayparam->id == 3) : ?>
+                                <?= $last_hot_water_counter ?>
+                            <?php endif; ?>
+                            <?php if($param->dayparam->id == 4) : ?>
+                                <?= $last_el_counter ?>
+                            <?php endif; ?>
 
                         </td>
 
@@ -191,11 +200,21 @@
                     <?php $i++; endforeach; ?>
 
 
-                <?php foreach ($params as $param) :  ?>
+                <?php foreach ($params as $param) :
+                    //var_dump($param); exit; ?>
 
                     <tr>
                         <td>
                             <?= $param->name ?>
+                            <?php if($param->id == 2) : ?>
+                                <?= '<br><p>Последние показания: '.$last_cold_water_counter.'</p>' ?>
+                            <?php endif; ?>
+                            <?php if($param->id == 3) : ?>
+                                <?= '<br><p>Последние показания: '.$last_hot_water_counter.'</p>' ?>
+                            <?php endif; ?>
+                            <?php if($param->id == 4) : ?>
+                                <?= '<br><p>Последние показания: '.$last_el_counter.'</p>' ?>
+                            <?php endif; ?>
 
                         </td>
 

@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'description')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
 
-            <?= $form->field($model, 'status')->dropDownList([0, 1, 2])->label('0 - неопубликованно, 1 - музыка, 2 - книга');  ?>
+            <?= $form->field($model, 'status')->dropDownList([0, 1, 2, 3])->label('0 - неопубликованно, 1 - музыка, 2 - книга, 3 - нецензур');  ?>
 
             <?= $form->field($model, 'country_id')->dropDownList(ArrayHelper::map(\app\models\Country::find()->all(),'id','name'),
                 ['prompt' => 'Выбрать страну'])  ?>

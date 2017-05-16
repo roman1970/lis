@@ -6,6 +6,8 @@ use app\components\TranslateHelper;
 use app\models\Author;
 use app\models\ArticlesContent;
 use app\models\AuthorSearch;
+use app\models\RadioAuthor;
+use yii\db\IntegrityException;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -47,7 +49,16 @@ class AuthorController extends BackEndController
             $model->description = Yii::$app->request->post('Author')['description'];
             $model->country_id = Yii::$app->request->post('Author')['country_id'];
 
-            $model->save(false);
+            if($model->save(false)) {
+                try {
+                    $radio_author = new RadioAuthor();
+                    $radio_author->id = $model->id;
+                    $radio_author->name = $model->name;
+                    $radio_author->save(false);
+                } catch (IntegrityException $e) {
+                    return $e->getMessage();
+                }
+            };
 
             $authors = Author::find();
             $dataProvider = new ActiveDataProvider([
