@@ -3,9 +3,11 @@ namespace app\controllers;
 
 use app\components\BackEndController;
 use app\models\Categories;
+use app\models\Category;
 use app\models\Items;
 use app\models\ItemsSearch;
 use app\models\ItemsQueSearch;
+use app\models\MarkUser;
 use app\models\Playlist;
 use app\models\Source;
 use app\models\Tag;
@@ -120,9 +122,16 @@ class ItemController extends BackEndController
         $uploadFile = new UploadForm();
         $uploadImg = new UploadForm();
 
+        $model->cat_title = Categories::findOne($model->cat_id)->title;
+        $model->source_title = Source::findOne($model->source_id)->title;
+
+       // var_dump($model->source_title); exit;
+
         if (Yii::$app->request->isPost) {
             $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
             $uploadImg->img = UploadedFile::getInstance($uploadImg, 'img');
+
+            //var_dump($uploadFile); exit;
 
             if ($uploadFile->file && $uploadFile->validate()) {
                 $uploadFile->file->saveAs('uploads/' . Yii::$app->translater->translit($uploadFile->file->baseName) . '.' .$uploadFile->file->extension);
@@ -213,7 +222,27 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionListNoAudio(){
-        $items = Items::find()->where(['audio_link' => ''])->andWhere("source_id <> 2 and source_id <> 43 and cat_id <> 53")->orderBy(['rand()' => SORT_DESC]);
+        $items = Items::find()
+            ->where(['audio_link' => ''])
+            ->andWhere("source_id <> 2 and source_id <> 43 and cat_id <> 53")
+            ->orderBy(['rand()' => SORT_DESC]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        return $this->render('list', ['items' => $dataProvider]);
+    }
+
+    /**
+     * КВН без аудио
+     * @return string
+     */
+    public function actionListKvnNoAudio(){
+        $items = Items::find()
+            ->where("audio_link is NULL OR audio_link = ''")
+            ->andWhere("source_id = 21")
+            ->orderBy(['rand()' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
@@ -228,6 +257,16 @@ class ItemController extends BackEndController
      */
     public function actionInWork(){
         $items = Items::find()->where("in_work_prim <> '' ");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $items,
+        ]);
+
+        return $this->render('list', ['items' => $dataProvider]);
+    }
+    
+    public function actionShowRepertoire(){
+        $items = Items::find()->where("cat_id = 90 or cat_id = 89");
 
         $dataProvider = new ActiveDataProvider([
             'query' => $items,
@@ -273,16 +312,25 @@ class ItemController extends BackEndController
      * @return string
      */
     public function actionFormPlaylist($id){
-        $searchModel = new ItemsQueSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         
+        if($id == 7) {
+            $searchModel = new ItemsQueSearch();
+            $dataProvider = $searchModel->searchRepertoire(Yii::$app->request->queryParams);
 
-        $this_items = Items::find()->where(['play_status' => $id])->orderBy('radio_que');
-        $dataProvider2 = new ActiveDataProvider([
-            'query' => $this_items,
-        ]);
+            $this_items = Items::find()->where(['play_status' => $id])->orderBy('radio_que');
+            $dataProvider2 = new ActiveDataProvider([
+                'query' => $this_items,
+            ]);
+        }
+        else {
+            $searchModel = new ItemsQueSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        //print_r($i[0]); exit;
+            $this_items = Items::find()->where(['play_status' => $id])->orderBy('radio_que');
+            $dataProvider2 = new ActiveDataProvider([
+                'query' => $this_items,
+            ]);
+        }
 
 
         return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2, 'pl' => $id, 'searchModel' => $searchModel]);
@@ -302,13 +350,27 @@ class ItemController extends BackEndController
         $model->play_status = $pl;
         $model->update(false);
 
-        $searchModel = new ItemsQueSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if($pl == 7) {
+            $searchModel = new ItemsQueSearch();
+            $dataProvider = $searchModel->searchRepertoire(Yii::$app->request->queryParams);
 
-        $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
-        $dataProvider2 = new ActiveDataProvider([
-            'query' => $this_items,
-        ]);
+            $this_items = Items::find()->where(['play_status' => 7])->orderBy('radio_que');
+            $dataProvider2 = new ActiveDataProvider([
+                'query' => $this_items,
+            ]);
+        }
+        else {
+            $searchModel = new ItemsQueSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            $this_items = Items::find()->where(['play_status' => $pl])->orderBy('radio_que');
+            $dataProvider2 = new ActiveDataProvider([
+                'query' => $this_items,
+            ]);
+        }
+
+
+
 
         return $this->render('playlist', ['items' => $dataProvider, 'new_items' => $dataProvider2,  'searchModel' => $searchModel, 'pl' => $pl]);
 
@@ -360,6 +422,41 @@ class ItemController extends BackEndController
         if ($model === null)
             throw new \yii\web\HttpException(404, 'The requested page does not exist.');
         return $model;
+    }
+
+    
+    function actionShow($id){
+        //return 45;
+        if ($id) {
+            $this->layout = 'rncont';
+            $item = Items::findOne((int)$id);
+            return $this->render('item_by_id', ['rec' => $item]);
+        }
+        else return 'ups';
+
+    }
+
+    public function actionEditItemText(){
+        return 5;
+        //$request = Yii::$app->request;
+        //return $request->post('edited');
+        //return var_dump(Yii::$app->getRequest()->getQueryParam('user'));
+        if(Yii::$app->getRequest()->getQueryParam('user')) {
+
+            $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+
+            if (!$user) return 'Доступ запрещен!';
+
+            if(Yii::$app->getRequest()->getQueryParam('edited') && Yii::$app->getRequest()->getQueryParam('id')){
+                $item = Items::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                $item->text = Yii::$app->getRequest()->getQueryParam('edited');
+                if($item->update(false)) return 'Изменено!';
+                else return 'Измена!';
+            }
+            else return 'Ошибка сохранения';
+        }
+
+        else return 'Ошибка доступа';
     }
     
     

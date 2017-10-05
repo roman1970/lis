@@ -610,9 +610,10 @@ p {
     width:100px;
     height:100px;
 
-    position:fixed;
+    /*position:fixed;
     bottom: 243px;
     left:-830px;
+    */
 
 }
 

@@ -915,6 +915,21 @@ $this->title = 'Тесты';
                             return result;
                         }
                 </pre>
+
+        <a onclick="removeProp()" class="testLink">41 Удалить сойство объекта </a><br>
+                <pre class="brush: js;" id="code_41">
+                  // Удаляет свойство объекта:
+                    
+                       function removeProperty(obj, prop) {
+                          if(obj.hasOwnProperty(prop)) {
+                            obj.prop = undefined;
+                            console.log(obj.prop);
+                            return true;
+                          }
+                          else
+                            return false;
+                        }
+                </pre>
     </div>
 
 

@@ -45,7 +45,7 @@ class Items extends \yii\db\ActiveRecord
     {
         return [
             [['source_id', 'text', 'tags', 'audio'], 'required'],
-            [['source_id', 'text', 'tags', 'audio'], 'save'],
+            [['source_id', 'text', 'tags', 'audio', 'cens'], 'save'],
             [['source_id'], 'integer'],
             [['text'], 'string'],
             [['tags', 'audio'], 'string', 'max' => 255],
@@ -78,5 +78,10 @@ class Items extends \yii\db\ActiveRecord
     public function getCat()
     {
         return $this->hasOne(Categories::className(), ['id' => 'cat_id']);
+    }
+
+    public function getOriginal()
+    {
+        return $this->hasOne(SongText::className(), ['id' => 'original_song_id']);
     }
 }

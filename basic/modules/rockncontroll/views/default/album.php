@@ -43,24 +43,42 @@
         font-size: 17px;
     }
    /* @ToDo media */
+    .jp-audio .jp-controls {
+        width: 380px;
+        padding: 20px 20px 0 50px;
+    }
+
+    .jp-toggles {
+        left: 50px;
+        top: 65px;
+        width: 130px;
+    }
+
     .jp-audio .jp-type-playlist .jp-time-holder {
-        left: 16px;
+        left: 50px;
         width: 130px;
         top: 80px;
     }
     .jp-audio .jp-type-playlist .jp-progress {
-        left: 20px;
+        left: 50px;
         top: 65px;
         width: 130px;
     }
     .jp-volume-controls {
         position: absolute;
         top: 102px;
-        left: 30px;
+        left: 50px;
         width: 200px;
     }
+
+
     .jp-audio .jp-interface {
         height: 150px;
+    }
+
+    .jp-audio .jp-type-playlist .jp-toggles {
+        left: 100px;
+        top: 125px;
     }
 </style>
 <div class="center">

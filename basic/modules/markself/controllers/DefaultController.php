@@ -9,6 +9,7 @@ use app\models\MarkIt;
 use app\models\MarkUser;
 use app\models\RadioItem;
 use app\models\UploadForm;
+use app\models\Visit;
 use Yii;
 use yii\web\UploadedFile;
 
@@ -333,7 +334,39 @@ class DefaultController extends FrontEndController
 
         $current_bard = $this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/bard_mp3")[64]));
 
-        return  "1. ".$current_test ."<br>2. " .$current_second ."<br>3. ". $current_bard;
+        return  '<p class="borded" id="btn_test"> <button type="button" class="btn btn-success" onclick="onTest()" >Включить</button>
+                      <br>'.$current_test .'</p>
+                <p class="borded" id="btn_seccond"><button type="button" class="btn btn-success" onclick="onSecond()">Включить</button>
+                      <br>' .$current_second .'</p>
+                <p class="borded" id="btn_bard"><button type="button" class="btn btn-success" onclick="onBard()" >Включить</button>
+                      <br>'. $current_bard.'</p>';
+    }
+
+    function actionShowCurrentRadioTracksTest(){
+        return '<p>'.$this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/test_mp3")[64])).'</p>';
+    }
+
+    function actionShowCurrentRadioTracksSecond(){
+        return '<p>'.$this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/second_mp3")[64])).'</p>';
+    }
+
+    function actionShowCurrentRadioTracksBard(){
+        return '<p>'.$this->getAudioTags(strip_tags(file("http://37.192.187.83:10088/status.xsl?mount=/bard_mp3")[64])).'</p>';;
+    }
+    
+    function actionComeIn(){
+        $request = Yii::$app->request->post();
+        return var_dump($_POST);
+        if($request->post('hash') && $request->post('components')) {
+            $hash = $request->post('hash');
+            $components = $request->post('components');
+            return var_dump($components);
+            $visit = new Visit;
+            $visit->refer = $hash;
+            $visit->browser = $components;
+            if ($visit->save()) return;
+        }
+
     }
 
 

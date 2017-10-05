@@ -1,6 +1,9 @@
 <script>
     var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
     $(document).ready(function() {
+        
+        //alert(rand_cases);
+        if(typeof rand_cases != "undefined") rand_cases.remove();
 
         $(".accord h4:first").addClass("active");
 
@@ -56,6 +59,22 @@
             type: "GET",
             url: "rockncontroll/default/bind-next-item",
             data: "next=" + title + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res").html(html);
+
+            }
+
+        });
+    }
+    
+    function bindReperItem(id) {
+        var title = $("#item_reper_" + id).val();
+        //alert(title);
+
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/bind-reper-item",
+            data: "reper=" + title + "&user=" + user + "&id=" + id,
             success: function (html) {
                 $("#res").html(html);
 
@@ -154,6 +173,28 @@
         });
 
     }
+    
+    function autocompl_reper(id){
+
+        $('#item_reper_' + id).autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/rep-items", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+        
+    }
 
     function autocompl_cat_radio(id) {
 
@@ -230,6 +271,43 @@
 
     }
 
+    function text_edit(id) {
+
+        window.location = "http://servyz.xyz/plis/item/update/"+id;
+
+        /*
+
+        var txt = document.getElementById("text_edited_" + id).innerHTML;
+
+        //alert(txt); exit;
+
+        $.ajax({
+            type: "POST",
+            method: "POST",
+            //url: "rockncontroll/itemapi/update/2830",
+            dataType: 'json',
+            //data: {text: text},
+            url: "http://plis/item/edit-item-text",
+            //data:{edited:txt,user:user,id:id},//параметры запроса
+            data: '{"edited"}',
+           // contentType: "application/json; charset=utf-8",
+            //dataType: "json",
+           // data: "edited=txt&user=user&id:id",
+            //data: "edited=txt&user=user&id=id",
+            //data:{'cens':2},
+            //data: {'edited':txt,'user':user,'id':id, 'url':'edit-item-text'},
+            //data: $("#register_ajax").serialize(),
+            //data: "edited=" + txt + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res_" + id).html(html);
+                $("#red_button_" + id).hide();
+
+            }
+
+        });
+        */
+    }
+
 </script>
 
 <style>
@@ -274,6 +352,7 @@
                 <hr>
                 <h4><?=$i?>) <?=$rec->title?></h4>
                 <div>
+                    <a href="http://servyz.xyz/plis/item/show/<?=$rec->id?>">Поделиться ссылкой</a><br>
                     <?php if($rec->audio_link) : ?>
                         <audio controls="controls" >
                             <source src="http://37.192.187.83:10080/<?=$rec->audio_link?>" type='audio/mpeg'>
@@ -285,7 +364,10 @@
                     <?php endif;
                     ?>
                     
-                    <?=nl2br($rec->text)?>
+                    <p contenteditable="true" id="text_edited_<?=$rec->id?>"><?=nl2br($rec->text)?></p>
+                    <button type="button" class="btn btn-success" onclick="text_edit(<?=$rec->id?>)" id="red_button_<?=$rec->id?>" >Редактировать!</button><br>
+                    <a href="http://servyz.xyz/plis/item/update/<?=$rec->id?>">Редактировать</a><br>
+                    <p id="res_<?=$rec->id?>"></p>
 
                     <?='<br>('.$rec->source->title.' - '.$rec->source->author->name.')'?>
                     <form class="form-inline center" role="form" id="form-idea">
@@ -297,6 +379,11 @@
                         <input type="text" class="form-control" id="item_title_<?=$rec->id?>" onfocus="autocompl_item(<?=$rec->id?>)" placeholder="Next item <?=$rec->parent_item_id?>">
                         <br>
                         <button type="button" class="btn btn-success" onclick="bindItem(<?=$rec->id?>)" >Привязать как следующий!</button>
+                    </form>
+                    <form class="form-inline center" role="form" id="form-bind-reper">
+                        <input type="text" class="form-control" id="item_reper_<?=$rec->id?>" onfocus="autocompl_reper(<?=$rec->id?>)" placeholder="Вещь репертуара">
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="bindReperItem(<?=$rec->id?>)" >Привязать к песне репертуара!</button>
                     </form>
                     <form class="form-inline center" role="form" id="form-work">
                         <input type="text" class="form-control" id="in_work_item_<?=$rec->id?>" onfocus="autocompl_item(<?=$rec->id?>)" placeholder="Примечане в работе">

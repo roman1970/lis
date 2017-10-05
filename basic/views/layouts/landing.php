@@ -3,13 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
 use app\assets\LandberryAsset;
-use app\assets\AppAsset;
-use yii\bootstrap\ActiveForm;
-use yii\captcha\Captcha;
 
 $this->title = 'Contact';
 $this->params['breadcrumbs'][] = $this->title;
@@ -82,8 +76,6 @@ LandberryAsset::register($this);
 </script>
 <noscript><div><img src="https://mc.yandex.ru/watch/40643875" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 <!-- /Yandex.Metrika counter -->
-СкопироватьУстанавливая код счётчика на сайт, вы соглашаетесь со всеми условиями Пользовательского соглашения.
-Сохранить
 
 <!-- Home Section -->
 
@@ -109,7 +101,7 @@ LandberryAsset::register($this);
                             <h1><span>КОРПОРАТИВНЫЕ ПРИЛОЖЕНИЯ </span></h1>
                         </li>
                         <li>
-                            <h1><span>ЛЭНДИНГИ </span></h1>
+                            <h1><span>ЛЭНДИНГИ</span></h1>
                         </li>
                         <li>
                             <h1><span>ПАРСЕРЫ </span></h1>
@@ -145,7 +137,7 @@ LandberryAsset::register($this);
         <div class="collapse navbar-collapse" id="navigation">
 
             <ul id="nav" class="nav navbar-nav navbar-right">
-                <?php echo Nav::widget([
+                <?php /*echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                 //['label' => 'Контакт', 'url' => ['/site/contact']],
@@ -156,15 +148,15 @@ LandberryAsset::register($this);
                 'linkOptions' => ['data-method' => 'post']],
                 ],
                 ]);
-                ?>
+               */ ?>
 
-                <li class=""><a href="#about">О СЕБЕ</a></li>
-                <li><a href="#works">РАБОТЫ</a></li>
-                <li><a href="#numbers">ЦЕНЫ</a></li>
-                <li><a href="#services">ЗАКАЗ</a></li>
-                <li><a href="#advertisers">КОМПАНИЯМ</a></li>
-                <li><a href="#promote">ПРЕЙМУЩЕСТВА</a></li>
-                <li><a href="#contact">КОНТАКТЫ</a></li>
+                <li class=""><a href="#about">КТО</a></li>
+                <li><a href="#works">ЧТО</a></li>
+                <li><a href="#numbers">КАКИЕ</a></li>
+                <li><a href="#services">КАК</a></li>
+                <li><a href="#advertisers">КОМУ</a></li>
+                <li><a href="#promote">ПОЧЕМУ</a></li>
+                <li><a href="#contact">КУДА</a></li>
             </ul>
         </div>
     </div>
@@ -225,21 +217,19 @@ LandberryAsset::register($this);
 
                         <div class="col-md-10 col-sm-11 promo-icon-box">
 
-                            <div class="promo-icon">
 
-                                <i class="fa fa-comment"></i>
+                                    <div id="slidebox">
 
-                            </div>
+                                        <img src="images/roma_zek.png" alt="roma">
+
+
+                                    </div>
+
 
                         </div>
 
                         <div class="col-md-10 col-sm-11" >
-                            <div id="slidebox">
 
-                                <img src="images/roma_zek.png" alt="roma">
-
-
-                            </div>
 
                             <h4>Всем привет!<br> Меня зовут Роман</h4>
 
@@ -266,6 +256,7 @@ LandberryAsset::register($this);
 
 </section>
 
+
 <!-- End About Section -->
 
 <!-- Works Section -->
@@ -276,7 +267,7 @@ LandberryAsset::register($this);
 
         <div class="title col-md-12 col-sm-12 col-xs-12">
 
-            <h1><strong>МОИ РАБОТЫ</strong></h1>
+            <h1><strong>ПОРТФОЛИО</strong></h1>
 
             <hr>
 
@@ -290,7 +281,7 @@ LandberryAsset::register($this);
 
                     <img src="images/soccer.jpg" alt="">
 
-                    <a href="http://soccer.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://servyz.xyz" target="_blank" class="team-overlay">
 
                         <span class="top">Любителям футбольной статистики</span>
 
@@ -302,8 +293,8 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>SOCCER.QPLIS.RU</h3>
-                    <p>Статистика любого футбольного матча</p>
+                    <h3>servyz.xyz</h3>
+                    <p>Футбольная статистика</p>
 
                 </div>
 
@@ -319,9 +310,9 @@ LandberryAsset::register($this);
 
                     <img src="images/bard.jpg" alt="">
 
-                    <a href="http://bardzilla.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://servyz.xyz:888" target="_blank" class="team-overlay">
 
-                        <span class="top">Есть творческие талантливые люди</span>
+                        <span class="top">Авторское радио</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -331,9 +322,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>BARDZILLA.QPLIS.RU</h3>
+                    <h3>servyz.xyz:888</h3>
 
-                    <p>Любителям оригинальной авторской песни</p>
+                    <p>Авторское радио</p>
 
                 </div>
 
@@ -347,11 +338,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/oceny_site.jpg" alt="">
+                    <img src="images/deutch_site.jpg" alt="">
 
-                    <a href="http://berries.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://servyz.xyz:888/deutsch.html" target="_blank" class="team-overlay">
 
-                        <span class="top">Дневник для оценки своих действий</span>
+                        <span class="top">Тренер Немецкого</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -361,9 +352,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>BERRIES.QPLIS.RU</h3>
+                    <h3>servyz.xyz:888/deutsch.html</h3>
 
-                    <p>Мой сын использует эту систему для поддержания себя в форме</p>
+                    <p>Тренер немецкого</p>
 
                 </div>
 
@@ -377,11 +368,11 @@ LandberryAsset::register($this);
 
                 <div class="team-photo">
 
-                    <img src="images/wealth.jpg" alt="">
+                    <img src="images/tblo.jpg" alt="">
 
-                    <a href="http://weather.qplis.ru" target="_blank" class="team-overlay">
+                    <a href="http://servys.xyz/knoledges" target="_blank" class="team-overlay">
 
-                        <span class="top">Сайт-листинг с интересными фактами</span>
+                        <span class="top">Интерактивное js-табло с тестами</span>
 
                         <span class="bottom">Перейти на сайт</span>
 
@@ -391,9 +382,9 @@ LandberryAsset::register($this);
 
                 <div class="team-inner">
 
-                    <h3>OPPOSITIONS.QPLIS.RU</h3>
+                    <h3>TABLO</h3>
 
-                    <p>Великие противостояния</p>
+                    <p>Интерактивное js-табло с тестами</p>
 
                 </div>
 
@@ -401,7 +392,40 @@ LandberryAsset::register($this);
 
         </div>
 
-</div>
+
+        <hr>
+
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="animated hiding" data-animation="fadeInUp" data-delay="0">
+                <a href="https://www.testdome.com/cert/75ehq96xb2" class="testdome-certificate-stamp gold">
+                <span class="testdome-certificate-name">Roman Chernyshev</span>
+                <span class="testdome-certificate-test-name">JavaScript </span>
+                <span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a>
+                <script type="text/javascript">
+                var stylesheet = "https://www.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link");
+                link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);
+                </script>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="animated hiding" data-animation="fadeInUp" data-delay="0">
+                <a href="https://www.testdome.com/cert/1maknytzvk" class="testdome-certificate-stamp gold"><span class="testdome-certificate-name">Roman Chernyshev</span><span class="testdome-certificate-test-name">PHP </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script type="text/javascript">var stylesheet = "https://www.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="animated hiding" data-animation="fadeInUp" data-delay="0">
+                <a href="https://www.testdome.com/cert/cc5y4ijq55" class="testdome-certificate-stamp gold"><span class="testdome-certificate-name">Roman Chernyshev</span><span class="testdome-certificate-test-name">HTML/CSS </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script type="text/javascript">var stylesheet = "https://www.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-12">
+            <div class="animated hiding" data-animation="fadeInUp" data-delay="0">
+                <a href="https://www.testdome.com/cert/88xxfy27rk" class="testdome-certificate-stamp gold"><span class="testdome-certificate-name">Roman Chernyshev</span><span class="testdome-certificate-test-name">HTML/CSS (Hard) </span><span class="testdome-certificate-card-logo">TestDome<br />Certificate</span></a><script type="text/javascript">var stylesheet = "https://www.testdome.com/content/source/stylesheets/embed.css", link = document.createElement("link"); link.href = stylesheet, link.type = "text/css", link.rel = "stylesheet", link.media = "screen,print", document.getElementsByTagName("head")[0].appendChild(link);</script>
+            </div>
+        </div>
+
+    </div>
+
 
 </section>
 
@@ -858,6 +882,8 @@ LandberryAsset::register($this);
     <!-- End Contact Details -->
 
     <?= $content ?>
+    
+    
 
 
 

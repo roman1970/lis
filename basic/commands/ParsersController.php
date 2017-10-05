@@ -8,11 +8,15 @@ use app\models\Author;
 use app\models\Bought;
 use app\models\Currencies;
 use app\models\CurrHistory;
+use app\models\DeutschItem;
+use app\models\DeutschMark;
+use app\models\DeutschTournament;
 use app\models\DiaryActs;
 use app\models\DiaryAte;
 use app\models\DiaryDeals;
 use app\models\DiaryDoneDeal;
 use app\models\DiaryRecDayParams;
+use app\models\EnRus;
 use app\models\Event;
 use app\models\FootballNews;
 use app\models\Incomes;
@@ -33,6 +37,8 @@ use app\models\Tag;
 use app\models\Tasked;
 use app\models\TeamSum;
 use app\models\Telbase;
+use app\models\TestAnswers;
+use app\models\TestQuestions;
 use app\models\Totmatch;
 use app\models\Tournament;
 use app\modules\diary\models\Ormon;
@@ -1203,6 +1209,7 @@ class ParsersController extends Controller
             $f = 0;
 
             foreach ($today_acts as $act) {
+                //echo $act->model_id.' - '.date('Ymd',$act->time).PHP_EOL;
                
                 switch ($act->model_id) {
                     case 1:
@@ -1373,6 +1380,7 @@ class ParsersController extends Controller
             $data = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
+           // var_export($data); exit;
             return ($httpCode == 200) ? $data : false;
         }
 
@@ -1724,8 +1732,11 @@ class ParsersController extends Controller
                     $rec->c = $node->getAttribute('s');
                     $rec->dut = $node->getAttribute('dup');
                     $f = $node->getAttribute('f');
-                    $rec->f = str_replace(",", ".", $f);
+                    $rec->f = floatval(str_replace(",", ".", $f));
+                    
                     //echo floatval($f) . "<br />";
+                    //echo $f.PHP_EOL.$rec->f.PHP_EOL;
+                    //if($rec->f) {var_dump($rec); }
                     $datime_okon = $node->getAttribute('bd');
                     $ch = explode(" ", $datime_okon);
                     $rec->date_okon = $ch[0];
@@ -1869,7 +1880,7 @@ class ParsersController extends Controller
         public
         function actionMakeThemeRadioPlaylist($words)
         {
-            $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+            $f = fopen("/home/romanych/radio/dio/playlist2.txt", 'w');
 
             $dibilizmy = Items::find()->where(["source_id" => 17])->all();
             shuffle($dibilizmy);
@@ -1937,7 +1948,7 @@ class ParsersController extends Controller
         public
         function actionMakeRadioPlayListRandChess()
         {
-            $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
+            $f = fopen("/home/romanych/radio/dio/playlist2.txt", 'w');
             fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/mp3/komnata_s_mehom.mp3" .PHP_EOL);
             $arr = [];
             $dibilizmy = Items::find()
@@ -1970,7 +1981,14 @@ class ParsersController extends Controller
                 ->all();
             shuffle($cavers);
             $frazy = Items::find()
-                ->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")
+                ->where("source_id = 181 or source_id = 37 or 
+                         source_id = 30 or source_id = 29 or 
+                         source_id = 25 or source_id = 20 or 
+                         source_id = 10 or source_id = 484 or 
+                         source_id = 486 or source_id = 1468 or
+                         source_id = 463 or source_id = 15 or
+                         source_id = 415 or source_id = 460
+                         ")
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
                 ->andWhere("parent_item_id = 0")
@@ -1990,15 +2008,19 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($pesni);
+            
             /*
-            echo count($dibilizmy). 'dibilizmy'. PHP_EOL;
-            echo count($limerik). 'limerik'. PHP_EOL;
-            echo count($cavers). 'cavers'. PHP_EOL;
-            echo count($frazy). 'frazy'. PHP_EOL;
-            echo count($peredelki). 'peredelki'. PHP_EOL;
-            echo count($pesni). 'pesny'. PHP_EOL;
-            exit;
+            echo count($dibilizmy). ' dibilizmy'. PHP_EOL;
+            echo count($kvn). ' kvn'. PHP_EOL;
+            echo count($limerik). ' limerik'. PHP_EOL;
+            echo count($cavers). ' cavers'. PHP_EOL;
+            echo count($frazy). ' frazy'. PHP_EOL;
+            echo count($peredelki). ' peredelki'. PHP_EOL;
+            echo count($pesni). ' pesny'. PHP_EOL;
             */
+            //var_dump($kvn);
+            //exit;
+            
 
             for ($i = 0; $i < 1000; $i++) {
                 if (isset($dibilizmy[$i]))
@@ -2051,6 +2073,9 @@ class ParsersController extends Controller
         }
 
 
+    /**
+     * 56 22 * * * cd /home/romanych/public_html/plis/basic && php yii parsers/make-radio-play-list-rand-for-all
+     */
         public function actionMakeRadioPlayListRandForAll(){
 
 
@@ -2066,6 +2091,9 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($dibilizmy);
+            
+            //echo count($dibilizmy). ' дибилизмы '. PHP_EOL;
+            
             $limerik = Items::find()
                 ->where(["source_id" => 27])
                 ->andWhere("in_work_prim = ''")
@@ -2073,13 +2101,17 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($limerik);
-            $kvn = Items::find()
+
+            //echo count($limerik). ' limerik '. PHP_EOL;
+            
+            /*$kvn = Items::find()
                 ->where(["source_id" => 21])
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
                 ->andWhere("bind_item_id = 0")
                 ->all();
             shuffle($kvn);
+            */
             //print_r($kvn); exit;
 
             $cavers = Items::find()
@@ -2089,13 +2121,26 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($cavers);
+
+            //echo count($cavers). ' cavers '. PHP_EOL;
+            
             $frazy = Items::find()
-                ->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")
+                ->where("source_id = 181 or source_id = 37 or 
+                         source_id = 30 or source_id = 29 or 
+                         source_id = 25 or source_id = 20 or 
+                         source_id = 10 or source_id = 484 or 
+                         source_id = 486 or source_id = 1468 or
+                         source_id = 463 or source_id = 15 or
+                         source_id = 415 or source_id = 460
+                         ")
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($frazy);
+
+            //echo count($frazy). ' frazy '. PHP_EOL;
+            
             $peredelki = Items::find()
                 ->where(["source_id" => 19])
                 ->andWhere("in_work_prim = ''")
@@ -2103,6 +2148,9 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($peredelki);
+
+            //echo count($peredelki). ' peredelki '. PHP_EOL;
+            
             $pesni = Items::find()
                 ->where("source_id = 6 or source_id = 40")
                 ->andWhere("in_work_prim = ''")
@@ -2110,15 +2158,20 @@ class ParsersController extends Controller
                 ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($pesni);
+
+            //echo count($pesni). ' pesni '. PHP_EOL;
+            
+            //exit;
             
 
-            $authors_ids = ArrayHelper::map(Author::find()->where(['status' => 1])->all(), 'id', 'id');
+            /*$authors_ids = ArrayHelper::map(Author::find()->where(['status' => 1])->all(), 'id', 'id');
 
             shuffle($authors_ids);
 
 
             foreach ($authors_ids as $id){
                 $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+                //$sources[] = Source::find()->where(["author_id" => $id])->all();
             }
 
 
@@ -2128,6 +2181,11 @@ class ParsersController extends Controller
                     $songs[] = $source_songs[rand(0, count($source_songs)-1)];
                 }
             }
+            */
+            
+
+            //$songs = SongText::find()->where(["humor" => 1])->all();
+            
 
             for ($i = 0; $i < 1000; $i++) {
                 if (isset($dibilizmy[$i]))
@@ -2136,16 +2194,16 @@ class ParsersController extends Controller
                     array_push($arr, $limerik[$i]);
                 if (isset($cavers[$i]))
                     array_push($arr, $cavers[$i]);
-                if (isset($kvn[$i]))
-                    array_push($arr, $kvn[$i]);
+                //if (isset($kvn[$i]))
+                    //array_push($arr, $kvn[$i]);
                 if (isset($frazy[$i]))
                     array_push($arr, $frazy[$i]);
                 if (isset($peredelki[$i]))
                     array_push($arr, $peredelki[$i]);
                 if (isset($pesni[$i]))
                     array_push($arr, $pesni[$i]);
-                if (isset($songs[$i]))
-                    array_push($arr, $songs[$i]);
+                //if (isset($songs[$i]))
+                //    array_push($arr, $songs[$i]);
                 
             }
            
@@ -2194,8 +2252,10 @@ class ParsersController extends Controller
 
         /**
          * Формирование плейлиста радио чужих вещей
+         * 55 22 * * * cd /home/romanych/public_html/plis/basic && php yii parsers/make-play-list-alien
          */
         public function actionMakePlayListAlien(){
+            $k = 0;
 
             $f = fopen("/home/romanych/radio/dio/playlist.txt", 'w');
 
@@ -2207,7 +2267,7 @@ class ParsersController extends Controller
                 ->where(["source_id" => 21])
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
-                ->andWhere("bind_item_id = 0")
+                //->andWhere("bind_item_id = 0")
                 ->all();
             shuffle($kvn);
             //print_r($kvn); exit;
@@ -2223,10 +2283,17 @@ class ParsersController extends Controller
 
 
             shuffle($authors_ids);
+            
 
 
             foreach ($authors_ids as $id){
-                $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+                //var_dump(Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id); exit;
+                try {
+                    $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all()) - 1)]->id;
+                } catch (\ErrorException $e) {
+                    echo $e->getMessage().PHP_EOL.$id;
+                    //continue;
+                }
             }
 
 
@@ -2236,6 +2303,45 @@ class ParsersController extends Controller
                     $songs[] = $source_songs[rand(0, count($source_songs)-1)];
                 }
             }
+            
+            //echo count($songs). ' songs'.PHP_EOL;
+           // echo count($kvn). ' kvns'.PHP_EOL;
+            //echo count($songs)+count($kvn). ' ++++'.PHP_EOL;
+            //exit;
+            $k = round(count($songs)/count($kvn));
+            
+            $cnt = count($kvn);
+            
+            //var_dump(count($kvn));
+            
+            if($k>1){
+                for ($i = 0; $i < $cnt; $i++) {
+                    //echo $i.PHP_EOL;
+                    array_push($arr, array_pop($kvn));
+                    //var_dump(end($arr));
+                    
+                   // var_dump($arr);
+                    if($i%2 == 0) {
+                        for($j = 0; $j < $k-1; $j++) {
+                            array_push($arr, array_pop($songs));
+
+                        }
+                    }
+                    else{
+                    
+                        for($j = 0; $j < $k; $j++) {
+                            array_push($arr, array_pop($songs));
+
+                        }
+                    }
+                   
+                    //var_dump($arr);
+                    //exit;
+                }
+            }
+            
+            //echo count($arr).PHP_EOL;
+            /*
 
             for ($i = 0; $i < 1000; $i++) {
                 if (isset($kvn[$i]))
@@ -2244,8 +2350,12 @@ class ParsersController extends Controller
                     array_push($arr, $songs[$i]);
 
             }
+            */
 
-            shuffle($arr);
+
+            
+
+           // shuffle($arr);
 
             //var_dump($arr); exit;
 
@@ -2349,11 +2459,14 @@ class ParsersController extends Controller
 
         /**
          * Безцензурный плейлист плюс бард
+         * 57 22 * * * cd /home/romanych/public_html/plis/basic && php yii parsers/make-play-list-alien-pank
          */
         public function actionMakePlayListAlienPank(){
             $f = fopen("/home/romanych/radio/dio/playlist_nenor.txt", 'w');
+            //$f = fopen("/home/romanych/radio/dio/playlist2.txt", 'w');
 
             $arr = [];
+            $arr_other = [];
             $songs = [];
             $sources = [];
             $dibilizmy = Items::find()
@@ -2374,6 +2487,7 @@ class ParsersController extends Controller
                 ->where(["source_id" => 21])
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
+                ->andWhere("parent_item_id = 0")
                 ->all();
             shuffle($kvn);
             $cavers = Items::find()
@@ -2384,7 +2498,14 @@ class ParsersController extends Controller
                 ->all();
             shuffle($cavers);
             $frazy = Items::find()
-                ->where("source_id = 181 or source_id = 37 or source_id = 30 or source_id = 29 or source_id = 25 or source_id = 20")
+                ->where("source_id = 181 or source_id = 37 or 
+                         source_id = 30 or source_id = 29 or 
+                         source_id = 25 or source_id = 20 or 
+                         source_id = 10 or source_id = 484 or 
+                         source_id = 486 or source_id = 1468 or
+                         source_id = 463 or source_id = 15 or
+                         source_id = 415 or source_id = 460
+                         ")
                 ->andWhere("in_work_prim = ''")
                 ->andWhere("audio_link <> ''")
                 ->andWhere("parent_item_id = 0")
@@ -2417,7 +2538,15 @@ class ParsersController extends Controller
 
 
             foreach ($authors_ids as $id){
-                $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+                //Трахтенберг нах в его терминологии, Красная плесень туда же
+                if($id != 218 || $id != 209) {
+                    //echo $id.PHP_EOL;
+                    //echo count(Source::find()->where(["author_id" => $id])->all()).PHP_EOL;
+                    $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+                    
+                }
+                   // $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
+               // else echo $id;
             }
 
 
@@ -2431,8 +2560,8 @@ class ParsersController extends Controller
             for ($i = 0; $i < 1000; $i++) {
                 if (isset($kvn[$i]))
                     array_push($arr, $kvn[$i]);
-                if (isset($songs[$i]))
-                    array_push($arr, $songs[$i]);
+                //if (isset($songs[$i]))
+                //    array_push($arr, $songs[$i]);
                 if (isset($dibilizmy[$i]))
                     array_push($arr, $dibilizmy[$i]);
                 if (isset($limerik[$i]))
@@ -2448,20 +2577,93 @@ class ParsersController extends Controller
             }
 
             shuffle($arr);
+            //print_r($songs); exit;
 
-            //var_dump($arr); exit;
+            for ($i = 0; $i < 1000; $i++) {
+                if (isset($arr[$i]))
+                    array_push($arr_other, $arr[$i]);
+               // else echo $i.' my not set'.PHP_EOL;
+                if (isset($songs[$i]))
+                    array_push($arr_other, $songs[$i]);
+               // else echo $i.' song not set'.PHP_EOL;
+            }
 
-            foreach ($arr as $item) {
+            //var_dump($arr);
+            //exit;
+
+            $n=0;
+            foreach ($arr_other as $item) {
+                $n++;
                 if($item instanceof Items) {
+                    //if (!strstr($item->audio_link, '.mp3'))
+                    // echo $item->audio_link.PHP_EOL;
                     if (strstr($item->audio_link, '/music')) {
                         $one = str_replace('/music', 'music', $item->audio_link);
                         fwrite($f, "/home/romanych/" . $one . PHP_EOL);
-                    } elseif ($item->audio_link) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $item->audio_link . PHP_EOL);
+                        if ($item->bind_item_id && $next_item = Items::findOne($item->bind_item_id)) {
+                            if ($next_item->audio_link != '' && $next_item->in_work_prim == '') {
+                                if (strstr($next_item->audio_link, '/music')) {
+                                    fwrite($f, "/home/romanych/" . str_replace('/music', 'music', $next_item->audio_link) . PHP_EOL);
+                                }
+                                elseif (strstr($next_item->audio_link, 'uploads')) {
+                                    //$one = str_replace('/music', 'music', $item->audio_link);
+                                    fwrite($f, "/home/romanych/public_html/plis/basic/web" . $next_item->audio_link . PHP_EOL);
+                                }
+                                elseif ($next_item->audio_link) {
+                                    fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $next_item->audio_link . PHP_EOL);
+                                }
+                            }
+                        }
+                    } 
+                    elseif (strstr($item->audio_link, 'uploads')) {
+                        //$one = str_replace('/music', 'music', $item->audio_link);
+                        fwrite($f, "/home/romanych/public_html/plis/basic/web" . $item->audio_link . PHP_EOL);
+                        if ($item->bind_item_id && $next_item = Items::findOne($item->bind_item_id)) {
+                            if ($next_item->audio_link != '' && $next_item->in_work_prim == '') {
+                                if (strstr($next_item->audio_link, '/music')) {
+                                    fwrite($f, "/home/romanych/" . str_replace('/music', 'music', $next_item->audio_link) . PHP_EOL);
+                                }
+                                elseif (strstr($next_item->audio_link, 'uploads')) {
+                                    //$one = str_replace('/music', 'music', $item->audio_link);
+                                    fwrite($f, "/home/romanych/public_html/plis/basic/web" . $next_item->audio_link . PHP_EOL);
+                                }
+                                elseif ($next_item->audio_link) {
+                                    fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $next_item->audio_link . PHP_EOL);
+                                }
+                            }
+                        }
+                        
+                    }
+                    elseif ($item->audio_link)  {
+                        fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $item->audio_link . PHP_EOL);
+                        if ($item->bind_item_id && $next_item = Items::findOne($item->bind_item_id)) {
+                            if ($next_item->audio_link != '' && $next_item->in_work_prim == '') {
+                                if (strstr($next_item->audio_link, '/music')) {
+                                    fwrite($f, "/home/romanych/" . str_replace('/music', 'music', $next_item->audio_link) . PHP_EOL);
+                                }
+                                elseif (strstr($next_item->audio_link, 'uploads')) {
+                                    //$one = str_replace('/music', 'music', $item->audio_link);
+                                    fwrite($f, "/home/romanych/public_html/plis/basic/web" . $next_item->audio_link . PHP_EOL);
+                                }
+                                elseif ($next_item->audio_link) {
+                                    fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/" . $next_item->audio_link . PHP_EOL);
+                                }
+                            }
+                        }
+                    }
+                       
+                    //else echo $item->audio_link.' Items '.PHP_EOL;
+                   
                 }
                 elseif ($item instanceof SongText){
+                    //if (!strstr($item->link, '.mp3')) echo $item->link.PHP_EOL;
                     if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
                     elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                    if ($n % 15 == 0) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/mp3/oho.mp3" . PHP_EOL);
+                    if ($n % 10 == 0) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/mp3/komnata_s_mehom.mp3" . PHP_EOL);
+                    //else echo $item->id.' Song ' .PHP_EOL;
                 }
+                //else echo var_dump($item);
             }
 
             fclose($f);
@@ -2711,8 +2913,18 @@ class ParsersController extends Controller
                 ->select('SUM(mark)')
                 ->where("time > $start_time and user_id = 11")
                 ->scalar();
-            if ($mish_mark) $snapshot->mish_oz = $mish_mark;
+            if ($mish_mark) {
+                //$today = strtotime('today');
+
+                $deutsch_mark = DeutschMark::find()
+                    ->select(['SUM(mark)'])
+                    ->where("user_id = 11 AND time > $start_time")
+                    ->scalar();
+                $snapshot->mish_oz = $mish_mark+$deutsch_mark;
+            }
             else $snapshot->mish_oz = 0;
+            //var_dump($snapshot);
+            //exit;
 
             $today_acts = implode(',', ArrayHelper::map(DiaryActs::find()->where("time > $start_time and user_id = 8 and model_id = 1")->all(), 'id', 'id'));
             $snapshot->kkal = DiaryAte::find()
@@ -2803,8 +3015,7 @@ class ParsersController extends Controller
             }
 
             if ($snapshot->save()) {
-
-
+                
                 $act = new DiaryActs();
                 $act->model_id = 12;
                 $act->user_id = 8;
@@ -2844,19 +3055,50 @@ class ParsersController extends Controller
                     fclose($reminder);
                 }
 
+                $this->actionDayDeutschTournament();
+
             }
 
             //var_dump($snapshot);
 
-
         }
+
+
+    /**
+     * Турнир будущих немцев
+     */
+    public function actionDayDeutschTournament(){
+        $today = strtotime('today');
+        //echo $today;
+        $marks = DeutschMark::find()
+            ->select(['user_id, mark, COUNT(*) as cnt, SUM(mark) as avg '])
+            ->where("time > $today")
+            ->groupBy('user_id')
+            ->orderBy(['avg' => SORT_DESC])
+            ->all();
+        //var_dump($marks);
+        $i=0;
+        foreach ($marks as $mark){
+            $i++;
+            $day_user = new DeutschTournament();
+            $day_user->user_id = $mark->user_id;
+            if($i==1) $day_user->mark = 3;
+            elseif ($i==2) $day_user->mark = 1;
+            else $day_user->mark = 0;
+            $day_user->time = (int)date('Ymd', time());
+            //var_dump($day_user); exit;
+            if($day_user->save(false)) continue;
+            else return;
+        }
+        
+        //DeutschMark::deleteAll();
+    }
 
         /**
          * Парсер хабрахабра
          * @param $url
          */
-        public
-        function actionHabrParser($url, $title)
+        public function actionHabrParser($url, $title)
         {
             $tag_in = '';
             $tag_out = '';
@@ -2864,12 +3106,13 @@ class ParsersController extends Controller
             $source = 329;
 
             if (strstr($url, 'habrahabr.ru/company')) {
-                $tag_in = 'class="company_post"';
-                $tag_out = 'class="post__tags"';
+                //echo 'kk';
+                $tag_in = 'class="post__wrapper"';
+                $tag_out = 'class="defination-list defination-list_tags"';
 
             } elseif (strstr($url, 'habrahabr') || strstr($url, 'geektimes')) {
-                $tag_in = 'class="post_show"';
-                $tag_out = 'class="post__tags"';
+                $tag_in = 'class="post__wrapper"';
+                $tag_out = 'class="defination-list defination-list_tags"';
 
             } elseif (strstr($url, 'wikipedia')) {
                 $tag_in = 'id="mw-content-text"';
@@ -2883,21 +3126,28 @@ class ParsersController extends Controller
 
             }
 
-            //echo $tag_in;
+            //echo $tag_in.PHP_EOL;
             //echo $tag_out;  exit;
 
             header('Content-Type: text/html; charset=utf-8');
             //$head = file_get_contents(Url::to("@app/commands/header.html"));
 
+            
+
             $content = $this->get_page($url);
 
+            //var_export($content); exit;
+
             $content = $this->cut_content($content, $tag_in, $tag_out);
+
+            
 
             $allowedTags = '<a><br><b><h1><h2><h3><h4><i>' .
                 '<img><li><ol><p><strong><table><pre>' .
                 '<tr><td><th><u><ul>';
             $content = strip_tags($content, $allowedTags);
             //$content = preg_replace('$\[.*?\]$', '', $content);
+            
             $content = str_replace('id="mw-content-text" lang="ru" dir="ltr" class="mw-content-ltr">', '', $content);
 
 
@@ -3129,8 +3379,8 @@ class ParsersController extends Controller
 
                             $source->title = $albom;
 
-                            if (Author::find()->where('name like "%' . addslashes($new_artist) . '%"')->one()) {
-                                $source->author_id = $source->author_id = Author::find()->where("name like '%" . addslashes($new_artist) . "%'")->one()->id;
+                            if (Author::find()->where('name like "' . addslashes($new_artist) . '"')->one()) {
+                                $source->author_id = $source->author_id = Author::find()->where("name like '" . addslashes($new_artist) . "'")->one()->id;
                             }
                                
                             else return ('author error');
@@ -3336,6 +3586,16 @@ class ParsersController extends Controller
                                             }
 
                                         $song_obj->save(false);
+
+                                        $song_postg = new RadioSongs();
+                                        $song_postg->id = $song_obj->id;
+                                        $song_postg->source_id = $song_obj->source_id;
+                                        if($song_obj->title) $song_postg->title = $song_obj->title;
+                                        else $song_postg->title = '';
+                                        if($song_obj->link)$song_postg->link = $song_obj->link;
+                                        else $song_postg->link = '';
+                                        $song_postg->text = '';
+                                        $song_postg->save(false);
                                     }
                                 } else {
                                     echo $path . '-----no---dir--------------';
@@ -3783,6 +4043,186 @@ class ParsersController extends Controller
     }
 
 
+
+    public function actionCreateDefaultArticle(){
+        $model = new Articles();
+
+        $model->title = date('Ymd', time()+6*60*60);
+        $model->alias = TranslateHelper::translit(date('Ymd', time()+6*60*60));
+        $model->site_id = 13;
+        $model->cat_id = 56;
+        $model->redactor = 1;
+        $model->user_id = 0;
+        $model->source_id = NULL;
+        $model->save();
+
+    }
+
+    /**
+     * Заполняем англо-русскую таблицу
+     */
+    public function actionAddEnglishWordsFromFile(){
+        $words = file(Url::to("@app/commands/ENRUS.txt"));
+        
+        $i=0;
+        global $en_word;
+        $en_word = '';
+        
+        foreach ($words as $word){
+            $i++;
+           
+            if($i%2){
+                $en_word = trim(iconv('Windows-1251', 'UTF-8', $word));
+               
+            }
+            
+            else {
+                $rec = new EnRus();
+                $rec->en = $en_word;
+                $rec->rus = trim(iconv('Windows-1251', 'UTF-8', $word));
+                
+                $rec->save();
+                $en_word = '';
+               
+            }
+               
+        }
+
+    }
+    
+    public function actionTestGeneratorEnRus(int $dictionary, int $answers){
+        //var_dump($words);
+        
+        $ens = EnRus::find()->where('dictionary = '.$dictionary.' and used_test = 0')->all();
+        
+        if(!$ens) echo 'Нет слов'.PHP_EOL;
+
+        foreach ($ens as $en){
+            $test_question = new TestQuestions();
+            $test_question->body = $en->en;
+            $test_question->cat_id = 213;
+            if($test_question->save()){
+                $en->used_test = 1;
+                $en->update();
+                echo '---------------'.PHP_EOL.'Вопрос '.$test_question->body.PHP_EOL;
+                $test_answer = new TestAnswers();
+                $test_answer->question_id = $test_question->id;
+                $test_answer->body = $en->rus;
+                $test_answer->true = 1;
+                if($test_answer->save()) {
+                    echo 'Правильный ответ '.$test_answer->body.PHP_EOL;
+                    for($i=0;$i<($answers-1);$i++){
+                        $rand_id = rand(0,(count(EnRus::find()->all())-1));
+                        //$rand_en = EnRus::findOne($rand_id);
+                        $test_answer = new TestAnswers();
+                        $test_answer->question_id = $test_question->id;
+                        $test_answer->body = EnRus::findOne($rand_id) ? EnRus::findOne($rand_id)->rus : 'nothing';
+                        $test_answer->true = 0;
+                        if($test_answer->save()){
+                            echo 'Неправильный ответ '.$test_answer->body.PHP_EOL;
+                        }
+                        else echo 'Ошибка сохранения ответа с '.$test_answer->body.PHP_EOL;
+                    }
+                }
+                else echo 'Ошибка сохранения правильного ответа';
+               
+            }
+            else echo 'Ошибка сохранения вопроса';
+        }
+        
+    }
+
+    /**
+     * Добавление английских слов в определённый словарь
+     * @param array $words
+     * @param int $dictionary
+     */
+    public function actionAddWordsToSomeDictionary(Array $words, int $dictionary){
+        
+        foreach ($words as $word){
+            if(isset(EnRus::find()->where('en LIKE "'.$word.'"')->all()[0])){
+                $rec = EnRus::find()->where('en LIKE "'.$word.'"')->all()[0];
+                $rec->dictionary = $dictionary;
+                $rec->update();
+            }
+          
+        }
+       
+    }
+
+
+    public function actionCutZerosAfterPoint($numeral){
+        
+        echo preg_replace("/(\d*)((?:\.(?:0)*)+$)|(\.([1-9])*)|((0)*)/", "\$1\$3", $numeral).PHP_EOL;
+    }
+
+    /**
+     * 
+     */
+    public function actionPhraseToSongGenerator(){
+        $songs = Items::find()->where("(cat_id = 90 or cat_id = 89) ")->all();
+        $arr_objs = [];
+        $arr_ids = [];
+        
+        foreach ($songs as $song){
+            
+            $tags = explode(', ', $song->tags);
+            
+            //var_dump($tags); exit;
+            
+
+            foreach ($tags as $tag) {
+                
+                //echo $tag.PHP_EOL;
+
+                $query = new Query();
+
+                $items = $query->from('items')
+                    ->match($tag)
+                    ->all();
+
+               /* var_dump($items); exit;
+                
+
+                $i = Items::findOne((int)$items[rand(0,count($items)-1)]['id']);
+                if($i->id != $song->id) {
+                    $arr[] = $i->title;
+                }
+               */
+
+               foreach ($items as $arr_item_rec) {
+                   foreach ($arr_item_rec as $id) {
+                       echo $id.PHP_EOL;
+                        
+                       //var_dump($i = Items::findOne((int)$id['id']));
+                        if(Items::find()->where(['phrase_gen_id' => $id])->one()) continue;
+                        $i = Items::findOne((int)$id);
+                        if($i->cat_id == 93 || $i->cat_id == 94 ||
+                            $i->cat_id == 102 || $i->cat_id == 104 ||
+                            $i->cat_id == 105 || $i->cat_id == 125 ) {
+                            if(!in_array($i->id, $arr_ids)) {
+                                $arr_objs[] = $i;
+                                $arr_ids[] = $i->id;
+                            }
+                            
+                        }
+                        
+                   }
+                   
+                }
+                
+            }
+
+            //var_dump($arr); exit;
+            
+
+            $song->phrase_gen_id = $arr_objs[rand(0, count($arr_objs)-1)]->id;
+            if($song->update(false)) echo $song->phrase_gen_id.PHP_EOL;
+            else echo 'fail'. $arr_objs[rand(0, count($arr_objs)-1)]->id .PHP_EOL;
+            
+        }
+       
+    }
 
    
 }

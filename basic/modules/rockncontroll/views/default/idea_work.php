@@ -20,9 +20,25 @@
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/project",
-            data: "edited=" + txt + "&user=" + user + "&id=" + id,
+            data:{edited:txt,user:user,id:id},//параметры запроса
+            //data: "edited=" + txt + "&user=" + user + "&id=" + id,
             success: function (html) {
                 $("#res").html(html);
+
+            }
+
+        });
+    }
+
+    function usedItem(user, idea_id, item_id) {
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/project-used-item",
+            data:{idea_id:idea_id,user:user,item_id:item_id},//параметры запроса
+            //data: "edited=" + txt + "&user=" + user + "&id=" + id,
+            success: function (html) {
+                $("#res_used_item_" + item_id).html(html);
+                $("#used_item_" + item_id).hide;
 
             }
 
@@ -79,6 +95,8 @@
                         <h5><?=\app\models\Items::findOne($item_id)->title ?></h5>
                         <p>(<?=\app\models\Items::findOne($item_id)->source->title ?> - <?=\app\models\Items::findOne($item_id)->source->author->name ?>)</p>
                         <p><?=\app\models\Items::findOne($item_id)->text ?></p>
+                        <button type="button" class="btn btn-success" id="used_item_<?=$item_id?>" onclick="usedItem(user, idea_id, <?=$item_id?>)">Использовано!</button>
+                        <div id="res_used_item_<?=$item_id?>"></div>
                     </div>
                 <?php endif; ?>
             <?php endforeach; ?>

@@ -31,8 +31,6 @@
         
         $("#play").click(
             function() {
-
-
                
                 var theme_song = $("#theme_song").val();
                 

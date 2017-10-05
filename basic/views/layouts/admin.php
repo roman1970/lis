@@ -72,6 +72,7 @@ AppAsset::register($this);
                 ['label' => 'Тексты песен', 'url' => ['/songtext/index']],
                 ['label' => 'Погода XXI века', 'url' => ['/pogxxi/index']],
                 ['label' => 'Вопрос для проверки', 'url' => ['/quest/index']],
+                ['label' => 'Немецкий', 'url' => ['deutschitem/index']],
             ],
         ]);
         ?>

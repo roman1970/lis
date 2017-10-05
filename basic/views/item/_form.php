@@ -65,6 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]);
             ?>
+            <?php  //$form->field($model, 'cat_title')->textInput()  ?>
             <?php echo $form->field($model, 'cat_title')->widget(
                 AutoComplete::className(), [
                 'clientOptions' => [
@@ -77,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]);
             ?>
-            <?= $form->field($model, 'text')->textarea(['rows' => 5, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
+            <?= $form->field($model, 'text')->textarea(['rows' => 35, 'cols' => 5, 'id' => 'my-textarea-id'])  ?>
             <?=  $form->field($model, 'cens')->textInput()  ?>
             <?=  $form->field($model, 'published')->textInput()  ?>
             <?php  $form->field($model, 'tags')->textInput()  ?>

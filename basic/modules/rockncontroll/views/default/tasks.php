@@ -5,7 +5,7 @@
         $("#add_task").click(
             function() {
 
-                var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+                var user = <?= (isset($user)) ? $user : 8 ?>;
                 var task_name = $("#task_name").val();
                 var task_description = $("#task_description").val();
 
@@ -142,7 +142,7 @@
                         </td>
 
                         <td>
-                            <?= $task->description ?>
+                            <?= nl2br($task->description) ?>
                         </td>
                         <td>
                             <input type='text' class="form-control" id="mark_<?=$i ?>" placeholder="Оценка" width="20"/>

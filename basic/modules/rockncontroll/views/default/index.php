@@ -3,8 +3,7 @@
 <script>
     var arr = [];
     $(document).ready(function() {
-        //alert($.cookie('the_cookie'));
-
+       // alert($.cookie('the_cookie'));
 
         if($.cookie('the_cookie') == 'the_value') {
             $.ajax({
@@ -42,11 +41,12 @@
         }, "json");
         */
 
+      
     });
 
    
     function login(){
-      //$.cookie('the_cookie', 'the_value', { expires: 90 });
+  //  $.cookie('the_cookie', 'the_value', { expires: 90 });
 
         var name = $("#logg").val();
         var pseudo = $("#pswd").val();
@@ -89,7 +89,7 @@
 <header>
     <div class="logo">
        <h1 style="font-size: 35px"> <?=$denzhisni?>-<?=date('z-W-M-d-D', time()+3*60*60) ?></h1>
-        <?php /*<p id="radio"></p>*/ ?>
+        <?php //phpinfo();/*<p id="radio"></p>*/ ?>
         <!--Div that will hold the pie chart
         <div id="vis_div" style="width: 100%; height: 200px;"></div>-->
     </div>
@@ -146,7 +146,7 @@
 </div>
 
 <script>
-   
+
 
     /*setInterval(function () {
      $.ajax({

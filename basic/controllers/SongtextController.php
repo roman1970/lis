@@ -2,11 +2,13 @@
 namespace app\controllers;
 
 use app\components\BackEndController;
+use app\models\Author;
 use app\models\RadioSongs;
 use app\models\SongText;
 //use app\models\SongTextSearch;
 use app\models\SongtextSearch;
 use app\models\Source;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -130,6 +132,26 @@ class SongtextController extends BackEndController
         } else {
             throw new \yii\web\HttpException(404, 'Cant delete record.');
         }
+
+    }
+
+    public function actionArtistTexts($id){
+
+        //$artist = Author::findOne($id);
+        //var_dump($artist);
+
+       // $sources = Source::find()->where("author_id = $id")->all();
+
+        $source_texts = implode(',', ArrayHelper::map(Source::find()->where("author_id = $id")->all(), 'id', 'id'));
+
+        var_dump($source_texts);
+
+        $searchModel = new SongtextSearch();
+        $dataProvider = $searchModel->searchForArtist(Yii::$app->request->queryParams, $id);
+
+
+        return $this->render('index', ['texts' => $dataProvider, 'searchModel' => $searchModel]);
+
 
     }
 

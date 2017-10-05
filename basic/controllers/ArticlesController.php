@@ -130,12 +130,14 @@ class ArticlesController extends BackEndController
         }
 
     }
+   
 
     public function actionUpdate($id){
 
         $model = $this->loadModel($id);
         $uploadFile = new UploadForm();
         $uploadImg = new UploadForm();
+
 
         if (Yii::$app->request->isPost) {
             $uploadFile->file = UploadedFile::getInstance($uploadFile, 'file');
@@ -293,6 +295,8 @@ class ArticlesController extends BackEndController
         $artContent = $this->loadModelcontent($id);
         $artId = $artContent->articles_id;
         $redactor = $this->loadModel($artId)->redactor;
+
+        $artContent->source_title = Source::findOne($artContent->source_id)->title;
         $upload = new UploadForm();
         //var_dump($upload); exit;
         if (Yii::$app->request->isPost) {
@@ -547,7 +551,22 @@ class ArticlesController extends BackEndController
 
 
     }
-        
+
+    /**
+     * Отдаём запрошенную статью
+     * @param $id
+     * @return string
+     */
+    function actionShow($id){
+        //return 45;
+        if ($id) {
+            $this->layout = 'rncont';
+            $article = ArticlesContent::findOne((int)$id);
+            return $this->render('article_by_id', ['rec' => $article]);
+        }
+        else return 'ups';
+
+    }
    
 
     /*

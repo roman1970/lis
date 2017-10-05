@@ -3,6 +3,7 @@ namespace app\models;
 
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 
 class SongtextSearch extends SongText
 {
@@ -29,4 +30,23 @@ class SongtextSearch extends SongText
 
         return $dataProvider;
     }
+
+    public function searchForArtist($params, $id)
+    {
+
+        $source_texts = implode(',', ArrayHelper::map(Source::find()->where("author_id = $id")->all(), 'id', 'id'));
+        $query = SongText::find()->where(['text' => ''])->andWhere("source_id  IN (" . $source_texts . ")");
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+
+        $query->andFilterWhere(['like', 'title', $this->title]);
+
+        return $dataProvider;
+    }
+
 }

@@ -35,7 +35,7 @@ AppAsset::register($this);
             'name',
 
             ['class' => 'yii\grid\ActionColumn',
-                'template' => '{delete} {update}',
+                'template' => '{delete} {update} {edit_sources}',
                 'buttons' =>
                     [
                         'delete' => function ($url, $model) {
@@ -49,6 +49,13 @@ AppAsset::register($this);
                         'update' => function ($url, $model) {
                             return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['update','id' => $model->id]), [
                                 'title' => Yii::t('yii', 'Редактировать'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0',
+                            ]);
+                        },
+                        'edit_sources' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-book"></span>', Url::toRoute(['songtext/artist-texts','id' => $model->id]), [
+                                'title' => Yii::t('yii', 'Редактировать источники'),
                                 'data-method' => 'post',
                                 'data-pjax' => '0',
                             ]);

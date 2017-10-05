@@ -9,6 +9,7 @@ use app\models\Author;
 use app\models\Comments;
 use app\models\ContactForm;
 use app\models\Source;
+use app\models\TestAnswers;
 use app\models\TestQuestions;
 use app\models\UploadForm;
 use Yii;
@@ -62,6 +63,16 @@ class DefaultController extends FrontEndController
         if(isset(Yii::$app->request->get()['id'])){
             return $this->render('tablo');
         }
+        elseif (isset(Yii::$app->request->get()['eng'])){
+            $rand_item = rand(0,(count(TestQuestions::find()->where('cat_id = 213 and used = 0')->all())-1));
+            $test = TestQuestions::find()->where('cat_id = 213 and used = 0')->all()[$rand_item];
+            $test->used = 1;
+            $test->update();
+
+            return $this->render('@app/modules/rockncontroll/views/default/english',
+                ['test' => $test]
+            );
+        }
         else{
             $tests = TestQuestions::find()->where(['cat_id' => 205])->all();
 
@@ -97,6 +108,15 @@ class DefaultController extends FrontEndController
                 ['test' => $test]
             );
         }
+    }
+
+    public function actionEnglish(){
+
+        $test = TestQuestions::find()->where(['cat_id' => 213])->all()[0];
+
+        return $this->render('english',
+            ['test' => $test]
+        );
     }
 
     /**
@@ -173,6 +193,47 @@ class DefaultController extends FrontEndController
             echo CommentsWidget::widget(['article_id' => $id,
             'module_path' => \Yii::$app->view->theme->baseUrl]);
         else echo 'ooppps!';
+    }
+
+    /**
+     * Проверяем, верен ли ответ
+     * @param $id
+     * @return int
+     */
+    function actionTrue($id){
+        return TestAnswers::findOne($id)->true;
+    }
+
+    /**
+     * Отдаём вопрос теста
+     * @return string
+     */
+    function actionQuestion(){
+        if(isset(Yii::$app->request->get()['id'])){
+            $id = Yii::$app->request->get()['id'];
+            //return 2;
+            $answer = TestAnswers::findOne($id);
+
+            if(isset(TestQuestions::find()->where('cat_id = 213 and id >'.$answer->question_id)->all()[0])) {
+                $test = TestQuestions::find()->where('cat_id = 213 and id >'.$answer->question_id)->all()[0];
+
+                return $this->renderPartial('question',
+                    ['test' => $test]);
+            }
+
+            else return '<p class="big_font_with_padding">Тест закончен</p>';
+
+        }
+    }
+
+    function actionQuestionEnd(){
+        $used_tests = TestQuestions::find()->where('cat_id = 213 and used = 1')->all();
+
+        foreach ($used_tests as $test){
+            $test->used = 0;
+            $test->update();
+        }
+        return '<p class="big_font_with_padding">Тест закончен</p>';
     }
     
    

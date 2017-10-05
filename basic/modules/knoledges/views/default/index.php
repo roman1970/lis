@@ -4,6 +4,19 @@ use yii\widgets\ActiveForm;
 ?>
 
 <style>
+    #team_host, #team_guest {
+        width: 40%;
+        font-size: 40px!important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    #score_host, #score_guest{
+        font-size: 80px;
+    }
+    #tournament{
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
     .theme_title{
         text-align: center;
     }
@@ -18,13 +31,7 @@ use yii\widgets\ActiveForm;
     }
 
     }
-    #team_host, #team_guest {
-        width: 40%;
-        font-size: 40px!important;
-    }
-    #score_host, #score_guest{
-        font-size: 80px;
-    }
+
     .timer{
 
         font-size: 50px;
@@ -42,6 +49,47 @@ use yii\widgets\ActiveForm;
         border-radius: 10px;
         box-shadow: 0 0 6px black;
     }
+
+
+    @media (min-width:500px) and (max-width:1900px){
+        #team_host, #team_guest{
+            font-size: 40px!important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #score_host, #score_guest{
+            font-size: 80px!important;
+        }
+
+        .timer{
+            font-size: 40px;
+        }
+
+        .table {
+            table-layout: fixed;
+        }
+    }
+
+    @media (max-width:500px){
+        #team_host, #team_guest{
+            font-size: 20px!important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #score_host, #score_guest{
+            font-size: 25px!important;
+        }
+
+        .timer{
+            font-size: 20px;
+        }
+
+        .table {
+            table-layout: fixed;
+        }
+    }
+
+
 
 </style>
 
@@ -71,7 +119,7 @@ use yii\widgets\ActiveForm;
         <div class="table-responsive">
             <table class="table">
                 <tr class="teams">
-                    <td id="team_host" style="font-size: 40px">Сибирь</td>
+                    <td id="team_host" style="font-size: 40px">Сибирь</p></td>
                     <td></td>
                     <td id="team_guest" style="font-size: 40px">Трактор</td>
                 </tr>

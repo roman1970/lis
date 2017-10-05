@@ -883,3 +883,20 @@ function arg_sum() {
     return result;
 }
 
+
+function removeProp() {
+    $("#code_41").show();
+    var myJSONObject = {"ircEvent": "PRIVMSG", "metod": "newURI", "regex": "^http://.*"};
+    removeProperty(myJSONObject, 'metod');
+}
+
+function removeProperty(obj, prop) {
+    if(obj.hasOwnProperty(prop)) {
+        delete obj[prop];
+        console.log(obj[prop]);
+        return true;
+    }
+    else
+        return false;
+}
+

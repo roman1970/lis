@@ -18,7 +18,10 @@
 
     });
 
+    function text_edit(id) {
 
+        window.location = "http://servyz.xyz/plis/articles/updatepage/" + id;
+    }
 
 </script>
 <style>
@@ -63,6 +66,8 @@
                       </audio>
                   <?php endif; ?>
                 <?=$rec->body?></span>
+            <button type="button" class="btn btn-success" onclick="text_edit(<?=$rec->id?>)" id="red_button_<?=$rec->id?>" >Редактировать!</button><br>
+
             <?php
         endforeach;
 

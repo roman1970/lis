@@ -54,10 +54,11 @@ class SiteController extends BackEndController
             'error' => [
                 'class' => 'yii\web\ErrorAction',
             ],
-            'captcha' => [
-                'class' => 'yii\captcha\CaptchaAction',
-                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-            ],
+            //'captcha' => [
+             //   'class' => 'yii\captcha\CaptchaAction',
+                
+                //'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            //],
         ];
     }
 
@@ -65,11 +66,21 @@ class SiteController extends BackEndController
     {
         $model = new ContactForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+        if ($model->load(Yii::$app->request->post()) && $model->contact('r0man4ernyshev@gmail.ru')) {
             Yii::$app->session->setFlash('contactFormSubmitted');
+            if (!Yii::$app->request->isPjax) {
+                return $this->refresh('#contact');
+            }
+            else {
+                $success = 1;
+                return $this->render('contact_lend', [
+                    'model' => $model,
+                    'success' => $success
+                ]);
+            }
+                
+            
 
-
-            return $this->refresh('#contact');
         }
 
         if(Yii::$app->getRequest()->getQueryParam('hhash')) {
@@ -87,6 +98,8 @@ class SiteController extends BackEndController
             exit;
 
         }
+
+        //return 5;
 
         return $this->render('contact_lend', [
             'model' => $model,
@@ -118,7 +131,7 @@ class SiteController extends BackEndController
     public function actionContact()
     {
         $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['email_host'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 
             return $this->refresh();
@@ -132,6 +145,21 @@ class SiteController extends BackEndController
     {
         $names = User::findByUsername('roman');
         return $this->render('about', ['names' => $names]);
+    }
+
+    function actionComeIn(){
+        $request = Yii::$app->request->post();
+        return var_dump($_POST);
+        if($request->post('hash') && $request->post('components')) {
+            $hash = $request->post('hash');
+            $components = $request->post('components');
+            return var_dump($components);
+            $visit = new Visit;
+            $visit->refer = $hash;
+            $visit->browser = $components;
+            if ($visit->save()) return;
+        }
+
     }
 
 }

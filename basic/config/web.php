@@ -60,6 +60,19 @@ $config = [
             'cookieValidationKey' => $params['cookieValidationKey']
             //'enableCsrfValidation' => false,
         ],
+        'response' => [
+            'class' => 'yii\web\Response',
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null && !empty(Yii::$app->request->get('suppress_response_code'))) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+                    $response->statusCode = 200;
+                }
+            },
+        ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
@@ -110,14 +123,26 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => false,
+            'useFileTransport' => true,
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => $params['email_host'],
                 'username' => $params['mail_username'],
                 'password' => $params['mail_password'],
                 'port' => '465',
-                //'encryption' => 'tls',
+                'encryption' => 'ssl',
+                'messageConfig' => [
+                    'charset' => 'UTF-8',
+                ],
+
+                    'streamOptions' => [
+                    'ssl' => [
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                    ],
+               
+                ],
+
             ],
         ],
         'log' => [
@@ -153,14 +178,26 @@ $config = [
             'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+           // 'enableStrictParsing' => true,
             'rules' => [
-                //'<controller:\w+>/<id:\d+>'   => '<controller>/view',
+                '<controller:\w+>/<id:\d+>'   => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
-                '<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
-                '<controller:\w+>/<action:\w+>/<id:\d+>'   => '<controller>/<action>',
+                //'<controller:\w+>/<action:\w+>'   => '<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>' => '<module>/<controller>/<action>',
 
+                '/plis' => '/',
+
+                //'/show/<id:\d+>' => '/article-by-id'
+               [
+                   'class' => 'yii\rest\UrlRule',
+                   'controller' => 'itemapi',
+                   'tokens' => [
+                       '{id}' => '<id:\\w+>'
+                   ],
+                   'pluralize' => false,
+               ],
 
             ],
 

@@ -18,6 +18,7 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Items', 'url' => ['/item/index']],
             ['label' => 'Без аудио', 'url' => ['/item/list-no-audio']],
+            ['label' => 'КВН без аудио', 'url' => ['/item/list-kvn-no-audio']],
             ['label' => 'Сформировать плейлист', 'url' => ['/item/add-playlist']],
             ['label' => 'Выбрать плейлист', 'url' => ['/item/choose-playlist']],
             ['label' => 'В работе', 'url' => ['/item/in-work']],

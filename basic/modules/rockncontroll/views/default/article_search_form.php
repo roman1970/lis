@@ -1,6 +1,11 @@
 <script>
     var user = <?= (isset($user->id)) ? $user->id : 8 ?>;
+    var night_btn = document.getElementById('night_btn');
+    var day_btn = document.getElementById('day_btn');
+
     $(document).ready(function() {
+
+        day_btn.style.display = 'none';
 
         $('#book').autoComplete({
             minChars: 3,
@@ -86,10 +91,47 @@
         });
     }
 
+    function nightSkinn() {
+        //document.getElementsByClassName("article")[0].removeAttribute("class");
+        els = document.getElementsByClassName("article");
+        for (var j=0; j<els.length; j++)  {
+            els[j].setAttribute("class", "article_night");
+        }
+        day_btn.style.display = 'block';
+        night_btn.style.display = 'none';
+        codes = document.getElementsByTagName('pre');
+        for (var i=0; i<codes.length; i++)  {
+            codes[i].style.color = 'white';
+            codes[i].style.backgroundColor = 'black';
+        }
+
+
+    }
+
+    function daySkinn() {
+        //document.getElementsByClassName("article")[0].removeAttribute("class");
+
+        els = document.getElementsByClassName("article_night");
+        for (var j=0; j<els.length; j++)  {
+            els[j].setAttribute("class", "article");
+        }
+        day_btn.style.display = 'none';
+        night_btn.style.display = 'block';
+        codes = document.getElementsByTagName('pre');
+        for (var i=0; i<codes.length; i++)  {
+            codes[i].style.color = 'black';
+            codes[i].style.backgroundColor = 'white';
+        }
+    }
+
+
 
 
 </script>
 <style>
+    .btn-success {
+        width: 100%;
+    }
     .form-group{
         text-align: center;
     }
@@ -108,7 +150,17 @@
         font-size: 13px;
         line-height: 24px;
          font-family: 'Tinos', sans-serif;*/
-
+    }
+    .article_night{
+        display: block;
+        color: rgb(218, 212, 195);
+        font-size: 17px;
+        border-radius: 5px;
+        background: none;
+        background-size: 100%;
+        line-height: 20px;
+        padding: 10px;
+        text-align: left
     }
     .post__title, h1, h2{
         font-size: 25px;
@@ -136,8 +188,11 @@
 
                 <button type="button" class="btn btn-success" id="search" >Найти статью!</button>
             </p>
+            <button type="button" class="btn btn-success" onclick="daySkinn()" id="day_btn" >День!</button><br>
+            <button type="button" class="btn btn-success" onclick="nightSkinn()" id="night_btn" >Ночь!</button><br>
             <div id="res">
                 <h3>Случайная статья</h3>
+                <a href="http://servyz.xyz/plis/articles/show/<?=$rec->id?>">Поделиться ссылкой</a>
                 <h4><?=$rec->minititle?> :: <?=$rec->source->title?> :: <?=$rec->source->author->name ?></h4>
                 <?php if($rec->audio) : ?>
                     <audio controls="controls" class="audio">

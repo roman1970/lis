@@ -77,4 +77,43 @@ class AuthorController extends BackEndController
 
     }
 
+    public function actionUpdate($id)
+    {
+
+        $model = $this->loadModel($id);
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->name = Yii::$app->request->post('Author')['name'];
+            $model->status = Yii::$app->request->post('Author')['status'];
+            $model->description = Yii::$app->request->post('Author')['description'];
+            $model->country_id = Yii::$app->request->post('Author')['country_id'];
+
+
+            $authors = Author::find();
+            $dataProvider = new ActiveDataProvider([
+                'query' => $authors,
+            ]);
+
+            return $this->redirect(Url::toRoute('author/index'));
+
+        } else {
+
+            return $this->render('_form', [
+                'model' => $model,
+
+            ]);
+        }
+    }
+
+    public function loadModel($id)
+    {
+
+        $model = Author::findOne($id);
+
+        if ($model === null)
+            throw new \yii\web\HttpException(404, 'The requested page does not exist.');
+        return $model;
+    }
+
+
 }

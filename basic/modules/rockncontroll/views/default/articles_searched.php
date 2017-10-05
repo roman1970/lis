@@ -44,8 +44,27 @@
         });
 
     }
+
+    function text_edit(id) {
+
+        window.location = "http://servyz.xyz/plis/articles/updatepage/" + id;
+    }
+
+    function night() {
+        var elements = getElementsByClass('article');
+        for (var i=0; i<elements.length; i++)  {
+
+            elements[i].className = elements[i].className.replace('article', 'article_night');
+
+        }
+
+    }
+    
 </script>
 <style>
+    .btn-success {
+        width: 100%;
+    }
     @media(min-width:320px) and (max-width:767px){.container{width: 100%; padding: 0 3px;}}
     .article {
         display: block; 
@@ -63,6 +82,16 @@
          font-family: 'Tinos', sans-serif;*/
     
     }
+    .article_night{
+        display: block;
+        color: rgb(218, 212, 195);
+        font-size: 17px;
+        border-radius: 5px;
+        background: none;
+        background-size: 100%;
+        line-height: 20px;
+        padding: 10px;
+    }
     .post__title, h1, h2{
         font-size: 25px;
     }
@@ -79,6 +108,7 @@
         foreach ($articles_rows as $rec): $i++;
             ?>
             <hr>
+            <a href="http://servyz.xyz/plis/articles/show/<?=$rec->id?>">Поделиться ссылкой</a>
             <h4><?=$i?>) <?=$rec->minititle?> :: <?=$rec->source->title?> :: <?=$rec->source->author->name ?></h4>
 
             <span class="article">
@@ -88,6 +118,7 @@
                       </audio>
                   <?php endif; ?>
                 <?=$rec->body?></span>
+            <button type="button" class="btn btn-success" onclick="text_edit(<?=$rec->id?>)" id="red_button_<?=$rec->id?>" >Редактировать!</button><br>
             <?php
         endforeach;
     else: echo $articles_rows;

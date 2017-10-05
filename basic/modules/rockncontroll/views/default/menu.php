@@ -152,6 +152,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'project')">Проект</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'news')">Новости</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'copyright')">Копирайт</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'limerik')">Лимерик</button>
 </div>
 
 <div id="show_menu">

@@ -17,6 +17,28 @@
 
     });
 
+    function autocompl() {
+
+        $('#concert').autoComplete({
+            minChars: 3,
+            source: function (term, suggest) {
+                term = term.toLowerCase();
+                console.log(term);
+                $.getJSON("rockncontroll/default/concerts", function (data) {
+
+                    choices = data;
+                    var suggestions = [];
+                    for (i = 0; i < choices.length; i++)
+                        if (~choices[i].toLowerCase().indexOf(term)) suggestions.push(choices[i]);
+                    suggest(suggestions);
+
+                }, "json");
+
+            }
+        });
+
+    }
+
     function saveNextSong(user, id) {
 
         $.ajax({
@@ -43,6 +65,21 @@
         });
 
     }
+    
+    function generateConcert() {
+        var concert = $("#concert").val();
+        //alert(title);
+        $.ajax({
+            type: "GET",
+            url: "rockncontroll/default/generate-concert/",
+            data: "user="+user+"&concert="+concert,
+            success: function(html){
+                $("#res").html(html);
+            }
+
+        });
+        
+    }
 </script>
 <style>
     .accord{
@@ -64,11 +101,16 @@
     }
 </style>
 
-<div id="res"></div>
-<div class="accord">
+
+<form class="form-inline center" role="form" id="form-add-original">
+    <input type="text" class="form-control" id="concert" onfocus="autocompl()" placeholder="Концерт">
+    <br>
+    <button type="button" class="btn btn-success" onclick="generateConcert()" >Генерировать концерт!</button>
+</form>
+<div class="accord" id="res">
 
 
-    <?php foreach ($songs as $song): ?>
+    <?php /*foreach ($songs as $song): var_dump($song); exit;?>
 
         <h3 class="song-name"> <?= $song->title ?> </h3>
 
@@ -82,7 +124,7 @@
         <p class="phrase"> <?= nl2br($song->phrase) ?></p>
 
         <hr><hr>
-    <?php endforeach; ?>
+    <?php endforeach; */?>
 
 
 </div>

@@ -152,12 +152,18 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+
                 '<controller:\w+>/<id:\d+>'   => '<controller>/view',
                 '<module:\w+>/<controller:\w+>/<id:\d+>'   => '<module>/<controller>/view',
-                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
+                //'<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id>' => '<module>/<controller>/<action>/',
                 '<module:\w+>/<controller:\w+>/<action:\w+>/<id>/<page>' => '<module>/<controller>/<action>/',
                 '<controller:\w+>/<action:\w+>'  => '<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>/',
+                '/<eng:eng>' => '/knoledges/default/index',
+                '<module:\w+>/<controller:\w+>/<action:\w+>/<art_id:\d+>' => '/rockncontroll/default/article-by-id/'
+                //'/knoledges/rockncontroll/default/true/?id=*' => '/rockncontroll/default/true/',
+                //'/knoledges/rockncontroll/default/question/?id=*' => '/rockncontroll/default/question/',
 
 
             ],

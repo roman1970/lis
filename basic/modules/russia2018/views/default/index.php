@@ -1464,6 +1464,7 @@ function affOfDayByNumber($days){
 
 </div>
 <script src="/themes/russia2018/js/all-9a817bdc2fe0defd1926c8c6d917d06c.js"></script>
+<script src="/themes/russia2018/js/fingerprint2.min.js"></script>
 <script>
     $(document).ready(function() {
         var host = $("#host");
@@ -1483,29 +1484,12 @@ function affOfDayByNumber($days){
         var key = $("#key");
         var h;
 
-        $(window).scroll(function() {
-            if($(this).scrollTop() > 1000){
-                $('#goTop').stop().animate({
-                    top: $(this).scrollTop() + $(this).height() - 50
-                }, 1000);
-            }
-            else{
-                $('#goTop').stop().animate({
-                    top: '-100px'
-                }, 1000);
-            }
-        });
-        $('#goTop').click(function() {
-            $('html, body').stop().animate({
-                scrollTop: 0
-            }, 1000, function() {
-                $('#goTop').stop().animate({
-                    top: '-100px'
-                }, 1000);
-            });
+        $.get('https://ipinfo.io/json', function (data) {
+
+            siteBlockListener('russia2018', 'body', data);
         });
 
-
+       
         var k = false;
         $("#statusMess").ajaxSuccess(
             function() {
@@ -1979,6 +1963,27 @@ function affOfDayByNumber($days){
 
         }
 
+    }
+
+    function siteBlockListener(site, block, ip_json) {
+        //console.log(ip_json);
+
+        new Fingerprint2().get(function(result, components){
+            //console.log(result); //a hash, representing your device fingerprint
+            //console.log(components); // an array of FP components
+
+            $.ajax({
+                url: "http://servyz.xyz:8098/datas/come-in/",
+                type:'POST',
+                data:'components=' + JSON.stringify(components) +
+                '&hash=' + result +
+                '&site='+ site +'&block=' + block +
+                '&ip_json=' + JSON.stringify(ip_json)
+                // success: function(html){
+                //    $("#dev_res").html(html);
+                // }
+            });
+        });
     }
 
 

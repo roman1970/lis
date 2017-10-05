@@ -102,7 +102,7 @@
             if($today_event) :
                 foreach ($today_event as $event) :
                 ?>
-                    <li style="color: rgb(255, 215, 0);; text-align: left"><?=date('H:i',$event->act->time)?> - <?=$event->cat->name?> - <?=$event->text?></li>
+                    <li style="color: rgb(255, 215, 0);; text-align: left"><?=date('H:i',$event->act->time-(60*60))?> - <?=$event->cat->name?> - <?=$event->text?></li>
 
                 <?php endforeach; ?>
             <?php endif; ?>

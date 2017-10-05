@@ -34,7 +34,7 @@ class Task extends \yii\db\ActiveRecord
         return [
             [['name', 'description', 'dead_line'], 'required'],
             [['status', 'hour', 'dead_line'], 'integer'],
-            [['name', 'description'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 

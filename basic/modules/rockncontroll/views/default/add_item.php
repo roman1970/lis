@@ -108,7 +108,8 @@
         $.ajax({
             type: "GET",
             url: "rockncontroll/default/record-item",
-            data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data+"&cens="+cens+"&published="+published,
+            //data: "title="+title+"&source="+source+"&cat="+cat+"&tags="+tags+"&txt="+txt+"&user="+user+"&old_data="+old_data+"&cens="+cens+"&published="+published,
+            data:{title:title,user:user,source:source,cat:cat,tags:tags,txt:txt,old_data:old_data,cens:cens,published:published},
             success: function(html){
                 $("#res").html(html);
 

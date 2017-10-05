@@ -1,5 +1,7 @@
 AddDefaultCharset utf-8
-
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "http://rockncontroll"
+</IfModule>
 Options +FollowSymLinks
 #IndexIgnore */*
 RewriteEngine on
