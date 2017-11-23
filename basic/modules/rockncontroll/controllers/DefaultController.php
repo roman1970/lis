@@ -304,7 +304,7 @@ class DefaultController extends FrontEndController
             $incomes = Incomes::find()
                 ->select('SUM(money)')
                 ->where("act_id > $first_sept_act->id")
-                ->andWhere("income_id IN (3,4,6,16)")
+                ->andWhere("income_id IN (3,4,6,16,18)")
                 ->scalar();
             
 
@@ -1954,7 +1954,7 @@ class DefaultController extends FrontEndController
 
                             $not_curr_sum = Incomes::find()
                                 ->select('SUM(money)')
-                                ->where("income_id  IN (1,2,7,10)")
+                                ->where("income_id  IN (1,2,7,10,23)")
                                 ->scalar();
                             $dollar = Incomes::find()
                                 ->select('SUM(money)')
@@ -1984,7 +1984,7 @@ class DefaultController extends FrontEndController
             
             $not_curr_sum = Incomes::find()
                 ->select('SUM(money)')
-                ->where("income_id  IN (1,2,7,10)")
+                ->where("income_id  IN (1,2,7,10,23)")
                 ->scalar();
             $dollar = Incomes::find()
                 ->select('SUM(money)')
@@ -2082,81 +2082,18 @@ class DefaultController extends FrontEndController
         }
     }
 
-    /**
-     * Закладки
-     * @return string
-     * @throws \Exception
-     */
-    public function actionMarkers(){
+    public function actionPythonMarker(){
 
-        $current_hour = date('G', time()+6*60*60);
-        //return $current_hour;
-
-
-        switch ($current_hour) {
-            /*case 6:
-                $cat = 136;
-                break;
-            */
-
-            case 7:
-                $cat = 116;
-                break;
-            case 8:
-                $cat = 116;
-                break;
-            case 9:
-                $cat = 116;
-                break;
-            case 10:
-                $cat = 116;
-                break;
-            case 11:
-                $cat = 116;
-                break;
-            case 12:
-                $cat = 116;
-                break;
-            case 13:
-                $cat = 116;
-                break;
-            case 14:
-                $cat = 116;
-                break;
-            case 15:
-                $cat = 116;
-                break;
-            case 16:
-                $cat = 116;
-                break;
-            case 17:
-                $cat = 116;
-                break;
-            case 18:
-                $cat = 114;
-                break;
-            case 19:
-                $cat = 116;
-                break;
-            case 20:
-                $cat = 116;
-                break;
-            default:
-                $cat = 53;
-        }
-
-       //return $cat;
-
-
+        $cat = 234;
         if(Yii::$app->getRequest()->getQueryParam('user')) {
-            
+
             $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
             if (!$user) return 'Доступ запрещен!';
-            
+
             if (Yii::$app->getRequest()->getQueryParam('id') && Yii::$app->getRequest()->getQueryParam('mark')) {
 
                 //return var_dump((int)Yii::$app->getRequest()->getQueryParam('id'));
-               
+
                 $update_source = Source::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
                 $update_source->marker = Yii::$app->getRequest()->getQueryParam('mark');
                 $update_source->is_next = 0;
@@ -2165,13 +2102,11 @@ class DefaultController extends FrontEndController
                 if($update_source->id == 1276) return "<h4 style='text-align: center; color: white;'>Закладка сохранена!</h4>";
 
                 //return var_dump($update_source);
-                
 
-                   
+
                 $next_source = Source::find()
                     ->where("id > $update_source->id and cat_id = $cat ")
                     ->one();
-
 
 
                 if(!$next_source) {
@@ -2188,6 +2123,130 @@ class DefaultController extends FrontEndController
 
                 return $this->renderPartial('source', ['source' => $next_source, 'user' => $user]);
             }
+
+
+            $source = Source::find()
+                ->where("cat_id = $cat and is_next = 1")
+                ->one();
+
+
+            return $this->renderPartial('source', ['source' => $source, 'user' => $user]);
+        }
+
+        return 'нет!';
+
+
+    }
+
+    /**
+     * Закладки
+     * @return string
+     * @throws \Exception
+     */
+    public function actionMarkers(){
+
+        $current_hour = date('G', time()+6*60*60);
+        //return $current_hour;
+
+
+        switch ($current_hour) {
+
+                case 6:
+                    $cat = 116;
+                    break;
+                case 7:
+                    $cat = 116;
+                    break;
+                case 8:
+                    $cat = 116;
+                    break;
+                case 9:
+                    $cat = 116;
+                    break;
+                case 10:
+                    $cat = 116;
+                    break;
+                case 11:
+                    $cat = 116;
+                    break;
+                case 12:
+                    $cat = 116;
+                    break;
+                case 13:
+                    $cat = 116;
+                    break;
+                case 14:
+                    $cat = 116;
+                    break;
+                case 15:
+                    $cat = 116;
+                    break;
+                case 16:
+                    $cat = 116;
+                    break;
+                case 17:
+                    $cat = 114;
+                    break;
+                case 18:
+                    $cat = 114;
+                    break;
+                case 19:
+                    $cat = 116;
+                    break;
+                case 20:
+                    $cat = 116;
+                    break;
+                case 21:
+                    $cat = 116;
+                    break;
+                case 22:
+                    $cat = 116;
+                    break;
+                default:
+                    $cat = 53;
+            }
+
+       //return $cat;
+
+
+            if (Yii::$app->getRequest()->getQueryParam('user')) {
+
+                $user = MarkUser::findOne(Yii::$app->getRequest()->getQueryParam('user'));
+                if (!$user) return 'Доступ запрещен!';
+
+                if (Yii::$app->getRequest()->getQueryParam('id') && Yii::$app->getRequest()->getQueryParam('mark')) {
+
+                    //return var_dump((int)Yii::$app->getRequest()->getQueryParam('id'));
+
+                    $update_source = Source::findOne((int)Yii::$app->getRequest()->getQueryParam('id'));
+                    $update_source->marker = Yii::$app->getRequest()->getQueryParam('mark');
+                    $update_source->is_next = 0;
+                    $update_source->update(false);
+
+                    if ($update_source->id == 1276) return "<h4 style='text-align: center; color: white;'>Закладка сохранена!</h4>";
+
+                    //return var_dump($update_source);
+
+
+                    $next_source = Source::find()
+                        ->where("id > $update_source->id and cat_id = $cat ")
+                        ->one();
+
+
+                    if (!$next_source) {
+                        $next_source = Source::find()
+                            ->where("cat_id = $cat")
+                            ->one();
+                        if (!$next_source) {
+                            return "Категория!";
+                        }
+                    }
+                    $next_source->is_next = 1;
+                    //return var_dump($next_source);
+                    $next_source->update(false);
+
+                    return $this->renderPartial('source', ['source' => $next_source, 'user' => $user]);
+                }
 
 
                 $source = Source::find()
@@ -2310,6 +2369,7 @@ class DefaultController extends FrontEndController
                     //return var_dump($query->prepare(Yii::$app->db->queryBuilder)->createCommand()->sql);
                     $query_events_ids = $query->from('events')
                         ->match(Yii::$app->getRequest()->getQueryParam('text'))
+                        ->orderBy('id DESC')
                         ->all();
 
                 } catch (\Exception $e) {
@@ -4229,6 +4289,47 @@ class DefaultController extends FrontEndController
      */
     function br2nl($str) {
         return preg_replace('/\<br(\s*)?\/?\>/i', "", $str);
+    }
+
+
+
+    function actionYearPoint(){
+
+        if ($user = Yii::$app->getRequest()->getQueryParam('user')) {
+
+            if (!$user) return 'Доступ запрещён!';
+
+                if (Yii::$app->getRequest()->getQueryParam('year') && Yii::$app->getRequest()->getQueryParam('deal')) {
+
+                    $deal_id = (int)DiaryDeals::find()->where("name like '".Yii::$app->getRequest()->getQueryParam('deal')."'")->one()->id;
+
+                    $deels = DiaryDoneDeal::find()->where("deal_id = $deal_id")->all();
+
+                    $year_beginnig = mktime(0, 0, 0, 1, 1, (int)Yii::$app->getRequest()->getQueryParam('year'));
+
+                    $res = [];
+
+                    for ($i = 0; $i <= 365; $i++) {
+                        $res[$i] = 0;
+                    }
+
+                    foreach ($deels as $deel) {
+
+                        if ($deel->act->time > $year_beginnig && $deel->act->time < ($year_beginnig + 60 * 60 * 24 * 365)) {
+
+                            $res[(int)(date('z', $deel->act->time+60*60*24))] = 1;
+
+                        }
+
+                    }
+
+                    return json_encode($res);
+                }
+
+            }
+
+        return $this->renderPartial('year_point');
+
     }
 
 

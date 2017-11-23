@@ -57,9 +57,13 @@
       <library name="PHARS">
         <CLASSES>
           <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/../777/basic/vendor/codeception/base/package/php54/codecept.phar/" />
+          <root url="phar://$MODULE_DIR$/../radiorooma/basic/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
         </CLASSES>
         <SOURCES>
           <root url="phar://$MODULE_DIR$/composer.phar/" />
+          <root url="phar://$MODULE_DIR$/../777/basic/vendor/codeception/base/package/php54/codecept.phar/" />
+          <root url="phar://$MODULE_DIR$/../radiorooma/basic/vendor/phpunit/phpunit/tests/_files/phpunit-example-extension/tools/phpunit.d/phpunit-example-extension-1.0.0.phar/" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -169,5 +173,14 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="module" module-name="777" />
+    <orderEntry type="module" module-name="radiorooma" />
+    <orderEntry type="module" module-name="bardzilla" />
+  </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="" />
+  </component>
+  <component name="TestRunnerService">
+    <option name="PROJECT_TEST_RUNNER" value="Unittests" />
   </component>
 </module>

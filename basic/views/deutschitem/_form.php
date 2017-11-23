@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 class="text-center"><?= Html::encode($this->title) ?></h1>
 
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2 sidebar big-font">
             <p>&#223; c&#807</p>
             <p>ʌ, ə, æ, i, e, o, u</p>
             <p>ɑ:, ə:, i:, ɔ:, u:, &#596, u&#776, o&#776, a&#776, &#248, &#214, &#339, &#227</p>
@@ -38,9 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
             
             <?= $form->field($model, 'd_phrase_translation')->textInput()  ?>
 
-            <?= $form->field($model, 'd_word_transcription')->textInput()  ?>
+            <?php /* $form->field($model, 'd_word_transcription')->textInput()  */?>
            
-            <?= $form->field($model, 'd_phrase_transcription')->textInput()  ?>
+            <?php /* $form->field($model, 'd_phrase_transcription')->textInput()  */?>
             
             
             <div class="form-group">
@@ -51,4 +51,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </div>
 </div>
+<style>
+    .big-font{
+        font-size: 20px;
+    }
+</style>
 

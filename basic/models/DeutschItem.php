@@ -31,7 +31,7 @@ class DeutschItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['d_word',  'd_phrase', 'd_word_translation', 'd_phrase_translation', 'd_word_transcription', 'd_phrase_transcription', ], 'required'],
+            [['d_word',  'd_phrase', 'd_word_translation', 'd_phrase_translation' ], 'required'],
             [['d_word', 'd_phrase', 'd_word_translation', 'd_phrase_translation', 'd_word_transcription', 'd_phrase_transcription', ], 'string', 'max' => 255],
         ];
     }

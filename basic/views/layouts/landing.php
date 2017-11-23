@@ -235,7 +235,6 @@ LandberryAsset::register($this);
 
 
                             <p id="hi">
-
                                 Хочу предложить Вам свои услуги в веб-разработке и реализации любых идей в этой сфере.<br>
                                 Как правило использую стэк HTML5-CSS(bootstrap)-JS(Jquery)-PHP(Yii2.0)-MySQL<br>
                                 Ниже приведены примеры работ, собранные в системе тестирования решений, с помощью которой<br>
@@ -648,8 +647,8 @@ LandberryAsset::register($this);
             <h2> Предлагаю свои услуги web-программиста компаниям,
                 которым требуется поддержка или разработка сайтов и внутренних систем и сервисов.
                 Знатокам предлагаю ознакомиться с примерами кода из Системы Тестированния Решений,
-                разработанной на Yii2.0.
-
+                разработанной на Yii2.0.<br>
+                Опыт работы в команде: Октябрь 2014 — Январь 2016 (1 год и 4 месяца) Новосибирск ООО "Акула Пера" Веб-разработчик
 
         </div>
         <div class="col-md-4 col-sm-4 col-xs-12">
@@ -704,14 +703,14 @@ LandberryAsset::register($this);
                 <div class="plan-heading">
 
 
-                    <h3>ВЬЮХА САЙТА ФУТБОЛЬНОЙ СТАТИСТИКИ</h3>
+                    <h3>АГРЕГАТОР ЛОГОВ (APACHE, NGINX)</h3>
 
                     <br><br>
 
                     <div class="hexagon">
 
-                        <a href="https://github.com/roman1970/lis/blob/master/basic/modules/russia2018/views/default/index.php">
-                            <i class="fa fa-futbol-o"></i>
+                        <a href="https://github.com/roman1970/apache_logs_agregator">
+                            <i class="fa fa-book"></i>
                         </a>
 
                     </div>
@@ -720,7 +719,7 @@ LandberryAsset::register($this);
 
                 <ul>
 
-                    <li><a href="https://github.com/roman1970/lis/blob/master/basic/modules/russia2018/views/default/index.php">ССЫЛКА НА GITHUB</a></li>
+                    <li><a href="https://github.com/roman1970/apache_logs_agregator">ССЫЛКА НА GITHUB</a></li>
 
                 </ul>
                 <!--
@@ -743,14 +742,14 @@ LandberryAsset::register($this);
 
                 <div class="plan-heading">
 
-                    <h3>КАСТОМНЫЙ ПАГИНАТОР ДЛЯ ЛИСТИНГА</h3>
+                    <h3>ТЕСТОВЫЙ API ДЛЯ ВНЕШНИХ ФРОНТОВ</h3>
 
                     <br><br>
 
                     <div class="hexagon">
 
-                        <a href="https://github.com/roman1970/lis/blob/master/basic/components/KnoledgesPagination.php">
-                            <i class="fa fa-book"></i>
+                        <a href="https://github.com/roman1970/apache_logs_agregator/blob/master/controllers/DatasController.php">
+                            <i class="fa fa-arrows-alt"></i>
                         </a>
 
                     </div>
@@ -759,7 +758,7 @@ LandberryAsset::register($this);
 
                 <ul>
 
-                    <li><a href="https://github.com/roman1970/lis/blob/master/basic/components/KnoledgesPagination.php">ССЫЛКА НА GITHUB</a></li>
+                    <li><a href="https://github.com/roman1970/apache_logs_agregator/blob/master/controllers/DatasController.php">ССЫЛКА НА GITHUB</a></li>
 
 
                 </ul>

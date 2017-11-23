@@ -3,6 +3,7 @@ namespace app\controllers;
 
 use app\models\DeutschItem;
 use app\models\DeutschItemSearch;
+use yii\base\ErrorException;
 use yii\data\ActiveDataProvider;
 use Yii;
 use yii\helpers\Url;
@@ -12,7 +13,7 @@ use app\components\BackEndController;
 class DeutschitemController extends BackEndController
 {
 
-    public $layout = 'admin';
+    public $layout = 'main';
 
     public function actionIndex()
     {
@@ -47,9 +48,9 @@ class DeutschitemController extends BackEndController
            
             $model->d_phrase_translation = Yii::$app->request->post('DeutschItem')['d_phrase_translation'];
 
-            $model->d_word_transcription = Yii::$app->request->post('DeutschItem')['d_word_transcription'];
+            //$model->d_word_transcription = Yii::$app->request->post('DeutschItem')['d_word_transcription'];
             
-            $model->d_phrase_transcription = Yii::$app->request->post('DeutschItem')['d_phrase_transcription'];
+            //$model->d_phrase_transcription = Yii::$app->request->post('DeutschItem')['d_phrase_transcription'];
 
             /*генерация слова и ссылки*/
 
@@ -72,7 +73,8 @@ class DeutschitemController extends BackEndController
 
 
             if($model->save(false))
-                return $this->redirect(Url::toRoute('deutschitem/index'));
+                return $this->redirect(Url::to('http://servyz.xyz/plis/deutschitem/index'));
+                //return $this->redirect(Yii::$app->request->referrer);
             else return $this->render('_form', [
                 'model' => $model,
             ]);
@@ -89,6 +91,7 @@ class DeutschitemController extends BackEndController
     public function actionUpdate($id){
         $model = $this->loadModel($id);
         if ($model->load(Yii::$app->request->post())) {
+
             $model->d_word = Yii::$app->request->post('DeutschItem')['d_word'];
            
             $model->d_phrase = Yii::$app->request->post('DeutschItem')['d_phrase'];
@@ -97,13 +100,12 @@ class DeutschitemController extends BackEndController
            
             $model->d_phrase_translation = Yii::$app->request->post('DeutschItem')['d_phrase_translation'];
 
-            $model->d_word_transcription = Yii::$app->request->post('DeutschItem')['d_word_transcription'];
+           // $model->d_word_transcription = Yii::$app->request->post('DeutschItem')['d_word_transcription'];
             
-            $model->d_phrase_transcription = Yii::$app->request->post('DeutschItem')['d_phrase_transcription'];
+           // $model->d_phrase_transcription = Yii::$app->request->post('DeutschItem')['d_phrase_transcription'];
 
-
-            if($model->update(false))
-                return $this->redirect(Url::toRoute('deutschitem/index'));
+            if($model->update(false,['d_word', 'd_phrase', 'd_word_translation', 'd_phrase_translation']))
+                return $this->redirect(Url::to('http://servyz.xyz/plis/deutschitem/index'));
             else return $this->render('_form', [
                 'model' => $model,
             ]);
@@ -113,6 +115,16 @@ class DeutschitemController extends BackEndController
             return $this->render('_form', [
                 'model' => $model,
             ]);
+        }
+
+    }
+
+    public function actionDelete($id){
+
+        if ($model = $this->loadModel($id)->delete()) {
+            return $this->redirect(Url::to('http://servyz.xyz/plis/deutschitem/index'));
+        } else {
+            throw new \yii\web\HttpException(404, 'Cant delete record.');
         }
 
     }

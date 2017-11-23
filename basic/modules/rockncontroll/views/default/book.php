@@ -65,6 +65,7 @@
                          <source src='<?=\yii\helpers\Url::to($rec->audio)?>' type='audio/mpeg'>
                       </audio>
                   <?php endif; ?>
+                <a href="http://servyz.xyz/plis/articles/show/<?=$rec->id?>">Поделиться ссылкой</a>
                 <?=$rec->body?></span>
             <button type="button" class="btn btn-success" onclick="text_edit(<?=$rec->id?>)" id="red_button_<?=$rec->id?>" >Редактировать!</button><br>
 

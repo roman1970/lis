@@ -63,7 +63,8 @@ class TestController extends FrontEndController
                 elseif ($cat_id == 220 || $cat_id == 221 || $cat_id == 222 || 
                         $cat_id == 223 || $cat_id == 224 || $cat_id == 225 || $cat_id == 226
                         || $cat_id == 227 || $cat_id == 228 || $cat_id == 229 || $cat_id == 230 
-                        || $cat_id == 231 || $cat_id == 232 || $cat_id == 233){
+                        || $cat_id == 231 || $cat_id == 232 || $cat_id == 233 || $cat_id == 235
+                        || $cat_id == 236 || $cat_id == 238 || $cat_id == 239 || $cat_id == 240){
                     if ((float)Yii::$app->getRequest()->getQueryParam('presize') == 100) $act->mark = 3;
                     elseif ((float)Yii::$app->getRequest()->getQueryParam('presize') >= 80) $act->mark = 2;
                     elseif ((float)Yii::$app->getRequest()->getQueryParam('presize') >= 60) $act->mark = 1;

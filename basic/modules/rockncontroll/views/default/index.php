@@ -5,7 +5,7 @@
     $(document).ready(function() {
        // alert($.cookie('the_cookie'));
 
-        if($.cookie('the_cookie') == 'the_value') {
+        if($.cookie('the_cookie') === 'the_value') {
             $.ajax({
                 type: "GET",
                 url: "/rockncontroll/default/login/",
@@ -17,29 +17,6 @@
             });
         }
 
-
-        /*
-        $.getJSON("/rockncontroll/default/data-for-charts/", function (data) {
-
-            google.charts.load('current', {'packages':['corechart']});
-
-
-            google.charts.setOnLoadCallback(drawVisualization);
-
-            function drawVisualization() {
-                var wrapper = new google.visualization.ChartWrapper({
-
-                    chartType: 'ColumnChart',
-                    dataTable: data,
-                    options: {'title': 'Countries'},
-                    containerId: 'vis_div'
-
-                });
-                wrapper.draw();
-            }
-
-        }, "json");
-        */
 
       
     });
@@ -114,17 +91,17 @@
                         'validateOnType'         => false,
                         'validateOnChange'       => false,
                     ]) ?>
-    
+
                     <?= $form->field($model, 'login', ['inputOptions' => ['autofocus' => 'autofocus', 'class' => 'form-control', 'tabindex' => '1']]) ?>
-    
+
                     <?= $form->field($model, 'password', ['inputOptions' => ['class' => 'form-control', 'tabindex' => '2', 'id' => 'pswd']])->passwordInput()->label(Yii::t('user', 'Пароль') . ($module->enablePasswordRecovery ? ' (' . Html::a(Yii::t('user', 'Забыли пароль?'), ['/user/recovery/request'], ['tabindex' => '5']) . ')' : '')) ?>
-    
+
                     <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '4']) ?>
-    
+
                     <?= Html::submitButton(Yii::t('user', 'Вход'), ['class' => 'btn btn-primary btn-block', 'tabindex' => '3', 'onclick' => 'login()']) ?>
-    
+
                     <?php ActiveForm::end();
-    
+
                     */
                     ?>
                     <p class="form">Имя</p>

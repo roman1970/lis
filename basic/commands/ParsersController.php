@@ -333,7 +333,7 @@ class ParsersController extends Controller
             $date = date('d.m.Y', $rec->ad+7*60*60);
             $time = date('H:i', $rec->ad+7*60*60);
 
-            $content = $this->_soccerStandDetailCurl("http://www.soccerstand.com/ru/match/" . $rec->aa . "/#match-summary");
+            $content = $this->_soccerStandDetailCurl("https://www.soccerstand.com/ru/match/" . $rec->aa . "/#match-summary");
             
             $prepared = explode('÷', explode('¬', $this->_soccerStandCurl("http://d.soccerstand.com/ru/x/feed/df_dos_1_" . $rec->aa . "_"))[0]);
             if (isset($prepared[1]) && explode('|', $prepared[1])[1] && explode('|', $prepared[1])[2]) $bets = explode('|', $prepared[1]);
@@ -362,8 +362,8 @@ class ParsersController extends Controller
             $content = str_replace(chr(10), '', $content);
 
             
-            $tournament = ''; // турнир
-            $host = $rec->ae; //номинальный хозяин
+            $tournament = $rec->zy.': '.$rec->zx; // турнир
+            $host = ' '.$rec->ae; //номинальный хозяин
             $guest = $rec->af; //номинальный гость
             $score = ''; //счёт
             $gett = $rec->ag; //голы, забитые хозяевами
@@ -2238,6 +2238,7 @@ class ParsersController extends Controller
                 elseif ($item instanceof SongText){
                     if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
                     elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                    elseif(strstr($item->link, '/music/Music/')) fwrite($f, "/home/romanych".$item->link . PHP_EOL);
                 }
                 
               //  fclose($f); exit;
@@ -2369,6 +2370,7 @@ class ParsersController extends Controller
                 elseif ($item instanceof SongText){
                     if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
                     elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                    elseif(strstr($item->link, '/music/Music/')) fwrite($f, "/home/romanych".$item->link . PHP_EOL);
                 }
             }
 
@@ -2449,6 +2451,7 @@ class ParsersController extends Controller
                 elseif ($item instanceof SongText){
                     if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
                     elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                    elseif(strstr($item->link, '/music/Music/')) fwrite($f, "/home/romanych".$item->link . PHP_EOL);
                 }
             }
 
@@ -2534,20 +2537,25 @@ class ParsersController extends Controller
             $authors_ids = ArrayHelper::map(Author::find()->all(), 'id', 'id');
 
 
-            shuffle($authors_ids);
+            //var_dump($authors_ids); exit;
 
 
             foreach ($authors_ids as $id){
+                //echo $id.PHP_EOL;
                 //Трахтенберг нах в его терминологии, Красная плесень туда же
-                if($id != 218 || $id != 209) {
-                    //echo $id.PHP_EOL;
+                if($id != 218 && $id != 209) {
+                    echo $id.PHP_EOL;
                     //echo count(Source::find()->where(["author_id" => $id])->all()).PHP_EOL;
                     $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
                     
                 }
                    // $sources[] = Source::find()->where(["author_id" => $id])->all()[rand(0, count(Source::find()->where(["author_id" => $id])->all())-1)]->id;
-               // else echo $id;
+               //else echo $id;
             }
+
+            //exit;
+
+            shuffle($sources);
 
 
             foreach ($sources as $id){
@@ -2659,6 +2667,7 @@ class ParsersController extends Controller
                     //if (!strstr($item->link, '.mp3')) echo $item->link.PHP_EOL;
                     if(strstr($item->link, '/musicplis')) fwrite($f, $item->link . PHP_EOL);
                     elseif(strstr($item->link, 'best_alboms')) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik".$item->link . PHP_EOL);
+                    elseif(strstr($item->link, '/music/Music/')) fwrite($f, "/home/romanych".$item->link . PHP_EOL);
                     if ($n % 15 == 0) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/mp3/oho.mp3" . PHP_EOL);
                     if ($n % 10 == 0) fwrite($f, "/home/romanych/Музыка/Thoughts_and_klassik/new_ideas/mp3/komnata_s_mehom.mp3" . PHP_EOL);
                     //else echo $item->id.' Song ' .PHP_EOL;
@@ -3349,7 +3358,8 @@ class ParsersController extends Controller
         {
             $dir_list = [
                 '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/'. $new_artist,
-                '/musicplis/'. $new_artist
+                '/musicplis/'. $new_artist,
+                '/home/romanych/music/Music/'. $new_artist
             ];
             //$dir = '/home/romanych/Музыка/Thoughts_and_klassik/best_alboms/' . $new_artist;
 
@@ -3434,16 +3444,22 @@ class ParsersController extends Controller
                                             if($i==1){
                                                 $song_obj->link = substr($path . '/' . $song . '/' . $sub_song, 48);
                                             }
+                                            elseif ($i==3){
+                                                $song_obj->link = substr($path . '/' . $song . '/' . $sub_song, 14);
+                                            }
                                             else {
                                                 $song_obj->link = $path . '/' . $song . '/' . $sub_song;
                                             }
-                                            //echo mb_detect_encoding($song_obj->link);
                                         }
-                                    } else
+                                    }
+                                    else
                                         if (preg_match('/(.+).mp3$/', $song, $match)) {
                                             $song_obj->title = mb_convert_encoding($song, "UTF-8");
                                             if($i==1) {
                                                 $song_obj->link = substr($path . '/' . $song, 48);
+                                            }
+                                            elseif ($i==3){
+                                                $song_obj->link = substr($path . '/' . $song, 14);
                                             }
                                             else {
                                                 $song_obj->link = $path . '/' . $song;
@@ -3451,6 +3467,8 @@ class ParsersController extends Controller
                                             //return var_dump($song_obj);
                                             //echo mb_detect_encoding($song_obj->link);
                                         }
+
+                                    //return var_dump($song_obj);
 
                                     $song_obj->save(false);
 

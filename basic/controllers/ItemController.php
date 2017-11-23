@@ -224,7 +224,7 @@ class ItemController extends BackEndController
     public function actionListNoAudio(){
         $items = Items::find()
             ->where(['audio_link' => ''])
-            ->andWhere("source_id <> 2 and source_id <> 43 and cat_id <> 53")
+            //->andWhere("source_id <> 2 and source_id <> 43 and cat_id <> 53")
             ->orderBy(['rand()' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([

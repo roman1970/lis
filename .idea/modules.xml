@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../777/.idea/777.iml" filepath="$PROJECT_DIR$/../777/.idea/777.iml" />
+      <module fileurl="file://$USER_HOME$/www/bardzilla/.idea/bardzilla.iml" filepath="$USER_HOME$/www/bardzilla/.idea/bardzilla.iml" />
+      <module fileurl="file://$USER_HOME$/PycharmProjects/ffllask/ffllask.iml" filepath="$USER_HOME$/PycharmProjects/ffllask/ffllask.iml" />
+      <module fileurl="file://$USER_HOME$/PycharmProjects/manager_new/manager_new.iml" filepath="$USER_HOME$/PycharmProjects/manager_new/manager_new.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/plis.iml" filepath="$PROJECT_DIR$/.idea/plis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../radiorooma/.idea/radiorooma.iml" filepath="$PROJECT_DIR$/../radiorooma/.idea/radiorooma.iml" />
     </modules>
   </component>
 </project>

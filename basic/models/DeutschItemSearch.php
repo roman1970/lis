@@ -10,20 +10,19 @@ class DeutschItemSearch extends DeutschItem
     {
         return [
 
-            [['d_word', 'e_word'], 'save'],
+            [['d_word'], 'save'],
         ];
     }
 
 
     public function search($params)
     {
-        $query = DeutschItem::find();
+        $query = DeutschItem::find()->orderBy('id DESC');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
-
 
         $query->andFilterWhere(['like', 'd_word', $this->d_word]);
 

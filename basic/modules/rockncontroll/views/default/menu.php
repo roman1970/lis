@@ -153,6 +153,7 @@
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'news')">Новости</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'copyright')">Копирайт</button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'limerik')">Лимерик</button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="send(user,'year-point')">Пятна года</button>
 </div>
 
 <div id="show_menu">
